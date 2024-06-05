@@ -1,5 +1,10 @@
 package game.entity;
 
+import game.automaton.Automate;
+import game.automaton.Category;
+import game.automaton.Direction;
+import game.grid.Grid;
+
 public class Apple extends Entity{
 
 	private boolean eaten;
@@ -12,6 +17,12 @@ public class Apple extends Entity{
 	
 	public boolean eaten () {
 		return eaten;
+	}
+
+	@Override
+	public boolean eval_cell(Direction dir, Category cat) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }

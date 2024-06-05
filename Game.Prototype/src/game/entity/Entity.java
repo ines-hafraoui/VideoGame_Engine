@@ -9,6 +9,8 @@ import game.grid.*;
 public abstract class Entity {
 	Automate aut;
 	Grid g;
+	int x,y; 
+	Orientation orientation;
 	
 	public abstract boolean eval_cell(Direction dir, Category cat);
 }

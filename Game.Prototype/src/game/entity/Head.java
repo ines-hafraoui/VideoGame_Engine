@@ -1,10 +1,13 @@
 package game.entity;
 
+import game.automaton.Automate;
+import game.automaton.Category;
+import game.automaton.Direction;
+import game.grid.Grid;
+
 public class Head extends Entity{
 	
 	private Snake parent;
-	private Orientation orientation;
-	
 
 	public Head (Snake parent, Orientation orientation, Automate aut, Grid grid) {
 		this.aut=aut;
@@ -29,5 +32,11 @@ public class Head extends Entity{
 	
 	public int get_y() {
 		return y;
+	}
+
+	@Override
+	public boolean eval_cell(Direction dir, Category cat) {
+		
+		return g.eval(dir, cat, x, y , orientation);
 	}
 }

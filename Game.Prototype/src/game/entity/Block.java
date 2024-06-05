@@ -26,4 +26,10 @@ public class Block extends Entity {
 	public Block get_next() {
 		return next;
 	}
+
+	@Override
+	public boolean eval_cell(Direction dir, Category cat) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
