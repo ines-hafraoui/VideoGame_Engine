@@ -36,7 +36,6 @@ public class Head extends Entity{
 
 	@Override
 	public boolean eval_cell(Direction dir, Category cat) {
-		
 		return g.eval(dir, cat, x, y , orientation);
 	}
 }

@@ -29,7 +29,6 @@ public class Block extends Entity {
 
 	@Override
 	public boolean eval_cell(Direction dir, Category cat) {
-		// TODO Auto-generated method stub
-		return false;
+		return g.eval(dir, cat, x, y, orientation);
 	}
 }

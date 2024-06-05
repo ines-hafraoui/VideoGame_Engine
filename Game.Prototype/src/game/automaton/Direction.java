@@ -6,6 +6,7 @@ public class Direction {
 	public static final char FRONT = 'F';
 	public static final char RIGHT = 'R';
 	public static final char LEFT = 'L';
+	public static final char HERE = 'H';
 	
 	public Direction(char direction) {
 		dir = direction; 

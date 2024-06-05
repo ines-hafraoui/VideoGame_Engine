@@ -7,6 +7,7 @@ public class Orientation {
 	public static final char SOUTH = 'S';
 	public static final char EAST = 'E';
 	public static final char WEST = 'W';
+	public static final char HERE = 'H';
 	
 	public Orientation(char orientation) {
 		this.orientation = orientation; 
