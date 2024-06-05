@@ -1,12 +1,15 @@
 package game.grid;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import game.automaton.Category;
 import game.automaton.Direction;
+import game.entity.Apple;
 import game.entity.Entity;
 import game.entity.Orientation;
+import game.entity.Snake;
 
 public class Grid {
 	
@@ -29,34 +32,77 @@ public class Grid {
 		return null;
 	}
 	
-	public boolean eval(Direction d, Category c, int x, int y, Orientation o) {
+	public char eval(Direction d, int x, int y, Orientation o) {
+		int targetX = x; 
+		int targetY = y; 
 		
 	
 		switch(o.getOrientation()) {
 		case 'N' : 
 			switch(d.getDirection()) {
 			case 'F':
-				for (Entity e : entities) {
-				}
+				targetY--; 
 				break; 
 			case 'R':
-				for (Entity e : entities) {
-				}
+				targetX ++;
 				break; 
 			case 'L': 
-				for (Entity e : entities) {
-				}
+				targetX--;
 				break; 
 			}
-			check_orientation();
-			
+			break;
+		case 'S':
+			switch(d.getDirection()) {
+			case 'F':
+				targetY++;
+				break; 
+			case 'R':
+				targetX++;
+				break; 
+			case 'L': 
+				targetX--;
+				break; 
 			}
-	
-		return false;
-	}
-	
-	public boolean check_orientation() {
-		return true;
+			break;
+		case 'E': 
+			switch(d.getDirection()) {
+			case 'F':
+				targetX++;
+				break; 
+			case 'R':
+				targetY++;
+				break; 
+			case 'L': 
+				targetY--;
+				break; 
+			}
+			break; 
+		case 'W':
+			switch(d.getDirection()) {
+			case 'F':
+				targetX--;
+				break; 
+			case 'R':
+				targetY--;
+				break; 
+			case 'L': 
+				targetY++;
+				break; 
+			}
+			break; 
+		}
+		
+		for(Entity e : entities) {
+			if (e instanceof Apple) {
+				if (e.y == targetY && e.x == targetX) return 'A';
+			}
+			else if(e instanceof Snake){
+				if (e.y == targetY && e.x == targetX) return 'S';
+			}else {
+				if (e.y == targetY && e.x == targetX) return 'E';
+			}
+		}
+		return 'X';
 	}
 
 }

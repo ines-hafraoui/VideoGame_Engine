@@ -23,5 +23,17 @@ public class Apple extends Entity{
 	public boolean eval_cell(Direction dir, Category cat) {
 		return g.eval(dir, cat, x, y, orientation);
 	}
+
+	@Override
+	public int getY() {
+		
+		return this.y;
+	}
+
+	@Override
+	public int getX() {
+		
+		return this.x;
+	}
 	
 }

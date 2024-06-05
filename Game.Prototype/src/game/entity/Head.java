@@ -5,23 +5,20 @@ import game.automaton.Category;
 import game.automaton.Direction;
 import game.grid.Grid;
 
-public class Head extends Entity{
-	
-	private Snake parent;
+public class Head extends Snake{
 
-	public Head (Snake parent, Orientation orientation, Automate aut, Grid grid) {
-		this.aut=aut;
-		this.g = grid;
-		this.parent=parent;
-		this.orientation=orientation;
-		super.x=0;
-		super.y=0;
-	}
 	
-	public Snake get_parent() {
-		return parent;
-	}
+//	public Head (Orientation orientation, Automate aut, Grid grid) {
+//		this.aut=aut;
+//		this.g = grid;
+//		this.orientation=orientation;
+//	}
 	
+	public Head(Head h) {
+		super(h);
+		// TODO Auto-generated constructor stub
+	}
+
 	public Orientation get_orientation() {
 		return orientation;
 	}
@@ -36,6 +33,20 @@ public class Head extends Entity{
 
 	@Override
 	public boolean eval_cell(Direction dir, Category cat) {
-		return g.eval(dir, cat, x, y , orientation);
+		
+		char r=  g.eval(dir, x, y, orientation);
+		if(r != 'X') 
+			return true; 
+		return false;
+	}
+
+	@Override
+	public int getY() {
+		return this.y;
+	}
+
+	@Override
+	public int getX() {
+		return this.x;
 	}
 }

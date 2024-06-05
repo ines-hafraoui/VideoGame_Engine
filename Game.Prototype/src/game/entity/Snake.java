@@ -8,7 +8,7 @@ import game.automaton.Category;
 import game.automaton.Direction;
 import game.grid.*;
 
-public class Snake{
+public abstract class Snake extends Entity{
 	
 	Head head; 
 	private List<Block> body;
