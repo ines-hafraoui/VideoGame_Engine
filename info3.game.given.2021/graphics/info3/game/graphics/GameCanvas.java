@@ -65,7 +65,7 @@ import info3.game.sound.AudioPlayerListener;
  * We also manage an audio player for audio streams in the OGG format. The
  * player is automatically stopped when the window is closed.
  * 
- * @see info3.game.CanvasListener.GameCanvasListener to know how to get at the
+ * @see info3.game.snake.CanvasListener.GameCanvasListener to know how to get at the
  *      mouse and keyboard events, the timer events, and the paint requests.
  * 
  *      NOTA BENE: this is not a class that you are supposed to change. you may

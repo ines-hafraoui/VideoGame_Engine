@@ -18,30 +18,40 @@
  *  Created on: March, 2020
  *      Author: Pr. Olivier Gruber
  */
-package info3.game;
+package info3.game.snake;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.awt.Graphics;
 import java.io.IOException;
 
-import info3.game.graphics.GameCanvas;
-import info3.game.sound.AudioPlayer;
-import info3.game.sound.AudioPlayerListener;
 
-public class Sound {
-  GameCanvas m_canvas;
-  String m_name;
-  String m_filename;
+/**
+ * A simple class that holds the images of a sprite for an animated cowbow.
+ *
+ */
+public class Model {
 
-  Sound(GameCanvas canvas) {
-    m_canvas = canvas;
+  long m_imageElapsed;
+  int m_x=10, m_y=10;
+  int m_width;
+  Grid m_grid;
+  
+  Model(Grid grid) throws IOException {
+	    m_grid = grid;
+  }
+  
+  public void tick(long elapsed) {
+    m_imageElapsed += elapsed;
+    if (m_imageElapsed > 200) {
+      m_imageElapsed = 0;
+    }
+    
+  }
+  
+  public void paint(Graphics g, int width, int height) {
+    m_width = width;
+    m_grid.setBorder(2);
+	m_grid.paint(g);
   }
 
-  public void load(String name, String filename, long duration, float volume) throws IOException {
-    m_name = name;
-    m_filename = filename;
-    File file = new File(filename);
-    FileInputStream fis = new FileInputStream(file);
-    m_canvas.playSound(name, fis, duration,volume);
-  }
+
 }

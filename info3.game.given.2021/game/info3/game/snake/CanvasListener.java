@@ -18,7 +18,7 @@
  *  Created on: March, 2020
  *      Author: Pr. Olivier Gruber
  */
-package info3.game;
+package info3.game.snake;
 
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;

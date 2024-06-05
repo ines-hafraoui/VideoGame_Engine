@@ -18,7 +18,7 @@
  *  Created on: March, 2020
  *      Author: Pr. Olivier Gruber
  */
-package info3.game;
+package info3.game.snake;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -47,16 +47,17 @@ public class Game {
 	}
 
 	JFrame m_frame;
-	JLabel m_text;
+//	JLabel m_text;
 	GameCanvas m_canvas;
 	CanvasListener m_listener;
-	Cowboy m_cowboy;
+	Model m_model;
 	Sound m_music;
 
 	Game() throws Exception {
-		// creating a cowboy, that would be a model
+		// creating a model, that would be a model
 		// in an Model-View-Controller pattern (MVC)
-		m_cowboy = new Cowboy();
+		Dimension d = new Dimension(1000, 1000);
+		m_model = new Model(new Grid(0, 0, d.width, d.height-20, 20, 20));
 		// creating a listener for all the events
 		// from the game canvas, that would be
 		// the controller in the MVC pattern
@@ -66,9 +67,7 @@ public class Game {
 		m_canvas = new GameCanvas(m_listener);
 
 		System.out.println("  - creating frame...");
-		Dimension d = new Dimension(1024, 768);
 		m_frame = m_canvas.createFrame(d);
-
 		System.out.println("  - setting up the frame...");
 		setupFrame();
 	}
@@ -84,9 +83,9 @@ public class Game {
 
 		m_frame.add(m_canvas, BorderLayout.CENTER);
 
-		m_text = new JLabel();
-		m_text.setText("Tick: 0ms FPS=0");
-		m_frame.add(m_text, BorderLayout.NORTH);
+//		m_text = new JLabel();
+//		m_text.setText("Tick: 0ms FPS=0");
+//		m_frame.add(m_text, BorderLayout.NORTH);
 
 		// center the window on the screen
 		m_frame.setLocationRelativeTo(null);
@@ -132,7 +131,7 @@ public class Game {
 	 */
 	void tick(long elapsed) {
 
-		m_cowboy.tick(elapsed);
+		m_model.tick(elapsed);
 
 		// Update every second
 		// the text on top of the frame: tick and fps
@@ -141,12 +140,7 @@ public class Game {
 			m_textElapsed = 0;
 			float period = m_canvas.getTickPeriod();
 			int fps = m_canvas.getFPS();
-
-			String txt = "Tick=" + period + "ms";
-			while (txt.length() < 15)
-				txt += " ";
-			txt = txt + fps + " fps   ";
-			m_text.setText(txt);
+			System.out.println("Elapsed="+ period + " FPS="+fps);
 		}
 	}
 
@@ -156,7 +150,7 @@ public class Game {
 	 */
 	void paint(Graphics g) {
 
-		// get the size of the canvas
+		// getickt the size of the canvas
 		int width = m_canvas.getWidth();
 		int height = m_canvas.getHeight();
 
@@ -165,7 +159,7 @@ public class Game {
 		g.fillRect(0, 0, width, height);
 
 		// paint
-		m_cowboy.paint(g, width, height);
+		m_model.paint(g, width, height);
 	}
 
 }
