@@ -1,7 +1,5 @@
 package game.automaton;
 
-import game.entity.Category;
-import game.entity.Direction;
 import game.entity.Entity;
 
 public class Cell implements Condition {
@@ -15,8 +13,7 @@ public class Cell implements Condition {
 	}
 	
 	public boolean eval (Entity e) {
-		// TODO;
-		return false;
+		return e.eval_cell(d,cat);
 	}
 
 }

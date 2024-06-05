@@ -12,8 +12,7 @@ public class Conjonction implements Condition {
 
 	@Override
 	public boolean eval(Entity e) {
-		// TODO Auto-generated method stub
-		return false;
+		return m_c1.eval(e) && m_c2.eval(e);
 	}
 
 }
