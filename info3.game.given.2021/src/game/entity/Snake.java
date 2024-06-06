@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import game.automaton.Automate;
+import game.automaton.Category;
+import game.automaton.Direction;
 import game.automaton.State;
 import info3.game.snake.Grid;
 
-public class Snake {
+public class Snake extends Entity{
 	
 	private Head head; 
 	private Block corps;
@@ -16,10 +18,13 @@ public class Snake {
 	
 	
 	public Snake(Automate aut, Grid g, Head h) {
+		super(aut, g, 0, 0, new Orientation('S'));
 		automate = aut;
 		head = h;
 	}
 	public Snake( Grid g, Head h) {
+		super(g, 0, 0, new Orientation('S'));
+
 		head = h;
 	}
 	
@@ -58,11 +63,28 @@ public class Snake {
 	public void set_automate(Automate aut) {
 		this.automate = aut;
 	}
+	
+	
 	/* eval_cell call the method eval of Grid that needs
 	 * the direction and category of the condition 
 	 * and the coordinates + orientation of the snake
 	 * 
 	 * return value : boolean
 	 */
+	@Override
+	public boolean eval_cell(Direction dir, Category cat) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean do_move() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean do_egg() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

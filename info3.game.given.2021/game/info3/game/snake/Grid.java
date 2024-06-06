@@ -45,7 +45,7 @@ public class Grid {
 		int box_height = (m_height - m_border) / m_nboxcol;
 		for (int i = 0; i < m_nboxcol; i++) {
 			for (int j = 0; j < m_nboxline; j++) {
-				if(boxcolor[i*j] == null)
+				if(boxcolor.length > i*j && (boxcolor[i*j] == null))
 					g.setColor(Color.DARK_GRAY);
 				else
 					g.setColor(Color.GREEN);
@@ -127,12 +127,12 @@ public class Grid {
 		
 		for(Entity e : entities) {
 			if (e instanceof Apple) {
-				if (e.y == targetY && e.x == targetX) return 'A';
+				if (e.get_y() == targetY && e.get_x() == targetX) return 'A';
 			}
 			else if(e instanceof Snake){
-				if (e.y == targetY && e.x == targetX) return 'S';
+				if (e.get_y() == targetY && e.get_x() == targetX) return 'S';
 			}else {
-				if (e.y == targetY && e.x == targetX) return 'E';
+				if (e.get_y() == targetY && e.get_x() == targetX) return 'E';
 			}
 		}
 		return 'X';

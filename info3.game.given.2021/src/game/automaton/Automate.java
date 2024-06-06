@@ -12,7 +12,7 @@ public class Automate {
 	private List<State> currentStateList;
 	private Entity entity;
 	
-	Automate(Entity entity){
+	public Automate(Entity entity){
 		states = new ArrayList<>();
 		this.entity = entity;
 	}
