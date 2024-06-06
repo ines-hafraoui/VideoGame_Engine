@@ -51,7 +51,7 @@ public class Grid {
 				if(boxcolor[i*j] == null)
 					g.setColor(Color.DARK_GRAY);
 				else
-					g.setColor(Color.GREEN);
+					g.setColor(boxcolor[i*j]);
 				g.fillRect(m_x + j * box_width + m_border, m_y + i * box_height + m_border, box_width - (m_border * 2),
 						box_height - m_border);
 			}
