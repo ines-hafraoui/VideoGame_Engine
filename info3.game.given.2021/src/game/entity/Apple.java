@@ -26,17 +26,6 @@ public class Apple extends Entity{
 		return false;
 	}
 
-	@Override
-	public int getY() {
-		
-		return this.y;
-	}
-
-	@Override
-	public int getX() {
-		
-		return this.x;
-	}
 
 	/*
 	 * la pomme ne bouge pas donc elle renvoie false car
