@@ -3,11 +3,14 @@ package info3.game.snake;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import game.automaton.Direction;
 import game.entity.Apple;
+import game.entity.Block;
 import game.entity.Entity;
+import game.entity.Head;
 import game.entity.Orientation;
 import game.entity.Snake;
 
@@ -40,20 +43,12 @@ public class Grid {
 	
 
 	public void paint(Graphics g) {
-<<<<<<< HEAD
-		Color[] colorpos = GetEltsPos();
-=======
 		Color[] boxcolor = GridEltPos();
->>>>>>> AutomateTest
 		int box_width = (m_width + m_border) / m_nboxline;
 		int box_height = (m_height - m_border) / m_nboxcol;
 		for (int i = 0; i < m_nboxcol; i++) {
 			for (int j = 0; j < m_nboxline; j++) {
-<<<<<<< HEAD
-				if(colorpos[i*j] == null)
-=======
 				if(boxcolor[i*j] == null)
->>>>>>> AutomateTest
 					g.setColor(Color.DARK_GRAY);
 				else
 					g.setColor(Color.GREEN);
@@ -62,24 +57,20 @@ public class Grid {
 			}
 		}
 	}
-	
-<<<<<<< HEAD
-	/* This method returns an array, size of the grid with the color of the element
-	 * present on this box if there is nothing its null
-	 */
-	Color[] GetEltsPos() {
-		Color[] colortab = new Color[m_nboxcol*m_nboxline];
-		//un itérateur sur les élements, on cherche à ce que chacun des elements nous renvoie sa position
-		//et on remplie le tableau en conséquence
-		return colortab;
-=======
+
 	
 	//METHODE returns an array of colors
 	Color[] GridEltPos() {
-		Color[] colorpos = new Color[entities.size()];
+		Color[] colorpos = new Color[m_nboxcol*m_nboxline];
 		//un itérateur sur les élements, on cherche à ce que chacun des elements nous renvoie sa position
-		
-		
+		Iterator<Entity> iter = entities.iterator();
+		while(iter.hasNext()) {
+			Entity e = iter.next();
+			if(e instanceof Apple)
+				colorpos[e.getX()*e.getY()] = Color.GREEN;
+			if(e instanceof Head || e instanceof Block) 
+				colorpos[e.getX()*e.getY()] = Color.BLUE;
+		}
 		return colorpos;
 	}
 	
@@ -154,7 +145,7 @@ public class Grid {
 			}
 		}
 		return 'X';
->>>>>>> AutomateTest
+
 	}
 
 
