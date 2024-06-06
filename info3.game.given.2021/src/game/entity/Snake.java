@@ -13,31 +13,30 @@ public class Snake extends Entity{
 	
 	private Head head; 
 	private Block corps;
-	private Automate automate;
 	private Grid g;
 	
 	
-	public Snake(Automate aut, Grid g, Head h) {
-		super(aut, g, 0, 0, new Orientation('S'));
+	public Snake(Automate aut, Position p, Grid g, Orientation o) {
+		super(aut,g,p,o);
 		automate = aut;
-		head = h;
+		head = new Head(o,g,p);
 	}
-	public Snake( Grid g, Head h) {
-		super(g, 0, 0, new Orientation('S'));
-
-		head = h;
+	
+	public Snake( Position p, Grid g, Orientation o) {
+		super(g,p,o);
+		head = new Head(o,g,p);
 	}
 	
 	public void grow() {
 		
 		
 		if (corps == null) {
-			corps = new Block(g, head.get_x(), head.get_y());
+			corps = new Block(head, g,head.position);
 		}
 		
 		Block tail = get_tail();
 		
-		Block new_tail = new Block(g, tail.get_x(), tail.get_y());
+		Block new_tail = new Block(head, g,tail.position);
 		tail.set_next(new_tail);
 		new_tail.set_prev(tail);
 	}

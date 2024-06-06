@@ -31,6 +31,7 @@ import javax.swing.JLabel;
 
 import game.entity.Head;
 import game.entity.Orientation;
+import game.entity.Position;
 import game.entity.Snake;
 import info3.game.graphics.GameCanvas;
 import info3.game.sound.RandomFileInputStream;
@@ -75,8 +76,8 @@ public class Game {
 		setupFrame();
 		
 		
-		Head s_head = new Head(new Orientation('S'), m_model.get_grid(),0, 0) ;
-		Snake snake =new Snake(m_model.get_grid(), s_head);
+		Head s_head = new Head(new Orientation('S'), m_model.get_grid(), new Position(0,0)) ;
+		Snake snake =new Snake(null,m_model.get_grid(), null);
 		
 		m_model.get_grid().add_entity(snake);
 		

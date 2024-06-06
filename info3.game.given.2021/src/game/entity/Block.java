@@ -7,8 +7,8 @@ import info3.game.snake.Grid;
 
 public class Block extends Entity {
 
-	public Block(Grid g, int x, int y) {
-		super(g,x,y,new Orientation('N'));
+	public Block(Head h, Grid g, Position p) {
+		super(g,p,h.orientation);
 	}
 
 	private Entity previous;
@@ -43,7 +43,7 @@ public class Block extends Entity {
 	}
 	@Override
 	public boolean eval_cell(Direction dir, Category cat) {
-		char r=  g.eval(dir, x, y, orientation);
+		char r=  g.eval(dir, position.x, position.y, orientation);
 		if(r != 'X') 
 			return true; 
 		return false;
@@ -54,16 +54,16 @@ public class Block extends Entity {
 	public boolean do_move() {
 		switch(orientation.getOrientation()) {
 		case 'N': 
-			this.y --;
+			position.y --;
 			return true;
 		case 'S': 
-			super.y++;
+			position.y++;
 			return true;
 		case 'E' : 
-			x++;
+			position.x++;
 			return true;
 		case 'W': 
-			x--;
+			position.x--;
 			return true;
 		}
 		return false;

@@ -8,38 +8,40 @@ import info3.game.snake.Grid;
 public abstract class Entity {
 	protected Automate aut;
 	protected Grid g;
-	protected  int x;
-	protected  int y; 
 	protected Orientation orientation;
+	protected Automate automate;
+	protected Position position;
 	
-	public Entity(Automate a,Grid g, int x,int y, Orientation o) {
+	public Entity(Automate a,Grid g, Position p, Orientation o) {
 		aut = a;
 		this.g = g;
-		this.x = x; 
-		this.y = y; 
+		position = p;
 		orientation = o;
 	}
 	
-	public Entity(Grid g, int x,int y, Orientation o) {
+	public Entity(Grid g,  Position p, Orientation o) {
 		this.g = g;
-		this.x = x; 
-		this.y = y; 
+		position = p;
 		orientation = o;
 	}
 	
 	public abstract boolean eval_cell(Direction dir, Category cat);
 	
 	public int get_x() {
-		return x;
+		return position.x;
 	}
 	
 	public int get_y() {
-		return y;
+		return position.y;
 	}
 
 	public abstract boolean do_move();
 
 	public abstract boolean do_egg();
+	
+	public void set_automate(Automate a) {
+		automate = a;
+	}
 	
 	public void tick(long elpased) {
 		

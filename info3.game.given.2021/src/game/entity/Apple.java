@@ -9,8 +9,13 @@ public class Apple extends Entity{
 
 	private boolean eaten;
 	
-	public Apple (Automate a,Grid g, int x,int y, Orientation o) {
-		super(a,g,x,y,o);
+	public Apple (Automate a,Grid g, Position p, Orientation o) {
+		super(a,g,p,o);
+		eaten = false;
+	}
+	
+	public Apple (Grid g, Position p, Orientation o) {
+		super(g,p,o);
 		eaten = false;
 	}
 	
@@ -20,7 +25,7 @@ public class Apple extends Entity{
 
 	@Override
 	public boolean eval_cell(Direction dir, Category cat) {
-		char r=  g.eval(dir, x, y, orientation);
+		char r=  g.eval(dir, position.x, position.y, orientation);
 		if(r != 'X') 
 			return true; 
 		return false;
