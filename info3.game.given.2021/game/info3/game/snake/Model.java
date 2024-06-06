@@ -45,6 +45,7 @@ public class Model {
       m_imageElapsed = 0;
     }
     
+    m_grid.tick(elapsed);
   }
   
   public void paint(Graphics g, int width, int height) {

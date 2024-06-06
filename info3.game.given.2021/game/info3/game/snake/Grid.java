@@ -137,6 +137,12 @@ public class Grid {
 		}
 		return 'X';
 	}
+	
+	void tick(long elapsed) {
+		for (Entity e : entities) {
+			e.tick(elapsed);
+		}
+	}
 
 
 }
