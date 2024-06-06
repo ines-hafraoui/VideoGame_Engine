@@ -19,7 +19,7 @@ public class Automate {
 	
 	
 	public boolean blocked; //the entity will unblock the automaton once it's transition is over
-	void step(Entity e) {
+	public void step(Entity e) {
 		
 		if (!blocked) {
 			

@@ -35,4 +35,11 @@ public abstract class Entity {
 	public abstract boolean do_move();
 
 	public abstract boolean do_egg();
+	
+	public void tick(long elpased) {
+		
+		if (aut != null) {
+			aut.step(this);
+		}
+	}
 }
