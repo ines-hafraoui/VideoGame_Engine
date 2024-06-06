@@ -33,12 +33,16 @@ public class Model {
   long m_imageElapsed;
   int m_x=10, m_y=10;
   int m_width;
-  Grid m_grid;
+  private Grid m_grid;
   
   Model(Grid grid) throws IOException {
 	    m_grid = grid;
   }
   
+  
+  public Grid get_grid() {
+	  return m_grid;
+  }
   public void tick(long elapsed) {
     m_imageElapsed += elapsed;
     if (m_imageElapsed > 200) {

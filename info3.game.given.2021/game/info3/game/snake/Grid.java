@@ -138,7 +138,12 @@ public class Grid {
 		return 'X';
 	}
 	
-	void tick(long elapsed) {
+	
+	
+	public void add_entity(Entity e) {
+		entities.add(e);
+	}
+	public void tick(long elapsed) {
 		for (Entity e : entities) {
 			e.tick(elapsed);
 		}

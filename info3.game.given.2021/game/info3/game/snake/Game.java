@@ -29,6 +29,9 @@ import java.io.RandomAccessFile;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import game.entity.Head;
+import game.entity.Orientation;
+import game.entity.Snake;
 import info3.game.graphics.GameCanvas;
 import info3.game.sound.RandomFileInputStream;
 
@@ -70,6 +73,14 @@ public class Game {
 		m_frame = m_canvas.createFrame(d);
 		System.out.println("  - setting up the frame...");
 		setupFrame();
+		
+		
+		Head s_head = new Head(new Orientation('S'), m_model.get_grid(),0, 0) ;
+		Snake snake =new Snake(m_model.get_grid(), s_head);
+		
+		game.m_model.get_grid(snake).
+		
+		
 	}
 
 	/*

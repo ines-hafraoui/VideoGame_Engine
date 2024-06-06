@@ -11,7 +11,10 @@ public class Head extends Entity{
 		super(aut,g,x,y,orientation);
 		
 	}
-
+	public Head(Orientation orientation, Grid g ,int x, int y) {
+		super(g,x,y,orientation);
+		
+	}
 	public Orientation get_orientation() {
 		return orientation;
 	}

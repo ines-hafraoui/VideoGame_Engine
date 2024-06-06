@@ -12,17 +12,14 @@ public class Snake {
 	private Head head; 
 	private Block corps;
 	private Automate automate;
-	private Orientation orientation;
 	private Grid g;
 	
 	
-	public Snake(Automate aut,Orientation o, Grid g, Head h) {
-		orientation = o;
+	public Snake(Automate aut, Grid g, Head h) {
 		automate = aut;
 		head = h;
 	}
-	public Snake(Orientation o, Grid g, Head h) {
-		orientation = o;
+	public Snake( Grid g, Head h) {
 		head = h;
 	}
 	
