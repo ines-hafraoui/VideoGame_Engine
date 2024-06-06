@@ -24,4 +24,8 @@ public abstract class Entity {
 	
 	public abstract int getY(); 
 	public abstract int getX();
+
+	public abstract boolean do_move();
+
+	public abstract boolean do_egg();
 }

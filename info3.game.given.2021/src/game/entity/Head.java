@@ -49,4 +49,29 @@ public class Head extends Snake{
 	public int getX() {
 		return this.x;
 	}
+
+	@Override
+	public boolean do_move() {
+		switch(orientation.getOrientation()) {
+		case 'N': 
+			y--;
+			return true;
+		case 'S': 
+			y++;
+			return true;
+		case 'E' : 
+			x++;
+			return true;
+		case 'W': 
+			x--;
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean do_egg() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

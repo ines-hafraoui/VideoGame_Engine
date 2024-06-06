@@ -37,5 +37,21 @@ public class Apple extends Entity{
 		
 		return this.x;
 	}
+
+	/*
+	 * la pomme ne bouge pas donc elle renvoie false car
+	 * elle a pas bougé 
+	 */
+	
+	@Override
+	public boolean do_move() {
+		return false;
+	}
+
+	@Override
+	public boolean do_egg() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }
