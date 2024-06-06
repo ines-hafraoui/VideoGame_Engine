@@ -32,122 +32,129 @@ public class Grid {
 	public void setBorder(int border) {
 		m_border = border;
 	}
-	
+
 	public Grid resize(int h, int w, int nbcase) {
-		//TODO
+		// TODO
 		return null;
 	}
-	
 
 	public void paint(Graphics g) {
-		Color[] boxcolor = GridEltPos();
 		int box_width = (m_width + m_border) / m_nboxline;
 		int box_height = (m_height - m_border) / m_nboxcol;
 		for (int i = 0; i < m_nboxcol; i++) {
 			for (int j = 0; j < m_nboxline; j++) {
-				if(boxcolor.length > i*m_nboxline +j && (boxcolor[i*m_nboxline +j] == null))
-					g.setColor(Color.DARK_GRAY);
-				else
-					g.setColor(Color.GREEN);
-				
+				g.setColor(Color.GREEN);
 				g.fillRect(m_x + j * box_width + m_border, m_y + i * box_height + m_border, box_width - (m_border * 2),
 						box_height - m_border);
 			}
 		}
+
+		for (Entity e : entities) {
+			
+			Entity[] eList = e.get_entity();
+			
+			for (Entity e_e : eList) {
+				
+				g.setColor(Color.DARK_GRAY);
+				g.fillRect(m_x + e_e.get_x() * box_width + m_border,m_y + e_e.get_y() * box_height + m_border, box_width - (m_border * 2),
+						box_height - m_border);
+
+			}
+		}
 	}
-	
-	
-	//METHODE returns an array of colors
-	Color[] GridEltPos() {
+
+	// METHODE returns an array of colors
+	// C'est bien ta fonction inês
+	Color[] GridEltColor() {
 		Color[] colorpos = new Color[entities.size()];
-		//un itérateur sur les élements, on cherche à ce que chacun des elements nous renvoie sa position
-	
+		// un itérateur sur les élements, on cherche à ce que chacun des elements nous
+		// renvoie sa position
+
 		return colorpos;
 	}
-	
+
 	public char eval(Direction d, int x, int y, Orientation o) {
-		int targetX = x; 
-		int targetY = y; 
-		
-	
-		switch(o.getOrientation()) {
-		case 'N' : 
-			switch(d.getDirection()) {
+		int targetX = x;
+		int targetY = y;
+
+		switch (o.getOrientation()) {
+		case 'N':
+			switch (d.getDirection()) {
 			case 'F':
-				targetY--; 
-				break; 
+				targetY--;
+				break;
 			case 'R':
-				targetX ++;
-				break; 
-			case 'L': 
+				targetX++;
+				break;
+			case 'L':
 				targetX--;
-				break; 
+				break;
 			}
 			break;
 		case 'S':
-			switch(d.getDirection()) {
+			switch (d.getDirection()) {
 			case 'F':
 				targetY++;
-				break; 
+				break;
 			case 'R':
 				targetX++;
-				break; 
-			case 'L': 
+				break;
+			case 'L':
 				targetX--;
-				break; 
+				break;
 			}
 			break;
-		case 'E': 
-			switch(d.getDirection()) {
+		case 'E':
+			switch (d.getDirection()) {
 			case 'F':
 				targetX++;
-				break; 
+				break;
 			case 'R':
 				targetY++;
-				break; 
-			case 'L': 
+				break;
+			case 'L':
 				targetY--;
-				break; 
+				break;
 			}
-			break; 
+			break;
 		case 'W':
-			switch(d.getDirection()) {
+			switch (d.getDirection()) {
 			case 'F':
 				targetX--;
-				break; 
+				break;
 			case 'R':
 				targetY--;
-				break; 
-			case 'L': 
+				break;
+			case 'L':
 				targetY++;
-				break; 
+				break;
 			}
-			break; 
+			break;
 		}
-		
-		for(Entity e : entities) {
+
+		for (Entity e : entities) {
 			if (e instanceof Apple) {
-				if (e.get_y() == targetY && e.get_x() == targetX) return 'A';
-			}
-			else if(e instanceof Snake){
-				if (e.get_y() == targetY && e.get_x() == targetX) return 'S';
-			}else {
-				if (e.get_y() == targetY && e.get_x() == targetX) return 'E';
+				if (e.get_y() == targetY && e.get_x() == targetX)
+					return 'A';
+			} else if (e instanceof Snake) {
+				if (e.get_y() == targetY && e.get_x() == targetX)
+					return 'S';
+			} else {
+				if (e.get_y() == targetY && e.get_x() == targetX)
+					return 'E';
 			}
 		}
 		return 'X';
 	}
-	
-	
-	
+
 	public void add_entity(Entity e) {
 		entities.add(e);
 	}
+
 	public void tick(long elapsed) {
 		for (Entity e : entities) {
 			e.tick(elapsed);
 		}
 	}
-
 
 }

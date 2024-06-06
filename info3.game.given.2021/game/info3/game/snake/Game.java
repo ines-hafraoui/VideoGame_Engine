@@ -29,6 +29,7 @@ import java.io.RandomAccessFile;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import game.entity.Apple;
 import game.entity.Head;
 import game.entity.Orientation;
 import game.entity.Position;
@@ -77,10 +78,16 @@ public class Game {
 		
 		
 		Head s_head = new Head(new Orientation('S'), m_model.get_grid(), new Position(0,0)) ;
-		Snake snake =new Snake(null,m_model.get_grid(), null);
+		Snake snake =new Snake(null,m_model.get_grid(), s_head);
+		
+		Apple apple = new Apple(m_model.get_grid(), new Position(5, 5), null);
 		
 		m_model.get_grid().add_entity(snake);
-		
+		m_model.get_grid().add_entity(apple);
+		m_model.get_grid().add_entity(apple);
+
+
+
 	}
 
 	/*

@@ -15,16 +15,15 @@ public class Snake extends Entity {
 	private Block corps;
 	private Grid g;
 
-
-	public Snake(Automate aut, Position p, Grid g, Orientation o) {
-		super(aut, g, p, o);
+	public Snake(Automate aut, Grid g, Head h) {
+		super(aut, g, null, null);
 		automate = aut;
-		head = new Head(o, g, p);
+		head = h;
 	}
 
-	public Snake(Position p, Grid g, Orientation o) {
-		super(g, p, o);
-		head = new Head(o, g, p);
+	public Snake(Grid g, Head h) {
+		super(g, null, null);
+		head = h;
 	}
 
 	public void grow() {
@@ -72,6 +71,41 @@ public class Snake extends Entity {
 			}
 		}
 
+	}
+
+	@Override
+	public Entity[] get_entity() {
+
+		Entity[] eList = new Entity[length_corps() + 1];
+		eList[0] = head;
+
+		if (corps != null) {
+			int i = 1;
+			Block b = corps;
+
+			while (b != null) {
+				eList[i] = b;
+				b = (Block) b.get_next();
+				i++;
+			}
+		}
+
+		return eList;
+	}
+
+	public int length_corps() {
+		int i = 0;
+
+		if (corps != null) {
+			Block b = corps;
+
+			while (b != null) {
+				b = (Block) b.get_next();
+				i++;
+			}
+		}
+
+		return i;
 	}
 
 	/*

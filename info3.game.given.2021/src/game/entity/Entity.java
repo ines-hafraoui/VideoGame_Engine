@@ -44,8 +44,16 @@ public abstract class Entity {
 		automate = a;
 	}
 	
+	
+	public Entity[] get_entity() {
+		Entity[] eList = new Entity[1];
+		eList[0] = this;
+		
+		return eList;
+	}
 	public void tick(long elpased) {
 		
+		System.out.print("TICK in " + this + "\n" );
 		if (aut != null) {
 			aut.step(this);
 		}
