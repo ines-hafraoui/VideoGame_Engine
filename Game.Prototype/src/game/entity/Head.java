@@ -7,6 +7,7 @@ import game.grid.Grid;
 
 public class Head extends Snake{
 
+	Block next;
 	
 //	public Head (Orientation orientation, Automate aut, Grid grid) {
 //		this.aut=aut;
@@ -14,9 +15,8 @@ public class Head extends Snake{
 //		this.orientation=orientation;
 //	}
 	
-	public Head(Head h) {
-		super(h);
-		// TODO Auto-generated constructor stub
+	public Head(Automate aut,Orientation orientation, Grid g ,Block next, int t, int x, int y) {
+		super(aut, orientation,g,next, t,x,y);
 	}
 
 	public Orientation get_orientation() {

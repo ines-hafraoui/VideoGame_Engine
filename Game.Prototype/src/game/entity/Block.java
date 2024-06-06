@@ -5,8 +5,8 @@ import game.grid.*;
 
 public class Block extends Snake {
 
-	public Block(Head h) {
-		super(h);
+	public Block(Automate aut,Orientation orientation, Grid g ,Block next, int t, int x, int y) {
+		super(aut, orientation,g,next, t,x,y);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -7,11 +7,19 @@ import game.automaton.State;
 import game.grid.*;
 
 public abstract class Entity {
-	Automate aut;
-	Grid g;
+	protected Automate aut;
+	protected Grid g;
 	public int x;
 	public int y; 
-	Orientation orientation;
+	protected Orientation orientation;
+	
+	public Entity(Automate a,Grid g, int x,int y, Orientation o) {
+		aut = a;
+		this.g = g;
+		this.x = x; 
+		this.y = y; 
+		orientation = o;
+	}
 	
 	public abstract boolean eval_cell(Direction dir, Category cat);
 	
