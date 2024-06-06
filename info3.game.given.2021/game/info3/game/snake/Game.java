@@ -78,8 +78,7 @@ public class Game {
 		Head s_head = new Head(new Orientation('S'), m_model.get_grid(),0, 0) ;
 		Snake snake =new Snake(m_model.get_grid(), s_head);
 		
-		game.m_model.get_grid().add_entity(snake);
-		
+		m_model.get_grid().add_entity(snake);
 		
 	}
 

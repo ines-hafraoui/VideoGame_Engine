@@ -45,10 +45,11 @@ public class Grid {
 		int box_height = (m_height - m_border) / m_nboxcol;
 		for (int i = 0; i < m_nboxcol; i++) {
 			for (int j = 0; j < m_nboxline; j++) {
-				if(boxcolor.length > i*j && (boxcolor[i*j] == null))
+				if(boxcolor.length > i*m_nboxline +j && (boxcolor[i*m_nboxline +j] == null))
 					g.setColor(Color.DARK_GRAY);
 				else
 					g.setColor(Color.GREEN);
+				
 				g.fillRect(m_x + j * box_width + m_border, m_y + i * box_height + m_border, box_width - (m_border * 2),
 						box_height - m_border);
 			}
@@ -60,8 +61,7 @@ public class Grid {
 	Color[] GridEltPos() {
 		Color[] colorpos = new Color[entities.size()];
 		//un itérateur sur les élements, on cherche à ce que chacun des elements nous renvoie sa position
-		
-		
+	
 		return colorpos;
 	}
 	
