@@ -16,13 +16,7 @@ public class Head extends Entity{
 		return orientation;
 	}
 	
-	public int get_x() {
-		return x;
-	}
-	
-	public int get_y() {
-		return y;
-	}
+
 
 	@Override
 	public boolean eval_cell(Direction dir, Category cat) {
@@ -31,16 +25,6 @@ public class Head extends Entity{
 		if(r != 'X') 
 			return true; 
 		return false;
-	}
-
-	@Override
-	public int getY() {
-		return this.y;
-	}
-
-	@Override
-	public int getX() {
-		return this.x;
 	}
 
 	@Override

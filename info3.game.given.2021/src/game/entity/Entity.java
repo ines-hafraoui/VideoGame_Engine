@@ -8,8 +8,8 @@ import info3.game.snake.Grid;
 public abstract class Entity {
 	protected Automate aut;
 	protected Grid g;
-	public int x;
-	public int y; 
+	protected  int x;
+	protected  int y; 
 	protected Orientation orientation;
 	
 	public Entity(Automate a,Grid g, int x,int y, Orientation o) {
@@ -29,8 +29,13 @@ public abstract class Entity {
 	
 	public abstract boolean eval_cell(Direction dir, Category cat);
 	
-	public abstract int getY(); 
-	public abstract int getX();
+	public int get_x() {
+		return x;
+	}
+	
+	public int get_y() {
+		return y;
+	}
 
 	public abstract boolean do_move();
 

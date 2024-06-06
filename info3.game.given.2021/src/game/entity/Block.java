@@ -7,12 +7,12 @@ import info3.game.snake.Grid;
 
 public class Block extends Entity {
 
-	public Block(Grid g,Orientation orientation,int x, int y) {
-		super(g,x,y,orientation);
+	public Block(Grid g, int x, int y) {
+		super(g,x,y,new Orientation('N'));
 	}
 
-	private Block previous;
-	private Block next;
+	private Entity previous;
+	private Entity next;
 	
 //	public Block (Block prev, Block next, Automate aut, Grid grid) {
 //		this.previous=prev;
@@ -25,14 +25,22 @@ public class Block extends Entity {
 		return (this.next==null);
 	}
 	
-	public Block get_prev() {
+	public Entity get_prev() {
 		return previous;
 	}
 	
-	public Block get_next() {
+	public Entity get_next() {
 		return next;
 	}
 
+	
+	public void set_prev(Entity prev) {
+		this.previous = prev;
+	}
+	
+	public void set_next(Entity next) {
+		this.next = next;
+	}
 	@Override
 	public boolean eval_cell(Direction dir, Category cat) {
 		char r=  g.eval(dir, x, y, orientation);
@@ -41,24 +49,15 @@ public class Block extends Entity {
 		return false;
 	}
 
-	@Override
-	public int getY() {
-		return this.y;
-	}
-
-	@Override
-	public int getX() {
-		return this.x;
-	}
 
 	@Override
 	public boolean do_move() {
 		switch(orientation.getOrientation()) {
 		case 'N': 
-			y--;
+			this.y --;
 			return true;
 		case 'S': 
-			y++;
+			super.y++;
 			return true;
 		case 'E' : 
 			x++;
