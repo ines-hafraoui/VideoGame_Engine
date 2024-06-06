@@ -1,20 +1,32 @@
 package game.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import game.automaton.Automate;
+import game.automaton.State;
 import info3.game.snake.Grid;
 
-public abstract class Snake extends Entity{
+public class Snake {
 	
-	//Head head; 
-	Block next;
-	int team;
+	Head head; 
+	List<Block> blocks;
+	Automate automate;
+	Orientation orientation;
+	Grid g;
 	
 	
-	public Snake(Automate aut,Orientation orientation, Grid g ,Block next, int t, int x, int y) {
-		super(aut, g, x,y, orientation);
-		//head = h; 
-		this.next = next;
-		team = t;
+	public Snake(Automate aut,Orientation o, Grid g, Head h) {
+		orientation = o;
+		automate = aut;
+		head = h;
+		blocks = new ArrayList<>();
+	}
+	
+	public Snake(Orientation o, Grid g, Head h) {
+		orientation = o;
+		head = h;
+		blocks = new ArrayList<>();
 	}
 
 	/* eval_cell call the method eval of Grid that needs

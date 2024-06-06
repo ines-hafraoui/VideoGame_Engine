@@ -5,11 +5,10 @@ import game.automaton.Category;
 import game.automaton.Direction;
 import info3.game.snake.Grid;
 
-public class Block extends Snake {
+public class Block extends Entity {
 
-	public Block(Automate aut,Orientation orientation, Grid g ,Block next, int t, int x, int y) {
-		super(aut, orientation,g,next, t,x,y);
-		// TODO Auto-generated constructor stub
+	public Block(Grid g,Orientation orientation,int x, int y) {
+		super(g,x,y,orientation);
 	}
 
 	private Block previous;

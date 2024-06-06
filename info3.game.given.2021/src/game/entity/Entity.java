@@ -20,6 +20,13 @@ public abstract class Entity {
 		orientation = o;
 	}
 	
+	public Entity(Grid g, int x,int y, Orientation o) {
+		this.g = g;
+		this.x = x; 
+		this.y = y; 
+		orientation = o;
+	}
+	
 	public abstract boolean eval_cell(Direction dir, Category cat);
 	
 	public abstract int getY(); 

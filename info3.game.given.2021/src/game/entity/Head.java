@@ -5,18 +5,11 @@ import game.automaton.Category;
 import game.automaton.Direction;
 import info3.game.snake.Grid;
 
-public class Head extends Snake{
-
-	Block next;
+public class Head extends Entity{
 	
-//	public Head (Orientation orientation, Automate aut, Grid grid) {
-//		this.aut=aut;
-//		this.g = grid;
-//		this.orientation=orientation;
-//	}
-	
-	public Head(Automate aut,Orientation orientation, Grid g ,Block next, int t, int x, int y) {
-		super(aut, orientation,g,next, t,x,y);
+	public Head(Automate aut,Orientation orientation, Grid g ,int x, int y) {
+		super(aut,g,x,y,orientation);
+		
 	}
 
 	public Orientation get_orientation() {
