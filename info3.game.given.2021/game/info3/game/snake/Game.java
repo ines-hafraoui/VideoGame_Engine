@@ -130,7 +130,6 @@ public class Game {
 	 * that elapsed since the last time this method was invoked.
 	 */
 	void tick(long elapsed) {
-
 		m_model.tick(elapsed);
 
 		// Update every second
