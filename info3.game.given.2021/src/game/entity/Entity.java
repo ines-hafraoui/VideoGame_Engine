@@ -1,5 +1,6 @@
 package game.entity;
 
+import game.entity.Position;
 import game.automaton.Automate;
 import game.automaton.Category;
 import game.automaton.Direction;

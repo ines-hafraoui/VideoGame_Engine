@@ -9,64 +9,74 @@ import game.automaton.Direction;
 import game.automaton.State;
 import info3.game.snake.Grid;
 
-public class Snake extends Entity{
-	
-	private Head head; 
+public class Snake extends Entity {
+
+	private Head head;
 	private Block corps;
 	private Grid g;
-	
-	
+
+
 	public Snake(Automate aut, Position p, Grid g, Orientation o) {
-		super(aut,g,p,o);
+		super(aut, g, p, o);
 		automate = aut;
-		head = new Head(o,g,p);
+		head = new Head(o, g, p);
 	}
-	
-	public Snake( Position p, Grid g, Orientation o) {
-		super(g,p,o);
-		head = new Head(o,g,p);
+
+	public Snake(Position p, Grid g, Orientation o) {
+		super(g, p, o);
+		head = new Head(o, g, p);
 	}
-	
+
 	public void grow() {
-		
-		
+
 		if (corps == null) {
-			corps = new Block(head, g,head.position);
+			corps = new Block(head, g, head.position);
 		}
-		
+
 		Block tail = get_tail();
-		
-		Block new_tail = new Block(head, g,tail.position);
+
+		Block new_tail = new Block(head, g, tail.position);
 		tail.set_next(new_tail);
 		new_tail.set_prev(tail);
 	}
-	
-
-
 
 	public Block get_tail() {
-		
+
 		// i allow myself to cast since i'm in a snake
-		//and i know it's corps is made of blocks only
-		Block  c_tail = corps;
+		// and i know it's corps is made of blocks only
+		Block c_tail = corps;
 
 		if (c_tail != null) {
 			while (c_tail.get_next() != null) {
 				c_tail = (Block) c_tail.get_next();
-			}		
+			}
 		}
-		
+
 		return c_tail;
 	}
-	
+
 	public void set_automate(Automate aut) {
 		this.automate = aut;
 	}
-	
-	
-	/* eval_cell call the method eval of Grid that needs
-	 * the direction and category of the condition 
-	 * and the coordinates + orientation of the snake
+
+	@Override
+	public void tick(long elapsed) {
+		head.tick(elapsed);
+
+		if (corps != null) {
+			Block b = corps;
+
+			while (b != null) {
+				b.tick(elapsed);
+				b = (Block) b.get_next();
+			}
+		}
+
+	}
+
+	/*
+	 * eval_cell call the method eval of Grid that needs the direction and category
+	 * of the condition and the coordinates + orientation of the snake
 	 * 
 	 * return value : boolean
 	 */
@@ -75,11 +85,13 @@ public class Snake extends Entity{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
 	public boolean do_move() {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
 	public boolean do_egg() {
 		// TODO Auto-generated method stub
