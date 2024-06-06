@@ -1,12 +1,7 @@
 package game.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import game.automaton.Automate;
-import game.automaton.Category;
-import game.automaton.Direction;
-import game.grid.*;
+import info3.game.snake.Grid;
 
 public abstract class Snake extends Entity{
 	

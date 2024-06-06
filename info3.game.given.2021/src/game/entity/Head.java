@@ -3,7 +3,7 @@ package game.entity;
 import game.automaton.Automate;
 import game.automaton.Category;
 import game.automaton.Direction;
-import game.grid.Grid;
+import info3.game.snake.Grid;
 
 public class Head extends Snake{
 

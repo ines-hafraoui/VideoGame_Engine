@@ -1,7 +1,9 @@
 package game.entity;
 
-import game.automaton.*;
-import game.grid.*;
+import game.automaton.Automate;
+import game.automaton.Category;
+import game.automaton.Direction;
+import info3.game.snake.Grid;
 
 public class Block extends Snake {
 

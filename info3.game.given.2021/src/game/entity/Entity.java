@@ -1,10 +1,9 @@
 package game.entity;
 
 import game.automaton.Automate;
-import game.automaton.Direction;
 import game.automaton.Category;
-import game.automaton.State;
-import game.grid.*;
+import game.automaton.Direction;
+import info3.game.snake.Grid;
 
 public abstract class Entity {
 	protected Automate aut;
