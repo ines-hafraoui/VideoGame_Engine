@@ -33,8 +33,7 @@ public class Apple extends Entity{
 
 
 	/*
-	 * la pomme ne bouge pas donc elle renvoie false car
-	 * elle a pas bougé 
+	 * an apple do not move, return false bc didn't move
 	 */
 	
 	@Override
@@ -46,10 +45,13 @@ public class Apple extends Entity{
 		return true;
 	}
 
+	/*
+	 * an apple do not egg
+	 */
 	@Override
 	public boolean do_egg() {
-		// TODO Auto-generated method stub
 		return false;
 	}
+
 	
 }

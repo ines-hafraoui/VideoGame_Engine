@@ -52,18 +52,11 @@ public class Block extends Entity {
 
 	@Override
 	public boolean do_move() {
-		switch(orientation.getOrientation()) {
-		case 'N': 
-			position.y --;
-			return true;
-		case 'S': 
-			position.y++;
-			return true;
-		case 'E' : 
-			position.x++;
-			return true;
-		case 'W': 
-			position.x--;
+		
+		Block prev = (Block)get_prev();
+		if (prev != null) {
+			this.position.SetPositionX(prev.position.getPositionX());
+			this.position.SetPositionY(prev.position.getPositionY());
 			return true;
 		}
 		return false;
@@ -71,7 +64,6 @@ public class Block extends Entity {
 
 	@Override
 	public boolean do_egg() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

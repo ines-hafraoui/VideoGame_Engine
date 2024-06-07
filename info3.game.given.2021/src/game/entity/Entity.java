@@ -39,6 +39,11 @@ public abstract class Entity {
 
 	public abstract boolean do_egg();
 	
+	public  boolean do_turn(Orientation o) {
+		orientation = o;
+		return true;
+	}
+	
 	public void set_automate(Automate a) {
 		aut = a;
 	}

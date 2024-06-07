@@ -34,24 +34,24 @@ public class Head extends Entity{
 	public boolean do_move() {
 		switch(orientation.getOrientation()) {
 		case 'N': 
-			position.y--;
+			position.SetPositionX(get_y()-1);
 			return true;
 		case 'S': 
-			position.y++;
+			position.SetPositionX(get_y()+1);
 			return true;
 		case 'E' : 
-			position.x++;
+			position.SetPositionX(get_x()+1);
 			return true;
 		case 'W': 
-			position.x--;
+			position.SetPositionX(get_x()-1);
 			return true;
 		}
 		return false;
 	}
 
+	
 	@Override
 	public boolean do_egg() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

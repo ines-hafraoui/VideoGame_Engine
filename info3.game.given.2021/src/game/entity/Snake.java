@@ -26,19 +26,6 @@ public class Snake extends Entity {
 		head = h;
 	}
 
-	public void grow() {
-
-		if (corps == null) {
-			corps = new Block(head, g, head.position);
-		}
-
-		Block tail = get_tail();
-
-		Block new_tail = new Block(head, g, tail.position);
-		tail.set_next(new_tail);
-		new_tail.set_prev(tail);
-	}
-
 	public Block get_tail() {
 
 		// i allow myself to cast since i'm in a snake
@@ -122,14 +109,34 @@ public class Snake extends Entity {
 
 	@Override
 	public boolean do_move() {
-		// TODO Auto-generated method stub
-		return false;
+		
+		boolean moved = false; 
+		if (corps == null) {
+			moved =  head.do_move();
+		}
+
+		Block tail = get_tail();
+		Block prev = (Block)tail.get_prev();
+		while(prev != null) {
+			moved = tail.do_move();
+		}
+	
+		return moved;
 	}
 
 	@Override
 	public boolean do_egg() {
-		// TODO Auto-generated method stub
-		return false;
+		if (corps == null) {
+			corps = new Block(head, g, head.position);
+		}
+
+		Block tail = get_tail();
+
+		Block new_tail = new Block(head, g, tail.position);
+		tail.set_next(new_tail);
+		new_tail.set_prev(tail);
+		
+		return true;
 	}
 
 }
