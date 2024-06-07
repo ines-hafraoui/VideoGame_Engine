@@ -3,11 +3,14 @@ package info3.game.snake;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import game.automaton.Direction;
 import game.entity.Apple;
+import game.entity.Block;
 import game.entity.Entity;
+import game.entity.Head;
 import game.entity.Orientation;
 import game.entity.Snake;
 
@@ -43,7 +46,6 @@ public class Grid {
 		int box_height = (m_height - m_border) / m_nboxcol;
 		for (int i = 0; i < m_nboxcol; i++) {
 			for (int j = 0; j < m_nboxline; j++) {
-				g.setColor(Color.GREEN);
 				g.fillRect(m_x + j * box_width + m_border, m_y + i * box_height + m_border, box_width - (m_border * 2),
 						box_height - m_border);
 			}
@@ -63,13 +65,19 @@ public class Grid {
 		}
 	}
 
-	// METHODE returns an array of colors
-	// C'est bien ta fonction inês
-	Color[] GridEltColor() {
-		Color[] colorpos = new Color[entities.size()];
-		// un itérateur sur les élements, on cherche à ce que chacun des elements nous
-		// renvoie sa position
-
+	
+	//METHODE returns an array of colors
+	Color[] GridEltPos() {
+		Color[] colorpos = new Color[m_nboxcol*m_nboxline];
+		//un itérateur sur les élements, on cherche à ce que chacun des elements nous renvoie sa position
+		Iterator<Entity> iter = entities.iterator();
+		while(iter.hasNext()) {
+			Entity e = iter.next();
+			if(e instanceof Apple)
+				colorpos[e.get_x()*e.get_y()] = Color.GREEN;
+			if(e instanceof Head || e instanceof Block) 
+				colorpos[e.get_x()*e.get_y()] = Color.BLUE;
+		}
 		return colorpos;
 	}
 
@@ -145,6 +153,7 @@ public class Grid {
 			}
 		}
 		return 'X';
+
 	}
 
 	public void add_entity(Entity e) {
