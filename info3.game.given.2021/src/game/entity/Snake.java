@@ -17,7 +17,7 @@ public class Snake extends Entity {
 
 	public Snake(Automate aut, Grid g, Head h) {
 		super(aut, g, null, null);
-		automate = aut;
+		aut = aut;
 		head = h;
 	}
 
@@ -55,7 +55,7 @@ public class Snake extends Entity {
 	}
 
 	public void set_automate(Automate aut) {
-		this.automate = aut;
+		this.aut = aut;
 	}
 
 	@Override

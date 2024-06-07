@@ -25,10 +25,19 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import game.automaton.Action;
+import game.automaton.Automate;
+import game.automaton.Condition;
+import game.automaton.Move;
+import game.automaton.State;
+import game.automaton.Transition;
+import game.automaton.TrueFalse;
 import game.entity.Apple;
 import game.entity.Head;
 import game.entity.Orientation;
@@ -82,9 +91,36 @@ public class Game {
 		
 		Apple apple = new Apple(m_model.get_grid(), new Position(5, 5), null);
 		
+		
+		
+		
+		//AUTOMATON
+		
+		State s0 = new State();
+		State s1 = new State();
+		
+		Condition t = new TrueFalse(true);
+		
+		List<Action> LA = new ArrayList<Action>();
+		LA.add(new Move(apple));
+		
+		Transition t01 = new Transition(s1, t, LA);
+		Transition t10 = new Transition(s0, t, LA);
+		
+		s0.add_transition(t01);
+		s1.add_transition(t10);
+		
+		Automate a_aut = new Automate(apple);
+		a_aut.add_state(s0);
+		a_aut.add_state(s1);
+		
+		a_aut.addCurrentState(s0);
+		
+		apple.set_automate(a_aut);
+		
 		m_model.get_grid().add_entity(snake);
 		m_model.get_grid().add_entity(apple);
-		m_model.get_grid().add_entity(apple);
+
 
 
 

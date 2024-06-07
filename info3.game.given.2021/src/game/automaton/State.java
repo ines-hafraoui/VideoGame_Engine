@@ -1,11 +1,16 @@
 package game.automaton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class State {
 
 	private int tirage = 0;
 	private List<Transition> transitionList;
+	
+	public State() {
+		transitionList = new ArrayList<Transition>();
+	}
 	
 	State(List<Transition> tList) {
 		transitionList = tList;
@@ -19,7 +24,7 @@ public class State {
 		this.transitionList =  transitionList;
 	}
 	
-	boolean add_transition(Transition t) {
+	public boolean add_transition(Transition t) {
 		return transitionList.add(t);
 	}
 	

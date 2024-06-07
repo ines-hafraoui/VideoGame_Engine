@@ -8,7 +8,7 @@ public class Transition {
 	Condition c;
 	List<Action> actionList;
 	
-	Transition(State cible, Condition condition, List<Action> a) {
+	public Transition(State cible, Condition condition, List<Action> a) {
 		
 		actionList = a;
 		this.cible = cible;

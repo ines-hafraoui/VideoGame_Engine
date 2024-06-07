@@ -10,7 +10,6 @@ public abstract class Entity {
 	protected Automate aut;
 	protected Grid g;
 	protected Orientation orientation;
-	protected Automate automate;
 	protected Position position;
 	
 	public Entity(Automate a,Grid g, Position p, Orientation o) {
@@ -41,7 +40,7 @@ public abstract class Entity {
 	public abstract boolean do_egg();
 	
 	public void set_automate(Automate a) {
-		automate = a;
+		aut = a;
 	}
 	
 	

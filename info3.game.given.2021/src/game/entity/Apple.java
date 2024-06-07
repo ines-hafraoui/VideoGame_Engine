@@ -39,7 +39,11 @@ public class Apple extends Entity{
 	
 	@Override
 	public boolean do_move() {
-		return false;
+		System.out.print(get_x() + "\n");
+		position.SetPositionX(get_x()+1);
+		System.out.print(get_x() + "\n");
+
+		return true;
 	}
 
 	@Override
