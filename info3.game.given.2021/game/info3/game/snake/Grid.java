@@ -46,6 +46,7 @@ public class Grid {
 		int box_height = (m_height - m_border) / m_nboxcol;
 		for (int i = 0; i < m_nboxcol; i++) {
 			for (int j = 0; j < m_nboxline; j++) {
+				g.setColor(Color.GREEN);
 				g.fillRect(m_x + j * box_width + m_border, m_y + i * box_height + m_border, box_width - (m_border * 2),
 						box_height - m_border);
 			}
