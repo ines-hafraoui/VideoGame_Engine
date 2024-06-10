@@ -90,6 +90,19 @@ public class CanvasListener implements GameCanvasListener {
   @Override
   public void keyPressed(KeyEvent e) {
     System.out.println("Key pressed: "+e.getKeyChar()+" code="+e.getKeyCode());
+	if (e.getKeyCode() == 37) {// gauche
+		m_game.m_model.getOrientation().orientation='W';
+	}
+	if (e.getKeyCode() == 39) {// droite
+		m_game.m_model.getOrientation().orientation='E';
+
+	}
+	if (e.getKeyCode() == 38) {// haut
+		m_game.m_model.getOrientation().orientation='N';
+	}
+	if (e.getKeyCode() == 40) {// bas
+		m_game.m_model.getOrientation().orientation='S';
+	}
   }
 
   @Override

@@ -43,7 +43,9 @@ import game.entity.Head;
 import game.entity.Orientation;
 import game.entity.Position;
 import game.entity.Snake;
+import info3.game.graphics.Avatar;
 import info3.game.graphics.GameCanvas;
+import info3.game.graphics.View;
 import info3.game.sound.RandomFileInputStream;
 
 public class Game {
@@ -70,8 +72,13 @@ public class Game {
 	Game() throws Exception {
 		// creating a model, that would be a model
 		// in an Model-View-Controller pattern (MVC)
+		
+		m_model = new Model(new Grid(20, 20));
+		
 		Dimension d = new Dimension(1000, 1000);
-		m_model = new Model(new Grid(0, 0, d.width, d.height-20, 20, 20));
+		View m_view=new View(m_model,0,0,d.width,d.height,2);
+		
+		m_model.add_view(m_view);
 		// creating a listener for all the events
 		// from the game canvas, that would be
 		// the controller in the MVC pattern
@@ -121,7 +128,8 @@ public class Game {
 		m_model.get_grid().add_entity(snake);
 		m_model.get_grid().add_entity(apple);
 
-
+		Avatar head=new Avatar(snake.getHead(),m_view);
+		Avatar Pom=new Avatar(apple,m_view);
 
 
 	}

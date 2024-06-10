@@ -23,6 +23,10 @@ package info3.game.snake;
 import java.awt.Graphics;
 import java.io.IOException;
 
+import game.automaton.Direction;
+import game.entity.Orientation;
+import info3.game.graphics.View;
+
 
 /**
  * A simple class that holds the images of a sprite for an animated cowbow.
@@ -34,11 +38,17 @@ public class Model {
   int m_x=10, m_y=10;
   int m_width;
   private Grid m_grid;
+  private View m_view;
+  private Orientation m_orientation;
   
   Model(Grid grid) throws IOException {
 	    m_grid = grid;
+	    m_orientation= new Orientation('H');
   }
   
+  public void set_view(View view) {
+	  m_view=view;
+  }
   
   public Grid get_grid() {
 	  return m_grid;
@@ -54,9 +64,17 @@ public class Model {
   
   public void paint(Graphics g, int width, int height) {
     m_width = width;
-    m_grid.setBorder(2);
-	m_grid.paint(g);
+	m_view.paint(g);
+	System.out.println("orientation :"+m_orientation.orientation +"\n");
   }
+  
+  public void add_view(View v) {
+	  m_view=v;
+  }
+
+public Orientation getOrientation() {
+	return m_orientation;
+}
 
 
 }
