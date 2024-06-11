@@ -47,7 +47,7 @@ public class Snake extends Entity {
 
 	@Override
 	public void tick(long elapsed) {
-		head.tick(elapsed);
+		getHead().tick(elapsed);
 
 		if (corps != null) {
 			Block b = corps;
@@ -64,7 +64,7 @@ public class Snake extends Entity {
 	public Entity[] get_entity() {
 
 		Entity[] eList = new Entity[length_corps() + 1];
-		eList[0] = head;
+		eList[0] = getHead();
 
 		if (corps != null) {
 			int i = 1;
@@ -112,7 +112,7 @@ public class Snake extends Entity {
 		
 		boolean moved = false; 
 		if (corps == null) {
-			moved =  head.do_move();
+			moved =  getHead().do_move();
 		}
 
 		Block tail = get_tail();
@@ -127,16 +127,20 @@ public class Snake extends Entity {
 	@Override
 	public boolean do_egg() {
 		if (corps == null) {
-			corps = new Block(head, g, head.position);
+			corps = new Block(getHead(), g, getHead().position);
 		}
 
 		Block tail = get_tail();
 
-		Block new_tail = new Block(head, g, tail.position);
+		Block new_tail = new Block(getHead(), g, tail.position);
 		tail.set_next(new_tail);
 		new_tail.set_prev(tail);
 		
 		return true;
+	}
+
+	public Head getHead() {
+		return head;
 	}
 
 }

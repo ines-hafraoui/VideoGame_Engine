@@ -43,7 +43,9 @@ import game.entity.Head;
 import game.entity.Orientation;
 import game.entity.Position;
 import game.entity.Snake;
+import info3.game.graphics.Avatar;
 import info3.game.graphics.GameCanvas;
+import info3.game.graphics.View;
 import info3.game.sound.RandomFileInputStream;
 
 public class Game {
@@ -64,6 +66,7 @@ public class Game {
 //	JLabel m_text;
 	GameCanvas m_canvas;
 	CanvasListener m_listener;
+	View m_view;
 	Model m_model;
 	Sound m_music;
 
@@ -71,7 +74,8 @@ public class Game {
 		// creating a model, that would be a model
 		// in an Model-View-Controller pattern (MVC)
 		Dimension d = new Dimension(1000, 1000);
-		m_model = new Model(new Grid(0, 0, d.width, d.height-20, 20, 20));
+		m_model = new Model(new Grid(20, 20),d.width,d.height);
+		m_view=new View(m_model,d.width,d.height,2);
 		// creating a listener for all the events
 		// from the game canvas, that would be
 		// the controller in the MVC pattern
@@ -83,47 +87,8 @@ public class Game {
 		System.out.println("  - creating frame...");
 		m_frame = m_canvas.createFrame(d);
 		System.out.println("  - setting up the frame...");
+		
 		setupFrame();
-		
-		
-		Head s_head = new Head(new Orientation('S'), m_model.get_grid(), new Position(0,0)) ;
-		Snake snake =new Snake(null,m_model.get_grid(), s_head);
-		
-		Apple apple = new Apple(m_model.get_grid(), new Position(5, 5), null);
-		
-		
-		
-		
-		//AUTOMATON
-		
-		State s0 = new State();
-		State s1 = new State();
-		
-		Condition t = new TrueFalse(true);
-		
-		List<Action> LA = new ArrayList<Action>();
-		LA.add(new Move(apple));
-		
-		Transition t01 = new Transition(s1, t, LA);
-		Transition t10 = new Transition(s0, t, LA);
-		
-		s0.add_transition(t01);
-		s1.add_transition(t10);
-		
-		Automate a_aut = new Automate(apple);
-		a_aut.add_state(s0);
-		a_aut.add_state(s1);
-		
-		a_aut.addCurrentState(s0);
-		
-		apple.set_automate(a_aut);
-		
-		m_model.get_grid().add_entity(snake);
-		m_model.get_grid().add_entity(apple);
-
-
-
-
 	}
 
 	/*
@@ -164,8 +129,8 @@ public class Game {
 		m_musicName = m_musicNames[m_musicIndex];
 		String filename = "resources/" + m_musicName + ".ogg";
 		m_musicIndex = (m_musicIndex + 1) % m_musicNames.length;
-		try { 
-			RandomAccessFile file = new RandomAccessFile(filename,"r");
+		try {
+			RandomAccessFile file = new RandomAccessFile(filename, "r");
 			RandomFileInputStream fis = new RandomFileInputStream(file);
 			m_canvas.playMusic(fis, 0, 1.0F);
 		} catch (Throwable th) {
@@ -175,7 +140,7 @@ public class Game {
 	}
 
 	private int m_musicIndex = 0;
-	private String[] m_musicNames = new String[] { "Runaway-Food-Truck" }; 
+	private String[] m_musicNames = new String[] { "Runaway-Food-Truck" };
 
 	private long m_textElapsed;
 
@@ -193,7 +158,7 @@ public class Game {
 			m_textElapsed = 0;
 			float period = m_canvas.getTickPeriod();
 			int fps = m_canvas.getFPS();
-			System.out.println("Elapsed="+ period + " FPS="+fps);
+			System.out.println("Elapsed=" + period + " FPS=" + fps);
 		}
 	}
 
@@ -212,7 +177,7 @@ public class Game {
 		g.fillRect(0, 0, width, height);
 
 		// paint
-		m_model.paint(g, width, height);
+		m_view.paint(g);
 	}
 
 }

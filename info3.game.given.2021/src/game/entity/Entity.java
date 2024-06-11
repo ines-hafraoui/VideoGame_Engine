@@ -48,6 +48,10 @@ public abstract class Entity {
 		aut = a;
 	}
 	
+	public Automate get_automate() {
+		return aut;
+	}
+	
 	
 	public Entity[] get_entity() {
 		Entity[] eList = new Entity[1];
