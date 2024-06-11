@@ -22,11 +22,24 @@ package info3.game.snake;
 
 import java.awt.Graphics;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import game.automaton.Action;
+import game.automaton.Automate;
+import game.automaton.Condition;
 import game.automaton.Direction;
+import game.automaton.Move;
+import game.automaton.State;
+import game.automaton.Transition;
+import game.automaton.TrueFalse;
+import game.entity.Apple;
+import game.entity.Head;
 import game.entity.Orientation;
+import game.entity.Position;
+import game.entity.Snake;
+import info3.game.graphics.Avatar;
 import info3.game.graphics.View;
-
 
 /**
  * A simple class that holds the images of a sprite for an animated cowbow.
@@ -34,47 +47,65 @@ import info3.game.graphics.View;
  */
 public class Model {
 
-  long m_imageElapsed;
-  int m_x=10, m_y=10;
-  int m_width;
-  private Grid m_grid;
-  private View m_view;
-  private Orientation m_orientation;
-  
-  Model(Grid grid) throws IOException {
-	    m_grid = grid;
-	    m_orientation= new Orientation('H');
-  }
-  
-  public void set_view(View view) {
-	  m_view=view;
-  }
-  
-  public Grid get_grid() {
-	  return m_grid;
-  }
-  public void tick(long elapsed) {
-    m_imageElapsed += elapsed;
-    if (m_imageElapsed > 200) {
-      m_imageElapsed = 0;
-    }
-    
-    m_grid.tick(elapsed);
-  }
-  
-  public void paint(Graphics g, int width, int height) {
-    m_width = width;
-	m_view.paint(g);
-	System.out.println("orientation :"+m_orientation.orientation +"\n");
-  }
-  
-  public void add_view(View v) {
-	  m_view=v;
-  }
+	long m_imageElapsed;
+	int m_width, height;
+	private Grid m_grid;
+	private Orientation m_orientation;
 
-public Orientation getOrientation() {
-	return m_orientation;
-}
+	Model(Grid grid, int w, int h) throws IOException {
+		m_grid = grid;
+		m_orientation = new Orientation('H');
+		Head s_head = new Head(new Orientation('S'), this.get_grid(), new Position(0, 0));
+		Snake snake = new Snake(null, this.get_grid(), s_head);
+		Apple apple = new Apple(this.get_grid(), new Position(5, 5), null);
 
+		// AUTOMATON
+		State s0 = new State();
+		State s1 = new State();
+
+		Condition t = new TrueFalse(true);
+
+		List<Action> LA = new ArrayList<Action>();
+		LA.add(new Move(apple));
+
+		Transition t01 = new Transition(s1, t, LA);
+		Transition t10 = new Transition(s0, t, LA);
+
+		s0.add_transition(t01);
+		s1.add_transition(t10);
+
+		Automate a_aut = new Automate(apple);
+		a_aut.add_state(s0);
+		a_aut.add_state(s1);
+
+		a_aut.addCurrentState(s0);
+
+		apple.set_automate(a_aut);
+
+		get_grid().add_entity(snake);
+		get_grid().add_entity(apple);
+	}
+
+	public Grid get_grid() {
+		return m_grid;
+	}
+
+	public void tick(long elapsed) {
+		m_imageElapsed += elapsed;
+		if (m_imageElapsed > 200) {
+			m_imageElapsed = 0;
+		}
+
+		m_grid.tick(elapsed);
+	}
+
+	public void paint(Graphics g, int width, int height) {
+		m_width = width;
+		System.out.println("orientation :" + m_orientation.orientation + "\n");
+	}
+
+	public Orientation getOrientation() {
+		return m_orientation;
+	}
 
 }
