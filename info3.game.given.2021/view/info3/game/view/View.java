@@ -1,4 +1,4 @@
-package info3.game.graphics;
+package info3.game.view;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -11,7 +11,7 @@ import game.entity.Apple;
 import game.entity.Entity;
 import game.entity.Head;
 import game.entity.Snake;
-import info3.game.snake.Model;
+import game.model.Model;
 
 public class View extends Container {
 

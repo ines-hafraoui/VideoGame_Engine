@@ -18,15 +18,15 @@
  *  Created on: March, 2020
  *      Author: Pr. Olivier Gruber
  */
-package info3.game.snake;
+package info3.game;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import info3.game.graphics.GameCanvas;
 import info3.game.sound.AudioPlayer;
 import info3.game.sound.AudioPlayerListener;
+import info3.game.view.GameCanvas;
 
 public class Sound {
   GameCanvas m_canvas;

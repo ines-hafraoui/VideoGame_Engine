@@ -42,7 +42,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package info3.game.graphics;
+package info3.game.view;
 
 import java.io.IOException;
 import java.io.InputStream;

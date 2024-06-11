@@ -1,4 +1,4 @@
-package info3.game.graphics;
+package info3.game.view;
 
 import java.awt.Color;
 import java.awt.Component;

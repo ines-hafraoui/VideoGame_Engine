@@ -29,7 +29,7 @@ package info3.game.sound;
 
 import java.io.InputStream;
 
-import info3.game.graphics.GameCanvas;
+import info3.game.view.GameCanvas;
 
 /* 
  * A player for audio files in the ogg format.

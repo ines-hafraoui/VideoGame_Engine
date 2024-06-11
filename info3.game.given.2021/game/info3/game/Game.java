@@ -18,35 +18,21 @@
  *  Created on: March, 2020
  *      Author: Pr. Olivier Gruber
  */
-package info3.game.snake;
+package info3.game;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.RandomAccessFile;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
-import game.automaton.Action;
-import game.automaton.Automate;
-import game.automaton.Condition;
-import game.automaton.Move;
-import game.automaton.State;
-import game.automaton.Transition;
-import game.automaton.TrueFalse;
-import game.entity.Apple;
-import game.entity.Head;
-import game.entity.Orientation;
-import game.entity.Position;
-import game.entity.Snake;
-import info3.game.graphics.Avatar;
-import info3.game.graphics.GameCanvas;
-import info3.game.graphics.View;
+import game.model.Model;
+import info3.controller.CanvasListener;
 import info3.game.sound.RandomFileInputStream;
+import info3.game.view.GameCanvas;
+import info3.game.view.View;
 
 public class Game {
 
@@ -67,7 +53,7 @@ public class Game {
 	GameCanvas m_canvas;
 	CanvasListener m_listener;
 	View m_view;
-	Model m_model;
+	public Model m_model;
 	Sound m_music;
 
 	Game() throws Exception {
@@ -125,7 +111,7 @@ public class Game {
 	 */
 	String m_musicName;
 
-	void loadMusic() {
+	public void loadMusic() {
 		m_musicName = m_musicNames[m_musicIndex];
 		String filename = "resources/" + m_musicName + ".ogg";
 		m_musicIndex = (m_musicIndex + 1) % m_musicNames.length;
@@ -148,7 +134,7 @@ public class Game {
 	 * This method is invoked almost periodically, given the number of milli-seconds
 	 * that elapsed since the last time this method was invoked.
 	 */
-	void tick(long elapsed) {
+	public void tick(long elapsed) {
 		m_model.tick(elapsed);
 
 		// Update every second
@@ -166,7 +152,7 @@ public class Game {
 	 * This request is to paint the Game Canvas, using the given graphics. This is
 	 * called from the GameCanvasListener, called from the GameCanvas.
 	 */
-	void paint(Graphics g) {
+	public void paint(Graphics g) {
 
 		// getickt the size of the canvas
 		int width = m_canvas.getWidth();

@@ -18,7 +18,7 @@
  *  Created on: March, 2020
  *      Author: Pr. Olivier Gruber
  */
-package info3.game.snake;
+package game.model;
 
 import java.awt.Graphics;
 import java.io.IOException;
@@ -38,8 +38,9 @@ import game.entity.Head;
 import game.entity.Orientation;
 import game.entity.Position;
 import game.entity.Snake;
-import info3.game.graphics.Avatar;
-import info3.game.graphics.View;
+import info3.game.Grid;
+import info3.game.view.Avatar;
+import info3.game.view.View;
 
 /**
  * A simple class that holds the images of a sprite for an animated cowbow.
@@ -52,7 +53,7 @@ public class Model {
 	private Grid m_grid;
 	private Orientation m_orientation;
 
-	Model(Grid grid, int w, int h) throws IOException {
+	public Model(Grid grid, int w, int h) throws IOException {
 		m_grid = grid;
 		m_orientation = new Orientation('H');
 		Head s_head = new Head(new Orientation('S'), this.get_grid(), new Position(0, 0));

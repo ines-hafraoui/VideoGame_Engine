@@ -7,7 +7,7 @@ import game.automaton.Automate;
 import game.automaton.Category;
 import game.automaton.Direction;
 import game.automaton.State;
-import info3.game.snake.Grid;
+import info3.game.Grid;
 
 public class Snake extends Entity {
 
