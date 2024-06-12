@@ -91,18 +91,36 @@ public class CanvasListener implements GameCanvasListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		System.out.println("Key pressed: " + e.getKeyChar() + " code=" + e.getKeyCode());
-		if (e.getKeyCode() == 37) {// gauche
-			m_game.m_model.getOrientation().orientation = 'W';
-		}
-		if (e.getKeyCode() == 39) {// droite
-			m_game.m_model.getOrientation().orientation = 'E';
-
-		}
-		if (e.getKeyCode() == 38) {// haut
-			m_game.m_model.getOrientation().orientation = 'N';
-		}
-		if (e.getKeyCode() == 40) {// bas
-			m_game.m_model.getOrientation().orientation = 'S';
+		switch(e.getKeyCode()) {
+		case 81 :// gauche joueur1 'q'
+			m_game.m_model.entities[0].get_automate().set_key(81);
+		case 68 :// droite joueur1 'd'
+			m_game.m_model.entities[0].get_automate().set_key(68);
+		case 90 :// haut joueur1 'z'
+			m_game.m_model.entities[0].get_automate().set_key(90);
+		case 83 :// bas joueur1 's'
+			m_game.m_model.entities[0].get_automate().set_key(83);
+		case 32 :// Hit joueur1 ' '
+			m_game.m_model.entities[0].get_automate().set_key(32);
+		case 65 :// Select joueur1 'a'
+			m_game.m_model.entities[0].get_automate().set_key(65);
+		case 69 :// Accepter sélection joueur1 'e'
+			m_game.m_model.entities[0].get_automate().set_key(69);
+			
+		case 37 :// gauche joueur2 'Flèche gauche'
+			m_game.m_model.entities[1].get_automate().set_key(37);
+		case 39 :// droite joueur2 'Flèche droite'
+			m_game.m_model.entities[1].get_automate().set_key(39);
+		case 38 :// haut joueur2 'Flèche haute'
+			m_game.m_model.entities[1].get_automate().set_key(38);
+		case 40 :// bas joueur2 'Flèche basse'
+			m_game.m_model.entities[1].get_automate().set_key(40);
+		case 517 :// Hit joueur2 '!'
+			m_game.m_model.entities[1].get_automate().set_key(517);
+		case 0 :// Select joueur2 'ù'
+			m_game.m_model.entities[1].get_automate().set_key(0);
+		case 10 :// Accepter sélection joueur2 'Entrée'
+			m_game.m_model.entities[1].get_automate().set_key(10);
 		}
 	}
 
