@@ -117,4 +117,9 @@ public class Model {
 		return false;
 	}
 
+	public Entity get_entity(int distance, Category c) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -22,6 +22,9 @@ public abstract class Entity {
 	protected List<Entity> bots;
 	protected boolean explode;
 	
+	public final static int FLECHE = 1;
+	public final static int BOULE_FEU = 2;
+	
 	public Entity(Automate a,Model m, Position p, Absolute_Orientation o) {
 		aut = a;
 		model = m;
@@ -61,7 +64,7 @@ public abstract class Entity {
 
 	public abstract boolean do_move(Absolute_Orientation o);
 
-	public abstract void do_egg(Automate a);
+	public abstract void do_egg(int cat);
 		
 	public abstract boolean do_hit();
 	
@@ -140,5 +143,10 @@ public abstract class Entity {
 	
 	public boolean calcul_newPos() {
 		return true;
+	}
+	
+	public boolean calcul_newSpeed(int acc_factor) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

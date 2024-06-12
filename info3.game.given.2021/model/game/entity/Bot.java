@@ -7,16 +7,18 @@ import game.automaton.Direction;
 import game.model.Model;
 
 public class Bot extends Entity{
+
 	
-	public final static int FLECHE = 1;
-	public final static int BOULE_FEU = 2;
+	private int acc_factor;
 	
 	public Bot(Automate a, Model m,Position p, Absolute_Orientation o ) {
 		super(a,m,p,o);
+		acc_factor = 3;
 	}
 	
 	public Bot(Model m,Position p, Absolute_Orientation o ) {
 		super(m,p,o);
+		acc_factor = 3;
 	}
 
 	@Override
@@ -30,8 +32,10 @@ public class Bot extends Entity{
 		
 		switch(cat) {
 		case FLECHE : 
+			model.get_entities().add(new Fleche(model,position,abs_or));
 			break;
 		case BOULE_FEU : 
+			model.get_entities().add(new Boule_Feu(model,position,abs_or));
 			break;
 		default : 
 			break;
@@ -66,19 +70,16 @@ public class Bot extends Entity{
 
 	@Override
 	public boolean do_jump() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean do_wizz() {
-		// TODO Auto-generated method stub
-		return false;
+		return calcul_newSpeed(acc_factor);
 	}
 
 	@Override
 	public boolean do_get(Entity e, int index) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	
