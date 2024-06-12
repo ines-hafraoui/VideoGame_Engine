@@ -27,6 +27,7 @@ import java.util.List;
 
 import game.automaton.Action;
 import game.automaton.Automate;
+import game.automaton.Category;
 import game.automaton.Condition;
 import game.automaton.Direction;
 import game.automaton.Move;

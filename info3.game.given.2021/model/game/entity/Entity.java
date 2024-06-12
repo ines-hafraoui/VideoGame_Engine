@@ -47,12 +47,12 @@ public abstract class Entity {
 		return false;
 	}
 	
-	public int get_x() {
-		return position.x;
+	public float get_x() {
+		return position.getPositionX();
 	}
 	
-	public int get_y() {
-		return position.y;
+	public float get_y() {
+		return position.getPositionY();
 	}
 	
 	public void reduce_HP(int r) {
@@ -61,7 +61,7 @@ public abstract class Entity {
 
 	public abstract boolean do_move(Absolute_Orientation o);
 
-	public abstract Entity do_egg(Automate a);
+	public abstract void do_egg(Automate a);
 		
 	public abstract boolean do_hit();
 	
@@ -78,7 +78,9 @@ public abstract class Entity {
 	public abstract Entity do_throw(int index);
 	
 	
-	public abstract void do_explode();
+	public  void do_explode() {
+		explode = true;
+	}
 	
 	public abstract void do_power(int p);
 	
