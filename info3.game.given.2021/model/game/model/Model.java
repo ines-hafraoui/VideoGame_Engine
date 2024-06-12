@@ -34,6 +34,8 @@ import game.automaton.State;
 import game.automaton.Transition;
 import game.automaton.TrueFalse;
 import game.entity.Apple;
+import game.entity.Base;
+import game.entity.Entity;
 import game.entity.Head;
 import game.entity.Absolute_Orientation;
 import game.entity.Position;
@@ -102,11 +104,16 @@ public class Model {
 
 	public void paint(Graphics g, int width, int height) {
 		m_width = width;
-		System.out.println("orientation :" + m_orientation.orientation + "\n");
+		System.out.println("orientation :" + m_orientation.abs_or + "\n");
 	}
 
 	public Absolute_Orientation getOrientation() {
 		return m_orientation;
+	}
+
+	public boolean explode(Entity e) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

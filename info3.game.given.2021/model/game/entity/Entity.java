@@ -3,6 +3,9 @@ package game.entity;
 import game.entity.Position;
 import game.model.Model;
 import info3.game.Grid;
+
+import java.util.List;
+
 import game.automaton.Automate;
 import game.automaton.Category;
 import game.automaton.Direction;
@@ -15,6 +18,9 @@ public abstract class Entity {
 	protected Position position;
 	protected State state;
 	protected int HP;
+	protected List<Automate> inventory; 
+	protected List<Entity> bots;
+	protected boolean explode;
 	
 	public Entity(Automate a,Model m, Position p, Absolute_Orientation o) {
 		aut = a;
@@ -23,6 +29,7 @@ public abstract class Entity {
 		abs_or = o;
 		state = a.getcurrentstate();
 		HP = 100; 
+		explode = false;
 	}
 	
 	public Entity(Model m,  Position p, Absolute_Orientation o) {
@@ -30,9 +37,15 @@ public abstract class Entity {
 		position = p;
 		abs_or = o;
 		HP = 100; 
+		explode = false;
+		
 	}
 	
-	public abstract boolean eval_cell(Direction dir, Category cat);
+	public boolean eval_cell(Direction dir, Category cat) {
+		char response = model.get_grid().eval(dir, position.getPositionX(), position.getPositionY(), abs_or);
+		if (response != 'X') return true;
+		return false;
+	}
 	
 	public int get_x() {
 		return position.x;
@@ -46,31 +59,28 @@ public abstract class Entity {
 		HP = HP-r;
 	}
 
-	public abstract boolean do_move();
+	public abstract boolean do_move(Absolute_Orientation o);
 
-	public abstract boolean do_egg();
-	
-	public abstract boolean do_turn();
-	
+	public abstract Entity do_egg(Automate a);
+		
 	public abstract boolean do_hit();
 	
-	public abstract boolean do_wait();
+	public  boolean do_wait() {
+		return true;
+		
+	}
 	
 	// take smth from the floor 
-	public abstract boolean do_pick();
+	public abstract boolean do_pick(int distance, Category c);
 	
-	// throw what is in its hand
-	public abstract boolean do_throw();
+	// throw what is in its bag at the index. It will create an entity that will be 
+	// paint by the view
+	public abstract Entity do_throw(int index);
 	
-	//stock the entity in its bag
-	public abstract boolean do_store();
 	
-	// take an entity from its bag
-	public abstract boolean do_get(int index);
+	public abstract void do_explode();
 	
-	public abstract boolean do_explode();
-	
-	public abstract boolean do_power();
+	public abstract void do_power(int p);
 	
 	// method to fly
 	public abstract boolean do_jump();
@@ -79,10 +89,11 @@ public abstract class Entity {
 	// method for speed move
 	public abstract boolean do_wizz();
 	
-	public  boolean do_turn(Absolute_Orientation o) {
-		abs_or = o;
-		return true;
-	}
+	
+	// take an automate from its bag and link it to the entity (bot)
+	public abstract boolean do_get(Entity e,int index);
+	
+	public abstract void do_turn(Absolute_Orientation o);
 	
 	/*
 	 * set the automate of the entity
@@ -123,5 +134,9 @@ public abstract class Entity {
 		if (aut != null) {
 			aut.step(this);
 		}
+	}
+	
+	public boolean calcul_newPos() {
+		return true;
 	}
 }

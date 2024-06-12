@@ -15,13 +15,6 @@ public class Bot extends Entity{
 		super(m,p,o);
 	}
 
-
-	@Override
-	public boolean eval_cell(Direction dir, Category cat) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	@Override
 	public boolean do_move() {
 		// TODO Auto-generated method stub
@@ -31,6 +24,83 @@ public class Bot extends Entity{
 	@Override
 	public boolean do_egg() {
 		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean do_turn() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean do_hit() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean do_wait() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean do_pick() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean do_throw() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean do_store() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean do_get(int index) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean do_explode() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean do_power() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean do_jump() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean do_wizz() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Entity do_egg(Automate a) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean do_store(Entity e) {
 		return false;
 	}
 	
