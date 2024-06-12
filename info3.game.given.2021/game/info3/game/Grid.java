@@ -1,6 +1,7 @@
 package info3.game;
 
 import java.awt.Color;
+
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,7 +12,7 @@ import game.entity.Apple;
 import game.entity.Block;
 import game.entity.Entity;
 import game.entity.Head;
-import game.entity.Orientation;
+import game.entity.Absolute_Orientation;
 import game.entity.Snake;
 
 public class Grid {
@@ -47,7 +48,7 @@ public class Grid {
 		return colorpos;
 	}
 
-	public char eval(Direction d, int x, int y, Orientation o) {
+	public char eval(Direction d, int x, int y, Absolute_Orientation o) {
 		int targetX = x;
 		int targetY = y;
 

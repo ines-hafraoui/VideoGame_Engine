@@ -9,12 +9,12 @@ public class Apple extends Entity{
 
 	private boolean eaten;
 	
-	public Apple (Automate a,Grid g, Position p, Orientation o) {
+	public Apple (Automate a,Grid g, Position p, Absolute_Orientation o) {
 		super(a,g,p,o);
 		eaten = false;
 	}
 	
-	public Apple (Grid g, Position p, Orientation o) {
+	public Apple (Grid g, Position p, Absolute_Orientation o) {
 		super(g,p,o);
 		eaten = false;
 	}

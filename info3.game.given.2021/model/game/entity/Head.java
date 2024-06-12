@@ -7,15 +7,15 @@ import info3.game.Grid;
 
 public class Head extends Entity{
 	
-	public Head(Automate aut,Orientation orientation, Grid g ,Position p) {
+	public Head(Automate aut,Absolute_Orientation orientation, Grid g ,Position p) {
 		super(aut, g,p,orientation);
 		
 	}
-	public Head(Orientation orientation, Grid g ,Position p) {
+	public Head(Absolute_Orientation orientation, Grid g ,Position p) {
 		super(g,p,orientation);
 		
 	}
-	public Orientation get_orientation() {
+	public Absolute_Orientation get_orientation() {
 		return orientation;
 	}
 	
