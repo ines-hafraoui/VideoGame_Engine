@@ -22,6 +22,9 @@ public class Biome {
         this.landType = landType;
     }
 
+    public Position getPosition() {
+        return borders.getCenter();
+    }
     
     public String getName() {
         return name;

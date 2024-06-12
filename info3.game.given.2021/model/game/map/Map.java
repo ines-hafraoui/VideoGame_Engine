@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-
-
 public class Map {
 
 	private int seed;
@@ -49,20 +47,40 @@ public class Map {
 		return this.seed;
 	}
 
+	public List<Biome> getBiome() {
+		return biomes;
+	}
+
+	public Biome getBiome(Position position) {
+		Biome highestBiome = null;
+		float maxZ = Float.NEGATIVE_INFINITY;
+
+		for (Biome biome : biomes) {
+
+			if (biome.getBorders().containsPosition(position) && biome.getPosition().getPositionZ() >= maxZ) {
+				highestBiome = biome;
+				maxZ = biome.getPosition().getPositionZ();
+			}
+
+		}
+		return highestBiome;
+	}
+
 	public Plot getPlot(Position position) {
 		Plot highestPlot = null;
 		float maxZ = Float.NEGATIVE_INFINITY;
 
-		for (Biome biome : biomes) {
-			for (Plot plot : biome.getPlots()) {
+		Biome biome = getBiome(position);
+		for (Plot plot : biome.getPlots()) {
 
-				if (plot.getBorders().containsPosition(position) && plot.getPosition().getPositionZ() >= maxZ) {
-					highestPlot = plot;
-					maxZ = plot.getPosition().getPositionZ();
-				}
+			if (plot.getBorders().containsPosition(position) && plot.getPosition().getPositionZ() >= maxZ) {
+				highestPlot = plot;
+				maxZ = plot.getPosition().getPositionZ();
 			}
 		}
+
 		return highestPlot;
+
 	}
 
 	public LandType getLandType(Position position) {
@@ -83,13 +101,12 @@ public class Map {
 		List<Position> seedPoints = selectSeedPoints(seed, allPoints);
 
 		// Step 6: Créer les polygones à partir des seeds
-		List<Polygon> polygons = createPolygonsFromSeeds(allpoints, seedPoints);
+		List<Polygon> polygons = CreateValidPolygons(seedPoints, allPoints);
 
-		// Step 7: Attribuer chaque point au polygon le plus proche
-		assignPointsToClosestPolygon(allPoints, polygons);
-
-		// Step 8: Vérifier les cas particuliers et répéter si nécessaire
-		checkSpecialCasesAndRepeat(polygons);
+		// Nettoyer les polygones pour maximiser leur surface
+        for (Polygon polygon : polygons) {
+            polygon.cleanPolygon();
+        }
 	}
 
 	private List<Position> generatePointsInsidePolygon(int seed) {
@@ -126,11 +143,9 @@ public class Map {
 	private List<Position> selectSeedPoints(int seed, List<Position> allPoints) {
 		int totalPoints = allPoints.size();
 
-		
 		Random random = new Random(seed);
 		int numberOfSeeds = random.nextInt(totalPoints);
 		List<Position> seedPoints = new ArrayList<>();
-
 
 		// select seeds
 		while (seedPoints.size() < numberOfSeeds) {
@@ -146,43 +161,55 @@ public class Map {
 		return seedPoints;
 	}
 
-	private List<Polygon> createPolygonsFromSeeds(List<Position> seedPoints, List<Position> allPoints) {
-        List<Polygon> polygons = new ArrayList<>();
-        
-        // Créer un polygone initial pour chaque seed point
-        for (Position seed : seedPoints) {
-            Polygon poly = new Polygon();
-            poly.addVertex(seed);
-            polygons.add(poly);
-        }
+	private List<Polygon> CreateValidPolygons(List<Position> seedPoints, List<Position> allPoints) {
+		List<Polygon> polygons = new ArrayList<>();
 
-        // Assigner chaque point au polygone le plus proche
-        for (Position point : allPoints) {
-            if (!seedPoints.contains(point)) {
-                Polygon closestPolygon = null;
-                double minDistance = Double.MAX_VALUE;
-                
-                for (Polygon poly : polygons) {
-                    double distance = poly.getCenter().distance(point);
-                    if (distance < minDistance) {
-                        minDistance = distance;
-                        closestPolygon = poly;
-                    }
-                }
-                
-                if (closestPolygon != null) {
-                    closestPolygon.addVertex(point);
-                }
-            }
-        }
-	}
+		// Créer un polygone initial pour chaque seed point
+		for (Position seed : seedPoints) {
+			Polygon poly = new Polygon();
+			poly.addVertex(seed);
+			polygons.add(poly);
+		}
 
-	private void assignPointsToClosestPolygon(List<Position> allPoints, List<Polygon> polygons) {
-		// TODO: Attribuer chaque point au polygone le plus proche
-	}
+		while (!allPoints.isEmpty()) {
+			// Assigner chaque point au polygone le plus proche
+			for (Position point : allPoints) {
 
-	private void checkSpecialCasesAndRepeat(List<Polygon> polygons) {
-		// TODO: Vérifier les cas particuliers et répéter si nécessaire
+				Polygon closestPolygon = null;
+				double minDistance = Double.MAX_VALUE;
+
+				for (Polygon poly : polygons) {
+					double distance = poly.getCenter().distance(point);
+					if (distance < minDistance) {
+						minDistance = distance;
+						closestPolygon = poly;
+					}
+				}
+
+				if (closestPolygon != null) {
+					closestPolygon.addVertex(point);
+					allPoints.remove(point);
+				}
+
+			}
+
+			// check for invalid polygons
+			// Vérifier les polygones avec des conditions spéciales
+			List<Position> invalidPoints = new ArrayList<>();
+
+			for (Polygon poly : polygons) {
+				if (poly.getVertices().size() <= 1 || poly.getArea() == 0) {
+					allPoints.addAll(poly.getVertices());
+				}
+			}
+		}
+		
+		return polygons;
+
 	}
+	
+
+
+
 
 }
