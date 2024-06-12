@@ -9,14 +9,12 @@ public class LandType {
     private float viscosity; //value that represents how slowed down walking on this soil
     
     
-    // Constructor to initialize all variables
     public LandType(Dimension dimension, String name, float viscosity) {
         this.dimension = dimension;
         this.name = name;
         this.viscosity = viscosity;
     }
 
-    // Getter and setter for position
     public float getViscosity() {
         return viscosity;
     }
@@ -25,7 +23,6 @@ public class LandType {
         this.viscosity = viscosity;
     }
     
-    // Getter and setter for dimension
     public Dimension getDimension() {
         return dimension;
     }
@@ -34,7 +31,6 @@ public class LandType {
         this.dimension = dimension;
     }
 
-    // Getter and setter for name
     public String getName() {
         return name;
     }

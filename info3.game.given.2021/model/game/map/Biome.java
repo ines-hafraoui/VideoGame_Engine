@@ -9,7 +9,8 @@ public class Biome {
     private Polygon borders; // List of positions defining the polygon borders of the biome
     private List<Plot> plots; // List of plots composing the biome
     private LandType landType; //default landtype to show on the background by default.
-    
+    private String name;  // Name of the Biome
+
     public Biome(Polygon borders, LandType landType) {
         this.borders = borders;
         this.landType = landType;
@@ -21,6 +22,15 @@ public class Biome {
         this.landType = landType;
     }
 
+    
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
     public Polygon getBorders() {
         return borders;
     }
@@ -50,7 +60,6 @@ public class Biome {
     }
     
 
-    // Method to get a description of the Biome
     public String getDescription() {
         StringBuilder description = new StringBuilder();
         description.append("Biome Borders: ");
