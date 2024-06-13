@@ -1,4 +1,4 @@
-package info3.game.view;
+package info3.game.avatar;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import game.entity.Entity;
+import info3.game.view.View;
 
 public abstract class Avatar extends Component{
 

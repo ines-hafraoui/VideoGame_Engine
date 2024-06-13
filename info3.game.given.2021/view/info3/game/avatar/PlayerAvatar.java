@@ -1,4 +1,4 @@
-package info3.game.view;
+package info3.game.avatar;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -6,15 +6,15 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
-import game.entity.Apple;
+import game.entity.Player;
+import info3.game.view.View;
 
 public class PlayerAvatar extends Avatar{
 
 	public static final int HIT = 1;
 	public static final int WALK = 2;
 	
-	public PlayerAvatar(Player e, View v) {
+	public PlayerAvatar(Player e, View v) throws IOException {
 		super(e,v);
 		m_imageIndex=0;
 		loadSprite("resources/perso.png", 8, 12);

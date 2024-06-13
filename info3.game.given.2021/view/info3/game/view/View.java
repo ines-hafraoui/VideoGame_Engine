@@ -12,6 +12,9 @@ import game.entity.Entity;
 import game.entity.Head;
 import game.entity.Snake;
 import game.model.Model;
+import info3.game.avatar.AppleAvatar;
+import info3.game.avatar.Avatar;
+import info3.game.avatar.SnakeAvatar;
 
 public class View extends Container {
 
