@@ -48,11 +48,11 @@ public class Grid {
 		return colorpos;
 	}
 
-	public char eval(Direction d, int x, int y, Absolute_Orientation o) {
+	public char eval(Direction d, float x, float y, Absolute_Orientation o) {
 		int targetX = x;
 		int targetY = y;
 
-		switch (o.getOrientation()) {
+		switch (o.get_abs_Orientation()) {
 		case 'N':
 			switch (d.getDirection()) {
 			case 'F':

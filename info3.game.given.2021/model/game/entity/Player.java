@@ -2,11 +2,13 @@ package game.entity;
 
 import game.automaton.Automate;
 
+
 import game.automaton.Category;
 import game.automaton.Direction;
 import game.model.Model;
 import java.util.ArrayList;
 import java.util.List;
+import game.entity.Entity;
 
 public class Player extends Entity {
 	
@@ -32,8 +34,18 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public Entity do_egg(Automate a) {
-		return null;
+	public void do_egg(int cat) {
+		
+		switch(cat) {
+		case FLECHE : 
+			model.get_entities().add(new Fleche(model,position,abs_or));
+			break;
+		case BOULE_FEU : 
+			model.get_entities().add(new Boule_Feu(model,position,abs_or));
+			break;
+		default : 
+			break;
+		}
 	}
 
 	@Override
@@ -51,13 +63,8 @@ public class Player extends Entity {
 	@Override
 	public Entity do_throw(int index) {
 		Automate a = inventory.remove(index);
-		Entity new_e = new Entity(a,model, position,abs_or);
-		return new_e;
-	}
-
-	@Override
-	public void do_explode() {
-		explode = true;
+		Item new_item = new Item(a,model, position,abs_or);
+		return new_item;
 	}
 
 	@Override
@@ -69,16 +76,6 @@ public class Player extends Entity {
 	public void do_turn(Absolute_Orientation o) {
 		abs_or = o;
 	}
-	
-	@Override
-	public boolean do_jump() {
-		return false;
-	}
-
-	@Override
-	public boolean do_wizz() {
-		return false;
-	}
 
 	@Override
 	public boolean do_get(Entity e, int index) {
@@ -87,6 +84,16 @@ public class Player extends Entity {
 			e.aut = a; 
 			return true;
 		}
+		return false;
+	}
+	
+	@Override
+	public boolean do_jump() {
+		return false;
+	}
+
+	@Override
+	public boolean do_wizz() {
 		return false;
 	}
 
