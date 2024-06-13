@@ -9,10 +9,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import game.entity.Apple;
-import game.entity.Block;
 import game.entity.Entity;
-import game.entity.Head;
 
 public abstract class Avatar extends Component{
 
