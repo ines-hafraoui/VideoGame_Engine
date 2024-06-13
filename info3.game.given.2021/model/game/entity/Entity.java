@@ -24,6 +24,7 @@ public abstract class Entity {
 	
 	public final static int FLECHE = 1;
 	public final static int BOULE_FEU = 2;
+	public final static int BOT = 3;
 	
 	public Entity(Automate a,Model m, Position p, Absolute_Orientation o) {
 		aut = a;

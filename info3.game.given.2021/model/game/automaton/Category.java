@@ -4,27 +4,16 @@ public class Category {
 	
 	public char category;
 	public static final char EMPTY = 'E';
-	public static final char BOULE_FEU = 'B';
-	public static final char FLECHE = 'F';
 	public static final char ITEM = 'I';
+	public static final char BOT = 'B';
+	public static final char PARASITE = 'P';
 	
 	public Category(char cat) {
 		category = cat; 
 	}
 	
 	public char getCategory() {
-		switch (category) {
-		case 'E' : 
-			return EMPTY;
-		case 'B' :
-			return BOULE_FEU;
-		case 'F' :
-			return FLECHE;
-		case 'I' : 
-			return ITEM;
-		default :
-			return 'X';
-		}
+		return category;
 	}
 	
 	public void setCategory(char cat) {

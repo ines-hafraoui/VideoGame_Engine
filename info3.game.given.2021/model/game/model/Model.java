@@ -112,11 +112,6 @@ public class Model {
 		return m_orientation;
 	}
 
-	public boolean explode(Entity e) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	public Entity get_entity(int distance, Category c) {
 		// TODO Auto-generated method stub
 		return null;

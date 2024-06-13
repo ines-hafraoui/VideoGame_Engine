@@ -22,8 +22,7 @@ public class Item extends Entity{
 	}
 
 	@Override
-	public Entity do_egg(Automate a) {
-		return null;
+	public void do_egg(int c) {
 	}
 
 	@Override
