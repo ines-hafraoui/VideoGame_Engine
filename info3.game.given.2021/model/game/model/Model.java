@@ -117,4 +117,9 @@ public class Model {
 		return null;
 	}
 
+	public boolean inflict_hit(Absolute_Orientation o, int porte, Category c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

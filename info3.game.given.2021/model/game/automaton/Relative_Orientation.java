@@ -1,4 +1,4 @@
-package game.entity;
+package game.automaton;
 
 public class Relative_Orientation {
 	

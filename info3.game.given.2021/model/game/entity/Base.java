@@ -35,12 +35,12 @@ public class Base extends Entity {
 	public void do_power(int p) {}
 	
 	@Override
-	public Entity do_throw(int index) {
+	public Entity do_throw() {
 		return null;
 	}
 	
 	@Override
-	public boolean do_move(Absolute_Orientation o) {
+	public boolean do_move() {
 		return false;
 	}
 
@@ -50,7 +50,7 @@ public class Base extends Entity {
 	}
 	
 	@Override
-	public boolean do_wizz() {
+	public boolean do_wizz(int factor) {
 		return false;
 	}
 	
@@ -58,17 +58,17 @@ public class Base extends Entity {
 	public void do_turn(Absolute_Orientation o) {	}
 
 	@Override
-	public boolean do_hit() {
+	public boolean do_hit(Absolute_Orientation o, Category c, int porte) {
 		return false;
 	}
 
 	@Override
-	public boolean do_pick(int distance, Category c) {
+	public boolean do_pick(Category c,int distance) {
 		return false;
 	}
 
 	@Override
-	public boolean do_get(Entity e, int index) {
+	public boolean do_get() {
 		return false;
 	}
 	

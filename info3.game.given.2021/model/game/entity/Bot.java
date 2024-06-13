@@ -22,9 +22,8 @@ public class Bot extends Entity{
 	}
 
 	@Override
-	public boolean do_move(Absolute_Orientation o) {
-		abs_or = o;
-		return calcul_newPos();
+	public boolean do_move() {
+		return newPosition();
 	}
 
 	@Override
@@ -48,17 +47,17 @@ public class Bot extends Entity{
 	}
 
 	@Override
-	public boolean do_hit() {
+	public boolean do_hit(Absolute_Orientation o,  Category c, int porte) {
+		return model.inflict_hit(o, porte, c);
+	}
+
+	@Override
+	public boolean do_pick(Category c,int distance) {
 		return false;
 	}
 
 	@Override
-	public boolean do_pick(int distance, Category c) {
-		return false;
-	}
-
-	@Override
-	public Entity do_throw(int index) {
+	public Entity do_throw() {
 		return null;
 	}
 
@@ -74,12 +73,12 @@ public class Bot extends Entity{
 	}
 
 	@Override
-	public boolean do_wizz() {
+	public boolean do_wizz(int factor) {
 		return calcul_newSpeed(acc_factor);
 	}
 
 	@Override
-	public boolean do_get(Entity e, int index) {
+	public boolean do_get() {
 		return false;
 	}
 	

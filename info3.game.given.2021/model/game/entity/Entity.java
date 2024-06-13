@@ -9,6 +9,7 @@ import java.util.List;
 import game.automaton.Automate;
 import game.automaton.Category;
 import game.automaton.Direction;
+import game.automaton.Relative_Orientation;
 import game.automaton.State;
 
 public abstract class Entity {
@@ -21,6 +22,8 @@ public abstract class Entity {
 	protected List<Automate> inventory; 
 	protected List<Entity> bots;
 	protected boolean explode;
+	protected int index_inventory;
+	protected int index_bot;
 	
 	public final static int FLECHE = 1;
 	public final static int BOULE_FEU = 2;
@@ -34,6 +37,7 @@ public abstract class Entity {
 		state = a.getcurrentstate();
 		HP = 100; 
 		explode = false;
+		index_inventory =0 ;
 	}
 	
 	public Entity(Model m,  Position p, Absolute_Orientation o) {
@@ -42,10 +46,11 @@ public abstract class Entity {
 		abs_or = o;
 		HP = 100; 
 		explode = false;
+		index_inventory = 0;
 		
 	}
 	
-	public boolean eval_cell(Direction dir, Category cat) {
+	public boolean eval_cell(Relative_Orientation dir, Category cat) {
 		char response = model.get_grid().eval(dir, position.getPositionX(), position.getPositionY(), abs_or);
 		if (response != 'X') return true;
 		return false;
@@ -63,23 +68,28 @@ public abstract class Entity {
 		HP = HP-r;
 	}
 
-	public abstract boolean do_move(Absolute_Orientation o);
+	public abstract boolean do_move();
 
 	public abstract void do_egg(int cat);
 		
-	public abstract boolean do_hit();
+	public abstract boolean do_hit(Absolute_Orientation o, Category c,int porte );
 	
-	public  boolean do_wait() {
+	public  boolean do_wait(int n) {
+		
+		if (index_inventory== 0) 
+			index_inventory = 0;
+		else
+			index_inventory +=n;
 		return true;
 		
 	}
 	
 	// take smth from the floor 
-	public abstract boolean do_pick(int distance, Category c);
+	public abstract boolean do_pick(Category c,int distance);
 	
 	// throw what is in its bag at the index. It will create an entity that will be 
 	// paint by the view
-	public abstract Entity do_throw(int index);
+	public abstract Entity do_throw();
 	
 	
 	public  void do_explode() {
@@ -93,11 +103,11 @@ public abstract class Entity {
 	
 	
 	// method for speed move
-	public abstract boolean do_wizz();
+	public abstract boolean do_wizz(int factor);
 	
 	
 	// take an automate from its bag and link it to the entity (bot)
-	public abstract boolean do_get(Entity e,int index);
+	public abstract boolean do_get();
 	
 	public abstract void do_turn(Absolute_Orientation o);
 	
@@ -141,10 +151,7 @@ public abstract class Entity {
 			aut.step(this);
 		}
 	}
-	
-	public boolean calcul_newPos() {
-		return true;
-	}
+
 	
 	public boolean calcul_newSpeed(int acc_factor) {
 		// TODO Auto-generated method stub

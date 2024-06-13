@@ -28,9 +28,8 @@ public class Player extends Entity {
 
 
 	@Override
-	public boolean do_move(Absolute_Orientation o) {
-		abs_or = o;
-		return calcul_newPos();
+	public boolean do_move() {
+		return newPosition();
 	}
 
 	@Override
@@ -49,19 +48,18 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public boolean do_hit() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean do_hit(Absolute_Orientation o, Category c, int porte) {
+		return model.inflict_hit(o, porte, c);
 	}
 
 	@Override
-	public boolean do_pick(int distance, Category c) {
+	public boolean do_pick(Category c,int distance) {
 		Entity e = model.get_entity(distance, c);
 		return inventory.add(e.aut);
 	}
 
 	@Override
-	public Entity do_throw(int index) {
+	public Entity do_throw() {
 		Automate a = inventory.remove(index);
 		Item new_item = new Item(a,model, position,abs_or);
 		return new_item;
@@ -78,7 +76,8 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public boolean do_get(Entity e, int index) {
+	public boolean do_get() {
+		
 		Automate a = inventory.remove(index);
 		if (a != null) {
 			e.aut = a; 
