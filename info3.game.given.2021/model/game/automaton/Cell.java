@@ -4,10 +4,10 @@ import game.entity.Entity;
 
 public class Cell implements Condition {
 	
-	Direction d; 
+	Relative_Orientation d; 
 	Category cat; 
 	
-	public Cell (Direction d, Category c ) {
+	public Cell (Relative_Orientation d, Category c ) {
 		this.d = d; 
 		cat = c; 
 	}

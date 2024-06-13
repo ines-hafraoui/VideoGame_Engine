@@ -1,14 +1,14 @@
 package game.automaton;
 
 import game.entity.Entity;
-import game.entity.Orientation;
+import game.entity.Absolute_Orientation;
 
 public class Turn implements Action{
 	
 	Entity e;
-	Orientation o; 
+	Absolute_Orientation o; 
 	
-	public Turn(Entity e, Orientation or) {
+	public Turn(Entity e, Absolute_Orientation or) {
 		this.e = e;
 		o = or;
 	}
