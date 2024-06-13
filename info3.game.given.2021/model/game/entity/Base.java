@@ -9,13 +9,13 @@ public class Base extends Entity {
 	
 	boolean picked; 
 	
-	public Base(Automate a, Model m,Position p, Absolute_Orientation o ) {
-		super(a,m,p,o);
+	public Base(Automate a, Model m,Position p, Absolute_Orientation o , String t) {
+		super(a,m,p,o,t);
 		picked = false;
 	}
 	
-	public Base(Model m,Position p, Absolute_Orientation o ) {
-		super(m,p,o);
+	public Base(Model m,Position p, Absolute_Orientation o ,String t) {
+		super(m,p,o,t);
 		picked = false;
 	}
 
@@ -24,7 +24,7 @@ public class Base extends Entity {
 		
 		switch(cat) {
 		case BOT : 
-			model.get_entities().add(new Bot(model,position,abs_or));
+			model.get_entities().add(new Bot(model,position,abs_or, "BO"));
 			break;
 		default : 
 			break;
@@ -58,12 +58,12 @@ public class Base extends Entity {
 	public void do_turn(Absolute_Orientation o) {	}
 
 	@Override
-	public boolean do_hit(Absolute_Orientation o, Category c, int porte) {
+	public boolean do_hit(Absolute_Orientation o, String t, int porte) {
 		return false;
 	}
 
 	@Override
-	public boolean do_pick(Category c,int distance) {
+	public boolean do_pick(String t,int distance) {
 		return false;
 	}
 
