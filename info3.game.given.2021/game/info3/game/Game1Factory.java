@@ -1,11 +1,15 @@
 package info3.game;
 
+import java.io.IOException;
+
 import game.automaton.Automate;
 import game.entity.Absolute_Orientation;
+import game.entity.Arrow;
 import game.entity.Base;
 import game.entity.Bot;
 import game.entity.Boule_Feu;
 import game.entity.Entity;
+import game.entity.Fire_Ball;
 import game.entity.Fleche;
 import game.entity.Item;
 import game.entity.Player;
@@ -40,10 +44,6 @@ public class Game1Factory implements IFactory {
 			return new Bot(a, m, p, o, type);
 		case PLAYER:
 			return new Player(a, m, p, o, type);
-		case FIREBALL:
-			return new Boule_Feu(a, m, p, o, type);
-		case ARROW:
-			return new Fleche(a, m, p, o, type);
 		default:
 			return null;
 		}
@@ -61,16 +61,16 @@ public class Game1Factory implements IFactory {
 		case PLAYER:
 			return new Player(m, p, o, type);
 		case FIREBALL:
-			return new Boule_Feu(m, p, o, type);
+			return new Fire_Ball(m, p, o, type);
 		case ARROW:
-			return new Fleche(m, p, o, type);
+			return new Arrow(m, p, o, type);
 		default:
 			return null;
 		}
 	}
 
 	@Override
-	public Avatar newAvatar(Entity e, View v) {
+	public Avatar newAvatar(Entity e, View v) throws IOException {
 		switch (e.get_type()) {
 		case BASE:
 			return new BaseAvatar(e, v);

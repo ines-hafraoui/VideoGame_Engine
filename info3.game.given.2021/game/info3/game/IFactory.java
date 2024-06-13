@@ -1,5 +1,7 @@
 package info3.game;
 
+import java.io.IOException;
+
 import game.automaton.Automate;
 import game.automaton.Category;
 import game.entity.Absolute_Orientation;
@@ -14,6 +16,6 @@ public interface IFactory {
 
 	public Entity newEntity(Model m, Position p, Absolute_Orientation o, String type);
 
-	public Avatar newAvatar(Entity e, View v);
+	public Avatar newAvatar(Entity e, View v) throws IOException;
 
 }
