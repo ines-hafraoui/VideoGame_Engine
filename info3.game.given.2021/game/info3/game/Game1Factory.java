@@ -2,15 +2,14 @@ package info3.game;
 
 import java.io.IOException;
 
+
 import game.automaton.Automate;
 import game.entity.Absolute_Orientation;
 import game.entity.Arrow;
 import game.entity.Base;
 import game.entity.Bot;
-import game.entity.Boule_Feu;
 import game.entity.Entity;
 import game.entity.Fire_Ball;
-import game.entity.Fleche;
 import game.entity.Item;
 import game.entity.Player;
 import game.entity.Position;
@@ -44,6 +43,10 @@ public class Game1Factory implements IFactory {
 			return new Bot(a, m, p, o, type);
 		case PLAYER:
 			return new Player(a, m, p, o, type);
+		case FIREBALL:
+			return new Fire_Ball(a,m, p, o, type);
+		case ARROW:
+			return new Arrow(a,m, p, o, type);
 		default:
 			return null;
 		}
@@ -60,10 +63,6 @@ public class Game1Factory implements IFactory {
 			return new Bot(m, p, o, type);
 		case PLAYER:
 			return new Player(m, p, o, type);
-		case FIREBALL:
-			return new Fire_Ball(m, p, o, type);
-		case ARROW:
-			return new Arrow(m, p, o, type);
 		default:
 			return null;
 		}

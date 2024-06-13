@@ -1,9 +1,16 @@
 package game.entity;
 
+import game.automaton.Automate;
 import game.automaton.Category;
 import game.model.Model;
 
 public class Fire_Ball extends Entity{
+	
+	
+	public Fire_Ball(Automate a,Model m, Position p, Absolute_Orientation o,String t) {
+		super(a,m,p,o,t);
+	}
+	 
 	
 	public Fire_Ball(Model m, Position p, Absolute_Orientation o,String t) {
 		super(m,p,o,t);

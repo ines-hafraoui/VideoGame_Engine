@@ -1,9 +1,14 @@
 package game.entity;
 
+import game.automaton.Automate;
 import game.automaton.Category;
 import game.model.Model;
 
 public class Arrow extends Entity{
+	
+	public Arrow(Automate a,Model m, Position p, Absolute_Orientation o,String t) {
+		super(m,p,o,t);
+	}
 	
 	public Arrow(Model m, Position p, Absolute_Orientation o,String t) {
 		super(m,p,o,t);
