@@ -33,6 +33,10 @@ public class Automate {
 	public boolean removeCurrentState(State s) {
 		return currentStateList.remove(s);
 	}
+	
+	public List<State> returnCurrentState(State s) {
+		return currentStateList;
+	}
 
 	public boolean blocked; // the entity will unblock the automaton once it's transition is over
 
