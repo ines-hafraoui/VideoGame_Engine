@@ -15,14 +15,14 @@ public class PlayerAvatar extends Avatar{
 	public PlayerAvatar(Player e, Container parent) throws IOException {
 		super(e,parent);
 		m_imageIndex=0;
-		loadSprite("resources/perso.png", 8, 12);
+		m_images = loadSprite("resources/perso.png", 8, 12);
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		int etat=2;
 		BufferedImage img = m_images[m_imageIndex];
-		g.drawImage(img, m_view.get_x() + m_entity.get_x(), m_view.get_y() + m_entity.get_y(), img.getWidth(), img.getHeight(), m_view);
+		g.drawImage(img, m_view.get_x() + m_entity.get_x(), m_view.get_y() + m_entity.get_y(), img.getWidth(), img.getHeight(), m_parent);
 		m_hb.drawHealthBar(g,m_view.get_x() + m_entity.get_x(),m_view.get_y() + m_entity.get_y() - 5%img.getHeight(),img.getWidth(),5%img.getHeight());
 	}
 

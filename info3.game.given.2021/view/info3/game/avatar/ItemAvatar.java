@@ -1,14 +1,14 @@
 package info3.game.avatar;
 
+import java.awt.Container;
 import java.awt.Graphics;
 
 import game.entity.Entity;
-import info3.game.view.View;
 
 public class ItemAvatar extends Avatar{
 
-	public ItemAvatar(Entity e, View v) {
-		super(e, v);
+	public ItemAvatar(Entity e, Container p) {
+		super(e, p);
 		// TODO Auto-generated constructor stub
 	}
 

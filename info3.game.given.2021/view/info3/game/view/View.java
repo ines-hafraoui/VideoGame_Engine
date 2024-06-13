@@ -1,9 +1,11 @@
 package info3.game.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -22,16 +24,16 @@ public class View extends Container {
 	private Viewport m_viewport;
 
 	public View(Model model, IFactory f, Dimension d) {
+
+		setBackground(Color.black);
+		BorderLayout bl = new BorderLayout();
+		setLayout(bl);
+
 		m_model = model;
 		m_f = f;
 		m_dimension = d;
 		List<Entity> Es = m_model.get_grid().getEntities();
-		Iterator<Entity> iter = Es.iterator();
-		while (iter.hasNext()) {
-			Entity e = iter.next();
-			m_f.newAvatar(e, this);
-		}
-		m_viewport = new Viewport();
+		m_viewport = new Viewport(m_model, Es, m_f, this);
 	}
 
 	public View(Model model, int x, int y, int width, int height, int border, IFactory f) {
@@ -41,18 +43,15 @@ public class View extends Container {
 		m_border = border;
 		m_x = x;
 		m_y = y;
-		m_f = f;;
+		m_f = f;
+		m_model = model;
+
 		List<Entity> Es = m_model.get_grid().getEntities();
-		Iterator<Entity> iter = Es.iterator();
-		while (iter.hasNext()) {
-			Entity e = iter.next();
-			m_f.newAvatar(e, this);
-		}
-		m_viewport = new Viewport();
+		m_viewport = new Viewport(m_model, Es, m_f, this);
 	}
 
 	public void paint(Graphics g) {
-
+		super.paintAll(g);
 		int box_width = (m_width + get_border()) / m_model.get_grid().getnboxline();
 		int box_height = (m_height - get_border()) / m_model.get_grid().getnboxcol();
 		for (int i = 0; i < m_model.get_grid().getnboxcol(); i++) {
@@ -61,12 +60,6 @@ public class View extends Container {
 				g.fillRect(get_x() + j * box_width + get_border(), get_y() + i * box_height + get_border(),
 						box_width - (get_border() * 2), box_height - get_border());
 			}
-		}
-
-		Iterator<Avatar> iterator = avatars.iterator();
-		while (iterator.hasNext()) {
-			Avatar avatar = iterator.next();
-			avatar.paint(g, box_width, box_height);
 		}
 	}
 
@@ -81,13 +74,4 @@ public class View extends Container {
 	public int get_border() {
 		return m_border;
 	}
-
-	public List<Avatar> getAvatars() {
-		return avatars;
-	}
-
-	public void add_avatar(Avatar a) {
-		getAvatars().add(a);
-	}
-
 }

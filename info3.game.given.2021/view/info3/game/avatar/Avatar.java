@@ -1,5 +1,6 @@
 package info3.game.avatar;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Graphics;
@@ -23,7 +24,7 @@ public abstract class Avatar extends Component{
 		m_parent = p;
 		m_entity = e;
 		m_hb = new HealthBar(this);
-		m_parent.add(this);
+		m_parent.add(this,BorderLayout.CENTER);
 	}
 
 	public abstract void paint(Graphics g);
