@@ -1,17 +1,19 @@
 package info3.game;
 
 import java.awt.Color;
+
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import game.automaton.Direction;
+import game.automaton.Relative_Orientation;
 import game.entity.Apple;
 import game.entity.Block;
 import game.entity.Entity;
 import game.entity.Head;
-import game.entity.Orientation;
+import game.entity.Absolute_Orientation;
 import game.entity.Snake;
 
 public class Grid {
@@ -47,11 +49,11 @@ public class Grid {
 		return colorpos;
 	}
 
-	public char eval(Direction d, int x, int y, Orientation o) {
-		int targetX = x;
-		int targetY = y;
+	public char eval(Absolute_Orientation d, float x, float y) {
+		float targetX = x;
+		float targetY = y;
 
-		switch (o.getOrientation()) {
+		switch (o.get_abs_Orientation()) {
 		case 'N':
 			switch (d.getDirection()) {
 			case 'F':

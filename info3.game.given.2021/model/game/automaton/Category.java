@@ -4,8 +4,9 @@ public class Category {
 	
 	public char category;
 	public static final char EMPTY = 'E';
-	public static final char APPLE = 'A';
-	public static final char SNAKE = 'S';
+	public static final char ITEM = 'I';
+	public static final char BOT = 'B';
+	public static final char PARASITE = 'P';
 	
 	public Category(char cat) {
 		category = cat; 
@@ -17,12 +18,6 @@ public class Category {
 	
 	public void setCategory(char cat) {
 		this.category = cat; 
-	}
-	
-	
-	
-	
-	
-	
+	}	
 
 }

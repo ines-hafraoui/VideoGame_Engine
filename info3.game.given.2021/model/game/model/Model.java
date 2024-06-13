@@ -27,6 +27,7 @@ import java.util.List;
 
 import game.automaton.Action;
 import game.automaton.Automate;
+import game.automaton.Category;
 import game.automaton.Condition;
 import game.automaton.Direction;
 import game.automaton.Move;
@@ -34,8 +35,10 @@ import game.automaton.State;
 import game.automaton.Transition;
 import game.automaton.TrueFalse;
 import game.entity.Apple;
+import game.entity.Base;
+import game.entity.Entity;
 import game.entity.Head;
-import game.entity.Orientation;
+import game.entity.Absolute_Orientation;
 import game.entity.Position;
 import game.entity.Snake;
 import info3.game.Grid;
@@ -51,12 +54,12 @@ public class Model {
 	long m_imageElapsed;
 	int m_width, height;
 	private Grid m_grid;
-	private Orientation m_orientation;
+	private Absolute_Orientation m_orientation;
 
 	public Model(Grid grid, int w, int h) throws IOException {
 		m_grid = grid;
-		m_orientation = new Orientation('H');
-		Head s_head = new Head(new Orientation('S'), this.get_grid(), new Position(0, 0));
+		m_orientation = new Absolute_Orientation('H');
+		Head s_head = new Head(new Absolute_Orientation('S'), this.get_grid(), new Position(0, 0));
 		Snake snake = new Snake(null, this.get_grid(), s_head);
 		Apple apple = new Apple(this.get_grid(), new Position(5, 5), null);
 
@@ -102,11 +105,21 @@ public class Model {
 
 	public void paint(Graphics g, int width, int height) {
 		m_width = width;
-		System.out.println("orientation :" + m_orientation.orientation + "\n");
+		System.out.println("orientation :" + m_orientation.abs_or + "\n");
 	}
 
-	public Orientation getOrientation() {
+	public Absolute_Orientation getOrientation() {
 		return m_orientation;
+	}
+
+	public Entity get_entity(int distance, Category c) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean inflict_hit(Absolute_Orientation o, int porte, Category c) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
