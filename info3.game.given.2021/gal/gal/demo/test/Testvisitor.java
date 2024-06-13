@@ -31,7 +31,7 @@ public class Testvisitor implements IVisitor{
 
 	@Override
 	public Object visit(Direction dir) {
-		System.out.println("visit dir");
+		System.out.println("visit dir " + dir.toString());
 		return null;
 	}
 
