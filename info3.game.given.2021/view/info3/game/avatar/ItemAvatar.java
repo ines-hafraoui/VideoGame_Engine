@@ -13,7 +13,7 @@ public class ItemAvatar extends Avatar{
 	}
 
 	@Override
-	public void paint(Graphics g, int box_width, int box_height) {
+	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
 		
 	}

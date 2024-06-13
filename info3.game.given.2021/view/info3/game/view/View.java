@@ -2,64 +2,49 @@ package info3.game.view;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import game.entity.Apple;
 import game.entity.Entity;
-import game.entity.Head;
-import game.entity.Snake;
 import game.model.Model;
-import info3.game.avatar.AppleAvatar;
+import info3.game.IFactory;
 import info3.game.avatar.Avatar;
-import info3.game.avatar.SnakeAvatar;
 
 public class View extends Container {
 
 	private Model m_model;
-	private List<Avatar> avatars;
 	private int m_width, m_height, m_border, m_x = 0, m_y = 0;
+	private IFactory m_f;
+	private Dimension m_dimension;
 
-	public View(Model model, int width, int height, int border) {
+	public View(Model model, IFactory f, Dimension d) {
 		m_model = model;
-		m_width = width;
-		m_height = height;
-		m_border = border;
-		avatars = new ArrayList();
+		m_f = f;
+		m_dimension = d;
 		List<Entity> Es = m_model.get_grid().getEntities();
 		Iterator<Entity> iter = Es.iterator();
 		while (iter.hasNext()) {
 			Entity e = iter.next();
-			if (e instanceof Apple) {
-				new AppleAvatar((Apple) e, this);
-			}
-			if (e instanceof Snake) {
-				Avatar a = new SnakeAvatar((Snake)e, this);
-			}
+			m_f.newAvatar(e, this);
 		}
 	}
 
-	public View(Model model, int x, int y, int width, int height, int border) {
+	public View(Model model, int x, int y, int width, int height, int border, IFactory f) {
 		m_model = model;
 		m_width = width;
 		m_height = height;
 		m_border = border;
 		m_x = x;
 		m_y = y;
-		avatars = new ArrayList();
+		m_f = f;;
 		List<Entity> Es = m_model.get_grid().getEntities();
 		Iterator<Entity> iter = Es.iterator();
 		while (iter.hasNext()) {
 			Entity e = iter.next();
-			if (e instanceof Apple) {
-				Avatar a = new AppleAvatar((Apple) e, this);
-			}
-			if (e instanceof Snake) {
-				Avatar a = new SnakeAvatar((Snake)e, this);
-			}
-
+			m_f.newAvatar(e, this);
 		}
 	}
 
@@ -80,19 +65,6 @@ public class View extends Container {
 			Avatar avatar = iterator.next();
 			avatar.paint(g, box_width, box_height);
 		}
-
-//		for (Entity e : m_model.get_grid().getEntities()) {
-//			
-//			Entity[] eList = e.get_entity();
-//			
-//			for (Entity e_e : eList) {
-//				
-//				g.setColor(Color.DARK_GRAY);
-//				g.fillRect(get_x() + e_e.get_x() * box_width + get_border(),get_y() + e_e.get_y() * box_height + get_border(), box_width - (get_border() * 2),
-//						box_height - get_border());
-//
-//			}
-//		}
 	}
 
 	public int get_x() {
