@@ -25,7 +25,7 @@ public abstract class Entity {
 	protected List<Entity> bots;
 	protected boolean explode;
 
-	protected Category c;
+	protected String type;
 	protected int index_inventory;
 	protected int index_bot;
 	protected int nb_bot; 
@@ -38,10 +38,16 @@ public abstract class Entity {
 	public final static int FLECHE = 1;
 	public final static int BOULE_FEU = 2;
 	public final static int BOT = 3;
-	
 	public final static int dt = 1;
+	
+	public static final String BASE = "BA";
+	public static final String ITEM = "I";
+	public static final String TEAMMATE = "BO";
+	public static final String PARASITE = "P";
+	public static final String FIRE_BALL = "FB";
+	public static final String ARROW = "A";
 
-	public Entity(Automate a, Model m, Position p, Absolute_Orientation o) {
+	public Entity(Automate a, Model m, Position p, Absolute_Orientation o, String type) {
 		aut = a;
 		model = m;
 		position = p;
@@ -52,9 +58,10 @@ public abstract class Entity {
 		index_inventory =0 ;
 		index_bot =0;
 		nb_bot = 5;
+		this.type = type;
 	}
 
-	public Entity(Model m, Position p, Absolute_Orientation o) {
+	public Entity(Model m, Position p, Absolute_Orientation o, String type) {
 		model = m;
 		position = p;
 		abs_or = o;
@@ -63,6 +70,7 @@ public abstract class Entity {
 		index_inventory = 0;
 		index_bot = 0;
 		nb_bot = 5;
+		this.type = type;
 
 	}
 
@@ -83,7 +91,7 @@ public abstract class Entity {
 		return !set1.isEmpty();
 	}
 
-	protected void newSpeed() {
+	protected void newSpeed(int factor) {
 
 		if (acc_speed <= 0) {
 			acc_speed = (float) 0;
@@ -127,6 +135,10 @@ public abstract class Entity {
 			return true;
 		return false;
 	}
+	
+	public String get_type() {
+		return type;
+	}
 
 	public float get_x() {
 		return position.getPositionX();
@@ -144,7 +156,7 @@ public abstract class Entity {
 
 	public abstract void do_egg(int cat);
 
-	public abstract boolean do_hit(Absolute_Orientation o, Category c, int porte);
+	public abstract boolean do_hit(Absolute_Orientation o, String type, int porte);
 
 	public boolean do_wait(int inc, int select ) {
 		switch(select) {
@@ -163,8 +175,9 @@ public abstract class Entity {
 
 	/*
 	 * take smth from the floor at a certain distance from itself
+	 * param : t for the type of Entity
 	 */
-	public abstract boolean do_pick(Category c,int distance);
+	public abstract boolean do_pick(String t,int distance);
 
 	// throw what is in its bag at the index. It will create an entity that will be
 	// paint by the view

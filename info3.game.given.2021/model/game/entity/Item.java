@@ -8,12 +8,12 @@ import game.model.Model;
 
 public class Item extends Entity{
 	
-	public Item(Automate a, Model m,Position p, Absolute_Orientation o ) {
-		super(a,m,p,o);
+	public Item(Automate a, Model m,Position p, Absolute_Orientation o,String t ) {
+		super(a,m,p,o,t);
 	}
 	
-	public Item(Model m,Position p, Absolute_Orientation o ) {
-		super(m,p,o);
+	public Item(Model m,Position p, Absolute_Orientation o, String t ) {
+		super(m,p,o,t);
 	}
 
 	@Override
@@ -26,12 +26,12 @@ public class Item extends Entity{
 	}
 
 	@Override
-	public boolean do_hit(Absolute_Orientation o,  Category c, int porte) {
+	public boolean do_hit(Absolute_Orientation o,  String t, int porte) {
 		return false;
 	}
 
 	@Override
-	public boolean do_pick(Category c,int distance) {
+	public boolean do_pick(String t,int distance) {
 		return false;
 	}
 

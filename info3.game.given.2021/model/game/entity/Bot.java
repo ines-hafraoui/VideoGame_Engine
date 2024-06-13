@@ -11,19 +11,22 @@ public class Bot extends Entity{
 	
 	private int acc_factor;
 	
-	public Bot(Automate a, Model m,Position p, Absolute_Orientation o ) {
-		super(a,m,p,o);
+	public Bot(Automate a, Model m,Position p, Absolute_Orientation o,String t ) {
+		super(a,m,p,o,t);
 		acc_factor = 3;
 	}
 	
-	public Bot(Model m,Position p, Absolute_Orientation o ) {
-		super(m,p,o);
+	public Bot(Model m,Position p, Absolute_Orientation o, String t) {
+		super(m,p,o,t);
 		acc_factor = 3;
 	}
 
 	@Override
 	public boolean do_move() {
-		return newPosition();
+		Position p = newPosition();
+		if (p == null) return false;
+		position = p;
+		return true;
 	}
 
 	@Override
@@ -31,10 +34,10 @@ public class Bot extends Entity{
 		
 		switch(cat) {
 		case FLECHE : 
-			model.get_entities().add(new Fleche(model,position,abs_or));
+			model.get_entities().add(new Arrow(model,position,abs_or, ARROW));
 			break;
 		case BOULE_FEU : 
-			model.get_entities().add(new Boule_Feu(model,position,abs_or));
+			model.get_entities().add(new Fire_Ball(model,position,abs_or, FIRE_BALL));
 			break;
 		default : 
 			break;
@@ -47,12 +50,12 @@ public class Bot extends Entity{
 	}
 
 	@Override
-	public boolean do_hit(Absolute_Orientation o,  Category c, int porte) {
-		return model.inflict_hit(o, porte, c);
+	public boolean do_hit(Absolute_Orientation o,  String t, int porte) {
+		return model.inflict_hit(o, porte, t);
 	}
 
 	@Override
-	public boolean do_pick(Category c,int distance) {
+	public boolean do_pick(String t ,int distance) {
 		return false;
 	}
 
@@ -74,7 +77,8 @@ public class Bot extends Entity{
 
 	@Override
 	public boolean do_wizz(int factor) {
-		return newSpeed(factor);
+		newSpeed(factor);
+		return true;
 	}
 
 	@Override

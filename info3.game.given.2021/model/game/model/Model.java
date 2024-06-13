@@ -55,39 +55,10 @@ public class Model {
 	int m_width, height;
 	private Grid m_grid;
 	private Absolute_Orientation m_orientation;
+	List<Entity> entities;
 
 	public Model(Grid grid, int w, int h) throws IOException {
-		m_grid = grid;
-		m_orientation = new Absolute_Orientation('H');
-		Head s_head = new Head(new Absolute_Orientation('S'), this.get_grid(), new Position(0, 0));
-		Snake snake = new Snake(null, this.get_grid(), s_head);
-		Apple apple = new Apple(this.get_grid(), new Position(5, 5), null);
-
-		// AUTOMATON
-		State s0 = new State();
-		State s1 = new State();
-
-		Condition t = new TrueFalse(true);
-
-		List<Action> LA = new ArrayList<Action>();
-		LA.add(new Move(apple));
-
-		Transition t01 = new Transition(s1, t, LA);
-		Transition t10 = new Transition(s0, t, LA);
-
-		s0.add_transition(t01);
-		s1.add_transition(t10);
-
-		Automate a_aut = new Automate(apple);
-		a_aut.add_state(s0);
-		a_aut.add_state(s1);
-
-		a_aut.addCurrentState(s0);
-
-		apple.set_automate(a_aut);
-
-		get_grid().add_entity(snake);
-		get_grid().add_entity(apple);
+		entities = new ArrayList<Entity>();
 	}
 
 	public Grid get_grid() {
@@ -112,14 +83,21 @@ public class Model {
 		return m_orientation;
 	}
 
-	public Entity get_entity(int distance, Category c) {
-		// TODO Auto-generated method stub
-		return null;
+	public Entity get_entity(int distance, String t) {
+		Entity e = m_grid.get_entity(distance, t);
+		return e;
 	}
 
-	public boolean inflict_hit(Absolute_Orientation o, int porte, Category c) {
+	public boolean inflict_hit(Absolute_Orientation o, int porte, String t) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	/* 
+	 * method give the list of entity that are on the map
+	 */
+	public List<Entity> get_entities() {
+		return entities;
 	}
 
 }

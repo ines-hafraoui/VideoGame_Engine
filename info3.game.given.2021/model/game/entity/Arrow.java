@@ -3,10 +3,10 @@ package game.entity;
 import game.automaton.Category;
 import game.model.Model;
 
-public class Fleche extends Entity{
+public class Arrow extends Entity{
 	
-	public Fleche(Model m, Position p, Absolute_Orientation o) {
-		super(m,p,o);
+	public Arrow(Model m, Position p, Absolute_Orientation o,String t) {
+		super(m,p,o,t);
 	}
 
 	@Override
@@ -19,12 +19,12 @@ public class Fleche extends Entity{
 	}
 
 	@Override
-	public boolean do_hit(Absolute_Orientation o,  Category c, int porte) {
+	public boolean do_hit(Absolute_Orientation o,  String t, int porte) {
 		return false;
 	}
 
 	@Override
-	public boolean do_pick(Category c,int distance) {
+	public boolean do_pick(String t,int distance) {
 		return false;
 	}
 

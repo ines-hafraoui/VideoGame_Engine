@@ -13,15 +13,15 @@ import game.entity.Entity;
 public class Player extends Entity {
 	
 	
-	public Player(Automate a, Model m,Position p, Absolute_Orientation o ) {
-		super(a,m,p,o);
+	public Player(Automate a, Model m,Position p, Absolute_Orientation o, String t) {
+		super(a,m,p,o, t);
 		inventory = new ArrayList<Automate>();
 		bots = new ArrayList<Entity>();
 	
 	}
 	
-	public Player(Model m,Position p, Absolute_Orientation o ) {
-		super(m,p,o);
+	public Player(Model m,Position p, Absolute_Orientation o, String t) {
+		super(m,p,o,t);
 		inventory = new ArrayList<Automate>();
 		bots = new ArrayList<Entity>();
 	}
@@ -40,10 +40,10 @@ public class Player extends Entity {
 		
 		switch(cat) {
 		case FLECHE : 
-			model.get_entities().add(new Fleche(model,position,abs_or));
+			model.get_entities().add(new Arrow(model,position,abs_or, ARROW));
 			break;
 		case BOULE_FEU : 
-			model.get_entities().add(new Boule_Feu(model,position,abs_or));
+			model.get_entities().add(new Fire_Ball(model,position,abs_or, FIRE_BALL));
 			break;
 		default : 
 			break;
@@ -51,13 +51,13 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public boolean do_hit(Absolute_Orientation o, Category c, int porte) {
-		return model.inflict_hit(o, porte, c);
+	public boolean do_hit(Absolute_Orientation o, String t, int porte) {
+		return model.inflict_hit(o, porte, t);
 	}
 
 	@Override
-	public boolean do_pick(Category c,int distance) {
-		Entity e = model.get_entity(distance, c);	// ask the model to give it the entity (whiwh is an item) at the distance d 
+	public boolean do_pick(String t,int distance) {
+		Entity e = model.get_entity(distance, t);	// ask the model to give it the entity (whiwh is an item) at the distance d 
 		return inventory.add(e.aut);
 	}
 
@@ -65,7 +65,7 @@ public class Player extends Entity {
 	public Entity do_throw() {
 		int index = index_inventory%nb_bot;
 		Automate a = inventory.remove(index);
-		Item new_item = new Item(a,model, position,abs_or);
+		Item new_item = new Item(a,model, position,abs_or,"I");
 		return new_item;
 	}
 
@@ -99,7 +99,8 @@ public class Player extends Entity {
 
 	@Override
 	public boolean do_wizz(int factor) {
-		return newSpeed(factor);
+		newSpeed(factor);
+		return true;
 	}
 
 	
