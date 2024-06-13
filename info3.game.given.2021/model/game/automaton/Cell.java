@@ -1,19 +1,37 @@
 package game.automaton;
 
+import game.entity.Absolute_Orientation;
 import game.entity.Entity;
 
 public class Cell implements Condition {
 	
-	Relative_Orientation d; 
+	Absolute_Orientation a=null;
+	Relative_Orientation d=null; 
 	Category cat; 
+	int portee;
 	
-	public Cell (Relative_Orientation d, Category c ) {
+	public Cell (Relative_Orientation d, Category c, int portee ) {
 		this.d = d; 
 		cat = c; 
+		this.portee=portee;
+	}
+	
+	public Cell (Absolute_Orientation a, Category c, int portee ) {
+		this.a = a; 
+		cat = c; 
+		this.portee=portee;
 	}
 	
 	public boolean eval (Entity e) {
-		return e.eval_cell(d,cat);
+		if (a==null) {
+			return e.eval_cell_rel(d,cat,portee);
+		}
+		else if (d==null) {
+			return e.eval_cell_abs(a,cat,portee);
+		}
+		else {
+			System.out.print("Orientation null !\n");
+		}
 	}
 
 }
