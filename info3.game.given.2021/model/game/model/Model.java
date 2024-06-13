@@ -43,7 +43,7 @@ import game.entity.Absolute_Orientation;
 import game.entity.Position;
 
 import info3.game.Grid;
-import info3.game.view.Avatar;
+import info3.game.avatar.Avatar;
 import info3.game.view.View;
 
 /**

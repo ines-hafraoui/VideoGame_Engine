@@ -55,13 +55,15 @@ public class Game {
 	View m_view;
 	public Model m_model;
 	Sound m_music;
+	IFactory m_factory;
 
 	Game() throws Exception {
 		// creating a model, that would be a model
 		// in an Model-View-Controller pattern (MVC)
 		Dimension d = new Dimension(1000, 1000);
+		m_factory = new Game1Factory();
 		m_model = new Model(new Grid(20, 20),d.width,d.height);
-		m_view=new View(m_model,d.width,d.height,2);
+		m_view= new View(m_model,m_factory,d);
 		// creating a listener for all the events
 		// from the game canvas, that would be
 		// the controller in the MVC pattern
