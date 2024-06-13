@@ -19,6 +19,7 @@ public class View extends Container {
 	private int m_width, m_height, m_border, m_x = 0, m_y = 0;
 	private IFactory m_f;
 	private Dimension m_dimension;
+	private Viewport m_viewport;
 
 	public View(Model model, IFactory f, Dimension d) {
 		m_model = model;
@@ -30,6 +31,7 @@ public class View extends Container {
 			Entity e = iter.next();
 			m_f.newAvatar(e, this);
 		}
+		m_viewport = new Viewport();
 	}
 
 	public View(Model model, int x, int y, int width, int height, int border, IFactory f) {
@@ -46,6 +48,7 @@ public class View extends Container {
 			Entity e = iter.next();
 			m_f.newAvatar(e, this);
 		}
+		m_viewport = new Viewport();
 	}
 
 	public void paint(Graphics g) {
