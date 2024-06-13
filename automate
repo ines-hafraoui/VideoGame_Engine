@@ -71,11 +71,14 @@ Fleche(beg){
   
 }
 
-Item(beg){	// pas fini (quelle comportement si inventaire
-		// du joueur plein
+Item(beg){	
 
  * (beg):
- | 
+ | not(Got(T)) ? Explode :(picked)
+ | True ? Wait :(beg)
+ 
+ * (picked):
+ | True ? :(picked)
 
 }
 
