@@ -43,6 +43,7 @@ import game.entity.Absolute_Orientation;
 import game.entity.Position;
 
 import info3.game.Grid;
+import info3.game.IFactory;
 import info3.game.avatar.Avatar;
 import info3.game.view.View;
 
@@ -57,9 +58,11 @@ public class Model {
 	private Grid m_grid;
 	private Absolute_Orientation m_orientation;
 	List<Entity> entities;
+	IFactory factory;
 
-	public Model(Grid grid, int w, int h) throws IOException {
+	public Model(Grid grid, int w, int h, IFactory f) throws IOException {
 		entities = new ArrayList<Entity>();
+		factory = f;
 	}
 
 	public Grid get_grid() {
@@ -103,6 +106,11 @@ public class Model {
 	 */
 	public List<Entity> get_entities() {
 		return entities;
+	}
+
+	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String arrow) {
+	
+		return factory.newEntity(model, position, abs_or, arrow);
 	}
 
 }
