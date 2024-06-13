@@ -2,6 +2,7 @@ package info3.game;
 
 import java.awt.Color;
 
+
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,12 +10,11 @@ import java.util.List;
 
 import game.automaton.Direction;
 import game.automaton.Relative_Orientation;
-import game.entity.Apple;
-import game.entity.Block;
+
 import game.entity.Entity;
-import game.entity.Head;
+
 import game.entity.Absolute_Orientation;
-import game.entity.Snake;
+
 
 public class Grid {
 
@@ -147,6 +147,12 @@ public class Grid {
 
 	public List<Entity> getEntities() {
 		return entities;
+	}
+
+
+	public Entity get_entity(int distance, String t) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

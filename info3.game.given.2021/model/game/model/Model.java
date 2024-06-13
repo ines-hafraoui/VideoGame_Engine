@@ -21,6 +21,7 @@
 package game.model;
 
 import java.awt.Graphics;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,13 +35,13 @@ import game.automaton.Move;
 import game.automaton.State;
 import game.automaton.Transition;
 import game.automaton.TrueFalse;
-import game.entity.Apple;
+
 import game.entity.Base;
 import game.entity.Entity;
-import game.entity.Head;
+
 import game.entity.Absolute_Orientation;
 import game.entity.Position;
-import game.entity.Snake;
+
 import info3.game.Grid;
 import info3.game.view.Avatar;
 import info3.game.view.View;
@@ -86,6 +87,10 @@ public class Model {
 	public Entity get_entity(int distance, String t) {
 		Entity e = m_grid.get_entity(distance, t);
 		return e;
+	}
+	
+	public void add_entity(Entity e) {
+		entities.add(e);
 	}
 
 	public boolean inflict_hit(Absolute_Orientation o, int porte, String t) {
