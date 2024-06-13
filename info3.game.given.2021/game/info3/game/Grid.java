@@ -49,7 +49,7 @@ public class Grid {
 		return colorpos;
 	}
 
-	public char eval(Relative_Orientation d, float x, float y, Absolute_Orientation o) {
+	public char eval(Absolute_Orientation d, float x, float y) {
 		float targetX = x;
 		float targetY = y;
 

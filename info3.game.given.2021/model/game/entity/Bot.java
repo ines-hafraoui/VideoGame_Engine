@@ -74,7 +74,7 @@ public class Bot extends Entity{
 
 	@Override
 	public boolean do_wizz(int factor) {
-		return calcul_newSpeed(acc_factor);
+		return newSpeed(factor);
 	}
 
 	@Override

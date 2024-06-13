@@ -10,64 +10,52 @@ public class Fleche extends Entity{
 	}
 
 	@Override
-	public boolean do_move(Absolute_Orientation o) {
-		// TODO Auto-generated method stub
+	public boolean do_move() {
 		return false;
 	}
 
 	@Override
-	public void do_egg(int cat) {
-		// TODO Auto-generated method stub
-		
+	public void do_egg(int c) {
 	}
 
 	@Override
-	public boolean do_hit() {
-		// TODO Auto-generated method stub
+	public boolean do_hit(Absolute_Orientation o,  Category c, int porte) {
 		return false;
 	}
 
 	@Override
-	public boolean do_pick(int distance, Category c) {
-		// TODO Auto-generated method stub
+	public boolean do_pick(Category c,int distance) {
 		return false;
 	}
 
 	@Override
-	public Entity do_throw(int index) {
-		// TODO Auto-generated method stub
+	public Entity do_throw() {
 		return null;
 	}
 
 	@Override
-	public void do_power(int p) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void do_explode() {}
+
+	@Override
+	public void do_power(int p) {	}
 
 	@Override
 	public boolean do_jump() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean do_wizz() {
-		// TODO Auto-generated method stub
+	public boolean do_wizz(int factor) {
 		return false;
 	}
 
 	@Override
-	public boolean do_get(Entity e, int index) {
-		// TODO Auto-generated method stub
+	public boolean do_get() {
 		return false;
 	}
 
 	@Override
-	public void do_turn(Absolute_Orientation o) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void do_turn(Absolute_Orientation o) {	}
 	
 
 }

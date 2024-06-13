@@ -26,6 +26,9 @@ public abstract class Entity {
 	protected boolean explode;
 
 	protected Category c;
+	protected int index_inventory;
+	protected int index_bot;
+	protected int nb_bot; 
 
 	protected Position position;
 	protected Float base_speed;
@@ -34,6 +37,8 @@ public abstract class Entity {
 
 	public final static int FLECHE = 1;
 	public final static int BOULE_FEU = 2;
+	public final static int BOT = 3;
+	
 	public final static int dt = 1;
 
 	public Entity(Automate a, Model m, Position p, Absolute_Orientation o) {
@@ -45,6 +50,8 @@ public abstract class Entity {
 		HP = 100;
 		explode = false;
 		index_inventory =0 ;
+		index_bot =0;
+		nb_bot = 5;
 	}
 
 	public Entity(Model m, Position p, Absolute_Orientation o) {
@@ -53,6 +60,9 @@ public abstract class Entity {
 		abs_or = o;
 		HP = 100;
 		explode = false;
+		index_inventory = 0;
+		index_bot = 0;
+		nb_bot = 5;
 
 	}
 
@@ -107,12 +117,12 @@ public abstract class Entity {
 			c_speed = 0;
 		}
 		
-		return 
+		return null;
 
 	}
 
-	public boolean eval_cell(Direction dir, Category cat) {
-		char response = model.get_grid().eval(dir, position.getPositionX(), position.getPositionY(), abs_or);
+	public boolean eval_cell(Absolute_Orientation dir, Category cat) {
+		char response = model.get_grid().eval(dir, position.getPositionX(), position.getPositionY());
 		if (response != 'X')
 			return true;
 		return false;
@@ -134,19 +144,31 @@ public abstract class Entity {
 
 	public abstract void do_egg(int cat);
 
-	public abstract boolean do_hit();
+	public abstract boolean do_hit(Absolute_Orientation o, Category c, int porte);
 
-	public boolean do_wait() {
+	public boolean do_wait(int inc, int select ) {
+		switch(select) {
+		case 1 :
+			index_bot +=inc;
+			break;
+		case 2 : 
+			index_inventory += inc;
+			break;
+		default : 
+			break;
+		}
 		return true;
-
 	}
+		
 
-	// take smth from the floor
-	public abstract boolean do_pick(int distance, Category c);
+	/*
+	 * take smth from the floor at a certain distance from itself
+	 */
+	public abstract boolean do_pick(Category c,int distance);
 
 	// throw what is in its bag at the index. It will create an entity that will be
 	// paint by the view
-	public abstract Entity do_throw(int index);
+	public abstract Entity do_throw();
 
 	public void do_explode() {
 		explode = true;
@@ -158,10 +180,10 @@ public abstract class Entity {
 	public abstract boolean do_jump();
 
 	// method for speed move
-	public abstract boolean do_wizz();
+	public abstract boolean do_wizz(int factor);
 
 	// take an automate from its bag and link it to the entity (bot)
-	public abstract boolean do_get(Entity e, int index);
+	public abstract boolean do_get();
 
 	public abstract void do_turn(Absolute_Orientation o);
 

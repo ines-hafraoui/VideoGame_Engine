@@ -29,7 +29,10 @@ public class Player extends Entity {
 
 	@Override
 	public boolean do_move() {
-		return newPosition();
+		Position p = newPosition();
+		if (p == null) return false;
+		position = p;
+		return true;
 	}
 
 	@Override
@@ -54,12 +57,13 @@ public class Player extends Entity {
 
 	@Override
 	public boolean do_pick(Category c,int distance) {
-		Entity e = model.get_entity(distance, c);
+		Entity e = model.get_entity(distance, c);	// ask the model to give it the entity (whiwh is an item) at the distance d 
 		return inventory.add(e.aut);
 	}
 
 	@Override
 	public Entity do_throw() {
+		int index = index_inventory%nb_bot;
 		Automate a = inventory.remove(index);
 		Item new_item = new Item(a,model, position,abs_or);
 		return new_item;
@@ -77,10 +81,12 @@ public class Player extends Entity {
 
 	@Override
 	public boolean do_get() {
-		
-		Automate a = inventory.remove(index);
+		Entity e = bots.get(index_bot);
+		Automate a = inventory.remove(index_inventory);
 		if (a != null) {
 			e.aut = a; 
+			index_inventory =0;
+			index_bot = 0;
 			return true;
 		}
 		return false;
@@ -92,8 +98,8 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public boolean do_wizz() {
-		return false;
+	public boolean do_wizz(int factor) {
+		return newSpeed(factor);
 	}
 
 	
