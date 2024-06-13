@@ -141,15 +141,14 @@ public class Map {
 	}
 
 	private List<Position> selectSeedPoints(int seed, List<Position> allPoints) {
-		int totalPoints = allPoints.size();
 
 		Random random = new Random(seed);
-		int numberOfSeeds = random.nextInt(totalPoints);
+		int numberOfSeeds = random.nextInt(allPoints.size());
 		List<Position> seedPoints = new ArrayList<>();
 
 		// select seeds
 		while (seedPoints.size() < numberOfSeeds) {
-			int randomIndex = random.nextInt(totalPoints);
+			int randomIndex = random.nextInt(allPoints.size());
 			Position randomPoint = allPoints.get(randomIndex);
 
 			if (!seedPoints.contains(randomPoint)) {
@@ -173,11 +172,12 @@ public class Map {
 
 		while (!allPoints.isEmpty()) {
 			// Assigner chaque point au polygone le plus proche
+			List<Position> p=new ArrayList<>();
 			for (Position point : allPoints) {
-
 				Polygon closestPolygon = null;
 				double minDistance = Double.MAX_VALUE;
-
+				
+				
 				for (Polygon poly : polygons) {
 					double distance = poly.getCenter().distance(point);
 					if (distance < minDistance) {
@@ -188,19 +188,25 @@ public class Map {
 
 				if (closestPolygon != null) {
 					closestPolygon.addVertex(point);
-					allPoints.remove(point);
+					p.add(point);
 				}
 
 			}
-
+			for (Position position : p) {
+				allPoints.remove(position);
+			}
 			// check for invalid polygons
 			// Vérifier les polygones avec des conditions spéciales
-			List<Position> invalidPoints = new ArrayList<>();
+			List<Polygon> invalidPolygons = new ArrayList<>();
 
 			for (Polygon poly : polygons) {
 				if (poly.getVertices().size() <= 1 || poly.getArea() == 0) {
 					allPoints.addAll(poly.getVertices());
+					invalidPolygons.add(poly);
 				}
+			}
+			for(Polygon poly : invalidPolygons) {
+				allPoints.remove(poly);
 			}
 		}
 		

@@ -18,7 +18,7 @@ public class View extends Container {
 	private Model m_model;
 	private List<Avatar> avatars;
 	private int m_width, m_height, m_border, m_x = 0, m_y = 0;
-	private Map m_map;
+	private MapView m_map;
 
 	public View(Model model, int width, int height, int border) {
 		m_model = model;
@@ -26,6 +26,7 @@ public class View extends Container {
 		m_height = height;
 		m_border = border;
 		avatars = new ArrayList();
+		m_map=new MapView(m_x,m_y,m_model);
 		List<Entity> Es = m_model.get_grid().getEntities();
 		Iterator<Entity> iter = Es.iterator();
 		while (iter.hasNext()) {
@@ -64,7 +65,7 @@ public class View extends Container {
 	public void paint(Graphics g) {
 		
 		g.setColor(Color.DARK_GRAY);
-		map.paint(g);
+		m_map.paint(g);
 
 		int box_width = (m_width + get_border()) / m_model.get_grid().getnboxline();
 		int box_height = (m_height - get_border()) / m_model.get_grid().getnboxcol();
