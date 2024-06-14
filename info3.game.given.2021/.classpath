@@ -10,5 +10,6 @@
 	<classpathentry kind="src" path="audio"/>
 	<classpathentry kind="src" path="game"/>
 	<classpathentry kind="src" path="controller"/>
+	<classpathentry kind="src" path="gal"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
