@@ -1,7 +1,8 @@
-package info3.game.view;
+package info3.game.avatar;
 
-import java.awt.Color;
+import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -9,25 +10,24 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import game.entity.Apple;
-import game.entity.Block;
 import game.entity.Entity;
-import game.entity.Head;
 
 public abstract class Avatar extends Component{
 
 	Entity m_entity;
-	View m_view;
+	Container m_parent;
 	BufferedImage[] m_images;
 	int m_imageIndex;
+	protected HealthBar m_hb;
 	
-	public Avatar(Entity e, View v) {
-		m_view = v;
+	public Avatar(Entity e, Container p) {
+		m_parent = p;
 		m_entity = e;
-		m_view.add_avatar(this);
+		m_hb = new HealthBar(this);
+		m_parent.add(this,BorderLayout.CENTER);
 	}
 
-	public abstract void paint(Graphics g, int box_width, int box_height);
+	public abstract void paint(Graphics g);
 	
 	public static BufferedImage[] loadSprite(String filename, int nrows, int ncols) throws IOException {
 	    File imageFile = new File(filename);
@@ -49,21 +49,5 @@ public abstract class Avatar extends Component{
 	    return null;
 	  }
 	
-	protected void drawHealthBar(Graphics g, int x, int y, int width, int height) {
-        //int health= m_entity.health;
-		int health = 50;
-        int healthWidth = (int) ((width * health) / 100.0);
-        
-        // Fond de la barre de santé
-        g.setColor(Color.GRAY);
-        g.fillRect(x, y, width, height);
-
-        // Barre de santé actuelle
-        g.setColor(Color.BLUE);
-        g.fillRect(x, y, healthWidth, height);
-
-        // Bordure de la barre de santé
-        g.setColor(Color.BLACK);
-        g.drawRect(x, y, width, height);
-    }
+	
 }

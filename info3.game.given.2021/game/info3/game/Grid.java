@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import game.automaton.Direction;
+import game.automaton.Relative_Orientation;
 import game.entity.Apple;
 import game.entity.Block;
 import game.entity.Entity;
@@ -48,11 +49,11 @@ public class Grid {
 		return colorpos;
 	}
 
-	public char eval(Direction d, int x, int y, Absolute_Orientation o) {
-		int targetX = x;
-		int targetY = y;
+	public char eval(Absolute_Orientation d, float x, float y) {
+		float targetX = x;
+		float targetY = y;
 
-		switch (o.getOrientation()) {
+		switch (o.get_abs_Orientation()) {
 		case 'N':
 			switch (d.getDirection()) {
 			case 'F':

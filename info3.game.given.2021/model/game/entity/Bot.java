@@ -1,106 +1,88 @@
 package game.entity;
 
 import game.automaton.Automate;
+import game.entity.Absolute_Orientation;
 import game.automaton.Category;
 import game.automaton.Direction;
 import game.model.Model;
 
 public class Bot extends Entity{
+
 	
-	public Bot(Automate a, Model m,Position p, Absolute_Orientation o ) {
-		super(a,m,p,o);
+	private int acc_factor;
+	
+	public Bot(Automate a, Model m,Position p, Absolute_Orientation o,String t ) {
+		super(a,m,p,o,t);
+		acc_factor = 3;
 	}
 	
-	public Bot(Model m,Position p, Absolute_Orientation o ) {
-		super(m,p,o);
+	public Bot(Model m,Position p, Absolute_Orientation o, String t) {
+		super(m,p,o,t);
+		acc_factor = 3;
 	}
 
 	@Override
 	public boolean do_move() {
-		// TODO Auto-generated method stub
+		Position p = newPosition();
+		if (p == null) return false;
+		position = p;
+		return true;
+	}
+
+	@Override
+	public void do_egg(int cat) {
+		
+		switch(cat) {
+		case FLECHE : 
+			model.get_entities().add(new Arrow(model,position,abs_or, ARROW));
+			break;
+		case BOULE_FEU : 
+			model.get_entities().add(new Fire_Ball(model,position,abs_or, FIRE_BALL));
+			break;
+		default : 
+			break;
+		}
+	}
+
+	@Override
+	public void do_turn(Absolute_Orientation o) {
+		abs_or = o;
+	}
+
+	@Override
+	public boolean do_hit(Absolute_Orientation o,  String t, int porte) {
+		return model.inflict_hit(o, porte, t);
+	}
+
+	@Override
+	public boolean do_pick(String t ,int distance) {
 		return false;
 	}
 
 	@Override
-	public boolean do_egg() {
-		// TODO Auto-generated method stub
-		return false;
+	public Entity do_throw() {
+		return null;
 	}
 
-	@Override
-	public boolean do_turn() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
-	public boolean do_hit() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean do_wait() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean do_pick() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean do_throw() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean do_store() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean do_get(int index) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean do_explode() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean do_power() {
-		// TODO Auto-generated method stub
-		return false;
+	public void do_power(int p) {
+		HP += p;
 	}
 
 	@Override
 	public boolean do_jump() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean do_wizz() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean do_wizz(int factor) {
+		newSpeed(factor);
+		return true;
 	}
 
 	@Override
-	public Entity do_egg(Automate a) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean do_store(Entity e) {
+	public boolean do_get() {
 		return false;
 	}
 	

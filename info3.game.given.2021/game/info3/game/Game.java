@@ -28,7 +28,9 @@ import java.io.RandomAccessFile;
 
 import javax.swing.JFrame;
 
+import game.entity.Entity;
 import game.model.Model;
+import game.model.Model.ModelListener;
 import info3.controller.CanvasListener;
 import info3.game.sound.RandomFileInputStream;
 import info3.game.view.GameCanvas;
@@ -55,13 +57,18 @@ public class Game {
 	View m_view;
 	public Model m_model;
 	Sound m_music;
+	IFactory m_factory;
 
 	Game() throws Exception {
 		// creating a model, that would be a model
 		// in an Model-View-Controller pattern (MVC)
 		Dimension d = new Dimension(1000, 1000);
-		m_model = new Model(new Grid(20, 20),d.width,d.height);
-		m_view=new View(m_model,d.width,d.height,2);
+		m_factory = new Game1Factory();
+		m_model = new Model(new Grid(20, 20), d.width, d.height);
+		m_view = new View(m_model, m_factory, d);
+
+		m_model.setListener(new SyncViewModel());
+
 		// creating a listener for all the events
 		// from the game canvas, that would be
 		// the controller in the MVC pattern
@@ -73,7 +80,7 @@ public class Game {
 		System.out.println("  - creating frame...");
 		m_frame = m_canvas.createFrame(d);
 		System.out.println("  - setting up the frame...");
-		
+
 		setupFrame();
 	}
 
@@ -164,6 +171,19 @@ public class Game {
 
 		// paint
 		m_view.paint(g);
+	}
+
+	class SyncViewModel implements ModelListener {
+
+		@Override
+		public void addedEntity(Entity e) {
+			m_view.newEntity(e);
+		}
+
+		@Override
+		public void removedEntity(Entity e) {
+			m_view.removeEntity(e);
+		}
 	}
 
 }

@@ -2,24 +2,28 @@ package game.entity;
 
 public class Absolute_Orientation {
 	
-	public char abs_or;  
+	public String abs_or;  
 	
-	public static final char NORTH = 'N';
-	public static final char SOUTH = 'S';
-	public static final char EAST = 'E';
-	public static final char WEST = 'W';
+	public static final String NORTH = "N";
+	public static final String SOUTH = "S";
+	public static final String EAST = "E";
+	public static final String WEST = "W";
+	public static final String NNORTH_E = "NE";
+	public static final String NORTH_W = "NW";
+	public static final String SOUTH_E = "SE";
+	public static final String SOUTH_W = "SW";
 	
 	
 	
-	public Absolute_Orientation(char orientation) {
+	public Absolute_Orientation(String orientation) {
 		abs_or = orientation; 
 	}
 	
-	public char get_abs_Orientation() {
+	public String get_abs_Orientation() {
 		return abs_or;
 	}
 	
-	public void set_abs_Orientation(char orientation) {
+	public void set_abs_Orientation(String orientation) {
 		abs_or = orientation; 
 	}
 

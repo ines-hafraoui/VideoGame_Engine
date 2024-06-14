@@ -1,65 +1,57 @@
 package info3.game.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import game.entity.Apple;
 import game.entity.Entity;
-import game.entity.Head;
-import game.entity.Snake;
 import game.model.Model;
+import info3.game.IFactory;
+import info3.game.avatar.Avatar;
 
 public class View extends Container {
 
 	private Model m_model;
-	private List<Avatar> avatars;
 	private int m_width, m_height, m_border, m_x = 0, m_y = 0;
 	private MapView m_map;
+	private IFactory m_f;
+	private Dimension m_dimension;
+	private Viewport m_viewport;
 
-	public View(Model model, int width, int height, int border) {
+	public View(Model model, IFactory f, Dimension d) {
+
+		setBackground(Color.black);
+		BorderLayout bl = new BorderLayout();
+		setLayout(bl);
+
 		m_model = model;
-		m_width = width;
-		m_height = height;
-		m_border = border;
-		avatars = new ArrayList();
+		m_width = d.width;
+		m_height = d.height;
 		m_map=new MapView(m_x,m_y,m_model);
+		m_f = f;
+		m_dimension = d;
 		List<Entity> Es = m_model.get_grid().getEntities();
-		Iterator<Entity> iter = Es.iterator();
-		while (iter.hasNext()) {
-			Entity e = iter.next();
-			if (e instanceof Apple) {
-				new AppleAvatar((Apple) e, this);
-			}
-			if (e instanceof Snake) {
-				Avatar a = new SnakeAvatar((Snake)e, this);
-			}
-		}
+		m_viewport = new Viewport(m_model, Es, m_f, this);
 	}
 
-	public View(Model model, int x, int y, int width, int height, int border) {
+	public View(Model model, int x, int y, int width, int height, int border, IFactory f) {
 		m_model = model;
 		m_width = width;
 		m_height = height;
 		m_border = border;
 		m_x = x;
 		m_y = y;
-		avatars = new ArrayList();
-		List<Entity> Es = m_model.get_grid().getEntities();
-		Iterator<Entity> iter = Es.iterator();
-		while (iter.hasNext()) {
-			Entity e = iter.next();
-			if (e instanceof Apple) {
-				Avatar a = new AppleAvatar((Apple) e, this);
-			}
-			if (e instanceof Snake) {
-				Avatar a = new SnakeAvatar((Snake)e, this);
-			}
+		m_f = f;
+		m_model = model;
 
-		}
+		List<Entity> Es = m_model.get_grid().getEntities();
+		m_viewport = new Viewport(m_model, Es, m_f, this);
 	}
 
 	public void paint(Graphics g) {
@@ -77,12 +69,12 @@ public class View extends Container {
 //						box_width - (get_border() * 2), box_height - get_border());
 //			}
 //		}
-
-		Iterator<Avatar> iterator = avatars.iterator();
-		while (iterator.hasNext()) {
-			Avatar avatar = iterator.next();
-			avatar.paint(g, box_width, box_height);
-		}
+//
+//		Iterator<Avatar> iterator = avatars.iterator();
+//		while (iterator.hasNext()) {
+//			Avatar avatar = iterator.next();
+//			avatar.paint(g, box_width, box_height);
+//		}
 
 //		for (Entity e : m_model.get_grid().getEntities()) {
 //			
@@ -110,12 +102,14 @@ public class View extends Container {
 		return m_border;
 	}
 
-	public List<Avatar> getAvatars() {
-		return avatars;
+	public Avatar newEntity(Entity e) {
+		return null;
+
 	}
 
-	public void add_avatar(Avatar a) {
-		getAvatars().add(a);
+	public Avatar removeEntity(Entity e) {
+		return null;
+
 	}
 
 }

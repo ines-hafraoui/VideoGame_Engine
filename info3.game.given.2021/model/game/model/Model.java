@@ -27,22 +27,20 @@ import java.util.List;
 
 import game.automaton.Action;
 import game.automaton.Automate;
+import game.automaton.Category;
 import game.automaton.Condition;
 import game.automaton.Direction;
 import game.automaton.Move;
 import game.automaton.State;
 import game.automaton.Transition;
 import game.automaton.TrueFalse;
-import game.entity.Apple;
-import game.entity.Head;
 //import game.entity.Orientation;
 import game.entity.Position;
-import game.entity.Snake;
 import game.map.Map;
 import game.map.Plot;
 import game.map.Polygon;
 import info3.game.Grid;
-import info3.game.view.Avatar;
+import info3.game.avatar.Avatar;
 import info3.game.view.View;
 
 /**
@@ -54,6 +52,7 @@ public class Model {
 	long m_imageElapsed;
 	int m_width, height;
 	private Grid m_grid;
+	
 	//private Orientation m_orientation;
 	public Map m_map;
 
@@ -127,4 +126,30 @@ public class Model {
 		return m_orientation;
 	}
 
+	public Entity get_entity(int distance, String t) {
+		Entity e = m_grid.get_entity(distance, t);
+		return e;
+	}
+
+	public boolean inflict_hit(Absolute_Orientation o, int porte, String t) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* 
+	 * method give the list of entity that are on the map
+	 */
+	public List<Entity> get_entities() {
+		return entities;
+	}
+	
+	public interface ModelListener {
+		 void addedEntity(Entity e);
+		 void removedEntity(Entity e);
+	}
+	
+	ModelListener m_ml;
+	public void setListener(ModelListener l) {
+		m_ml=l;
+	}
 }

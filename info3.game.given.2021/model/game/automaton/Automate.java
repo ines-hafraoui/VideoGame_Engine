@@ -70,4 +70,9 @@ public class Automate {
 		}
 	}
 
+	public State getcurrentstate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
