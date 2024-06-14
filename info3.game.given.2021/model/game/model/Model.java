@@ -21,35 +21,19 @@
 package game.model;
 
 import java.awt.Graphics;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import game.automaton.Action;
-import game.automaton.Automate;
-import game.automaton.Category;
-import game.automaton.Condition;
-import game.automaton.Direction;
-import game.automaton.Move;
-import game.automaton.State;
-import game.automaton.Transition;
-import game.automaton.TrueFalse;
-
-import game.entity.Base;
-import game.entity.Entity;
-
 import game.entity.Absolute_Orientation;
+import game.entity.Entity;
+import game.entity.EntityType;
+import game.entity.Player;
 import game.entity.Position;
-
-
 import game.map.Map;
-import game.map.Plot;
 import game.map.Polygon;
 import info3.game.Grid;
 import info3.game.IFactory;
-import info3.game.avatar.Avatar;
-import info3.game.view.View;
 
 /**
  * A simple class that holds the images of a sprite for an animated cowbow.
@@ -67,17 +51,13 @@ public class Model {
 	public Model(Grid grid, int w, int h, IFactory f) throws IOException {
 		entities = new ArrayList<Entity>();
 		factory = f;
-	}
-	//private Orientation m_orientation;
-	public Map m_map;
-
-	public Model(Grid grid, int w, int h) throws IOException {
 		m_grid = grid;
+		factory = f;
 		List<Position> poss = new ArrayList<>();
 		Position pos1=new Position(0,0);
-		Position pos2=new Position(0,1000);
-		Position pos3=new Position(1000,0);
-		Position pos4=new Position(1000,1000);
+		Position pos2=new Position(0,h);
+		Position pos3=new Position(w,0);
+		Position pos4=new Position(w,h);
 		
 		poss.add(pos1);
 		poss.add(pos2);
@@ -87,6 +67,32 @@ public class Model {
 		Polygon p=new Polygon(poss);
 		m_map=new Map(p);
 		m_map.generateMap(m_map.getSeed());
+		
+		Entity e = factory.newEntity(null, new Position(100,100), m_orientation, EntityType.PLAYER);
+		entities.add(e);
+		Entity e1 = factory.newEntity(null, new Position(900,400), m_orientation, EntityType.PLAYER);
+		entities.add(e1);
+	}
+	//private Orientation m_orientation;
+	public Map m_map;
+
+	public Model(Grid grid, int w, int h ) throws IOException {
+		m_grid = grid;
+		List<Position> poss = new ArrayList<>();
+		Position pos1=new Position(0,0);
+		Position pos2=new Position(0,h);
+		Position pos3=new Position(w,0);
+		Position pos4=new Position(w,h);
+		
+		poss.add(pos1);
+		poss.add(pos2);
+		poss.add(pos3);
+		poss.add(pos4);
+		
+		Polygon p=new Polygon(poss);
+		m_map=new Map(p);
+		m_map.generateMap(m_map.getSeed());
+		
 //		m_orientation = new Orientation('H');
 //		Head s_head = new Head(new Orientation('S'), this.get_grid(), new Position(0, 0));
 //		Snake snake = new Snake(null, this.get_grid(), s_head);
@@ -170,7 +176,7 @@ public class Model {
 
 	
 	public interface ModelListener {
-		 void addedEntity(Entity e);
+		 void addedEntity(Entity e) throws IOException;
 		 void removedEntity(Entity e);
 	}
 	

@@ -40,13 +40,6 @@ public abstract class Entity {
 	public final static int BOULE_FEU = 2;
 	public final static int BOT = 3;
 	public final static int dt = 1;
-	
-	public static final String BASE = "BA";
-	public static final String ITEM = "I";
-	public static final String TEAMMATE = "BO";
-	public static final String PARASITE = "P";
-	public static final String FIRE_BALL = "FB";
-	public static final String ARROW = "A";
 
 	public Entity(Automate a, Model m, Position p, Absolute_Orientation o, String type) {
 		aut = a;

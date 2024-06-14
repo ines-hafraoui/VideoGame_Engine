@@ -24,9 +24,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import game.entity.Entity;
 import game.model.Model;
@@ -51,21 +53,20 @@ public class Game {
 	}
 
 	JFrame m_frame;
-//	JLabel m_text;
+	JLabel m_text;
 	GameCanvas m_canvas;
 	CanvasListener m_listener;
 	View m_view;
 	public Model m_model;
 	Sound m_music;
-	IFactory m_factory;
 
 	Game() throws Exception {
 		// creating a model, that would be a model
 		// in an Model-View-Controller pattern (MVC)
-		Dimension d = new Dimension(1000, 1000);
-		m_factory = new Game1Factory();
-		m_model = new Model(new Grid(20, 20), d.width, d.height);
-		m_view = new View(m_model, m_factory, d);
+		Dimension d = new Dimension(1800, 1000);
+		IFactory factory = new Game1Factory();
+		m_model = new Model(new Grid(20, 20), d.width, d.height, factory);
+		m_view = new View(m_model, factory, d);
 
 		m_model.setListener(new SyncViewModel());
 
@@ -176,7 +177,7 @@ public class Game {
 	class SyncViewModel implements ModelListener {
 
 		@Override
-		public void addedEntity(Entity e) {
+		public void addedEntity(Entity e) throws IOException {
 			m_view.newEntity(e);
 		}
 

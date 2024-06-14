@@ -1,14 +1,9 @@
 package game.entity;
 
-import game.automaton.Automate;
-
-
-import game.automaton.Category;
-import game.automaton.Direction;
-import game.model.Model;
 import java.util.ArrayList;
-import java.util.List;
-import game.entity.Entity;
+
+import game.automaton.Automate;
+import game.model.Model;
 
 public class Player extends Entity {
 	
@@ -40,10 +35,10 @@ public class Player extends Entity {
 		
 		switch(cat) {
 		case FLECHE : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, ARROW));
+			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.ARROW));
 			break;
 		case BOULE_FEU : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, FIRE_BALL));
+			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.FIRE_BALL));
 			break;
 		default : 
 			break;

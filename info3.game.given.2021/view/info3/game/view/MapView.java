@@ -1,6 +1,7 @@
 package info3.game.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.Iterator;
 import java.util.List;
@@ -20,11 +21,13 @@ public class MapView {
 	private int x;
 	private int y;
 	private Model m_model;
+	Viewport m_parent;
 
-	public MapView(int x, int y, Model model) {
+	public MapView(int x, int y, Model model, Viewport parent) {
 		x_max = x;
 		y_max = y;
 		m_model = model;
+		m_parent = parent;
 	}
 
 	public void paint(Graphics g) {
@@ -49,11 +52,8 @@ public class MapView {
 //			g.fillPolygon(Polygon_coordX(p), Polygon_coordY(p), p.getVertices().size());
 //			AffichagePlots(g, biome);
 //		} else {
-//			g.setColor(Color.BLACK);
-//			g.fillRect(100, 100, 100, 100);
-		
-			g.setColor(Color.BLACK);
-			g.fillPolygon(Polygon_coordX(p), Polygon_coordY(p), p.getVertices().size());
+		g.setColor(Color.BLACK);
+		g.fillPolygon(Polygon_coordX(p), Polygon_coordY(p), p.getVertices().size());
 //			AffichagePlots(g, biome);
 //		}
 	}
@@ -63,29 +63,29 @@ public class MapView {
 		Iterator<Plot> iterator = plots.iterator();
 		while (iterator.hasNext()) {
 			Plot plot = iterator.next();
-			Polygon p =plot.getBorders();
+			Polygon p = plot.getBorders();
 			g.setColor(Color.CYAN);
 			g.fillPolygon(Polygon_coordX(p), Polygon_coordY(p), p.getVertices().size());
 		}
 
 	}
-	
+
 	private int[] Polygon_coordX(Polygon p) {
 		List<Position> l = p.getVertices();
 		int[] tab_x = new int[l.size()];
 		for (int i = 0; i < l.size(); i++) {
 			Position pos = l.get(i);
-			tab_x[i] = (int) (pos.getPositionX());
+			tab_x[i] = (int) (pos.getPositionX()*View.MAPDISPLAYSCALE);
 		}
 		return tab_x;
 	}
-	
+
 	private int[] Polygon_coordY(Polygon p) {
 		List<Position> l = p.getVertices();
 		int[] tab_y = new int[l.size()];
 		for (int i = 0; i < l.size(); i++) {
 			Position pos = l.get(i);
-			tab_y[i] = (int) (pos.getPositionY());
+			tab_y[i] = (int) (pos.getPositionY()*View.MAPDISPLAYSCALE);
 		}
 		return tab_y;
 	}

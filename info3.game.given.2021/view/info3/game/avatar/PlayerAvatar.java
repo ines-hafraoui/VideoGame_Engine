@@ -1,29 +1,38 @@
 package info3.game.avatar;
 
-import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import game.entity.Player;
+import game.entity.Entity;
+import info3.game.view.View;
 
-public class PlayerAvatar extends Avatar{
+public class PlayerAvatar extends Avatar {
 
-	public static final int HIT = 1;
-	public static final int WALK = 2;
-	
-	public PlayerAvatar(Player e, Container parent) throws IOException {
-		super(e,parent);
-		m_imageIndex=0;
-		m_images = loadSprite("resources/perso.png", 8, 12);
+	public PlayerAvatar(Entity e, View v) throws IOException {
+		super(e, v);
+		m_imageIndex = 0;
+		m_images = loadSprite("resources/MiniWorldSprites/Characters/Soldiers/Mounted/RedKnight.png", 12, 4);
 	}
 
 	@Override
-	public void paint(Graphics g) {
-		int etat=2;
+	public void paint(Graphics g, int x, int y) {
 		BufferedImage img = m_images[m_imageIndex];
-		g.drawImage(img, m_view.get_x() + m_entity.get_x(), m_view.get_y() + m_entity.get_y(), img.getWidth(), img.getHeight(), m_parent);
-		m_hb.drawHealthBar(g,m_view.get_x() + m_entity.get_x(),m_view.get_y() + m_entity.get_y() - 5%img.getHeight(),img.getWidth(),5%img.getHeight());
+		m_hb.drawHealthBar(g, (int) (x + m_entity.get_x() + 25), (int) (y + m_entity.get_y() - 5 % img.getHeight()),
+				(img.getWidth() * View.DISPLAYSCALE / 2), 5 % img.getHeight());
+		g.drawImage(img, (int) (x + m_entity.get_x()), (int) (y + m_entity.get_y()), img.getWidth() * View.DISPLAYSCALE,
+				img.getHeight() * View.DISPLAYSCALE, null);
+//		switch(a_state) {
+//		case IDLE:
+//			if(m_imageIndex) {
+//				
+//			}
+//			break;
+//		}
+		if (m_imageIndex > 46)
+			m_imageIndex = 0;
+		else
+			m_imageIndex++;
 	}
 
 }
