@@ -9,8 +9,7 @@ public class LandType {
     private float viscosity; //value that represents how slowed down walking on this soil
     
     
-    public LandType(Dimension dimension, String name, float viscosity) {
-        this.dimension = dimension;
+    public LandType(String name, float viscosity) {
         this.name = name;
         this.viscosity = viscosity;
     }
@@ -23,13 +22,6 @@ public class LandType {
         this.viscosity = viscosity;
     }
     
-    public Dimension getDimension() {
-        return dimension;
-    }
-
-    public void setDimension(Dimension dimension) {
-        this.dimension = dimension;
-    }
 
     public String getName() {
         return name;

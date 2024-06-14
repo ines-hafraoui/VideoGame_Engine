@@ -1,5 +1,6 @@
 package info3.game;
 
+import java.awt.Container;
 import java.io.IOException;
 
 
@@ -21,7 +22,6 @@ import info3.game.avatar.BotAvatar;
 import info3.game.avatar.FireBallAvatar;
 import info3.game.avatar.ItemAvatar;
 import info3.game.avatar.PlayerAvatar;
-import info3.game.view.View;
 
 public class Game1Factory implements IFactory {
 
@@ -44,9 +44,15 @@ public class Game1Factory implements IFactory {
 		case PLAYER:
 			return new Player(a, m, p, o, type);
 		case FIREBALL:
+<<<<<<< HEAD
 			return new Fire_Ball(a,m, p, o, type);
 		case ARROW:
 			return new Arrow(a,m, p, o, type);
+=======
+			return new Fire_Ball(a, m, p, o, type);
+		case ARROW:
+			return new Arrow(a, m, p, o, type);
+>>>>>>> origin/View
 		default:
 			return null;
 		}
@@ -69,20 +75,20 @@ public class Game1Factory implements IFactory {
 	}
 
 	@Override
-	public Avatar newAvatar(Entity e, View v) throws IOException {
+	public Avatar newAvatar(Entity e, Container p) throws IOException {
 		switch (e.get_type()) {
 		case BASE:
-			return new BaseAvatar(e, v);
+			return new BaseAvatar(e, p);
 		case ITEM:
-			return new ItemAvatar(e, v);
+			return new ItemAvatar(e, p);
 		case BOT:
-			return new BotAvatar(e, v);
+			return new BotAvatar(e, p);
 		case PLAYER:
-			return new PlayerAvatar((Player) e, v);
+			return new PlayerAvatar((Player) e, p);
 		case FIREBALL:
-			return new FireBallAvatar(e, v);
+			return new FireBallAvatar(e, p);
 		case ARROW:
-			return new ArrowAvatar(e, v);
+			return new ArrowAvatar(e, p);
 		default:
 			return null;
 		}
