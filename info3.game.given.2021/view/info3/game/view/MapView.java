@@ -39,20 +39,23 @@ public class MapView {
 	private void AffichageBiome(Graphics g, Biome biome) {
 		Polygon p = biome.getBorders();
 		// Dessiner le polygone
-		if (biome.getName().equals("volcan")) {
-			g.setColor(Color.RED);
-			g.fillPolygon(Polygon_coordX(p), Polygon_coordY(p), p.getVertices().size());
-			AffichagePlots(g, biome);
-		}
-		if (biome.getName().equals("jungle")) {
-			g.setColor(Color.GREEN);
-			g.fillPolygon(Polygon_coordX(p), Polygon_coordY(p), p.getVertices().size());
-			AffichagePlots(g, biome);
-		} else {
+//		if (biome.getName().equals("volcan")) {
+//			g.setColor(Color.RED);
+//			g.fillPolygon(Polygon_coordX(p), Polygon_coordY(p), p.getVertices().size());
+//			AffichagePlots(g, biome);
+//		}
+//		if (biome.getName().equals("jungle")) {
+//			g.setColor(Color.GREEN);
+//			g.fillPolygon(Polygon_coordX(p), Polygon_coordY(p), p.getVertices().size());
+//			AffichagePlots(g, biome);
+//		} else {
+//			g.setColor(Color.BLACK);
+//			g.fillRect(100, 100, 100, 100);
+		
 			g.setColor(Color.BLACK);
 			g.fillPolygon(Polygon_coordX(p), Polygon_coordY(p), p.getVertices().size());
-			AffichagePlots(g, biome);
-		}
+//			AffichagePlots(g, biome);
+//		}
 	}
 
 	private void AffichagePlots(Graphics g, Biome biome) {
@@ -72,7 +75,7 @@ public class MapView {
 		int[] tab_x = new int[l.size()];
 		for (int i = 0; i < l.size(); i++) {
 			Position pos = l.get(i);
-			tab_x[i] = (int) pos.getPositionX();
+			tab_x[i] = (int) (pos.getPositionX()*100);
 		}
 		return tab_x;
 	}
@@ -82,7 +85,7 @@ public class MapView {
 		int[] tab_y = new int[l.size()];
 		for (int i = 0; i < l.size(); i++) {
 			Position pos = l.get(i);
-			tab_y[i] = (int) pos.getPositionX();
+			tab_y[i] = (int) (pos.getPositionY()*100);
 		}
 		return tab_y;
 	}

@@ -24,7 +24,7 @@ public class Viewport extends Container {
 		super();
 		m_parent = parent;
 		m_model = model;
-		m_parent.add(parent, BorderLayout.EAST);
+		m_parent.add(this, BorderLayout.EAST);
 		BorderLayout bl = new BorderLayout();
 		setLayout(bl);
 		m_f = f;

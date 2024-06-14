@@ -34,6 +34,7 @@ import game.automaton.Move;
 import game.automaton.State;
 import game.automaton.Transition;
 import game.automaton.TrueFalse;
+import game.entity.Entity;
 //import game.entity.Orientation;
 import game.entity.Position;
 import game.map.Map;
