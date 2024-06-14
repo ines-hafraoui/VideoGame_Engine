@@ -28,7 +28,7 @@ public class MapView {
 	}
 
 	public void paint(Graphics g) {
-		List<Biome> b = m_model.m_map.getBiome();
+		List<Biome> b = m_model.getMap().getBiome();
 		Iterator<Biome> iterator = b.iterator();
 		while (iterator.hasNext()) {
 			Biome biome = iterator.next();
