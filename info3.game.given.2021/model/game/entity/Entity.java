@@ -1,7 +1,7 @@
 package game.entity;
 
 import game.entity.Position;
-
+import game.map.LandType;
 import game.model.Model;
 import info3.game.Grid;
 
@@ -125,8 +125,38 @@ public abstract class Entity {
 		} else {
 			c_speed = 0;
 		}
+		int angle = 0;
+		int XN = 0, YN = 0, XS = 0, YS = 0, XW = 0, YW = 0, XE = 0, YE = 0;
+		if (haveCommonChar("N", speed_vct_abs_or.get_abs_Orientation())) {
+			XN = 0;
+			YN = 1;
+			angle = 0;
+		}
+		if (haveCommonChar("S", speed_vct_abs_or.get_abs_Orientation())) {
+			XS = 0;
+			YS = -1;
+			angle = 0;
+		}
+		if (haveCommonChar("W", speed_vct_abs_or.get_abs_Orientation())) {
+			XW = -1;
+			YW = 0;
+			angle = 45;
+		}
+		if (haveCommonChar("E", speed_vct_abs_or.get_abs_Orientation())) {
+			XE = 1;
+			YE = 0;
+			angle = 45;
+		}
 		
-		return null;
+		
+		float X = (float) (Math.cos(angle) * c_speed);
+		float Y = (float) (Math.cos(angle) * c_speed);
+		
+		position.setPositionX(X*(XN + XS + XW + XE));
+		position.setPositionY(Y*(YN + YS + YW + YE));
+		
+		
+		return position;
 
 	}
 
