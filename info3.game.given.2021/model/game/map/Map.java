@@ -105,8 +105,11 @@ public class Map {
 
 		// Nettoyer les polygones pour maximiser leur surface
         for (Polygon polygon : polygons) {
-            polygon.cleanPolygon();
+            //polygon.cleanPolygon();
+        	biomes.add(new Biome(polygon, new LandType("LAVA", (float) 0.1)));
         }
+        
+       
 	}
 
 	private List<Position> generatePointsInsidePolygon(int seed) {
@@ -146,6 +149,8 @@ public class Map {
 		int numberOfSeeds = random.nextInt(allPoints.size());
 		List<Position> seedPoints = new ArrayList<>();
 
+		List<Position> to_remove = new ArrayList<>();
+		
 		// select seeds
 		while (seedPoints.size() < numberOfSeeds) {
 			int randomIndex = random.nextInt(allPoints.size());
@@ -153,8 +158,12 @@ public class Map {
 
 			if (!seedPoints.contains(randomPoint)) {
 				seedPoints.add(randomPoint);
-				allPoints.remove(randomIndex);
+				to_remove.add(randomPoint);
 			}
+		}
+		
+		for (Position p:to_remove) {
+			allPoints.remove(p);
 		}
 
 		return seedPoints;
@@ -172,7 +181,7 @@ public class Map {
 
 		while (!allPoints.isEmpty()) {
 			// Assigner chaque point au polygone le plus proche
-			List<Position> p=new ArrayList<>();
+
 			for (Position point : allPoints) {
 				Polygon closestPolygon = null;
 				double minDistance = Double.MAX_VALUE;
@@ -188,13 +197,11 @@ public class Map {
 
 				if (closestPolygon != null) {
 					closestPolygon.addVertex(point);
-					p.add(point);
 				}
 
 			}
-			for (Position position : p) {
-				allPoints.remove(position);
-			}
+			
+			allPoints.clear();
 			// check for invalid polygons
 			// Vérifier les polygones avec des conditions spéciales
 			List<Polygon> invalidPolygons = new ArrayList<>();
@@ -206,7 +213,7 @@ public class Map {
 				}
 			}
 			for(Polygon poly : invalidPolygons) {
-				allPoints.remove(poly);
+				polygons.remove(poly);
 			}
 		}
 		
