@@ -34,8 +34,13 @@ public class Automate {
 		return currentStateList.remove(s);
 	}
 	
-	public List<State> returnCurrentState(State s) {
+	public List<State> getcurrentstate() {
 		return currentStateList;
+	}
+	
+	public boolean add_transition(State s1, State s2, Condition cond, List<Action> a) {
+		Transition t = new Transition(s2,cond,a);
+		return s1.add_transition(t);
 	}
 
 	public boolean blocked; // the entity will unblock the automaton once it's transition is over
@@ -72,11 +77,6 @@ public class Automate {
 			}
 
 		}
-	}
-
-	public State getcurrentstate() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
