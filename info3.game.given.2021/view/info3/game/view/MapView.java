@@ -75,7 +75,7 @@ public class MapView {
 		int[] tab_x = new int[l.size()];
 		for (int i = 0; i < l.size(); i++) {
 			Position pos = l.get(i);
-			tab_x[i] = (int) (pos.getPositionX()*100);
+			tab_x[i] = (int) (pos.getPositionX());
 		}
 		return tab_x;
 	}
@@ -85,7 +85,7 @@ public class MapView {
 		int[] tab_y = new int[l.size()];
 		for (int i = 0; i < l.size(); i++) {
 			Position pos = l.get(i);
-			tab_y[i] = (int) (pos.getPositionY()*100);
+			tab_y[i] = (int) (pos.getPositionY());
 		}
 		return tab_y;
 	}

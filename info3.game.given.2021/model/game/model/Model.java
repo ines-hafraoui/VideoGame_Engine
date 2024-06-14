@@ -35,7 +35,6 @@ import game.automaton.Move;
 import game.automaton.State;
 import game.automaton.Transition;
 import game.automaton.TrueFalse;
-<<<<<<< HEAD
 
 import game.entity.Base;
 import game.entity.Entity;
@@ -43,14 +42,10 @@ import game.entity.Entity;
 import game.entity.Absolute_Orientation;
 import game.entity.Position;
 
-=======
-import game.entity.Entity;
-//import game.entity.Orientation;
-import game.entity.Position;
+
 import game.map.Map;
 import game.map.Plot;
 import game.map.Polygon;
->>>>>>> origin/View
 import info3.game.Grid;
 import info3.game.IFactory;
 import info3.game.avatar.Avatar;
@@ -65,7 +60,6 @@ public class Model {
 	long m_imageElapsed;
 	int m_width, height;
 	private Grid m_grid;
-<<<<<<< HEAD
 	private Absolute_Orientation m_orientation;
 	List<Entity> entities;
 	IFactory factory;
@@ -73,8 +67,7 @@ public class Model {
 	public Model(Grid grid, int w, int h, IFactory f) throws IOException {
 		entities = new ArrayList<Entity>();
 		factory = f;
-=======
-	
+	}
 	//private Orientation m_orientation;
 	public Map m_map;
 
@@ -124,7 +117,7 @@ public class Model {
 //
 //		get_grid().add_entity(snake);
 //		get_grid().add_entity(apple);
->>>>>>> origin/View
+
 	}
 
 	public Grid get_grid() {
@@ -169,14 +162,12 @@ public class Model {
 	public List<Entity> get_entities() {
 		return entities;
 	}
-<<<<<<< HEAD
 
 	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String arrow) {
 	
 		return factory.newEntity(model, position, abs_or, arrow);
 	}
 
-=======
 	
 	public interface ModelListener {
 		 void addedEntity(Entity e);
@@ -187,5 +178,4 @@ public class Model {
 	public void setListener(ModelListener l) {
 		m_ml=l;
 	}
->>>>>>> origin/View
 }

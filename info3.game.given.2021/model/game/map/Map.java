@@ -112,6 +112,28 @@ public class Map {
        
 	}
 
+	
+    private float getMaxX() {
+        float maxX = Float.NEGATIVE_INFINITY;
+        for (Position vertex : borders.getVertices()) {
+            if (vertex.getPositionX() > maxX) {
+                maxX = vertex.getPositionX();
+            }
+        }
+        return maxX;
+    }
+
+    // Method to get the maximum y value of the border points
+    private float getMaxY() {
+        float maxY = Float.NEGATIVE_INFINITY;
+        for (Position vertex : borders.getVertices()) {
+            if (vertex.getPositionY() > maxY) {
+                maxY = vertex.getPositionY();
+            }
+        }
+        return maxY;
+    }
+    
 	private List<Position> generatePointsInsidePolygon(int seed) {
 		Random random = new Random(seed);
 		int numberOfPoints = random.nextInt(100) + 1;
@@ -119,8 +141,8 @@ public class Map {
 		int count = 0;
 		List<Position> positionsInsideBorders = new ArrayList<>();
 		while (count < numberOfPoints) {
-			float x = random.nextFloat();
-			float y = random.nextFloat();
+			float x = random.nextInt() % getMaxX();
+			float y = random.nextInt() % getMaxY();
 
 			Position position = new Position(x, y);
 			if (borders.containsPosition(position)) {
