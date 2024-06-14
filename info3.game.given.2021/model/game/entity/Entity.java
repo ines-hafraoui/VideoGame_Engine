@@ -115,7 +115,7 @@ public abstract class Entity {
 			ACC_coeff = 1;
 		}
 
-		acc_speed = BS_coeff * base_speed + ACC_coeff * acc_speed;
+		acc_speed = factor * (BS_coeff * base_speed + ACC_coeff * acc_speed);
 	}
 
 	protected Position newPosition() {
