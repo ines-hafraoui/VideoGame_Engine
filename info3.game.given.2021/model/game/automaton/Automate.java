@@ -9,12 +9,32 @@ public class Automate {
 
 	private List<State> states;
 	private List<State> currentStateList;
+	private State initial_state;
 	private Entity entity;
 
 	public Automate(Entity entity) {
 		states = new ArrayList<>();
 		currentStateList = new ArrayList<>();
-
+		this.entity = entity;
+	}
+	
+	public Automate(State initial_state) {
+		states = new ArrayList<>();
+		currentStateList = new ArrayList<>();
+		this.initial_state = initial_state;
+		
+	}
+	public Automate(State initial_state, List<State> states) {
+		this.states = states;
+		currentStateList = new ArrayList<>();
+		this.initial_state = initial_state;
+		
+	}
+	
+	public Automate(State initial_state, Entity entity) {
+		states = new ArrayList<>();
+		currentStateList = new ArrayList<>();
+		this.initial_state = initial_state;
 		this.entity = entity;
 	}
 

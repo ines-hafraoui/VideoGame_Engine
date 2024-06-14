@@ -6,6 +6,9 @@ public class Move implements Action{
 
 	Entity e;
 	
+	public Move() {
+		
+	}
 	public Move(Entity e) {
 		this.e = e;
 	}

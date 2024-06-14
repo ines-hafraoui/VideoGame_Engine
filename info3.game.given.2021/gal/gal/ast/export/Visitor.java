@@ -24,26 +24,25 @@ import gal.ast.Underscore;
 import gal.ast.Value;
 
 import game.automaton.*;
+import game.entity.Absolute_Orientation;
+import game.entity.Entity;
 
 public class Visitor implements IVisitor {
 
 	@Override
 	public Object visit(Category cat) {
-		game.automaton.Category c;
-		
-		return cat;
+		return cat.terminal.content.charAt(0);
 	}
 
 	@Override
 	public Object visit(Direction dir) {
-		game.automaton.Direction d;
-		return dir;
+		return dir.terminal.content.charAt(0);
 	}
 
 	@Override
 	public Object visit(Key key) {
 	
-		return key;
+		return key.terminal.content;
 	}
 
 	@Override
@@ -76,12 +75,69 @@ public class Visitor implements IVisitor {
 
 	@Override
 	public Object build(FunCall funcall, List<Object> parameters) {
-		LinkedList<Parameter> listout = new LinkedList<Parameter>();
-		for (Object o : parameters) {
-			listout.add((Parameter) o);
+	
+		switch (funcall.name) { //pas sur que le premier élément de parameters est l'entite
+		case "Egg":
+			return new Egg();
+		case "Move":
+			return new Move();
+		case "Turn":
+			Absolute_Orientation a = new Absolute_Orientation("N");
+			switch ((String) parameters.get(0)) {
+			
+			case "N":
+				return new Turn(a);
+			case "S":
+				a.abs_or = "S";
+				return new Turn(a);
+			case "E":
+				a.abs_or = "E";
+				return new Turn(a);
+			case "W":
+				a.abs_or = "W";
+				return new Turn(a);
+			case "NE":
+				a.abs_or = "NE";
+				return new Turn(a);
+			case "NW":
+				a.abs_or = "NW";
+				return new Turn(a);
+			case "SE":
+				a.abs_or = "SE";
+				return new Turn(a);
+			case "SW":
+				a.abs_or = "SW";
+				return new Turn(a);
+			}
+			
+		case "Die":
+			return new Die(); 
+		case "Hit":
+			break; //wait to see what arguments we use with hit
+		case "Wait":
+			return new Wait();
+		case "Pick":
+			break; //same
+		case "Throw":
+			break;
+		case "Explode":
+			return new Explode();
+		case "Power":
+			break;
+		case "Jump":
+			break;
+		case "Wizz":
+			return new Wizz();
+		case "Get":
+			break;
+		case "Cell":
+			break; //switch case direction or other params
+		case "True":
+			return true;
+			
+			
+			
 		}
-		
-		return new FunCall(funcall.percent, funcall.name, listout);
 	}
 
 	@Override
@@ -153,19 +209,13 @@ public class Visitor implements IVisitor {
 	}
 
 	@Override
-	public Object build(Mode mode, Object source_state, Object behaviour) {
-		State s = (State) source_state;
-		Behaviour b = (Behaviour) behaviour;
-		return new Mode(s,b);
+	public Object build(Mode mode, Object source_state, Object behaviour) { //to change
+		return null;
 	}
 
 	@Override
 	public Object visit(Behaviour behaviour, List<Object> transitions) {
-		LinkedList<Transition> t = new LinkedList<Transition>();
-		for (Object o : transitions) {
-			t.add((Transition) o);
-		}
-		return t;
+		return transitions; //not sure
 		
 	}
 
@@ -182,7 +232,7 @@ public class Visitor implements IVisitor {
 	}
 
 	@Override
-	public Object build(Condition condition, Object expression) {
+	public Object build(Condition condition, Object expression) { //must create implementable class Condition and expression
 		Expression e = (Expression) expression;
 		return new Condition(e);
 	}
@@ -207,13 +257,7 @@ public class Visitor implements IVisitor {
 
 	@Override
 	public Object build(Actions action, String operator, List<Object> funcalls) {
-		Actions a = new Actions();
-		
-		for (Object o : funcalls) {
-			a.actions.add((FunCall) o);
-		}
-		a.operator = operator;
-		return a;
+		return funcalls;
 	}
 
 	@Override
@@ -229,11 +273,11 @@ public class Visitor implements IVisitor {
 	}
 
 	@Override
-	public Object build(Transition transition, Object condition, Object action, Object target_state) {
+	public Object build(Transition transition, Object condition, Object action, Object target_state) { //to change
 		Condition c = (Condition) condition;
 		Actions a = (Actions) action;
 		State s = (State) target_state;
-		return new Transition(c,a,s);
+		return new Transition(c,a,s); //State cible, Condition cond; List<	action> actions
 	}
 
 	@Override
@@ -249,8 +293,13 @@ public class Visitor implements IVisitor {
 
 	@Override
 	public Object build(Automaton automaton, Object initial_state, List<Object> modes) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		LinkedList<game.automaton.State> l = new LinkedList<game.automaton.State>();
+		for (Object o : modes) {
+			l.add((game.automaton.State) o);
+		}
+		
+		return new Automate((game.automaton.State) initial_state,l);
 	}
 
 	@Override

@@ -8,6 +8,9 @@ public class Turn implements Action{
 	Entity e;
 	Absolute_Orientation o; 
 	
+	public Turn (Absolute_Orientation or){
+		o = or;
+	}
 	public Turn(Entity e, Absolute_Orientation or) {
 		this.e = e;
 		o = or;
@@ -15,7 +18,7 @@ public class Turn implements Action{
 	
 	@Override
 	public boolean exec(Entity e) {
-		return e.do_turn(o);
+		e.do_turn(o);
 	}	
 
 }
