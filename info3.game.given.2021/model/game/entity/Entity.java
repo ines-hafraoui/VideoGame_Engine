@@ -1,6 +1,7 @@
 package game.entity;
 
 import game.entity.Position;
+
 import game.model.Model;
 import info3.game.Grid;
 
@@ -141,6 +142,10 @@ public abstract class Entity {
 	
 	public String get_type() {
 		return type;
+	}
+	
+	public Absolute_Orientation get_abs_or() {
+		return abs_or;
 	}
 
 	public float get_x() {
