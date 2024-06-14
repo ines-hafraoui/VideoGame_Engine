@@ -43,9 +43,9 @@ public class Game1Factory implements IFactory {
 		case PLAYER:
 			return new Player(a, m, p, o, type);
 		case FIREBALL:
-			return new Fire_Ball(a,m, p, o, type);
+			return new Fire_Ball(a, m, p, o, type);
 		case ARROW:
-			return new Arrow(a,m, p, o, type);
+			return new Arrow(a, m, p, o, type);
 		default:
 			return null;
 		}

@@ -99,5 +99,14 @@ public class Model {
 	public List<Entity> get_entities() {
 		return entities;
 	}
-
+	
+	public interface ModelListener {
+		 void addedEntity(Entity e);
+		 void removedEntity(Entity e);
+	}
+	
+	ModelListener m_ml;
+	public void setListener(ModelListener l) {
+		m_ml=l;
+	}
 }

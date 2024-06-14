@@ -74,4 +74,15 @@ public class View extends Container {
 	public int get_border() {
 		return m_border;
 	}
+
+	public Avatar newEntity(Entity e) {
+		return null;
+
+	}
+
+	public Avatar removeEntity(Entity e) {
+		return null;
+
+	}
+
 }

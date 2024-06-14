@@ -13,7 +13,11 @@ import info3.game.avatar.Avatar;
 import info3.game.view.View;
 import info3.game.view.Viewport;
 
+/*
+ * This factory allows you to generate new Entities and Avatars From the list of available types in the game
+ * */
 public interface IFactory {
+
 	public Entity newEntity(Automate a, Model m, Position p, Absolute_Orientation o, String type);
 
 	public Entity newEntity(Model m, Position p, Absolute_Orientation o, String type);

@@ -12,23 +12,22 @@ import game.model.Model;
 import info3.game.IFactory;
 import info3.game.avatar.Avatar;
 
-public class Viewport extends Container{
-	
+public class Viewport extends Container {
+
 	Model m_model;
 	Container m_parent;
 	IFactory m_f;
 	InventoryMenu m_inventory;
 	MiniMap m_map;
-	
-	
-	Viewport(Model model, List<Entity> entities, IFactory f, Container parent){
+
+	Viewport(Model model, List<Entity> entities, IFactory f, Container parent) {
 		super();
 		m_parent = parent;
 		m_model = model;
 		m_parent.add(parent, BorderLayout.EAST);
 		BorderLayout bl = new BorderLayout();
 		setLayout(bl);
-		m_f =f;
+		m_f = f;
 		Iterator<Entity> iter = entities.iterator();
 		while (iter.hasNext()) {
 			Entity e = iter.next();
@@ -39,14 +38,12 @@ public class Viewport extends Container{
 				e1.printStackTrace();
 			}
 		}
-		m_map = new MiniMap();//EAST SOUTH
-		m_inventory = new InventoryMenu(); //SOUTH
+		m_map = new MiniMap();// EAST SOUTH
+		m_inventory = new InventoryMenu(); // SOUTH
 	}
-	
-	void UpdateDisplayedAvatar(List<Entity> entities) throws Exception{
+
+	void UpdateDisplayedAvatar(List<Entity> entities) throws Exception {
 		throw new Exception("NYI");
 	}
-	
-	
-	
+
 }
