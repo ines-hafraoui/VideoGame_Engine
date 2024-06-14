@@ -18,6 +18,7 @@ public class View extends Container {
 	private Model m_model;
 	private List<Avatar> avatars;
 	private int m_width, m_height, m_border, m_x = 0, m_y = 0;
+	private MapView m_map;
 
 	public View(Model model, int width, int height, int border) {
 		m_model = model;
@@ -25,6 +26,7 @@ public class View extends Container {
 		m_height = height;
 		m_border = border;
 		avatars = new ArrayList();
+		m_map=new MapView(m_x,m_y,m_model);
 		List<Entity> Es = m_model.get_grid().getEntities();
 		Iterator<Entity> iter = Es.iterator();
 		while (iter.hasNext()) {
@@ -61,16 +63,20 @@ public class View extends Container {
 	}
 
 	public void paint(Graphics g) {
+		
+		g.setColor(Color.DARK_GRAY);
+		m_map.paint(g);
 
 		int box_width = (m_width + get_border()) / m_model.get_grid().getnboxline();
 		int box_height = (m_height - get_border()) / m_model.get_grid().getnboxcol();
-		for (int i = 0; i < m_model.get_grid().getnboxcol(); i++) {
-			for (int j = 0; j < m_model.get_grid().getnboxline(); j++) {
-				g.setColor(Color.GREEN);
-				g.fillRect(get_x() + j * box_width + get_border(), get_y() + i * box_height + get_border(),
-						box_width - (get_border() * 2), box_height - get_border());
-			}
-		}
+		
+//		for (int i = 0; i < m_model.get_grid().getnboxcol(); i++) {
+//			for (int j = 0; j < m_model.get_grid().getnboxline(); j++) {
+//				g.setColor(Color.GREEN);
+//				g.fillRect(get_x() + j * box_width + get_border(), get_y() + i * box_height + get_border(),
+//						box_width - (get_border() * 2), box_height - get_border());
+//			}
+//		}
 
 		Iterator<Avatar> iterator = avatars.iterator();
 		while (iterator.hasNext()) {
