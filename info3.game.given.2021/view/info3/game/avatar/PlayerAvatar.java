@@ -10,9 +10,12 @@ import info3.game.view.View;
 public class PlayerAvatar extends Avatar {
 
 	public PlayerAvatar(Entity e, View v) throws IOException {
-		super(e, v);
+		super();
+		m_view = v;
+		m_entity = e;
+		m_view.addPlayer(this);
 		m_imageIndex = 0;
-		m_images = loadSprite("resources/MiniWorldSprites/Characters/Soldiers/Mounted/RedKnight.png", 12, 4);
+		m_images = View.loadSprite("resources/MiniWorldSprites/Characters/Soldiers/Mounted/RedKnight.png", 12, 4);
 	}
 
 	@Override
@@ -20,8 +23,11 @@ public class PlayerAvatar extends Avatar {
 		BufferedImage img = m_images[m_imageIndex];
 		m_hb.drawHealthBar(g, (int) (x + m_entity.get_x() + 25), (int) (y + m_entity.get_y() - 5 % img.getHeight()),
 				(img.getWidth() * View.DISPLAYSCALE / 2), 5 % img.getHeight());
-		g.drawImage(img, (int) (x + m_entity.get_x()), (int) (y + m_entity.get_y()), img.getWidth() * View.DISPLAYSCALE,
-				img.getHeight() * View.DISPLAYSCALE, null);
+		g.drawImage(img, x-(img.getWidth() * View.DISPLAYSCALE), y-(img.getHeight() * View.DISPLAYSCALE), img.getWidth() * View.DISPLAYSCALE, img.getHeight() * View.DISPLAYSCALE, null);
+
+		
+		
+// Animating the character based on which state it is in		
 //		switch(a_state) {
 //		case IDLE:
 //			if(m_imageIndex) {

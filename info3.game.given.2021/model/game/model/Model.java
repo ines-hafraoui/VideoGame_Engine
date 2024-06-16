@@ -46,6 +46,7 @@ public class Model {
 	private Grid m_grid;
 	private Absolute_Orientation m_orientation;
 	List<Entity> entities;
+	Entity[] players;
 	IFactory factory;
 
 	public Model(Grid grid, int w, int h, IFactory f) throws IOException {
@@ -53,46 +54,48 @@ public class Model {
 		factory = f;
 		m_grid = grid;
 		factory = f;
-		List<Position> poss = new ArrayList<>();
-		Position pos1=new Position(0,0);
-		Position pos2=new Position(0,h);
-		Position pos3=new Position(w,0);
-		Position pos4=new Position(w,h);
-		
+		List<Position> poss = new ArrayList<Position>();
+		players = new Entity[2];
+		Entity e = factory.newEntity(null, new Position(100, 100), m_orientation, EntityType.PLAYER);
+		players[0] = e;
+		Entity e1 = factory.newEntity(null, new Position(900, 400), m_orientation, EntityType.PLAYER);
+		players[1] = e1;
+		Position pos1 = new Position(0, 0);
+		Position pos2 = new Position(0, h);
+		Position pos3 = new Position(w, 0);
+		Position pos4 = new Position(w, h);
+
 		poss.add(pos1);
 		poss.add(pos2);
 		poss.add(pos3);
 		poss.add(pos4);
-		
-		Polygon p=new Polygon(poss);
-		m_map=new Map(p);
+
+		Polygon p = new Polygon(poss);
+		m_map = new Map(p);
 		m_map.generateMap(m_map.getSeed());
-		
-		Entity e = factory.newEntity(null, new Position(100,100), m_orientation, EntityType.PLAYER);
-		entities.add(e);
-		Entity e1 = factory.newEntity(null, new Position(900,400), m_orientation, EntityType.PLAYER);
-		entities.add(e1);
+
 	}
-	//private Orientation m_orientation;
+
+	// private Orientation m_orientation;
 	public Map m_map;
 
-	public Model(Grid grid, int w, int h ) throws IOException {
+	public Model(Grid grid, int w, int h) throws IOException {
 		m_grid = grid;
 		List<Position> poss = new ArrayList<>();
-		Position pos1=new Position(0,0);
-		Position pos2=new Position(0,h);
-		Position pos3=new Position(w,0);
-		Position pos4=new Position(w,h);
-		
+		Position pos1 = new Position(0, 0);
+		Position pos2 = new Position(0, h);
+		Position pos3 = new Position(w, 0);
+		Position pos4 = new Position(w, h);
+
 		poss.add(pos1);
 		poss.add(pos2);
 		poss.add(pos3);
 		poss.add(pos4);
-		
-		Polygon p=new Polygon(poss);
-		m_map=new Map(p);
+
+		Polygon p = new Polygon(poss);
+		m_map = new Map(p);
 		m_map.generateMap(m_map.getSeed());
-		
+
 //		m_orientation = new Orientation('H');
 //		Head s_head = new Head(new Orientation('S'), this.get_grid(), new Position(0, 0));
 //		Snake snake = new Snake(null, this.get_grid(), s_head);
@@ -152,7 +155,7 @@ public class Model {
 		Entity e = m_grid.get_entity(distance, t);
 		return e;
 	}
-	
+
 	public void add_entity(Entity e) {
 		entities.add(e);
 	}
@@ -162,26 +165,31 @@ public class Model {
 		return false;
 	}
 
-	/* 
+	/*
 	 * method give the list of entity that are on the map
 	 */
 	public List<Entity> get_entities() {
 		return entities;
 	}
 
+	public Entity[] get_players() {
+		return players;
+	}
+
 	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String arrow) {
-	
+
 		return factory.newEntity(model, position, abs_or, arrow);
 	}
 
-	
 	public interface ModelListener {
-		 void addedEntity(Entity e) throws IOException;
-		 void removedEntity(Entity e);
+		void addedEntity(Entity e) throws IOException;
+
+		void removedEntity(Entity e);
 	}
-	
+
 	ModelListener m_ml;
+
 	public void setListener(ModelListener l) {
-		m_ml=l;
+		m_ml = l;
 	}
 }

@@ -52,6 +52,9 @@ public class MapView {
 //			g.fillPolygon(Polygon_coordX(p), Polygon_coordY(p), p.getVertices().size());
 //			AffichagePlots(g, biome);
 //		} else {
+		
+		
+		
 		g.setColor(Color.BLACK);
 		g.fillPolygon(Polygon_coordX(p), Polygon_coordY(p), p.getVertices().size());
 //			AffichagePlots(g, biome);

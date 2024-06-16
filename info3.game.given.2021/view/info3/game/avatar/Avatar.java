@@ -27,6 +27,12 @@ public abstract class Avatar {
 	protected HealthBar m_hb;
 	boolean m_valid;
 
+	public Avatar() {
+		m_hb = new HealthBar(this);
+		m_valid = true;
+		a_state = IDLE;
+	}
+	
 	public Avatar(Entity e, View v) {
 		m_view = v;
 		m_entity = e;
@@ -37,25 +43,5 @@ public abstract class Avatar {
 	}
 
 	public abstract void paint(Graphics g, int x, int y);
-
-	public static BufferedImage[] loadSprite(String filename, int nrows, int ncols) throws IOException {
-		File imageFile = new File(filename);
-		if (imageFile.exists()) {
-			BufferedImage image = ImageIO.read(imageFile);
-			int width = image.getWidth(null) / ncols;
-			int height = image.getHeight(null) / nrows;
-
-			BufferedImage[] images = new BufferedImage[nrows * ncols];
-			for (int i = 0; i < nrows; i++) {
-				for (int j = 0; j < ncols; j++) {
-					int x = j * width;
-					int y = i * height;
-					images[(i * ncols) + j] = image.getSubimage(x, y, width, height);
-				}
-			}
-			return images;
-		}
-		return null;
-	}
 
 }
