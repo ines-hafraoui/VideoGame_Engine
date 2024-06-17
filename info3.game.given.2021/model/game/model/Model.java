@@ -96,8 +96,35 @@ public class Model {
 		entities.add(e);
 	}
 
-	public boolean inflict_hit(Absolute_Orientation o, int porte, String t) {
-		// TODO Auto-generated method stub
+	public boolean inflict_hit(Absolute_Orientation o, int porte, String t, int currentx, int currenty) {
+		float newX = currentx; 
+		float newY = currenty;
+		
+		switch (o.get_abs_Orientation()) {
+		case "N" :
+			newY += porte;
+			break;
+		case "S" : 
+			newY -= porte;
+			break;
+		case "W" : 
+			newX -= porte;
+			break; 
+		case "E" : 
+			newX += porte;
+			break;
+		default : 
+			break;
+		}
+		
+		for (Entity entity : entities) {
+			if (entity.get_type().equals(t)) {
+				if (entity.get_x() == newX && entity.get_y() == newY) {
+					entity.get_injured();
+					return true;
+				}	
+			}
+		}
 		return false;
 	}
 

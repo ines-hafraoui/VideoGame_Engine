@@ -26,6 +26,7 @@ public abstract class Entity {
 	protected List<Entity> bots;
 	protected boolean explode;
 	protected int team;
+	protected boolean injured;
 
 	protected String type;
 	protected int index_inventory;
@@ -67,6 +68,7 @@ public abstract class Entity {
 		index_bot =0;
 		this.type = type;
 		this.team = team;
+		injured = false;
 	}
 
 	public Entity(Model m, Position p, Absolute_Orientation o, String type, int team) {
@@ -79,7 +81,7 @@ public abstract class Entity {
 		index_bot = 0;
 		this.type = type;
 		this.team = team;
-
+		injured = false;
 	}
 
 	public static boolean haveCommonChar(String str1, String str2) {
@@ -165,6 +167,11 @@ public abstract class Entity {
 
 	public void reduce_HP(int r) {
 		HP = HP - r;
+	}
+	
+	public void get_injured() {
+		injured = true;
+		HP -= 10;
 	}
 
 	public abstract boolean do_move();
