@@ -24,6 +24,7 @@ import gal.ast.Underscore;
 import gal.ast.Value;
 
 import game.automaton.*;
+import game.automaton.Relative_Orientation;
 import game.entity.Absolute_Orientation;
 import game.entity.Entity;
 
@@ -131,7 +132,17 @@ public class Visitor implements IVisitor {
 		case "Get":
 			break;
 		case "Cell":
-			break; //switch case direction or other params
+			if (Relative_Orientation.is_relative_orientation(parameters.get(0))){
+				
+				return new Cell(((Relative_Orientation) parameters.get(0)),
+								(game.automaton.Category)parameters.get(1),
+								(int)parameters.get(2));
+			}
+			return new Cell(((Absolute_Orientation) parameters.get(0)),
+					(game.automaton.Category)parameters.get(1),
+					(int)parameters.get(2));
+				
+			
 		case "True":
 			return true;
 			
@@ -159,7 +170,7 @@ public class Visitor implements IVisitor {
 	}
 
 	@Override
-	public Object build(BinaryOp binop, Object left, Object right) {
+	public Object build(BinaryOp binop, Object left, Object right) { //maybe change it
 		Expression l = (Expression) left;
 		Expression r = (Expression) right;
 		
@@ -186,8 +197,8 @@ public class Visitor implements IVisitor {
 	}
 
 	@Override
-	public Object visit(State state) {
-		return state;
+	public Object visit(State state) { // in our implementation : Mode = State so the professor's "State" are useless to construct
+		return null;
 	}
 
 	@Override
@@ -210,6 +221,13 @@ public class Visitor implements IVisitor {
 
 	@Override
 	public Object build(Mode mode, Object source_state, Object behaviour) { //to change
+		Behaviour b = (Behaviour) behaviour;
+		List<game.automaton.Transition> tlist = new LinkedList<game.automaton.Transition>();
+		for (Transition t : b.transitions) {
+			// must code Condition and Actions
+		}
+	
+		game.automaton.State sout = new game.automaton.State();
 		return null;
 	}
 
@@ -233,8 +251,8 @@ public class Visitor implements IVisitor {
 
 	@Override
 	public Object build(Condition condition, Object expression) { //must create implementable class Condition and expression
-		Expression e = (Expression) expression;
-		return new Condition(e);
+		game.automaton.Condition c;
+		
 	}
 
 	@Override
@@ -257,6 +275,7 @@ public class Visitor implements IVisitor {
 
 	@Override
 	public Object build(Actions action, String operator, List<Object> funcalls) {
+		
 		return funcalls;
 	}
 

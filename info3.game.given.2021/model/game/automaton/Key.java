@@ -4,7 +4,8 @@ import game.entity.Entity;
 
 public class Key implements Condition {
 	
-	String touche; //changed Touche touche to String lettre for better use in parser
+	String touche; //changed Touche touche to String touche for better use in parser
+		
 	public static final String ARROW_UP = "FU";
 	public static final String ARROW_DOWN = "FD";
 	public static final String ARROW_LEFT = "FL";
@@ -23,9 +24,10 @@ public class Key implements Condition {
 	
 	public Key (String t) {
 		this.touche = t; 
+
 	}
 	
-	public boolean eval (Entity e) {
+	public boolean eval (Entity e) { 
 		return e.eval_got(touche);
 	}
 

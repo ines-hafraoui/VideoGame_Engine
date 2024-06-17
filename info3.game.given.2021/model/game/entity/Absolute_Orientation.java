@@ -27,4 +27,25 @@ public class Absolute_Orientation {
 		abs_or = orientation; 
 	}
 
+	public static boolean is_absolute_orientation(Object o) {
+		switch (o.toString()){
+		case NORTH:
+			return true;
+		case SOUTH:
+			return true;
+		case EAST:
+			return true;
+		case WEST:
+			return true;
+		case NNORTH_E:
+			return true;
+		case NORTH_W:
+			return true;
+		case SOUTH_E:
+			return true;
+		case SOUTH_W:
+			return true;
+		}
+		return false;
+	}
 }

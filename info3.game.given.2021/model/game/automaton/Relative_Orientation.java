@@ -26,6 +26,24 @@ public class Relative_Orientation {
 		rel_or = orientation; 
 	}
 	
+	public static boolean is_relative_orientation(Object o) {
+		
+		switch (o.toString().charAt(0)) {
+		case HERE:
+			return true;
+		case FRONT:
+			return true;
+		case BACK:
+			return true;
+		case LEFT:
+			return true;
+		case RIGHT:
+			return true;
+		default:
+			return false;
+		}
+	}
+	
 	
 
 }
