@@ -213,7 +213,6 @@ public class View extends Container {
 			break;
 		case 2:
 			add(m_viewports[0], BorderLayout.EAST);
-
 			add(m_viewports[1], BorderLayout.WEST);
 			break;
 		default:

@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,95 +17,105 @@ import game.model.Model;
 
 public class MapView {
 
-	private int x_max,y_max;
+	private int x_max, y_max;
 	private int[] m_groundsetup;
-	private int m_ncols,m_nrows;
+	private int m_ncols, m_nrows;
 	private Model m_model;
 	Viewport m_parent;
 	View m_view;
 	protected BufferedImage[] m_bgimages;
+
+	private BufferedImage[] textureImage;
+	private List<Rectangle> squares = new ArrayList<>(); // List to store squares
+	private static final int SQUARE_SIZE = 10 * View.DISPLAYSCALE; // Size of each square
 
 	public MapView(int x, int y, Model model, View v) {
 		x_max = x;
 		y_max = y;
 		m_model = model;
 		m_view = v;
+
 		try {
 			m_bgimages = View.loadSprite("resources/MiniWorldSprites/Ground/TexturedGrass.png", 2, 3);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		genDefaultGround();
-		
+
+		try {
+			// Load the texture image
+			textureImage = View.loadSprite("resources/MiniWorldSprites/Ground/Shore.png", 1, 5);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		List<Biome> b = m_model.m_map.getBiome();
+		Iterator<Biome> iterator = b.iterator();
+		while (iterator.hasNext()) {
+			Biome biome = iterator.next();
+			Polygon p = biome.getBorders();
+			PolygontoTiles(p);
+			;
+		}
+
 	}
 
 	public void paint(Graphics g) {
-		//printing all the basic tiles to be optimized
-		for (int i = 0; i < m_ncols; i ++) {
-			for (int j = 0; j < m_nrows; j ++) {
-				BufferedImage img = m_bgimages[m_groundsetup[i*j+j]];
-				g.drawImage(img, j*(m_bgimages[0].getWidth() * View.DISPLAYSCALE), i*(m_bgimages[0].getHeight() * View.DISPLAYSCALE), img.getWidth() * View.DISPLAYSCALE, img.getHeight() * View.DISPLAYSCALE, null);
+		// printing all the basic tiles to be optimized
+		for (int i = 0; i < m_ncols; i++) {
+			for (int j = 0; j < m_nrows; j++) {
+				BufferedImage img = m_bgimages[m_groundsetup[i * j + j]];
+				g.drawImage(img, j * (m_bgimages[0].getWidth() * View.DISPLAYSCALE),
+						i * (m_bgimages[0].getHeight() * View.DISPLAYSCALE), img.getWidth() * View.DISPLAYSCALE,
+						img.getHeight() * View.DISPLAYSCALE, null);
 			}
 		}
-		
-		List<Biome> b = m_model.m_map.getBiome();
-		Iterator<Biome> iterator = b.iterator();
-		while (iterator.hasNext()) {
-			Biome biome = iterator.next();
-			AffichageBiome(g, biome);
+
+		for (Rectangle square : squares) {
+			g.drawImage(textureImage[2], square.x, square.y, SQUARE_SIZE, SQUARE_SIZE, null);
 		}
 	}
 	
-	public void paint(Graphics g, Rectangle bounds) {
-		//printing all the basic tiles to be optimized
-		
-		int h = m_bgimages[0].getHeight() * View.DISPLAYSCALE;
-		int w = m_bgimages[0].getWidth() * View.DISPLAYSCALE;
+	
+	public void paint(Graphics g, int x, int y) {
+//		g.translate(0, 0);
+		// printing all the basic tiles to be optimized
 		for (int i = 0; i < m_ncols; i++) {
-//			System.out.println(""+bounds.height+bounds.y +"   "+ i*w);
-//			if((bounds.width+bounds.x) >= i*w) {
-				for (int j = 0; j < m_nrows; j ++) {
-//					System.out.println(""+bounds.height+bounds.y);
-//					if((bounds.height+bounds.y) >= j*h) {
-						BufferedImage img = m_bgimages[m_groundsetup[i*j+j]];
-						g.drawImage(img, j*w, i*h, w, h, null);
-//					}
-//					else {
-//						break;
-//					}
-				}
-//			}
-//			else {
-//				break;
-//			}
+			for (int j = 0; j < m_nrows; j++) {
+				BufferedImage img = m_bgimages[m_groundsetup[i * j + j]];
+				g.drawImage(img, j * (m_bgimages[0].getWidth() * View.DISPLAYSCALE),
+						i * (m_bgimages[0].getHeight() * View.DISPLAYSCALE), img.getWidth() * View.DISPLAYSCALE,
+						img.getHeight() * View.DISPLAYSCALE, null);
+			}
 		}
-		
-		List<Biome> b = m_model.m_map.getBiome();
-		Iterator<Biome> iterator = b.iterator();
-		while (iterator.hasNext()) {
-			Biome biome = iterator.next();
-			AffichageBiome(g, biome);
+
+		for (Rectangle square : squares) {
+			g.drawImage(textureImage[2], square.x, square.y, SQUARE_SIZE, SQUARE_SIZE, null);
 		}
 	}
+	
+	
 
-	private void AffichageBiome(Graphics g, Biome biome) {
-		Polygon p = biome.getBorders();
-		// Dessiner le polygone
-//		if (biome.getName().equals("volcan")) {
-//			g.setColor(Color.RED);
-//			g.fillPolygon(Polygon_coordX(p), Polygon_coordY(p), p.getVertices().size());
-//			AffichagePlots(g, biome);
-//		}
-//		if (biome.getName().equals("jungle")) {
-//			g.setColor(Color.GREEN);
-//			g.fillPolygon(Polygon_coordX(p), Polygon_coordY(p), p.getVertices().size());
-//			AffichagePlots(g, biome);
-//		} else {
+	public void PolygontoTiles(Polygon p) {
+		// Calculate the bounds of the polygon
+		Rectangle bounds = p.getBounds();
 
-		g.setColor(Color.BLACK);
-		g.fillPolygon(Polygon_coordX(p), Polygon_coordY(p), p.getVertices().size());
-//			AffichagePlots(g, biome);
-//		}
+		// Place multiple squares to cover the polygon
+		int startX = bounds.x - (bounds.x % SQUARE_SIZE);
+		int startY = bounds.y - (bounds.y % SQUARE_SIZE);
+		int endX = bounds.x + bounds.width;
+		int endY = bounds.y + bounds.height;
+
+		for (int y = startY; y < endY; y += SQUARE_SIZE) {
+			for (int x = startX; x < endX; x += SQUARE_SIZE) {
+				Rectangle candidateSquare = new Rectangle(x, y, SQUARE_SIZE, SQUARE_SIZE);
+
+				// Check intersection of polygon and square
+				if (p.intersects(candidateSquare)) {
+					squares.add(candidateSquare);
+				}
+			}
+		}
 	}
 
 	private void AffichagePlots(Graphics g, Biome biome) {
@@ -141,12 +152,12 @@ public class MapView {
 
 	public void genDefaultGround() {
 		BufferedImage ref = m_bgimages[0];
-		m_nrows =  m_view.m_mheight/(ref.getHeight()/2 * View.DISPLAYSCALE);
-		m_ncols =  m_view.m_mwidth/(ref.getWidth()/2 * View.DISPLAYSCALE);
-		m_groundsetup = new int[m_nrows*m_ncols];
-		for (int i = 0; i <m_nrows; i ++) {
-			for (int j = 0; j <m_ncols; j ++) {
-				m_groundsetup[i*j+j] = m_view.getRandomNumber(0, m_bgimages.length);	
+		m_nrows = m_view.m_mheight / (ref.getHeight() / 2 * View.DISPLAYSCALE);
+		m_ncols = m_view.m_mwidth / (ref.getWidth() / 2 * View.DISPLAYSCALE);
+		m_groundsetup = new int[m_nrows * m_ncols];
+		for (int i = 0; i < m_nrows; i++) {
+			for (int j = 0; j < m_ncols; j++) {
+				m_groundsetup[i * j + j] = m_view.getRandomNumber(0, m_bgimages.length);
 			}
 		}
 	}

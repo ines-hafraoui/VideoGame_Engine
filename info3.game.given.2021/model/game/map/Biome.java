@@ -1,7 +1,8 @@
 package game.map;
 
-import game.entity.Position;
 import java.util.List;
+
+import game.entity.Position;
 
 public class Biome {
 

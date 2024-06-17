@@ -22,7 +22,7 @@ public abstract class Avatar {
 	
 	public Entity m_entity;
 	protected View m_view;
-	protected BufferedImage[] m_images;
+	public BufferedImage[] m_images;
 	protected int m_imageIndex;
 	protected HealthBar m_hb;
 	boolean m_valid;

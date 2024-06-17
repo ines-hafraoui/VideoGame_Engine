@@ -26,7 +26,7 @@ public class PlayerAvatar extends Avatar {
 //				(img.getWidth() * View.DISPLAYSCALE / 2), 5 % img.getHeight());
 		g.drawImage(img, x, y, img.getWidth() * View.DISPLAYSCALE, img.getHeight() * View.DISPLAYSCALE, null);
 
-		System.out.println("pos = " + m_entity.get_x() +" " + m_entity.get_y());
+//		System.out.println("pos = " + m_entity.get_x() +" " + m_entity.get_y());
 		
 // Animating the character based on which state it is in		
 //		switch(a_state) {
