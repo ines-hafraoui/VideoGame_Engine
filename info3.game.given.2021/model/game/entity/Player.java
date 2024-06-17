@@ -8,15 +8,15 @@ import game.model.Model;
 public class Player extends Entity {
 	
 	
-	public Player(Automate a, Model m,Position p, Absolute_Orientation o, String t) {
-		super(a,m,p,o, t);
+	public Player(Automate a, Model m,Position p, Absolute_Orientation o, String type, int team) {
+		super(a,m,p,o, type, team);
 		inventory = new ArrayList<Automate>();
 		bots = new ArrayList<Entity>();
 	
 	}
 	
-	public Player(Model m,Position p, Absolute_Orientation o, String t) {
-		super(m,p,o,t);
+	public Player(Model m,Position p, Absolute_Orientation o, String type, int team) {
+		super(m,p,o,type, team);
 		inventory = new ArrayList<Automate>();
 		bots = new ArrayList<Entity>();
 	}
@@ -47,20 +47,20 @@ public class Player extends Entity {
 
 	@Override
 	public boolean do_hit(Absolute_Orientation o, String t, int porte) {
-		return model.inflict_hit(o, porte, t);
+		return model.inflict_hit(o, porte, t, this.get_x(), this.get_y());
 	}
 
 	@Override
 	public boolean do_pick(String t,int distance) {
-		Entity e = model.get_entity(distance, t);	// ask the model to give it the entity (whiwh is an item) at the distance d 
+		Entity e = model.get_entity(distance, t, this.get_x(), this.get_y());	// ask the model to give it the entity (whiwh is an item) at the distance d 
 		return inventory.add(e.aut);
 	}
 
 	@Override
 	public Entity do_throw() {
-		int index = index_inventory%nb_bot;
+		int index = index_inventory%NB_BOT;
 		Automate a = inventory.remove(index);
-		Item new_item = new Item(a,model, position,abs_or,"I");
+		Item new_item = new Item(a,model, position,abs_or,"I", NOTEAM);
 		return new_item;
 	}
 

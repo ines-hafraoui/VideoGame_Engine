@@ -1,5 +1,17 @@
 package game.automaton;
 
-public class Explode {
+import game.entity.Entity;
+
+public class Explode implements Action {
+	
+	public Explode() {
+		
+	}
+	
+	@Override
+	public boolean exec(Entity e) {
+		e.do_explode();
+		return true;
+	}
 
 }

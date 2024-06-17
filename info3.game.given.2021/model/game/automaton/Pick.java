@@ -3,13 +3,10 @@ package game.automaton;
 import game.entity.Entity;
 
 public class Pick implements Action {
-
-	Entity e;
 	String type;
 	int distance;
 	
-	public Pick(Entity e, String t, int d) {
-		this.e = e;
+	public Pick(String t, int d) {
 		type = t;
 		distance = d;
 	}

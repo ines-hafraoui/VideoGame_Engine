@@ -20,11 +20,10 @@
  */
 package game.model;
 
-import java.awt.Graphics;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+import game.entity.Entity;
 import game.entity.Absolute_Orientation;
 import game.entity.Entity;
 import game.entity.EntityType;
@@ -35,6 +34,7 @@ import game.map.Polygon;
 import info3.game.Grid;
 import info3.game.IFactory;
 
+
 /**
  * A simple class that holds the images of a sprite for an animated cowbow.
  *
@@ -43,16 +43,18 @@ public class Model {
 
 	long m_imageElapsed;
 	int m_width, height;
-	private Grid m_grid;
+
+	private Map m_map;
 	private Absolute_Orientation m_orientation;
 	List<Entity> entities;
 	Entity[] players;
 	IFactory factory;
 
-	public Model(Grid grid, int w, int h, IFactory f) throws IOException {
+	// private Orientation m_orientation;
+		public Map m_map;
+
+	public Model(Map map, int w, int h, IFactory f) throws IOException {
 		entities = new ArrayList<Entity>();
-		factory = f;
-		m_grid = grid;
 		factory = f;
 		m_width = w;
 		height = h;
@@ -67,7 +69,7 @@ public class Model {
 		Position pos2 = new Position(0, h);
 		Position pos3 = new Position(w, 0);
 		Position pos4 = new Position(w, h);
-
+		
 		poss.add(pos1);
 		poss.add(pos2);
 		poss.add(pos3);
@@ -79,13 +81,9 @@ public class Model {
 
 	}
 
-	// private Orientation m_orientation;
-	public Map m_map;
-
 	public Model(Grid grid, int w, int h) throws IOException {
 		m_width = w;
 		height = h;
-		m_grid = grid;
 		List<Position> poss = new ArrayList<>();
 		Position pos1 = new Position(0, 0);
 		Position pos2 = new Position(0, h);
@@ -134,8 +132,9 @@ public class Model {
 
 	}
 
-	public Grid get_grid() {
-		return m_grid;
+
+	public Map get_map() {
+		return m_map;
 	}
 
 	public void tick(long elapsed) {
@@ -144,20 +143,12 @@ public class Model {
 			m_imageElapsed = 0;
 		}
 
-		m_grid.tick(elapsed);
+		m_map.tick(elapsed);
 	}
 
-	public void paint(Graphics g, int width, int height) {
-		m_width = width;
-		System.out.println("orientation :" + m_orientation.orientation + "\n");
-	}
 
-	public Orientation getOrientation() {
-		return m_orientation;
-	}
-
-	public Entity get_entity(int distance, String t) {
-		Entity e = m_grid.get_entity(distance, t);
+	public Entity get_entity(int distance, String t, float f, float g) {
+		Entity e = m_map.get_entity(distance, t, f, g);
 		return e;
 	}
 
@@ -165,8 +156,35 @@ public class Model {
 		entities.add(e);
 	}
 
-	public boolean inflict_hit(Absolute_Orientation o, int porte, String t) {
-		// TODO Auto-generated method stub
+	public boolean inflict_hit(Absolute_Orientation o, int porte, String t, float currentx, float currenty) {
+		float newX = currentx; 
+		float newY = currenty;
+		
+		switch (o.get_abs_Orientation()) {
+		case "N" :
+			newY += porte;
+			break;
+		case "S" : 
+			newY -= porte;
+			break;
+		case "W" : 
+			newX -= porte;
+			break; 
+		case "E" : 
+			newX += porte;
+			break;
+		default : 
+			break;
+		}
+		
+		for (Entity entity : entities) {
+			if (entity.get_type().equals(t)) {
+				if (entity.get_x() == newX && entity.get_y() == newY) {
+					entity.get_injured();
+					return true;
+				}	
+			}
+		}
 		return false;
 	}
 

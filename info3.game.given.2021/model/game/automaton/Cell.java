@@ -13,7 +13,7 @@ public class Cell implements Condition {
 	}
 	
 	public boolean eval (Entity e) {
-		return e.eval_cell(d,cat);
+		return e.eval_cell_rel(d,cat,0);
 	}
 
 }

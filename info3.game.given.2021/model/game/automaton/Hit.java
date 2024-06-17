@@ -5,13 +5,11 @@ import game.entity.Entity;
 
 public class Hit implements Action {
 	
-	Entity e;
 	Absolute_Orientation or;
 	String type;
 	int porte;
 	
-	public Hit(Entity e,Absolute_Orientation o,String t,int p) {
-		this.e = e;
+	public Hit(Absolute_Orientation o,String t,int p) {
 		or = o;
 		type = t;
 		porte = p;

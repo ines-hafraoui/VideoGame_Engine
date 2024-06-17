@@ -1,8 +1,7 @@
 package game.map;
 
-import game.entity.Position;
 
-public class LandType {
+public abstract class LandType {
 
     private Dimension dimension; // Dimension containing height and width
     private String name;  // Name of the LandType

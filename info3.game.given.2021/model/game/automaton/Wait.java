@@ -5,13 +5,11 @@ import game.entity.Entity;
 
 public class Wait implements Action {
 	
-	Entity e;
 	int inc; 
 	int select;
 	
 	
-	public Wait(Entity e,int i, int s) {
-		this.e = e;
+	public Wait(int i, int s) {
 		inc = i;
 		select = s;
 	}
