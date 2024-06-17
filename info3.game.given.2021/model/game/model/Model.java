@@ -44,14 +44,12 @@ public class Model {
 	long m_imageElapsed;
 	int m_width, height;
 
-	private Map m_map;
+	public Map m_map;
 	private Absolute_Orientation m_orientation;
 	List<Entity> entities;
 	Entity[] players;
 	IFactory factory;
 
-	// private Orientation m_orientation;
-		public Map m_map;
 
 	public Model(Map map, int w, int h, IFactory f) throws IOException {
 		entities = new ArrayList<Entity>();

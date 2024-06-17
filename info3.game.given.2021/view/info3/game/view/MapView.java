@@ -49,21 +49,9 @@ public class MapView {
 			e.printStackTrace();
 		}
 
-<<<<<<< HEAD
 		List<Biome> b = m_model.m_map.getBiome();
-=======
-	public void paint(Graphics g) {
-		List<Biome> b = m_model.getMap().getBiome();
->>>>>>> Mapdev
-		Iterator<Biome> iterator = b.iterator();
-		while (iterator.hasNext()) {
-			Biome biome = iterator.next();
-			Polygon p = biome.getBorders();
-			PolygontoTiles(p);
-			;
-		}
-
 	}
+		
 
 	public void paint(Graphics g) {
 		// printing all the basic tiles to be optimized
