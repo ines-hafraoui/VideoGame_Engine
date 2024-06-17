@@ -3,11 +3,8 @@ package game.automaton;
 import game.entity.Entity;
 
 public class Move implements Action{
-
-	Entity e;
 	
-	public Move(Entity e) {
-		this.e = e;
+	public Move() {
 	}
 	
 	@Override

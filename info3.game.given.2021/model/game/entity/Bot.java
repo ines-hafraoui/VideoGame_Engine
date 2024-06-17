@@ -11,13 +11,13 @@ public class Bot extends Entity{
 	
 	private int acc_factor;
 	
-	public Bot(Automate a, Model m,Position p, Absolute_Orientation o,String t ) {
-		super(a,m,p,o,t);
+	public Bot(Automate a, Model m,Position p, Absolute_Orientation o,String type, int team) {
+		super(a,m,p,o,type, team);
 		acc_factor = 3;
 	}
 	
-	public Bot(Model m,Position p, Absolute_Orientation o, String t) {
-		super(m,p,o,t);
+	public Bot(Model m,Position p, Absolute_Orientation o, String type, int team) {
+		super(m,p,o,type, team);
 		acc_factor = 3;
 	}
 

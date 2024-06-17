@@ -1,5 +1,8 @@
 package game.map;
 
+import game.automaton.Relative_Orientation;
+import game.entity.Absolute_Orientation;
+import game.entity.Entity;
 import game.entity.Position;
 import java.util.ArrayList;
 import java.util.List;
@@ -206,6 +209,26 @@ public class Map {
 		
 		return polygons;
 
+	}
+
+	public void tick(long elapsed) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Entity get_entity(int distance, String t) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean eval_abs(Absolute_Orientation dir, float positionX, float positionY, int porte) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean eval_rel(Relative_Orientation dir, float positionX, float positionY, int porte) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 

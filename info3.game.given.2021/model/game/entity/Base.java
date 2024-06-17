@@ -9,13 +9,13 @@ public class Base extends Entity {
 	
 	boolean picked; 
 	
-	public Base(Automate a, Model m,Position p, Absolute_Orientation o , String t) {
-		super(a,m,p,o,t);
+	public Base(Automate a, Model m,Position p, Absolute_Orientation o , String type, int team) {
+		super(a,m,p,o,type, team);
 		picked = false;
 	}
 	
-	public Base(Model m,Position p, Absolute_Orientation o ,String t) {
-		super(m,p,o,t);
+	public Base(Model m,Position p, Absolute_Orientation o ,String type, int team) {
+		super(m,p,o,type, team);
 		picked = false;
 	}
 

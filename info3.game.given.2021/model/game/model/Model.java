@@ -41,7 +41,7 @@ import game.entity.Entity;
 
 import game.entity.Absolute_Orientation;
 import game.entity.Position;
-
+import game.map.Map;
 import info3.game.Grid;
 import info3.game.IFactory;
 import info3.game.avatar.Avatar;
@@ -55,7 +55,7 @@ public class Model {
 
 	long m_imageElapsed;
 	int m_width, height;
-	private Grid m_grid;
+	private Map m_map;
 	private Absolute_Orientation m_orientation;
 	List<Entity> entities;
 	IFactory factory;
@@ -65,8 +65,8 @@ public class Model {
 		factory = f;
 	}
 
-	public Grid get_grid() {
-		return m_grid;
+	public Map get_map() {
+		return m_map;
 	}
 
 	public void tick(long elapsed) {
@@ -75,7 +75,7 @@ public class Model {
 			m_imageElapsed = 0;
 		}
 
-		m_grid.tick(elapsed);
+		m_map.tick(elapsed);
 	}
 
 	public void paint(Graphics g, int width, int height) {
@@ -88,7 +88,7 @@ public class Model {
 	}
 
 	public Entity get_entity(int distance, String t) {
-		Entity e = m_grid.get_entity(distance, t);
+		Entity e = m_map.get_entity(distance, t);
 		return e;
 	}
 	

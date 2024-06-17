@@ -13,15 +13,15 @@ import game.entity.Entity;
 public class Player extends Entity {
 	
 	
-	public Player(Automate a, Model m,Position p, Absolute_Orientation o, String t) {
-		super(a,m,p,o, t);
+	public Player(Automate a, Model m,Position p, Absolute_Orientation o, String type, int team) {
+		super(a,m,p,o, type, team);
 		inventory = new ArrayList<Automate>();
 		bots = new ArrayList<Entity>();
 	
 	}
 	
-	public Player(Model m,Position p, Absolute_Orientation o, String t) {
-		super(m,p,o,t);
+	public Player(Model m,Position p, Absolute_Orientation o, String type, int team) {
+		super(m,p,o,type, team);
 		inventory = new ArrayList<Automate>();
 		bots = new ArrayList<Entity>();
 	}
@@ -63,9 +63,9 @@ public class Player extends Entity {
 
 	@Override
 	public Entity do_throw() {
-		int index = index_inventory%nb_bot;
+		int index = index_inventory%NB_BOT;
 		Automate a = inventory.remove(index);
-		Item new_item = new Item(a,model, position,abs_or,"I");
+		Item new_item = new Item(a,model, position,abs_or,"I", NOTEAM);
 		return new_item;
 	}
 
