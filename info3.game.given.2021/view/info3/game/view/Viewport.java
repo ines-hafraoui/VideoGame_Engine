@@ -76,7 +76,7 @@ public class Viewport extends Component {
 		Iterator<Avatar> iter = m_avatars.iterator();
 		while (iter.hasNext()) {
 			Avatar a = iter.next();
-			a.paint(g, m_x, m_y);
+			a.paint(mg, m_x, m_y);
 		}
 		
 		m_player.paint(mg, m_d.width/2,  m_d.height/2);

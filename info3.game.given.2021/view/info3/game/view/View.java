@@ -99,12 +99,12 @@ public class View extends Container {
 	public void paint(Graphics g) {
 		Graphics mg = g.create(0, 0, m_d.width, m_d.height);
 
-		for (int i = 0; i < m_mheight; i += (m_bgimages[0].getHeight() * DISPLAYSCALE)) {
-			for (int j = 0; j < m_mwidth; j += (m_bgimages[0].getWidth() * DISPLAYSCALE)) {
-				BufferedImage img = m_bgimages[getRandomNumber(0, m_bgimages.length)];
-				g.drawImage(img, j, i, img.getWidth() * DISPLAYSCALE, img.getHeight() * DISPLAYSCALE, null);
-			}
-		}
+//		for (int i = 0; i < m_mheight; i += (m_bgimages[0].getHeight() * DISPLAYSCALE)) {
+//			for (int j = 0; j < m_mwidth; j += (m_bgimages[0].getWidth() * DISPLAYSCALE)) {
+//				BufferedImage img = m_bgimages[getRandomNumber(0, m_bgimages.length)];
+//				g.drawImage(img, j, i, img.getWidth() * DISPLAYSCALE, img.getHeight() * DISPLAYSCALE, null);
+//			}
+//		}
 		switch (m_viewports.length) {
 		case 1:
 			m_viewports[0].paint(mg);
