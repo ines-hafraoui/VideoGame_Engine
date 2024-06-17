@@ -6,14 +6,20 @@ import java.util.List;
 public class State {
 
 	private int tirage = 0;
+	private String name;
 	private List<Transition> transitionList;
 	
 	public State() {
 		transitionList = new ArrayList<Transition>();
 	}
 	
-	State(List<Transition> tList) {
+	public State(List<Transition> tList, String name) {
 		transitionList = tList;
+		this.name = name;
+	}
+	public State(String name){
+		this.name = name;
+		transitionList = new ArrayList<Transition>();
 	}
 	
 	List<Transition>get_transitionList() {
@@ -30,6 +36,9 @@ public class State {
 	
 	boolean remove_transition(Transition t) {
 		return transitionList.remove(t);
+	}
+	public String getName() {
+		return this.name;
 	}
 	
 }

@@ -1,0 +1,25 @@
+// Exporting the CFG of the parsed automata in .dot
+digraph bot{
+node[shape=box, fontsize=16, color=gray];
+
+
+subgraph cluster_Base_Jeu2{
+
+"29" [label="Base_Jeu2", shape=none, fontname=times, fontsize=12, fontcolor=blue];
+
+"16" [label="True? Move", shape=box, fontname=comic, fontsize=10];
+
+"28" -> "16";
+"16" -> "15";
+"25" [label="True? Move", shape=box, fontname=comic, fontsize=10];
+
+"15" -> "25";
+"25" -> "28";
+"29" -> "28";
+"15" [label="Deux", shape=circle, style=filled, fontsize=5];
+
+"28" [label="Beg", shape=circle, style=filled, fontsize=5];
+
+} // end of Base_Jeu2
+
+} // end of bot

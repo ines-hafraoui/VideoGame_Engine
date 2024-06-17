@@ -9,7 +9,7 @@ public class Automate {
 
 	private List<State> states;
 	private List<State> currentStateList;
-	private State initial_state;
+	private String initial_state;
 	private Entity entity;
 
 	public Automate(Entity entity) {
@@ -17,26 +17,24 @@ public class Automate {
 		currentStateList = new ArrayList<>();
 		this.entity = entity;
 	}
-	
-	public Automate(State initial_state) {
+
+	public Automate(String initial_state) {
 		states = new ArrayList<>();
+		//states.add(initial_state);
 		currentStateList = new ArrayList<>();
 		this.initial_state = initial_state;
-		
+		states.add(this.getState(initial_state));
+
+
 	}
-	public Automate(State initial_state, List<State> states) {
+
+	public Automate(String initial_state, List<State> states) {
 		this.states = states;
 		currentStateList = new ArrayList<>();
 		this.initial_state = initial_state;
-		
+
 	}
-	
-	public Automate(State initial_state, Entity entity) {
-		states = new ArrayList<>();
-		currentStateList = new ArrayList<>();
-		this.initial_state = initial_state;
-		this.entity = entity;
-	}
+
 
 	public void add_state(State s) {
 		states.add(s);
@@ -53,22 +51,22 @@ public class Automate {
 	public boolean removeCurrentState(State s) {
 		return currentStateList.remove(s);
 	}
-	
+
 	public List<State> getcurrentstate() {
 		return currentStateList;
 	}
-	
-	public boolean add_transition(State s1, State s2, Condition cond, List<Action> a) {
-		Transition t = new Transition(s2,cond,a);
+
+	public boolean add_transition(State s1, String s2, Condition cond, List<Action> a) {
+		Transition t = new Transition(s2, cond, a);
 		return s1.add_transition(t);
 	}
 
 	public boolean blocked; // the entity will unblock the automaton once it's transition is over
 
 	public void step(Entity e) {
-		//to delete when view will be able to handle animations
+		// to delete when view will be able to handle animations
 		blocked = false;
-		
+
 		if (!blocked) {
 
 			List<State> todelete = new ArrayList<>();
@@ -79,12 +77,12 @@ public class Automate {
 					if (transition.c.eval(entity)) {
 						blocked = true;
 
-						for(Action a : transition.actionList) {
+						for (Action a : transition.actionList) {
 							a.exec(e);
 						}
-							
-						toadd.add(transition.cible);
-						todelete.add(state);
+						State s = this.getState(transition.cible);
+						toadd.add(s);
+						todelete.add(s);
 					}
 				}
 			}
@@ -97,6 +95,15 @@ public class Automate {
 			}
 
 		}
+	}
+
+	public State getState(String name) {
+		for (State s : this.states) {
+			if (s.getName().equals(name)) {
+				return s;
+			}
+		}
+		return null;
 	}
 
 }
