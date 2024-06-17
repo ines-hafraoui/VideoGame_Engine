@@ -8,12 +8,12 @@ import game.model.Model;
 
 public class Item extends Entity{
 	
-	public Item(Automate a, Model m,Position p, Absolute_Orientation o,String t ) {
-		super(a,m,p,o,t);
+	public Item(Automate a, Model m,Position p, Absolute_Orientation o,String type, int team) {
+		super(a,m,p,o,type, team);
 	}
 	
-	public Item(Model m,Position p, Absolute_Orientation o, String t ) {
-		super(m,p,o,t);
+	public Item(Model m,Position p, Absolute_Orientation o, String type, int team) {
+		super(m,p,o,type, team);
 	}
 
 	@Override

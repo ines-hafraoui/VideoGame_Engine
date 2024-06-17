@@ -6,8 +6,8 @@ public class Die implements Action {
 
 	@Override
 	public boolean exec(Entity e) {
-		// TODO Auto-generated method stub
-		return false;
+		e.do_explode();
+		return true;
 	}
 
 }

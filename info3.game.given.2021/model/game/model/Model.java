@@ -28,10 +28,14 @@ import game.entity.Entity;
 
 import game.entity.Absolute_Orientation;
 import game.entity.Position;
+<<<<<<< HEAD
 
 
 import game.map.Map;
 import game.map.Polygon;
+=======
+import game.map.Map;
+>>>>>>> EntityDev
 import info3.game.Grid;
 import info3.game.IFactory;
 
@@ -44,17 +48,23 @@ public class Model {
 
 	long m_imageElapsed;
 	int m_width, height;
+<<<<<<< HEAD
 	private Grid m_grid;
 	private Map m_map;
 
+=======
+	private Map m_map;
+	private Absolute_Orientation m_orientation;
+>>>>>>> EntityDev
 	List<Entity> entities;
 	IFactory factory;
 
-	public Model(Grid grid, int w, int h, IFactory f) throws IOException {
+	public Model(Map map, int w, int h, IFactory f) throws IOException {
 		entities = new ArrayList<Entity>();
 		factory = f;
 	}
 
+<<<<<<< HEAD
 	public Model(Grid grid, int w, int h) throws IOException {
 		m_grid = grid;
 		List<Position> poss = new ArrayList<>();
@@ -105,6 +115,9 @@ public class Model {
 	}
 
 	public Map getMap() {
+=======
+	public Map get_map() {
+>>>>>>> EntityDev
 		return m_map;
 	}
 
@@ -114,12 +127,12 @@ public class Model {
 			m_imageElapsed = 0;
 		}
 
-		m_grid.tick(elapsed);
+		m_map.tick(elapsed);
 	}
 
 
-	public Entity get_entity(int distance, String t) {
-		Entity e = m_grid.get_entity(distance, t);
+	public Entity get_entity(int distance, String t, float f, float g) {
+		Entity e = m_map.get_entity(distance, t, f, g);
 		return e;
 	}
 	
@@ -127,8 +140,35 @@ public class Model {
 		entities.add(e);
 	}
 
-	public boolean inflict_hit(Absolute_Orientation o, int porte, String t) {
-		// TODO Auto-generated method stub
+	public boolean inflict_hit(Absolute_Orientation o, int porte, String t, float currentx, float currenty) {
+		float newX = currentx; 
+		float newY = currenty;
+		
+		switch (o.get_abs_Orientation()) {
+		case "N" :
+			newY += porte;
+			break;
+		case "S" : 
+			newY -= porte;
+			break;
+		case "W" : 
+			newX -= porte;
+			break; 
+		case "E" : 
+			newX += porte;
+			break;
+		default : 
+			break;
+		}
+		
+		for (Entity entity : entities) {
+			if (entity.get_type().equals(t)) {
+				if (entity.get_x() == newX && entity.get_y() == newY) {
+					entity.get_injured();
+					return true;
+				}	
+			}
+		}
 		return false;
 	}
 

@@ -25,11 +25,12 @@ public abstract class Entity {
 	protected List<Automate> inventory;
 	protected List<Entity> bots;
 	protected boolean explode;
+	protected int team;
+	protected boolean injured;
 
 	protected String type;
 	protected int index_inventory;
 	protected int index_bot;
-	protected int nb_bot; 
 
 	protected Position position;
 	protected Float base_speed;
@@ -47,8 +48,15 @@ public abstract class Entity {
 	public static final String PARASITE = "P";
 	public static final String FIRE_BALL = "FB";
 	public static final String ARROW = "A";
+	
+	public final static int NOTEAM = 0;
+	public final static int TEAM1 = 1;
+	public final static int TEAM2 = 2;
+	
+	public static int NB_BOT = 5; 
+	
 
-	public Entity(Automate a, Model m, Position p, Absolute_Orientation o, String type) {
+	public Entity(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team) {
 		aut = a;
 		model = m;
 		position = p;
@@ -58,11 +66,12 @@ public abstract class Entity {
 		explode = false;
 		index_inventory =0 ;
 		index_bot =0;
-		nb_bot = 5;
 		this.type = type;
+		this.team = team;
+		injured = false;
 	}
 
-	public Entity(Model m, Position p, Absolute_Orientation o, String type) {
+	public Entity(Model m, Position p, Absolute_Orientation o, String type, int team) {
 		model = m;
 		position = p;
 		abs_or = o;
@@ -70,9 +79,9 @@ public abstract class Entity {
 		explode = false;
 		index_inventory = 0;
 		index_bot = 0;
-		nb_bot = 5;
 		this.type = type;
-
+		this.team = team;
+		injured = false;
 	}
 
 	public static boolean haveCommonChar(String str1, String str2) {
@@ -99,7 +108,7 @@ public abstract class Entity {
 			speed_vct_abs_or.set_abs_Orientation(abs_or.get_abs_Orientation());
 		}
 
-		LandType lt = model.getMap().getLandType(position);
+		LandType lt = model.get_map().getLandType(position);
 		float BS_coeff;
 		float ACC_coeff;
 
@@ -161,12 +170,12 @@ public abstract class Entity {
 	}
 
 	public boolean eval_cell_abs(Absolute_Orientation dir, Category cat, int porte) {
-		return model.get_grid().eval_abs(dir, position.getPositionX(), position.getPositionY(), porte);
+		return model.get_map().eval_abs(dir, position.getPositionX(), position.getPositionY(), porte);
 		
 	}
 	
 	public boolean eval_cell_rel(Relative_Orientation dir, Category cat, int porte) {
-		return model.get_grid().eval_rel(dir, position.getPositionX(), position.getPositionY(), porte);
+		return model.get_map().eval_rel(dir, position.getPositionX(), position.getPositionY(), porte);
 		
 	}
 	
@@ -189,13 +198,26 @@ public abstract class Entity {
 	public void reduce_HP(int r) {
 		HP = HP - r;
 	}
+	
+	public void get_injured() {
+		injured = true;
+		HP -= 10;
+	}
 
 	public abstract boolean do_move();
 
 	public abstract void do_egg(int cat);
-
+	
+	
+	/*
+	 * an entity always
+	 */
 	public abstract boolean do_hit(Absolute_Orientation o, String type, int porte);
 
+	
+	/*
+	 * select is a  parameter that indicate if it is the first of the second selection 
+	 */
 	public boolean do_wait(int inc, int select ) {
 		switch(select) {
 		case 1 :
@@ -258,18 +280,7 @@ public abstract class Entity {
 	public Automate get_automate() {
 		return aut;
 	}
-
-	/*
-	 * méthode qui renvoie la list des entités qui compose cette entité
-	 */
-
-	public Entity[] get_entity() {
-		Entity[] eList = new Entity[1];
-		eList[0] = this;
-
-		return eList;
-	}
-
+	
 	public void tick(long elpased) {
 
 		System.out.print("TICK in " + this + "\n");
