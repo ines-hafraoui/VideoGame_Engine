@@ -57,11 +57,12 @@ public class Model {
 		m_width = w;
 		height = h;
 		List<Position> poss = new ArrayList<Position>();
-		players = new Entity[2];
-		Entity e = factory.newEntity(null, new Position(100, 100), m_orientation, EntityType.PLAYER);
+		players = new Entity[1];
+		Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.WEST);
+		Entity e = factory.newEntity(this, new Position(100, 100),ao , EntityType.PLAYER);
 		players[0] = e;
-		Entity e1 = factory.newEntity(null, new Position(900, 400), m_orientation, EntityType.PLAYER);
-		players[1] = e1;
+//		Entity e1 = factory.newEntity(this, new Position(900, 400), m_orientation, EntityType.PLAYER);
+//		players[1] = e1;
 		Position pos1 = new Position(0, 0);
 		Position pos2 = new Position(0, h);
 		Position pos3 = new Position(w, 0);

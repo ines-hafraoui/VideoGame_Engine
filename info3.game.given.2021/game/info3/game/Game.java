@@ -66,8 +66,6 @@ public class Game {
 		Dimension d = new Dimension(1800, 1000);
 		IFactory factory = new Game1Factory();
 		m_model = new Model(new Grid(20, 20), d.width, d.height, factory);
-		m_view = new View(m_model, factory, d);
-
 		m_model.setListener(new SyncViewModel());
 
 		// creating a listener for all the events
@@ -77,7 +75,8 @@ public class Game {
 		// creating the game canvas to render the game,
 		// that would be a part of the view in the MVC pattern
 		m_canvas = new GameCanvas(m_listener);
-
+		m_view = new View(m_model, factory, m_canvas.getMaximumSize());
+		
 		System.out.println("  - creating frame...");
 		m_frame = m_canvas.createFrame(d);
 		System.out.println("  - setting up the frame...");
@@ -171,6 +170,7 @@ public class Game {
 		g.fillRect(0, 0, width, height);
 
 		// paint
+		m_view.setDimension(width,height);
 		m_view.paint(g);
 	}
 

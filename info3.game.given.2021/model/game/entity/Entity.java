@@ -32,9 +32,9 @@ public abstract class Entity {
 	protected int nb_bot; 
 
 	protected Position position;
-	protected Float base_speed;
-	protected Float acc_speed; // accumulated speed
-	protected Absolute_Orientation speed_vct_abs_or;
+	protected Float base_speed = 1F;
+	protected Float acc_speed = 0F; // accumulated speed
+	protected Absolute_Orientation speed_vct_abs_or = new Absolute_Orientation(Absolute_Orientation.EAST);
 
 	public final static int FLECHE = 1;
 	public final static int BOULE_FEU = 2;

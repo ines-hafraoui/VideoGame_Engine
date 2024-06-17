@@ -24,26 +24,27 @@ public class View extends Container {
 	private static final long serialVersionUID = 5772029785230806250L;
 
 	// How much of the world we will be showing in each Viewport
-	public static final int MAPDISPLAYSCALE = 5;
-	public static final int DISPLAYSCALE = 2; // This is for the size of avatars
+	public static final int DISPLAYSCALE = 1; 
 
 	private Model m_model;
-	private int m_x = 0, m_y = 0, m_mwidth, m_mheight;
+	private int m_x = 0, m_y = 0;
+	int m_mwidth, m_mheight;
 	private IFactory m_f;
 	public Dimension m_d;
 	private Viewport[] m_viewports;
 	private List<Avatar> m_avatars;
 	private List<Avatar> m_players;
-	protected BufferedImage[] m_bgimages;
+	MapView m_map;
 
 	public View(Model model, IFactory f, Dimension d) {
 		m_model = model;
-		m_mwidth = model.get_width() * MAPDISPLAYSCALE;
-		m_mheight = model.get_height() * MAPDISPLAYSCALE;
+		m_mwidth = model.get_width() * DISPLAYSCALE;
+		m_mheight = model.get_height() * DISPLAYSCALE;
 		m_f = f;
 		m_d = d;
 		m_avatars = new LinkedList<Avatar>();
 		m_players = new LinkedList<Avatar>();
+		m_map = new MapView(0, 0, m_model,this);
 
 		List<Entity> entities = m_model.get_entities();
 		Iterator<Entity> iter = entities.iterator();
@@ -58,17 +59,12 @@ public class View extends Container {
 
 		setViewports();
 
-		try {
-			m_bgimages = loadSprite("resources/MiniWorldSprites/Ground/TexturedGrass.png", 2, 3);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public View(Model model, int x, int y, Dimension d, IFactory f) {
 		m_model = model;
-		m_mwidth = model.get_width() * MAPDISPLAYSCALE;
-		m_mheight = model.get_height() * MAPDISPLAYSCALE;
+		m_mwidth = model.get_width() * DISPLAYSCALE;
+		m_mheight = model.get_height() * DISPLAYSCALE;
 		m_x = x;
 		m_y = y;
 		m_f = f;
@@ -89,22 +85,11 @@ public class View extends Container {
 
 		setViewports();
 
-		try {
-			m_bgimages = loadSprite("resources/MiniWorldSprites/Ground/TexturedGrass.png", 2, 3);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void paint(Graphics g) {
 		Graphics mg = g.create(0, 0, m_d.width, m_d.height);
 
-//		for (int i = 0; i < m_mheight; i += (m_bgimages[0].getHeight() * DISPLAYSCALE)) {
-//			for (int j = 0; j < m_mwidth; j += (m_bgimages[0].getWidth() * DISPLAYSCALE)) {
-//				BufferedImage img = m_bgimages[getRandomNumber(0, m_bgimages.length)];
-//				g.drawImage(img, j, i, img.getWidth() * DISPLAYSCALE, img.getHeight() * DISPLAYSCALE, null);
-//			}
-//		}
 		switch (m_viewports.length) {
 		case 1:
 			m_viewports[0].paint(mg);
@@ -153,8 +138,24 @@ public class View extends Container {
 		m_avatars.remove(a);
 	}
 
-	void setDimension(Dimension d) {
+	public void setDimension(Dimension d) {
 		m_d = d;
+	}
+	
+	public void setDimension(int w, int h) {
+		m_d = new Dimension(w,h);
+		switch (m_viewports.length) {
+		case 1:
+			m_viewports[0].setDimension(m_d);
+			break;
+		case 2:
+			Dimension d = new Dimension(w/2,h);
+			m_viewports[0].setDimension(d);
+			m_viewports[1].setDimension(d);
+			break;
+		default:
+			throw new IllegalArgumentException("You have more than 2 players");
+		}
 	}
 
 	public static BufferedImage[] loadSprite(String filename, int nrows, int ncols) throws IOException {
@@ -196,7 +197,7 @@ public class View extends Container {
 		for (int i = 0; i < players.length; i++) {
 			try {
 				Avatar a = m_f.newAvatar(players[i], this);
-				m_viewports[i] = new Viewport(m_model, m_avatars, this, vp_d, i * (m_d.width / plen), 0, a);
+				m_viewports[i] = new Viewport(m_model, m_avatars, this, vp_d, i * (m_d.width / plen), 0, a,m_map);
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -223,5 +224,4 @@ public class View extends Container {
 	public int getRandomNumber(int min, int max) {
 		return (int) ((Math.random() * (max - min)) + min);
 	}
-
 }

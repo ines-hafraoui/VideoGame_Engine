@@ -23,7 +23,10 @@ package info3.controller;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
+import game.entity.Absolute_Orientation;
+import game.entity.Entity;
 import info3.game.Game;
 import info3.game.view.GameCanvasListener;
 
@@ -92,17 +95,29 @@ public class CanvasListener implements GameCanvasListener {
 	public void keyPressed(KeyEvent e) {
 		System.out.println("Key pressed: " + e.getKeyChar() + " code=" + e.getKeyCode());
 		if (e.getKeyCode() == 37) {// gauche
-			m_game.m_model.getOrientation().orientation = 'W';
+			Entity[] es =m_game.m_model.get_players();
+			Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.WEST);
+			es[0].do_turn(ao);
+			es[0].do_move();
 		}
 		if (e.getKeyCode() == 39) {// droite
-			m_game.m_model.getOrientation().orientation = 'E';
-
+			Entity[] es =m_game.m_model.get_players();
+			Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.EAST);
+			es[0].do_turn(ao);
+			es[0].do_move();
 		}
 		if (e.getKeyCode() == 38) {// haut
-			m_game.m_model.getOrientation().orientation = 'N';
+			Entity[] es =m_game.m_model.get_players();
+			Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.NORTH);
+			es[0].do_turn(ao);
+			es[0].do_move();
 		}
 		if (e.getKeyCode() == 40) {// bas
-			m_game.m_model.getOrientation().orientation = 'S';
+			Entity[] es =m_game.m_model.get_players();
+			Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.SOUTH);
+			es[0].do_turn(ao);
+			es[0].do_move();
+
 		}
 	}
 

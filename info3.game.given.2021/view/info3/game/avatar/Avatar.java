@@ -20,7 +20,7 @@ public abstract class Avatar {
 	
 	protected int a_state;
 	
-	protected Entity m_entity;
+	public Entity m_entity;
 	protected View m_view;
 	protected BufferedImage[] m_images;
 	protected int m_imageIndex;

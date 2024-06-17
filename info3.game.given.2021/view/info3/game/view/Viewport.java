@@ -29,32 +29,25 @@ public class Viewport extends Component {
 	Dimension m_d;
 	private MapView m_map;
 	int m_x, m_y;
-	Avatar m_player;
-
-	Viewport(Model model, List<Avatar> avatars, View parent, int x, int y, Avatar player) {
-		m_parent = parent;
-		m_model = model;
-		m_avatars = avatars;
-		m_map = new MapView(0, 0, m_model, this);
-		m_minimap = new MiniMap();// EAST SOUTH
-		m_inventory = new InventoryMenu(); // SOUTH
-		m_x = x;
-		m_y = y;
-		m_player = player;
-	}
+	Rectangle m_inWorldBounds;
+	Avatar m_player;	
 	
-	
-	Viewport(Model model, List<Avatar> avatars, View parent, Dimension d, int x, int y, Avatar player) {
+	Viewport(Model model, List<Avatar> avatars, View parent, Dimension d, int x, int y, Avatar player, MapView m) {
 		m_parent = parent;
 		m_model = model;
 		m_d = d;
 		m_avatars = avatars;
-		m_map = new MapView(0, 0, m_model, this);
+		m_map = m;
 		m_minimap = new MiniMap();// EAST SOUTH
 		m_inventory = new InventoryMenu(); // SOUTH
 		m_x = x;
 		m_y = y;
 		m_player = player;
+		
+		//Creates bounds of how much of the world can be desplayed
+		int wx = ((int) player.m_entity.get_x())- (d.width/2);
+		int wy = ((int) player.m_entity.get_y()) - (d.height/2);
+		m_inWorldBounds = new Rectangle(wx,wy,d.width,d.height);
 	}
 
 	void addDisplayedAvatar(Avatar avatar) {
@@ -71,7 +64,8 @@ public class Viewport extends Component {
 	
 	public void paint(Graphics g) {
 		Graphics mg = g.create(m_x, m_y, m_d.width, m_d.height);
-		m_map.paint(mg);
+		
+		m_map.paint(mg,m_inWorldBounds);
 		
 		Iterator<Avatar> iter = m_avatars.iterator();
 		while (iter.hasNext()) {
@@ -79,6 +73,6 @@ public class Viewport extends Component {
 			a.paint(mg, m_x, m_y);
 		}
 		
-		m_player.paint(mg, m_d.width/2,  m_d.height/2);
+		m_player.paint(mg,  ((int) m_player.m_entity.get_x()), ((int) m_player.m_entity.get_y()));
 	}
 }
