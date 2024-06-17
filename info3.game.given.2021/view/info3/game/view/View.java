@@ -28,7 +28,7 @@ public class View extends Container {
 	public static final int DISPLAYSCALE = 2; // This is for the size of avatars
 
 	private Model m_model;
-	private int m_x = 0, m_y = 0;
+	private int m_x = 0, m_y = 0, m_mwidth, m_mheight;
 	private IFactory m_f;
 	public Dimension m_d;
 	private Viewport[] m_viewports;
@@ -38,6 +38,8 @@ public class View extends Container {
 
 	public View(Model model, IFactory f, Dimension d) {
 		m_model = model;
+		m_mwidth = model.get_width() * MAPDISPLAYSCALE;
+		m_mheight = model.get_height() * MAPDISPLAYSCALE;
 		m_f = f;
 		m_d = d;
 		m_avatars = new LinkedList<Avatar>();
@@ -65,6 +67,8 @@ public class View extends Container {
 
 	public View(Model model, int x, int y, Dimension d, IFactory f) {
 		m_model = model;
+		m_mwidth = model.get_width() * MAPDISPLAYSCALE;
+		m_mheight = model.get_height() * MAPDISPLAYSCALE;
 		m_x = x;
 		m_y = y;
 		m_f = f;
@@ -94,10 +98,10 @@ public class View extends Container {
 
 	public void paint(Graphics g) {
 		Graphics mg = g.create(0, 0, m_d.width, m_d.height);
-		
-		for (int i = 0; i < m_d.height; i += (m_bgimages[0].getHeight() * DISPLAYSCALE)) {
-			for (int j = 0; j < m_d.width; j += (m_bgimages[0].getWidth() * DISPLAYSCALE)) {
-				BufferedImage img = m_bgimages[getRandomNumber(0,m_bgimages.length)];
+
+		for (int i = 0; i < m_mheight; i += (m_bgimages[0].getHeight() * DISPLAYSCALE)) {
+			for (int j = 0; j < m_mwidth; j += (m_bgimages[0].getWidth() * DISPLAYSCALE)) {
+				BufferedImage img = m_bgimages[getRandomNumber(0, m_bgimages.length)];
 				g.drawImage(img, j, i, img.getWidth() * DISPLAYSCALE, img.getHeight() * DISPLAYSCALE, null);
 			}
 		}
@@ -215,10 +219,9 @@ public class View extends Container {
 			throw new IllegalArgumentException("You have more than 2 players");
 		}
 	}
-	
-	
+
 	public int getRandomNumber(int min, int max) {
-	    return (int) ((Math.random() * (max - min)) + min);
+		return (int) ((Math.random() * (max - min)) + min);
 	}
-	
+
 }

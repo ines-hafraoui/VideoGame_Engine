@@ -54,6 +54,8 @@ public class Model {
 		factory = f;
 		m_grid = grid;
 		factory = f;
+		m_width = w;
+		height = h;
 		List<Position> poss = new ArrayList<Position>();
 		players = new Entity[2];
 		Entity e = factory.newEntity(null, new Position(100, 100), m_orientation, EntityType.PLAYER);
@@ -80,6 +82,8 @@ public class Model {
 	public Map m_map;
 
 	public Model(Grid grid, int w, int h) throws IOException {
+		m_width = w;
+		height = h;
 		m_grid = grid;
 		List<Position> poss = new ArrayList<>();
 		Position pos1 = new Position(0, 0);
@@ -172,6 +176,9 @@ public class Model {
 		return entities;
 	}
 
+	/*
+	 * method give the list of players in the world
+	 */
 	public Entity[] get_players() {
 		return players;
 	}
@@ -192,4 +199,13 @@ public class Model {
 	public void setListener(ModelListener l) {
 		m_ml = l;
 	}
+
+	public int get_width() {
+		return m_width;
+	}
+
+	public int get_height() {
+		return height;
+	}
+
 }
