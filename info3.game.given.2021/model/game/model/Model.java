@@ -60,7 +60,7 @@ public class Model {
 	List<Entity> entities;
 	IFactory factory;
 
-	public Model(Grid grid, int w, int h, IFactory f) throws IOException {
+	public Model(Map map, int w, int h, IFactory f) throws IOException {
 		entities = new ArrayList<Entity>();
 		factory = f;
 	}
@@ -87,8 +87,8 @@ public class Model {
 		return m_orientation;
 	}
 
-	public Entity get_entity(int distance, String t) {
-		Entity e = m_map.get_entity(distance, t);
+	public Entity get_entity(int distance, String t, float f, float g) {
+		Entity e = m_map.get_entity(distance, t, f, g);
 		return e;
 	}
 	

@@ -243,18 +243,7 @@ public abstract class Entity {
 	public Automate get_automate() {
 		return aut;
 	}
-
-	/*
-	 * méthode qui renvoie la list des entités qui compose cette entité
-	 */
-
-	public Entity[] get_entity() {
-		Entity[] eList = new Entity[1];
-		eList[0] = this;
-
-		return eList;
-	}
-
+	
 	public void tick(long elpased) {
 
 		System.out.print("TICK in " + this + "\n");

@@ -57,7 +57,7 @@ public class Player extends Entity {
 
 	@Override
 	public boolean do_pick(String t,int distance) {
-		Entity e = model.get_entity(distance, t);	// ask the model to give it the entity (whiwh is an item) at the distance d 
+		Entity e = model.get_entity(distance, t, this.get_x(), this.get_y());	// ask the model to give it the entity (whiwh is an item) at the distance d 
 		return inventory.add(e.aut);
 	}
 
