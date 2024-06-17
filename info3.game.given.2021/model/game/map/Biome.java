@@ -3,7 +3,7 @@ package game.map;
 import game.entity.Position;
 import java.util.List;
 
-public class Biome {
+public abstract class Biome {
 
 	
     private Polygon borders; // List of positions defining the polygon borders of the biome

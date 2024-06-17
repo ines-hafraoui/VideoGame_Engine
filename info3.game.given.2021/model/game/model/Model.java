@@ -28,14 +28,9 @@ import game.entity.Entity;
 
 import game.entity.Absolute_Orientation;
 import game.entity.Position;
-<<<<<<< HEAD
-
 
 import game.map.Map;
 import game.map.Polygon;
-=======
-import game.map.Map;
->>>>>>> EntityDev
 import info3.game.Grid;
 import info3.game.IFactory;
 
@@ -48,14 +43,9 @@ public class Model {
 
 	long m_imageElapsed;
 	int m_width, height;
-<<<<<<< HEAD
-	private Grid m_grid;
-	private Map m_map;
 
-=======
 	private Map m_map;
 	private Absolute_Orientation m_orientation;
->>>>>>> EntityDev
 	List<Entity> entities;
 	IFactory factory;
 
@@ -64,9 +54,7 @@ public class Model {
 		factory = f;
 	}
 
-<<<<<<< HEAD
 	public Model(Grid grid, int w, int h) throws IOException {
-		m_grid = grid;
 		List<Position> poss = new ArrayList<>();
 		Position pos1=new Position(0,0);
 		Position pos2=new Position(0,1000);
@@ -114,10 +102,8 @@ public class Model {
 
 	}
 
-	public Map getMap() {
-=======
+
 	public Map get_map() {
->>>>>>> EntityDev
 		return m_map;
 	}
 
