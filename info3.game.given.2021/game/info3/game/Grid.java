@@ -49,79 +49,13 @@ public class Grid {
 		return colorpos;
 	}
 
-	public char eval(Absolute_Orientation d, float x, float y) {
-		float targetX = x;
-		float targetY = y;
-
-		switch (o.get_abs_Orientation()) {
-		case 'N':
-			switch (d.getDirection()) {
-			case 'F':
-				targetY--;
-				break;
-			case 'R':
-				targetX++;
-				break;
-			case 'L':
-				targetX--;
-				break;
-			}
-			break;
-		case 'S':
-			switch (d.getDirection()) {
-			case 'F':
-				targetY++;
-				break;
-			case 'R':
-				targetX++;
-				break;
-			case 'L':
-				targetX--;
-				break;
-			}
-			break;
-		case 'E':
-			switch (d.getDirection()) {
-			case 'F':
-				targetX++;
-				break;
-			case 'R':
-				targetY++;
-				break;
-			case 'L':
-				targetY--;
-				break;
-			}
-			break;
-		case 'W':
-			switch (d.getDirection()) {
-			case 'F':
-				targetX--;
-				break;
-			case 'R':
-				targetY--;
-				break;
-			case 'L':
-				targetY++;
-				break;
-			}
-			break;
-		}
-
-		for (Entity e : getEntities()) {
-			if (e instanceof Apple) {
-				if (e.get_y() == targetY && e.get_x() == targetX)
-					return 'A';
-			} else if (e instanceof Snake) {
-				if (e.get_y() == targetY && e.get_x() == targetX)
-					return 'S';
-			} else {
-				if (e.get_y() == targetY && e.get_x() == targetX)
-					return 'E';
-			}
-		}
-		return 'X';
-
+	public boolean eval_abs(Absolute_Orientation d, float x, float y, int porte) {
+		return false;
+		
+	}
+	
+	public boolean eval_rel(Relative_Orientation d, float x, float y, int porte) {
+		return false;
 	}
 
 	public void add_entity(Entity e) {

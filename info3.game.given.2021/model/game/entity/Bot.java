@@ -34,10 +34,10 @@ public class Bot extends Entity{
 		
 		switch(cat) {
 		case FLECHE : 
-			model.get_entities().add(new Arrow(model,position,abs_or, ARROW));
+			model.get_entities().add(model.newEntity(model,position,abs_or, ARROW));
 			break;
 		case BOULE_FEU : 
-			model.get_entities().add(new Fire_Ball(model,position,abs_or, FIRE_BALL));
+			model.get_entities().add(model.newEntity(model,position,abs_or, FIRE_BALL));
 			break;
 		default : 
 			break;

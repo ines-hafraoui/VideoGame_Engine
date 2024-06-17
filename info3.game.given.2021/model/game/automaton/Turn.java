@@ -19,6 +19,7 @@ public class Turn implements Action{
 	@Override
 	public boolean exec(Entity e) {
 		e.do_turn(o);
+		return true;
 	}	
 
 }

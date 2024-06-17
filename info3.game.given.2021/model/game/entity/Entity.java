@@ -1,6 +1,7 @@
 package game.entity;
 
 import game.entity.Position;
+
 import game.model.Model;
 import info3.game.Grid;
 
@@ -129,15 +130,22 @@ public abstract class Entity {
 
 	}
 
-	public boolean eval_cell(Absolute_Orientation dir, Category cat) {
-		char response = model.get_grid().eval(dir, position.getPositionX(), position.getPositionY());
-		if (response != 'X')
-			return true;
-		return false;
+	public boolean eval_cell_abs(Absolute_Orientation dir, Category cat, int porte) {
+		return model.get_grid().eval_abs(dir, position.getPositionX(), position.getPositionY(), porte);
+		
+	}
+	
+	public boolean eval_cell_rel(Relative_Orientation dir, Category cat, int porte) {
+		return model.get_grid().eval_rel(dir, position.getPositionX(), position.getPositionY(), porte);
+		
 	}
 	
 	public String get_type() {
 		return type;
+	}
+	
+	public Absolute_Orientation get_abs_or() {
+		return abs_or;
 	}
 
 	public float get_x() {
