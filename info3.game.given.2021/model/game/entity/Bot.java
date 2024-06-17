@@ -51,7 +51,7 @@ public class Bot extends Entity{
 
 	@Override
 	public boolean do_hit(Absolute_Orientation o,  String t, int porte) {
-		return model.inflict_hit(o, porte, t);
+		return model.inflict_hit(o, porte, t, this.get_x(), this.get_y());
 	}
 
 	@Override

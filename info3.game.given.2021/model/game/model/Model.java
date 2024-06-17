@@ -96,7 +96,7 @@ public class Model {
 		entities.add(e);
 	}
 
-	public boolean inflict_hit(Absolute_Orientation o, int porte, String t, int currentx, int currenty) {
+	public boolean inflict_hit(Absolute_Orientation o, int porte, String t, float currentx, float currenty) {
 		float newX = currentx; 
 		float newY = currenty;
 		
