@@ -2,9 +2,8 @@
   "cooperative" : false,
   "timer" : -1, 
   “viscosity” : 1,
-
-  "entities": [
-    { "name" : "PLAYER 1",
+    "Player1":{
+      "name" : "PLAYER 1",
       "view" : 1,   
       "behaviour": "player1.gal",
       "features" : "Player.class",
@@ -15,7 +14,8 @@
       "team":1
 
     },
-    { "name" : "PLAYER 2",
+    "Player2":{ 
+      "name" : "PLAYER 2",
       "view" : 2,   
       "behaviour": "player2.gal",
       "features" : "Player.class",
@@ -25,6 +25,7 @@
       "position":[200,500],
       "team": 2
     },
+    "Bot1":
     { "name" : "BOT1", 
       "behaviour" : "bot.gal",
       "features" : "Bot.class",
@@ -34,7 +35,8 @@
       "position":[400,200],
       "team":1
     },
-    { "name" : "BOT2", 
+    "Bot2":{
+       "name" : "BOT2", 
       "behaviour" : "bot.gal",
       "features" : "Bot.class",
       "sprite" : "bot.png",
@@ -43,7 +45,8 @@
       "position":[300,400],
       "team":2
     },
- { "name" : "POWER", 
+    "Bot2":{
+      "name" : "POWER", 
       "behaviour" : "item.gal",
       "features" : "Power.class",
       "sprite" : "power.png",
@@ -52,7 +55,8 @@
       "position":[1,1],
       "team":0
     },
- { "name" : "BASE1", 
+    "Base1":{ 
+      "name" : "BASE1", 
       "behaviour" : "base1.gal",
       "features" : "Base.class",
       "sprite" : "base.png",
@@ -60,11 +64,9 @@
       "direction":"W",
       "position":[600,200],
       "team":1
-    }
-
-
-
-{ "name" : "BASE2", 
+    },
+    "Base2":{
+      "name" : "BASE2", 
       "behaviour" : "base1.gal",
       "features" : "Base.class",
       "sprite" : "base.png",
@@ -73,6 +75,5 @@
       "position":[100,400],
       "team":2
     }
-  ]
 }
 
