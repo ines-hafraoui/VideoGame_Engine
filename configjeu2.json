@@ -1,9 +1,9 @@
 {
   "cooperative" : true,
   "timer" : 120, 
-  “viscosity” : 0,
-  "entities": [
-    { "name" : "PLAYER 1",
+  "viscosity" : 0,
+  "Player1":{ 
+      "name" : "PLAYER 1",
       "view" : 1,   
       "behaviour": "player1.gal",
       "features" : "Player.class",
@@ -13,7 +13,8 @@
       "position":[500,200],
       "team":1
     },
-    { "name" : "PLAYER 2",
+    "Player2":{
+      "name" : "PLAYER 2",
       "view" : 2,   
       "behaviour": "player2.gal",
       "features" : "Player.class",
@@ -23,7 +24,9 @@
       "position":[550,200],
       "team":2
     },
-    { "name" : "PARASITE", 
+    "Parasite":{
+      "name" : "PARASITE", 
+      "view" : 0, 
       "behaviour" : "parasite.gal",
       "features" : "Bot.class",
       "sprite" : "parasite.png",
@@ -32,7 +35,9 @@
       "position":[100,50],
       "team":0
     },
- { "name" : "CAPACITY", 
+    "Capacity":{
+      "name" : "CAPACITY", 
+      "view" : 0, 
       "behaviour" : "item.gal",
       "features" : "Capacity.class",
       "sprite" : "capacity.png",
@@ -43,6 +48,7 @@
     },
  { "name" : "PLANT", 
       "behaviour" : "item.gal",
+      "view" : 0, 
       "features" : "Plant.class",
       "sprite" : "plant.png",
       "pickable" : true,
@@ -50,7 +56,9 @@
       "position":[50,100],
       "team":0
     },
- { "name" : "BASE", 
+    "Base":{
+      "name" : "BASE", 
+      "view" : 0,  
       "behaviour" : "base2.gal",
       "features" : "Base.class",
       "sprite" : "base.png",
@@ -59,6 +67,6 @@
       "position":[300,300],
       "team":0
     }
-  ]
+  
 }
 
