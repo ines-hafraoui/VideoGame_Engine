@@ -1,7 +1,7 @@
 Bot_Jeu1(Beg){
 
  * (Beg): 
- | not(Got(T)) ? Explode :(Mort)
+ | !(Got(T)) ? Explode :(Mort)
  | Cell(d,A,1) ? Turn(d) ; Hit(d,A,1) :(Beg)
  | Closest(d,@) ? Turn(d) ; Move :(Beg)
  
@@ -16,7 +16,7 @@ Bot_Jeu1(Beg){
 Bot_Jeu2(Beg){
 
  * (Beg): 
- | not(Got(T)) ? Explode :(Mort)
+ | !(Got(T)) ? Explode :(Mort)
  | Cell(d,A,1) ? Turn(d) ; Hit(d,A,1) :(Beg)
  | Closest(d,A) ? Turn(d) ; Move :(Beg)
  
@@ -30,8 +30,8 @@ Bot_Jeu2(Beg){
 Base_Jeu1(Beg){
 
  * (Beg):
- | not(Got(T)) ? Explode :(Mort)
- | True ? 0,01 % Egg(3) / Wait(0,0) :(Beg)
+ | !(Got(T)) ? Explode :(Mort)
+ | True ? 1 % Egg(3) / Wait(0,0) :(Beg)
  
  * (Mort):
  | True ? :(Mort)
@@ -63,7 +63,7 @@ Fleche(Beg){
  
   * (Beg):
   | Cell(F,V,1) ? 95 % Move(F) / Explode :(Beg)
-  | not(Got(T)) ? :(Mort)
+  | !(Got(T)) ? :(Mort)
   | Cell(F,A,1) ? Hit(F,A,1) ; Explode :(Mort)
   
   * (Mort):
@@ -74,7 +74,7 @@ Fleche(Beg){
 Item(Beg){	
 
  * (Beg):
- | not(Got(T)) ? Explode :(Picked)
+ | !(Got(T)) ? Explode :(Picked)
  | True ? Wait(0,0) :(Beg)
  
  * (Picked):
@@ -85,7 +85,7 @@ Item(Beg){
 Joueur_1(Beg){
 
  * (Beg): 
- | not(Got(T)) ? Explode :(Mort)
+ | !(Got(T)) ? Explode :(Mort)
  | Key(z) & Key(q) ? Turn(NW) ; Move(NW) :(Beg)
  | Key(z) & Key(d) ? Turn(NE) ; Move(NE) :(Beg)
  | Key(s) & Key(q) ? Turn(SW) ; Move(SW) :(Beg)
@@ -97,27 +97,27 @@ Joueur_1(Beg){
  | Key(SPACE) ? :(Fight)
  | Key(a) ? :(Select1)
  | Cell(H,P,1) ? Pick(P,1) :(Beg)
- | not(Cell(H,A,20)) ? :(Regen)
+ | !(Cell(H,A,20)) ? :(Regen)
  | True ? Wait(0,0) :(Beg)
  
  * (Regen):
- | not(Cell(H,A,20)) ? Power :(Regen)
+ | !(Cell(H,A,20)) & Got(Power) ? :(Regen)
  | Cell(H,A,20) ? :(Beg)
  
  * (Fight):
  | Cell(d,A,2) ? Turn(d) ; Hit(d,2) :(Beg)
- | not(Cell(d,A,2)) ? Egg(1) :(Beg)
+ | !(Cell(d,A,2)) ? Egg(1) :(Beg)
  
  * (Select1):
  | Key(a) ? :(Beg)
  | Key(d) ? Wait(1,1) :(Select1)
- | Key(q) ? Wait(-1,1) :(Select1)
+ | Key(q) ? Wait(2,1) :(Select1)
  | Key(e) ? Wait(0,1) :(Select2)
  
  * (Select2):
  | Key(l) ? :(Beg)
  | Key(FR) ? Wait(1,2) :(Select2)
- | Key(FL) ? Wait(-1,2) :(Select2)
+ | Key(FL) ? Wait(2,2) :(Select2)
  | Key(ENTER) ? Get :(Beg)
  | Key(p) ? Throw :(Beg)
   
@@ -129,36 +129,36 @@ Joueur_1(Beg){
 Joueur_2(Beg){
 
  * (Beg): 
- | not(Got(T)) ? Explode :(Mort)
+ | !(Got(T)) ? Explode :(Mort)
  | Key(FU) & Key(FL) ? Turn(NW) ; Move(NW) :(Beg)
  | Key(FU) & Key(FR) ? Turn(NE) ; Move(NE) :(Beg)
  | Key(FD) & Key(FL) ? Turn(SW) ; Move(SW) :(Beg)
  | Key(FD) & Key(FR) ? Turn(SE) ; Move(SE) :(Beg)
- | Key(F) ? Turn(F) ; Move(F) :(Beg)
+ | Key(f) ? Turn(F) ; Move(F) :(Beg)
  | Key(m) ? :(Fight)
  | Key(l) ? :(Select1)
  | Cell(H,P,1) ? Pick(P,1) :(Beg)
- | not(Cell(H,A,20)) ? :(Regen)
+ | !(Cell(H,A,20)) ? :(Regen)
  | True ? Wait(0,0) :(Beg)
  
  * (Regen):
- | not(Cell(H,A,20)) ? Power :(Regen)
+ | !(Cell(H,A,20)) & Got(Power) ? :(Regen)
  | Cell(H,A,20) ? :(Beg)
  
  * (Fight):
  | Cell(d,A,2) ? Turn(d) ; Hit(d,2) :(Beg)
- | not(Cell(d,A,2)) ? Egg(1) :(Beg)
+ | !(Cell(d,A,2)) ? Egg(1) :(Beg)
  
  * (Select1):
  | Key(l) ? :(Beg)
  | Key(FR) ? Wait(1,1) :(Select1)
- | Key(FL) ? Wait(-1,1) :(Select1)
+ | Key(FL) ? Wait(2,1) :(Select1)
  | Key(ENTER) ? Wait(0,1) :(Select2)
  
  * (Select2):
  | Key(l) ? :(Beg)
  | Key(FR) ? Wait(1,2) :(Select2)
- | Key(FL) ? Wait(-1,2) :(Select2)
+ | Key(FL) ? Wait(2,2) :(Select2)
  | Key(ENTER) ? Get :(Beg)
  | Key(p) ? Throw :(Beg)
   
@@ -170,13 +170,13 @@ Joueur_2(Beg){
 Dragon(Beg){
 
  * (Beg): 
- | not(Got(T)) ? Explode :(Mort)
+ | !(Got(T)) ? Explode :(Mort)
  | Cell(d,A,10) ? Turn(d) :(Fight)
  | True ? 25 % Turn(W) ; Move / 25 % Turn(E) ; Move / 25 % Turn(E) ; Move / 25 % Turn(S) ; Move :(Beg)
  
  * (Fight):
  | Cell(F,A,2) ? Hit(F,A,2) :(Beg)
- | not(Cell(F,A,2))? Egg(2) :(Beg)
+ | !(Cell(F,A,2))? Egg(2) :(Beg)
 
  * (Mort):
  | True ? :(Mort)
@@ -186,7 +186,7 @@ Dragon(Beg){
 Archer(Beg){
 
  * (Beg): 
- | not(Got(T)) ? Explode :(Mort)
+ | !(Got(T)) ? Explode :(Mort)
  | Cell(d,A,10) ? Turn(d) ; Egg(1) :(Beg)
  | True ? 25 % Turn(W) ; Move / 25 % Turn(E) ; Move / 25 % Turn(E) ; Move / 25 % Turn(S) ; Move :(Beg)
 
@@ -198,7 +198,7 @@ Archer(Beg){
 Dasher(Beg){
 
  * (Beg): 
- | not(Got(T)) ? Explode :(Mort)
+ | !(Got(T)) ? Explode :(Mort)
  | Cell(d,A,10) ? Turn(d) ; Wizz(10) :(Beg)
  | True ? 25 % Turn(W) ; Move / 25 % Turn(E) ; Move / 25 % Turn(E) ; Move / 25 % Turn(S) ; Move :(Beg)																										
 

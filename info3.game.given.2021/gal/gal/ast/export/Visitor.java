@@ -140,7 +140,7 @@ public class Visitor implements IVisitor {
 		case "Explode":
 			return new Explode();
 		case "Power":
-			break;
+			return new Power((int) parameters.get(0));
 		case "Jump":
 			break;
 		case "Wizz":
