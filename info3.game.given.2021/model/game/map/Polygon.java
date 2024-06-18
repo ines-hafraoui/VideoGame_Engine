@@ -68,55 +68,6 @@ public class Polygon {
 		vertices.remove(position);
 	}
 
-	public void cleanPolygon() {
-		this.vertices = convexHull(vertices);
-	}
-
-	private List<Position> convexHull(List<Position> points) {
-		if (points.size() < 3) {
-			return points;
-		}
-
-		// Find the point with the smallest y-coordinate (and x in case of tie)
-		Position start = Collections.min(points,
-				Comparator.comparing(Position::getPositionY).thenComparing(Position::getPositionX));
-
-		// Sort points by angle with the start point
-		points.sort((a, b) -> {
-			if (a.equals(start))
-				return -1;
-			if (b.equals(start))
-				return 1;
-			float angleA = angle(start, a);
-			float angleB = angle(start, b);
-			return Float.compare(angleA, angleB);
-		});
-
-		Stack<Position> hull = new Stack<>();
-		hull.push(start);
-		hull.push(points.get(1));
-
-		for (int i = 2; i < points.size(); i++) {
-			Position top = hull.pop();
-			while (!hull.isEmpty() && !isCounterClockwise(hull.peek(), top, points.get(i))) {
-				top = hull.pop();
-			}
-			hull.push(top);
-			hull.push(points.get(i));
-		}
-
-		return new ArrayList<>(hull);
-	}
-
-	private float angle(Position a, Position b) {
-		return (float) Math.atan2(b.getPositionY() - a.getPositionY(), b.getPositionX() - a.getPositionX());
-	}
-
-	private boolean isCounterClockwise(Position a, Position b, Position c) {
-		return (b.getPositionX() - a.getPositionX()) * (c.getPositionY() - a.getPositionY())
-				- (b.getPositionY() - a.getPositionY()) * (c.getPositionX() - a.getPositionX()) > 0;
-	}
-
 	public float getArea() {
 		int n = vertices.size();
 		if (n < 3)
@@ -195,7 +146,7 @@ public class Polygon {
 	
 	public List<Position> generatePointsInsidePolygon(int seed) {
 		Random random = new Random(seed);
-		int numberOfPoints = random.nextInt(10) + 1;
+		int numberOfPoints = random.nextInt(1000)%100 + 1;
 
 		int count = 0;
 		List<Position> positionsInsideBorders = new ArrayList<>();
