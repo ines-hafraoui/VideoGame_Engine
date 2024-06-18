@@ -1,0 +1,52 @@
+{
+  "cooperative" : true,
+  "timer" : 120, 
+  “viscosity” : 0,
+  "entities": [
+    { "name" : "PLAYER 1",
+      "view" : 1,   
+      "behaviour": "player1.gal",
+      "features" : "Player.class",
+      "sprite" : "teammate1.png",
+      "pickable": false ,
+      “x” : 1,
+      “y” : 1
+    },
+    { "name" : "PLAYER 2",
+      "view" : 2,   
+      "behaviour": "player2.gal",
+      "features" : "Player.class",
+      "sprite" : "teammate2.png",
+      "pickable": false ,
+      “x” : 2,
+      “y” : 2
+    },
+    { "name" : "PARASITE", 
+      "behaviour" : "parasite.gal",
+      "features" : "Bot.class",
+      "sprite" : "parasite.png",
+      "pickable" : false
+    },
+ { "name" : "CAPACITY", 
+      "behaviour" : "item.gal",
+      "features" : "Capacity.class",
+      "sprite" : "capacity.png",
+      "pickable" : true
+    },
+ { "name" : "PLANT", 
+      "behaviour" : "item.gal",
+      "features" : "Plant.class",
+      "sprite" : "plant.png",
+      "pickable" : true
+    },
+ { "name" : "BASE", 
+      "behaviour" : "base2.gal",
+      "features" : "Base.class",
+      "sprite" : "base.png",
+      "pickable" : false,
+      “x” : 50,
+      “y” : 50
+    }
+  ]
+}
+

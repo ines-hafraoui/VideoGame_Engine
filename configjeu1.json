@@ -1,0 +1,58 @@
+{
+  "cooperative" : false,
+  "timer" : -1, 
+  “viscosity” : 1,
+
+  "entities": [
+    { "name" : "PLAYER 1",
+      "view" : 1,   
+      "behaviour": "player1.gal",
+      "features" : "Player.class",
+      "sprite" : "fighter1.png",
+      "pickable": false  
+      “x” : 1,
+      “y” : 1
+    },
+    { "name" : "PLAYER 2",
+      "view" : 2,   
+      "behaviour": "player2.gal",
+      "features" : "Player.class",
+      "sprite" : "fighter2.png",
+      "pickable": false ,
+       “x” : 100,
+      “y” : 100
+    },
+    { "name" : "BOT", 
+      "behaviour" : "bot.gal",
+      "features" : "Bot.class",
+      "sprite" : "bot.png",
+      "pickable" : true
+    },
+ { "name" : "POWER", 
+      "behaviour" : "item.gal",
+      "features" : "Power.class",
+      "sprite" : "power.png",
+      "pickable" : true
+    },
+ { "name" : "BASE1", 
+      "behaviour" : "base1.gal",
+      "features" : "Base.class",
+      "sprite" : "base.png",
+      "pickable" : false,
+      “x” : 1,
+      “y” : 1
+    }
+
+
+
+{ "name" : "BASE2", 
+      "behaviour" : "base1.gal",
+      "features" : "Base.class",
+      "sprite" : "base.png",
+      "pickable" : false,
+      “x” : 100,
+      “y” : 100
+    }
+  ]
+}
+
