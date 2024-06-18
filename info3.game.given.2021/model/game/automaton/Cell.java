@@ -5,8 +5,8 @@ import game.entity.Entity;
 
 public class Cell implements Condition {
 	
-	Absolute_Orientation a=null;
-	Relative_Orientation d=null; 
+	Absolute_Orientation a;
+	Relative_Orientation d; 
 	Category cat; 
 	int portee;
 	

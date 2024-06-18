@@ -81,12 +81,12 @@ public class Visitor implements IVisitor {
 
 		switch (funcall.name) { // pas sur que le premier élément de parameters est l'entite
 		case "Egg":
-			return new Egg((int) parameters.get(0));
+			return new Egg(Integer.getInteger(parameters.get(0).toString()) );
 		case "Move":
 			return new Move();
 		case "Turn":
 			Absolute_Orientation a = new Absolute_Orientation("N");
-			switch ((String) parameters.get(0)) {
+			switch (parameters.get(0).toString()) {
 
 			case "N":
 				return new Turn(a);
@@ -121,26 +121,26 @@ public class Visitor implements IVisitor {
 			
 			Absolute_Orientation ao = new Absolute_Orientation(parameters.get(0).toString());
 			String t = parameters.get(1).toString();
-			int range = (int) parameters.get(2);
+			int range = Integer.getInteger(parameters.get(2).toString()) ;
 			return new Hit(ao, t, range);
 			}
 			Relative_Orientation ro = new Relative_Orientation(parameters.get(0).toString());
 			String t = parameters.get(1).toString();
-			int range = (int) parameters.get(2);
+			int range = Integer.getInteger(parameters.get(2).toString()) ;
 			return new Hit(ro, t, range);
 			
 		case "Wait":
-			return new Wait((int) parameters.get(0), (int) parameters.get(1));
+			return new Wait(Integer.valueOf(parameters.get(0).toString()), Integer.valueOf(parameters.get(1).toString()));
 			
 		case "Pick":
-			return new Pick(((game.automaton.Category) parameters.get(0)).get_category(), (int) parameters.get(1));
+			return new Pick(((game.automaton.Category) parameters.get(0)).get_category(), Integer.valueOf(parameters.get(1).toString()));
 		case "Throw":
 			//return new Throw(); // remove the entity or create another constructor
 			break;
 		case "Explode":
 			return new Explode();
 		case "Power":
-			return new Power((int) parameters.get(0));
+			return new Power();
 		case "Jump":
 			break;
 		case "Wizz":
@@ -150,12 +150,13 @@ public class Visitor implements IVisitor {
 			break;
 		case "Cell":
 			if (Relative_Orientation.is_relative_orientation(parameters.get(0))) {
-
-				return new Cell(((Relative_Orientation) parameters.get(0)), (game.automaton.Category) parameters.get(1),
-						(int) parameters.get(2));
+				Relative_Orientation or = new Relative_Orientation(parameters.get(0).toString());
+				game.automaton.Category cat = new game.automaton.Category(parameters.get(1).toString());
+				return new Cell(or, cat, Integer.valueOf(parameters.get(2).toString()));
 			}
-			return new Cell(((Absolute_Orientation) parameters.get(0)), (game.automaton.Category) parameters.get(1),
-					(int) parameters.get(2));
+			Absolute_Orientation o = new Absolute_Orientation(parameters.get(0).toString());
+			game.automaton.Category c = new game.automaton.Category(parameters.get(1).toString());
+			return new Cell(o, c,Integer.valueOf(parameters.get(2).toString()));
 
 		case "True":
 			return true;
@@ -205,9 +206,11 @@ public class Visitor implements IVisitor {
 
 	@Override
 	public Object build(UnaryOp unop, Object expression) { // mouais a modifier
-		Expression e = (Expression) expression;
+		//Expression e = (Expression) expression;
+		Boolean e = (Boolean)expression;
 
-		return new UnaryOp(unop.operator, e);
+		//return new UnaryOp(unop.operator, e);
+		return new TrueFalse(e);
 	}
 
 	@Override
@@ -289,7 +292,10 @@ public class Visitor implements IVisitor {
 				Object o2 = e.parameters.get(1);
 				return new Conjonction((game.automaton.Condition) o1, (game.automaton.Condition) o2);
 			}
-		} else if (expression instanceof Boolean){
+		} else if (expression instanceof Boolean || expression instanceof TrueFalse){
+			if (expression instanceof TrueFalse) {
+				return expression;
+			}
 			return new game.automaton.TrueFalse((boolean) expression);
 		}
 		

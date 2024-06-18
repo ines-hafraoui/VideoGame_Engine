@@ -63,14 +63,15 @@ public class Model {
 		players = new Entity[1];
 		Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.WEST);
 		Entity e = factory.newEntity(this, new Position(500, 200),ao , EntityType.PLAYER, Entity.TEAM1);
-		ArrayList<Automate> fsm_list = (ArrayList<Automate>) TestMain.loadAutomata("/home/jessy/Polytech_Grenoble/INFO3/Projet/g3/info3.game.given.2021/gal/gal/automate.gal");
-		e.set_automate(fsm_list.get(7));
+		List<Automate> fsm_list = (List<Automate>) TestMain.loadAutomata("/home/nada/Documents/INFO3/S2/Projet_Jeu/g3/info3.game.given.2021/gal/gal/automate.gal");
+		//e.set_automate(fsm_list.get(0));
 		players[0] = e;
 		//Entity e1 = factory.newEntity(this, new Position(900, 400),ao, EntityType.PLAYER, Entity.TEAM1);
 		//players[1] = e1;
 		Entity e2 = factory.newEntity(this, new Position(600, 200), ao, EntityType.FIREBALL, Entity.TEAM1);
 		entities.add(e2);
 		Entity e3 = factory.newEntity(this, new Position(200, 200), ao, EntityType.TEAMMATE, Entity.TEAM1);
+		e3.set_automate(fsm_list.get(0));
 		entities.add(e3);
 		Entity e4 = factory.newEntity(this, new Position(400, 400), ao, EntityType.BASE, Entity.TEAM1);
 		entities.add(e4);

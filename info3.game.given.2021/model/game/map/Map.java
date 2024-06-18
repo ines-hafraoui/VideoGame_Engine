@@ -315,16 +315,16 @@ public class Map {
 		
 		
 		switch (dir.get_rel_Orientation()) {
-		case 'F' :
+		case "F" :
 			newY += porte;
 			break;
-		case 'B' : 
+		case "B" : 
 			newY -= porte;
 			break;
-		case 'L' : 
+		case "L" : 
 			newX -= porte;
 			break; 
-		case 'R' : 
+		case "R" : 
 			newX += porte;
 			break;
 		default :
