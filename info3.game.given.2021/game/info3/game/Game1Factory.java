@@ -35,17 +35,17 @@ public class Game1Factory implements IFactory {
 	public Entity newEntity(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team) {
 		switch (type) {
 		case BASE:
-			return new Base(a, m, p, o, type, team);
+			return new Base(a, m, p, o, type, team,0);
 		case ITEM:
-			return new Item(a, m, p, o, type, team);
+			return new Item(a, m, p, o, type, team,0);
 		case BOT:
-			return new Bot(a, m, p, o, type, team);
+			return new Bot(a, m, p, o, type, team,0);
 		case PLAYER:
-			return new Player(a, m, p, o, type, team);
+			return new Player(a, m, p, o, type, team,Model.NB_BOT);
 		case FIREBALL:
-			return new Fire_Ball(a,m, p, o, type, team);
+			return new Fire_Ball(a,m, p, o, type, team,0);
 		case ARROW:
-			return new Arrow(a,m, p, o, type, team);
+			return new Arrow(a,m, p, o, type, team,0);
 
 		default:
 			return null;
@@ -56,17 +56,17 @@ public class Game1Factory implements IFactory {
 	public Entity newEntity(Model m, Position p, Absolute_Orientation o, String type, int team) {
 		switch (type) {
 		case BASE:
-			return new Base(m, p, o, type, team);
+			return new Base(m, p, o, type, team,0);
 		case ITEM:
-			return new Item(m, p, o, type, team);
+			return new Item(m, p, o, type, team,0);
 		case BOT:
-			return new Bot(m, p, o, type, team);
+			return new Bot(m, p, o, type, team,0);
 		case PLAYER:
-			return new Player(m, p, o, type, team);
+			return new Player(m, p, o, type, team,Model.NB_BOT);
 		case FIREBALL:
-			return new Fire_Ball(m, p, o, type, team);
+			return new Fire_Ball(m, p, o, type, team,0);
 		case ARROW:
-			return new Arrow(m, p, o, type, team);
+			return new Arrow(m, p, o, type, team,0);
 		default:
 			return null;
 		}
