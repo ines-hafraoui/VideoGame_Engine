@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 import java.util.Stack;
 
 import game.entity.Position;
@@ -187,4 +188,45 @@ public class Polygon {
         return r.intersectsLine(p1.getPositionX(), p1.getPositionY(), p2.getPositionX(), p2.getPositionY());
     }
 
+	
+	public List<Position> generatePointsInsidePolygon(int seed) {
+		Random random = new Random(seed);
+		int numberOfPoints = random.nextInt(10) + 1;
+
+		int count = 0;
+		List<Position> positionsInsideBorders = new ArrayList<>();
+		while (count < numberOfPoints) {
+			float x = random.nextInt() % getMaxX();
+			float y = random.nextInt() % getMaxY();
+
+			Position position = new Position(x, y);
+			if (containsPosition(position)) {
+				positionsInsideBorders.add(position);
+				count++;
+			}
+		}
+
+		return positionsInsideBorders;
+	}
+	
+    public float getMaxX() {
+        float maxX = Float.NEGATIVE_INFINITY;
+        for (Position vertex : getVertices()) {
+            if (vertex.getPositionX() > maxX) {
+                maxX = vertex.getPositionX();
+            }
+        }
+        return maxX;
+    }
+
+    // Method to get the maximum y value of the border points
+    public float getMaxY() {
+        float maxY = Float.NEGATIVE_INFINITY;
+        for (Position vertex : getVertices()) {
+            if (vertex.getPositionY() > maxY) {
+                maxY = vertex.getPositionY();
+            }
+        }
+        return maxY;
+    }
 }

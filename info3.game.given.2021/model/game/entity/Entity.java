@@ -112,7 +112,7 @@ public abstract class Entity {
 			ACC_coeff = 1;
 		}
 
-		acc_speed =  factor * (BS_coeff * base_speed + ACC_coeff * acc_speed); //+ model.getMap().getViscosity(position);
+		acc_speed =  factor * (BS_coeff * base_speed + ACC_coeff * acc_speed);// model.getMap().getViscosity(position);
 		
 	}
 
