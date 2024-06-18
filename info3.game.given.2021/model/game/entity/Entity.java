@@ -178,6 +178,11 @@ public abstract class Entity {
 
 	public abstract void do_egg(int cat);
 	
+	public void do_got(String s) {
+		if (s.equals("Power"))
+			this.do_power(5);
+	}
+	
 	
 	/*
 	 * an entity always
