@@ -81,7 +81,7 @@ public class Visitor implements IVisitor {
 
 		switch (funcall.name) { // pas sur que le premier élément de parameters est l'entite
 		case "Egg":
-			return new Egg();
+			return new Egg((int) parameters.get(0));
 		case "Move":
 			return new Move();
 		case "Turn":
@@ -115,17 +115,25 @@ public class Visitor implements IVisitor {
 
 		case "Die":
 			return new Die();
+			
 		case "Hit":
-			Absolute_Orientation ao = new Absolute_Orientation((String) parameters.get(0));
-			game.automaton.Category c = new game.automaton.Category((char) parameters.get(1));
+			if (Absolute_Orientation.is_absolute_orientation(parameters.get(0))){
+			
+			Absolute_Orientation ao = new Absolute_Orientation(parameters.get(0).toString());
+			String t = parameters.get(1).toString();
 			int range = (int) parameters.get(2);
-			//return new Hit(ao, c, range); // Nada must change his Hit constructor
-			break; // wait to see what arguments we use with hit
+			return new Hit(ao, t, range);
+			}
+			Relative_Orientation ro = new Relative_Orientation(parameters.get(0).toString());
+			String t = parameters.get(1).toString();
+			int range = (int) parameters.get(2);
+			return new Hit(ro, t, range);
+			
 		case "Wait":
-			//return new Wait();
-			break;
+			return new Wait((int) parameters.get(0), (int) parameters.get(1));
+			
 		case "Pick":
-			break; //second arg of pick must be a Category
+			return new Pick(((game.automaton.Category) parameters.get(0)).get_category(), (int) parameters.get(1));
 		case "Throw":
 			//return new Throw(); // remove the entity or create another constructor
 			break;
@@ -267,12 +275,12 @@ public class Visitor implements IVisitor {
 				return new game.automaton.Key(e.parameters.get(0).toString());
 			case "Got":
 				game.automaton.Category c = new game.automaton.Category(
-						(char) e.parameters.get(0).toString().charAt(0));
+						(String) e.parameters.get(0).toString());
 				return new Got(c);
 
 			case "Cell":
 				Absolute_Orientation ad = new Absolute_Orientation(e.parameters.get(0).toString());
-				game.automaton.Category cat = new game.automaton.Category(e.parameters.get(1).toString().charAt(0));
+				game.automaton.Category cat = new game.automaton.Category(e.parameters.get(1).toString());
 				int portee = Integer.parseInt(e.parameters.get(2).toString());
 				return new Cell(ad, cat, portee);
 
