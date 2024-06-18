@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 import java.util.Stack;
 
 import game.entity.Position;
@@ -22,30 +23,34 @@ public class Polygon {
 	}
 
 	public boolean containsPosition(Position position) {
-		int n = vertices.size();
-		boolean inside = false;
+	    int n = vertices.size();
+	    boolean inside = false;
 
-		float x = position.getPositionX();
-		float y = position.getPositionY();
+	    float x = position.getPositionX();
+	    float y = position.getPositionY();
 
-		for (int i = 0, j = n - 1; i < n; j = i++) {
-			float xi = vertices.get(i).getPositionX();
-			float yi = vertices.get(i).getPositionY();
-			float xj = vertices.get(j).getPositionX();
-			float yj = vertices.get(j).getPositionY();
+	    for (int i = 0, j = n - 1; i < n; j = i++) {
+	        float xi = vertices.get(i).getPositionX();
+	        float yi = vertices.get(i).getPositionY();
+	        float xj = vertices.get(j).getPositionX();
+	        float yj = vertices.get(j).getPositionY();
 
-			boolean onBoundary = ((yi <= y && y < yj) || (yj <= y && y < yi))
-					&& (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-			if (onBoundary)
-				return true;
+	        if (((yi <= y && y < yj) || (yj <= y && y < yi)) && 
+	            (x == (xj - xi) * (y - yi) / (yj - yi) + xi)) {
+	            return true;
+	        }
 
-			if ((yi > y) != (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) {
-				inside = !inside;
-			}
-		}
+	        if ((yi > y) != (yj > y)) {
+	            float intersectX = (xj - xi) * (y - yi) / (yj - yi) + xi;
+	            if (x < intersectX) {
+	                inside = !inside;
+	            }
+	        }
+	    }
 
-		return inside;
+	    return inside;
 	}
+
 
 	public List<Position> getVertices() {
 		return vertices;
@@ -187,4 +192,45 @@ public class Polygon {
         return r.intersectsLine(p1.getPositionX(), p1.getPositionY(), p2.getPositionX(), p2.getPositionY());
     }
 
+	
+	public List<Position> generatePointsInsidePolygon(int seed) {
+		Random random = new Random(seed);
+		int numberOfPoints = random.nextInt(10) + 1;
+
+		int count = 0;
+		List<Position> positionsInsideBorders = new ArrayList<>();
+		while (count < numberOfPoints) {
+			float x = random.nextInt() % getMaxX();
+			float y = random.nextInt() % getMaxY();
+
+			Position position = new Position(x, y);
+			if (containsPosition(position)) {
+				positionsInsideBorders.add(position);
+				count++;
+			}
+		}
+
+		return positionsInsideBorders;
+	}
+	
+    public float getMaxX() {
+        float maxX = Float.NEGATIVE_INFINITY;
+        for (Position vertex : getVertices()) {
+            if (vertex.getPositionX() > maxX) {
+                maxX = vertex.getPositionX();
+            }
+        }
+        return maxX;
+    }
+
+    // Method to get the maximum y value of the border points
+    public float getMaxY() {
+        float maxY = Float.NEGATIVE_INFINITY;
+        for (Position vertex : getVertices()) {
+            if (vertex.getPositionY() > maxY) {
+                maxY = vertex.getPositionY();
+            }
+        }
+        return maxY;
+    }
 }

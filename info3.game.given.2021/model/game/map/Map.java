@@ -1,6 +1,8 @@
 package game.map;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -8,12 +10,15 @@ import game.automaton.Relative_Orientation;
 import game.entity.Absolute_Orientation;
 import game.entity.Entity;
 import game.entity.Position;
+import game.map.Biomes.Volcano;
+import game.map.LandTypes.Lava;
 import game.model.Model;
 
 public class Map {
 
 	private int seed;
 	private List<Biome> biomes;
+    private final List<String> biomesNames = Collections.unmodifiableList(Arrays.asList("Volcano"));
 	protected Model m_model;
 
 	private Polygon borders; // Vertices in the order that create the polygon that makes the boundaries of
@@ -21,6 +26,8 @@ public class Map {
 
 	public Map(Polygon borders) {
 		this.biomes = new ArrayList<>();
+		this.biomes = new ArrayList<>();
+
 		generateSeed();
 
 		this.borders = borders;
@@ -98,17 +105,30 @@ public class Map {
 	}
 
 	public LandType getLandType(Position position) {
-		return getPlot(position).getLandType();
+		
+		Plot p =  getPlot(position);
+		
+		if (p != null) {
+			return p.getLandType();
+
+		}
+		return null;
+		
 	}
 
 	public float getViscosity(Position position) {
+		LandType lt = getLandType(position);
+		
+		if (lt != null) {
+			return lt.getViscosity();
 
-		return getLandType(position).getViscosity();
+		}
+		return 0;
 	}
 
 	public void generateMap(int seed) {
 
-		List<Position> pointsInsideBorders = generatePointsInsidePolygon(seed);
+		List<Position> pointsInsideBorders = borders.generatePointsInsidePolygon(seed);
 
 		List<Position> allPoints = addBorderPointsToAllPoints(pointsInsideBorders);
 
@@ -120,53 +140,27 @@ public class Map {
 		// Nettoyer les polygones pour maximiser leur surface
         for (Polygon polygon : polygons) {
             //polygon.cleanPolygon();
-        	biomes.add(new Biome(polygon, new LandType("LAVA", (float) 0.1)));
+        	
+        	Biome b = null;
+    		Random random = new Random(seed);
+    		int index = random.nextInt(biomesNames.size());
+    		
+    		switch (biomesNames.get(index)) {
+    		case ("Volcano"):
+    			b = new Volcano(polygon, new Lava());
+    			break;
+    		}
+    		
+    		b.generateBiome(seed);
+        	biomes.add(b);
+    		
         }
         
        
 	}
 
-	
-    private float getMaxX() {
-        float maxX = Float.NEGATIVE_INFINITY;
-        for (Position vertex : borders.getVertices()) {
-            if (vertex.getPositionX() > maxX) {
-                maxX = vertex.getPositionX();
-            }
-        }
-        return maxX;
-    }
 
-    // Method to get the maximum y value of the border points
-    private float getMaxY() {
-        float maxY = Float.NEGATIVE_INFINITY;
-        for (Position vertex : borders.getVertices()) {
-            if (vertex.getPositionY() > maxY) {
-                maxY = vertex.getPositionY();
-            }
-        }
-        return maxY;
-    }
-    
-	private List<Position> generatePointsInsidePolygon(int seed) {
-		Random random = new Random(seed);
-		int numberOfPoints = random.nextInt(100) + 1;
 
-		int count = 0;
-		List<Position> positionsInsideBorders = new ArrayList<>();
-		while (count < numberOfPoints) {
-			float x = random.nextInt() % getMaxX();
-			float y = random.nextInt() % getMaxY();
-
-			Position position = new Position(x, y);
-			if (borders.containsPosition(position)) {
-				positionsInsideBorders.add(position);
-				count++;
-			}
-		}
-
-		return positionsInsideBorders;
-	}
 
 	private List<Position> addBorderPointsToAllPoints(List<Position> pointsInsideBorders) {
 		List<Position> allPoints = new ArrayList<>(pointsInsideBorders);
@@ -182,7 +176,7 @@ public class Map {
 	private List<Position> selectSeedPoints(int seed, List<Position> allPoints) {
 
 		Random random = new Random(seed);
-		int numberOfSeeds = random.nextInt(allPoints.size());
+		int numberOfSeeds = random.nextInt(allPoints.size()-2)+1;
 		List<Position> seedPoints = new ArrayList<>();
 
 		List<Position> to_remove = new ArrayList<>();

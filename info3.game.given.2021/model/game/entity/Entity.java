@@ -1,17 +1,14 @@
 package game.entity;
 
-import game.entity.Position;
-import game.map.LandType;
+
 import game.model.Model;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Vector;
 
 import game.automaton.Automate;
 import game.automaton.Category;
-import game.automaton.Direction;
 import game.automaton.Relative_Orientation;
 import game.automaton.State;
 
@@ -112,7 +109,7 @@ public abstract class Entity {
 			ACC_coeff = 1;
 		}
 
-		acc_speed =  factor * (BS_coeff * base_speed + ACC_coeff * acc_speed); //+ model.getMap().getViscosity(position);
+		acc_speed =  factor * (BS_coeff * base_speed + ACC_coeff * acc_speed);// model.getMap().getViscosity(position);
 		
 	}
 
