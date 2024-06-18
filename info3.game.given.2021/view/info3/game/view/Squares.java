@@ -44,9 +44,9 @@ public class Squares {
 		}
 	}
 	
-	public void paint(Graphics g) {
+	public void paint(Graphics g, int x, int y) {
 		for (Rectangle square : m_squares) {
-			g.drawImage(m_textureImage, square.x, square.y, SQUARE_SIZE, SQUARE_SIZE, null);
+			g.drawImage(m_textureImage, square.x + x, square.y + y, SQUARE_SIZE, SQUARE_SIZE, null);
 		}
 	}
 

@@ -96,8 +96,9 @@ public class View extends Container {
 			break;
 		case 2:
 			m_viewports[0].paint(mg);
-			g.drawLine(m_d.width / 2, m_y, m_d.width / 2, m_d.height);
 			m_viewports[1].paint(mg);
+			mg.setColor(Color.black);
+			mg.drawLine(m_d.width / 2, m_y, m_d.width / 2, m_d.height);
 			break;
 		default:
 			throw new IllegalArgumentException("You have more than 2 players");

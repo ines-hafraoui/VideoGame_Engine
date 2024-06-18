@@ -33,6 +33,7 @@ public class Viewport extends Component {
 	Avatar m_player;
 
 	int m_trx, m_try;
+	int m_oldpositionx, m_oldpositiony;
 
 	Viewport(Model model, List<Avatar> avatars, View parent, Dimension d, int x, int y, Avatar player, MapView m) {
 		m_parent = parent;
@@ -45,8 +46,10 @@ public class Viewport extends Component {
 		m_x = x;
 		m_y = y;
 		m_player = player;
-		translate();
-		m_inWorldBounds = new Rectangle(m_trx,m_try,d.width,d.height);
+		m_oldpositionx = (int) m_player.m_entity.get_x();
+		m_oldpositiony = (int) m_player.m_entity.get_y();
+		Caculatetranslation(m_oldpositionx,m_oldpositiony);
+		m_inWorldBounds = new Rectangle(m_trx, m_try, d.width, d.height);
 	}
 
 	void addDisplayedAvatar(Avatar avatar) {
@@ -61,31 +64,22 @@ public class Viewport extends Component {
 		m_d = d;
 	}
 
-	void translate() {
+	void Caculatetranslation(int x , int y) {
 		// Creates bounds of how much of the world can be desplayed
-		m_trx = (((int) m_player.m_entity.get_x()) - (m_d.width / 2) * View.DISPLAYSCALE);
-		m_try = (((int) m_player.m_entity.get_y()) - (m_d.height / 2) * View.DISPLAYSCALE);
+		m_trx = x - (m_d.width / 2) * View.DISPLAYSCALE;
+		m_try = y - (m_d.height / 2) * View.DISPLAYSCALE;
 	}
 
 	public void paint(Graphics g) {
-		translate();
-		Graphics mg = g.create(m_x, m_y, m_d.width, m_d.height);
+		int x = (int) m_player.m_entity.get_x();
+		int y = (int) m_player.m_entity.get_y();
 		
-//		int x = ((int) m_player.m_entity.get_x()) + m_player.m_images[0].getWidth()-100;
-//	    int y = ((int) m_player.m_entity.get_y())  + m_player.m_images[0].getHeight() -200;
-////		mg.translate(x,y);
-//		 // Create a polygon
-//        Polygon polygon = new Polygon();
-//       
-//        int width = (int) m_player.m_entity.get_x()+100;
-//        int height =  (int) m_player.m_entity.get_y()+200;
-//        polygon.addPoint(x, y);
-//        polygon.addPoint(width, y);
-//        polygon.addPoint(width, height);
-//        polygon.addPoint(x, height);
-
-//		mg.setClip(polygon);
-		m_map.paint(mg, m_x, m_y);
+		if(x!= m_oldpositionx || y != m_oldpositiony) {
+			Caculatetranslation(x,y);
+		}
+		
+		Graphics mg = g.create(m_x, m_y, m_d.width, m_d.height);
+		m_map.paint(mg, -m_trx, -m_try);
 
 		Iterator<Avatar> iter = m_avatars.iterator();
 		while (iter.hasNext()) {

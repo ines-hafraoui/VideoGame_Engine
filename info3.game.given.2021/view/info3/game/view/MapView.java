@@ -39,27 +39,27 @@ public class MapView {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		try {
 			m_textureimages = View.loadSprite("resources/MiniWorldSprites/Ground/Shore.png", 1, 5);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		/*Generates the default ground tiles*/
+
+		/* Generates the default ground tiles */
 		genDefaultGround();
 
-		/*Generates the different views of the display*/
+		/* Generates the different views of the display */
 		List<Biome> b = m_model.m_map.getBiome();
 		Iterator<Biome> iterator = b.iterator();
-		int i =0;
+		int i = 0;
 		while (iterator.hasNext()) {
 			Biome bio = iterator.next();
 			Polygon p = bio.getBorders();
-			
-			squares.add(new Squares(p,m_textureimages[i]));
+
+			squares.add(new Squares(p, m_textureimages[i]));
 			i++;
-			if(i > 4) {
+			if (i > 4) {
 				i = 0;
 			}
 		}
@@ -77,7 +77,7 @@ public class MapView {
 		}
 
 		for (Squares square : squares) {
-			square.paint(g);
+			square.paint(g, x, y);
 		}
 	}
 
@@ -87,14 +87,14 @@ public class MapView {
 		for (int i = 0; i < m_ncols; i++) {
 			for (int j = 0; j < m_nrows; j++) {
 				BufferedImage img = m_bgimages[m_groundsetup[i * j + j]];
-				g.drawImage(img, j * (m_bgimages[0].getWidth() * View.DISPLAYSCALE),
-						i * (m_bgimages[0].getHeight() * View.DISPLAYSCALE), img.getWidth() * View.DISPLAYSCALE,
+				g.drawImage(img, j * (m_bgimages[0].getWidth() * View.DISPLAYSCALE) + x,
+						i * (m_bgimages[0].getHeight() * View.DISPLAYSCALE) + y, img.getWidth() * View.DISPLAYSCALE,
 						img.getHeight() * View.DISPLAYSCALE, null);
 			}
 		}
 
 		for (Squares square : squares) {
-			square.paint(g);
+			square.paint(g, x, y);
 		}
 	}
 
@@ -130,14 +130,13 @@ public class MapView {
 		return tab_y;
 	}
 
-	
 	/*
 	 * Here we generate the default tiling of the ground for the entire world
 	 */
 	public void genDefaultGround() {
 		BufferedImage ref = m_bgimages[0];
-		m_nrows = m_view.m_mheight / (ref.getHeight() / 2 * View.DISPLAYSCALE);
-		m_ncols = m_view.m_mwidth / (ref.getWidth() / 2 * View.DISPLAYSCALE);
+		m_nrows = m_view.m_mheight * View.DISPLAYSCALE;
+		m_ncols = m_view.m_mwidth * View.DISPLAYSCALE;
 		m_groundsetup = new int[m_nrows * m_ncols];
 		for (int i = 0; i < m_nrows; i++) {
 			for (int j = 0; j < m_ncols; j++) {
