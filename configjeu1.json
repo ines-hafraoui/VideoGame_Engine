@@ -1,7 +1,7 @@
 {
   "cooperative" : false,
   "timer" : -1, 
-  “viscosity” : 1,
+  "viscosity" : 1,
     "Player1":{
       "name" : "PLAYER 1",
       "view" : 1,   
@@ -45,7 +45,7 @@
       "position":[300,400],
       "team":2
     },
-    "Bot2":{
+    "Power":{
       "name" : "POWER", 
       "behaviour" : "item.gal",
       "features" : "Power.class",
