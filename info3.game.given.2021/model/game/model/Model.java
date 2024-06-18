@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import game.entity.Entity;
+import game.automaton.Automate;
 import game.entity.Absolute_Orientation;
 import game.entity.Entity;
 import game.entity.EntityType;
@@ -32,6 +33,8 @@ import game.entity.Position;
 import game.map.Map;
 import game.map.Polygon;
 import info3.game.IFactory;
+import gal.ast.export.*;
+import gal.demo.test.TestMain;
 
 
 /**
@@ -60,6 +63,8 @@ public class Model {
 		players = new Entity[1];
 		Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.WEST);
 		Entity e = factory.newEntity(this, new Position(500, 200),ao , EntityType.PLAYER, Entity.TEAM1);
+		ArrayList<Automate> fsm_list = (ArrayList<Automate>) TestMain.loadAutomata("/home/jessy/Polytech_Grenoble/INFO3/Projet/g3/info3.game.given.2021/gal/gal/automate.gal");
+		e.set_automate(fsm_list.get(7));
 		players[0] = e;
 		//Entity e1 = factory.newEntity(this, new Position(900, 400),ao, EntityType.PLAYER, Entity.TEAM1);
 		//players[1] = e1;

@@ -2,33 +2,33 @@ package game.automaton;
 
 public class Category {
 	
-	public static final char AUTRE = 'A'; // adversaire ou membre de l'autre équipe
-	public static final char CLUE = 'C'; //indice d'un précédent passage
-	public static final char DANGER = 'D'; 
-	public static final char GATE = 'G'; 
-	public static final char JUMPABLE = 'J';
-	public static final char MISSILE = 'M';
-	public static final char OBSTACLE = 'O';
-	public static final char PICKABLE = 'P';
-	public static final char TEAM = 'T'; // Une entité de mon equipe mais pas moi
-	public static final char VOID = 'V';
-	public static final char PLAYER_IN_MY_TEAM = '@';
-	public static final char PLAYER_IN_ENEMY_TEAM = '#';
-	public static final char ANYTHING = '_'; //but void
+	public static final String AUTRE = "A"; // adversaire ou membre de l"autre équipe
+	public static final String CLUE = "C"; //indice d"un précédent passage
+	public static final String DANGER = "D"; 
+	public static final String GATE = "G"; 
+	public static final String JUMPABLE = "J";
+	public static final String MISSILE = "M";
+	public static final String OBSTACLE = "O";
+	public static final String PICKABLE = "P";
+	public static final String TEAM = "T"; // Une entité de mon equipe mais pas moi
+	public static final String VOID = "V";
+	public static final String PLAYER_IN_MY_TEAM = "@";
+	public static final String PLAYER_IN_ENEMY_TEAM = "#";
+	public static final String ANYTHING = "_"; //but void
 	
 	
 	//field
-	private char cat;
-	public Category(char c) {
+	private String cat;
+	public Category(String c) {
 		this.cat = c;
 	}
 	
-	public char get_category(){
+	public String get_category(){
 		return this.cat;
 		
 	}
 	public static boolean is_category(Object o) {
-		switch (o.toString().charAt(0)) {
+		switch (o.toString()) {
 		case AUTRE:
 			return true;
 		case CLUE:

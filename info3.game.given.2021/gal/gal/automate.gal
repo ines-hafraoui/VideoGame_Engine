@@ -1,0 +1,211 @@
+Bot_Jeu1(Beg){
+
+ * (Beg): 
+ | !(Got(T)) ? Explode :(Mort)
+ | Cell(d,A,1) ? Turn(d) ; Hit(d,A,1) :(Beg)
+ | Closest(d,@) ? Turn(d) ; Move :(Beg)
+ 
+ * (Mort):
+ | True ? :(Mort)
+ 
+ * (Hit):
+ | True ? :(Beg)
+ 
+}
+
+Bot_Jeu2(Beg){
+
+ * (Beg): 
+ | !(Got(T)) ? Explode :(Mort)
+ | Cell(d,A,1) ? Turn(d) ; Hit(d,A,1) :(Beg)
+ | Closest(d,A) ? Turn(d) ; Move :(Beg)
+ 
+ * (Mort):
+ | True ? :(Mort)
+ 
+ * (Hit):
+ | True ? :(Beg)
+}
+
+Base_Jeu1(Beg){
+
+ * (Beg):
+ | !(Got(T)) ? Explode :(Mort)
+ | True ? 1 % Egg(3) / Wait(0,0) :(Beg)
+ 
+ * (Mort):
+ | True ? :(Mort)
+ 
+ * (Hit):
+ | True ? :(Beg)
+
+}
+
+Base_Jeu2(Beg){
+
+ * (Beg):
+ | Cell(H,P,5) ? Pick(P,5) :(Beg)
+
+}
+
+BDF(Beg){
+ 
+  * (Beg):
+  | Cell(H,A,1) / Cell(F,A,1) ? Hit(H,A,2) ; Explode :(Mort)
+  | Cell(F,V,1) ? Move :(Beg)
+  
+  * (Mort):
+  | True ? :(Mort)
+  
+}
+
+Fleche(Beg){
+ 
+  * (Beg):
+  | Cell(F,V,1) ? 95 % Move(F) / Explode :(Beg)
+  | !(Got(T)) ? :(Mort)
+  | Cell(F,A,1) ? Hit(F,A,1) ; Explode :(Mort)
+  
+  * (Mort):
+  | True ? :(Mort)
+  
+}
+
+Item(Beg){	
+
+ * (Beg):
+ | !(Got(T)) ? Explode :(Picked)
+ | True ? Wait(0,0) :(Beg)
+ 
+ * (Picked):
+ | True ? :(Picked)
+
+}
+
+Joueur_1(Beg){
+
+ * (Beg): 
+ | !(Got(T)) ? Explode :(Mort)
+ | Key(z) & Key(q) ? Turn(NW) ; Move(NW) :(Beg)
+ | Key(z) & Key(d) ? Turn(NE) ; Move(NE) :(Beg)
+ | Key(s) & Key(q) ? Turn(SW) ; Move(SW) :(Beg)
+ | Key(s) & Key(d) ? Turn(SE) ; Move(SE) :(Beg)
+ | Key(z) ? Turn(N) ; Move(F) :(Beg)
+ | Key(q) ? Turn(W) ; Move(F) :(Beg)
+ | Key(d) ? Turn(E) ; Move(F) :(Beg)
+ | Key(s) ? Turn(S) ; Move(F) :(Beg)
+ | Key(SPACE) ? :(Fight)
+ | Key(a) ? :(Select1)
+ | Cell(H,P,1) ? Pick(P,1) :(Beg)
+ | !(Cell(H,A,20)) ? :(Regen)
+ | True ? Wait(0,0) :(Beg)
+ 
+ * (Regen):
+ | !(Cell(H,A,20)) & Got(Power) ? :(Regen)
+ | Cell(H,A,20) ? :(Beg)
+ 
+ * (Fight):
+ | Cell(d,A,2) ? Turn(d) ; Hit(d,2) :(Beg)
+ | !(Cell(d,A,2)) ? Egg(1) :(Beg)
+ 
+ * (Select1):
+ | Key(a) ? :(Beg)
+ | Key(d) ? Wait(1,1) :(Select1)
+ | Key(q) ? Wait(2,1) :(Select1)
+ | Key(e) ? Wait(0,1) :(Select2)
+ 
+ * (Select2):
+ | Key(l) ? :(Beg)
+ | Key(FR) ? Wait(1,2) :(Select2)
+ | Key(FL) ? Wait(2,2) :(Select2)
+ | Key(ENTER) ? Get :(Beg)
+ | Key(p) ? Throw :(Beg)
+  
+ * (Mort):
+ | True ? :(Mort)
+ 
+}
+
+Joueur_2(Beg){
+
+ * (Beg): 
+ | !(Got(T)) ? Explode :(Mort)
+ | Key(FU) & Key(FL) ? Turn(NW) ; Move(NW) :(Beg)
+ | Key(FU) & Key(FR) ? Turn(NE) ; Move(NE) :(Beg)
+ | Key(FD) & Key(FL) ? Turn(SW) ; Move(SW) :(Beg)
+ | Key(FD) & Key(FR) ? Turn(SE) ; Move(SE) :(Beg)
+ | Key(f) ? Turn(F) ; Move(F) :(Beg)
+ | Key(m) ? :(Fight)
+ | Key(l) ? :(Select1)
+ | Cell(H,P,1) ? Pick(P,1) :(Beg)
+ | !(Cell(H,A,20)) ? :(Regen)
+ | True ? Wait(0,0) :(Beg)
+ 
+ * (Regen):
+ | !(Cell(H,A,20)) & Got(Power) ? :(Regen)
+ | Cell(H,A,20) ? :(Beg)
+ 
+ * (Fight):
+ | Cell(d,A,2) ? Turn(d) ; Hit(d,2) :(Beg)
+ | !(Cell(d,A,2)) ? Egg(1) :(Beg)
+ 
+ * (Select1):
+ | Key(l) ? :(Beg)
+ | Key(FR) ? Wait(1,1) :(Select1)
+ | Key(FL) ? Wait(2,1) :(Select1)
+ | Key(ENTER) ? Wait(0,1) :(Select2)
+ 
+ * (Select2):
+ | Key(l) ? :(Beg)
+ | Key(FR) ? Wait(1,2) :(Select2)
+ | Key(FL) ? Wait(2,2) :(Select2)
+ | Key(ENTER) ? Get :(Beg)
+ | Key(p) ? Throw :(Beg)
+  
+ * (Mort):
+ | True ? :(Mort)
+ 
+}
+
+Dragon(Beg){
+
+ * (Beg): 
+ | !(Got(T)) ? Explode :(Mort)
+ | Cell(d,A,10) ? Turn(d) :(Fight)
+ | True ? 25 % Turn(W) ; Move / 25 % Turn(E) ; Move / 25 % Turn(E) ; Move / 25 % Turn(S) ; Move :(Beg)
+ 
+ * (Fight):
+ | Cell(F,A,2) ? Hit(F,A,2) :(Beg)
+ | !(Cell(F,A,2))? Egg(2) :(Beg)
+
+ * (Mort):
+ | True ? :(Mort)
+
+}
+
+Archer(Beg){
+
+ * (Beg): 
+ | !(Got(T)) ? Explode :(Mort)
+ | Cell(d,A,10) ? Turn(d) ; Egg(1) :(Beg)
+ | True ? 25 % Turn(W) ; Move / 25 % Turn(E) ; Move / 25 % Turn(E) ; Move / 25 % Turn(S) ; Move :(Beg)
+
+ * (Mort):
+ | True ? :(Mort)
+
+}
+
+Dasher(Beg){
+
+ * (Beg): 
+ | !(Got(T)) ? Explode :(Mort)
+ | Cell(d,A,10) ? Turn(d) ; Wizz(10) :(Beg)
+ | True ? 25 % Turn(W) ; Move / 25 % Turn(E) ; Move / 25 % Turn(E) ; Move / 25 % Turn(S) ; Move :(Beg)																										
+
+ * (Mort):
+ | True ? :(Mort)
+
+}
+
+
+  
