@@ -32,7 +32,7 @@ public abstract class Entity {
 	protected int nb_bot; 
 
 	protected Position position;
-	protected Float base_speed = 1F;
+	protected Float base_speed = 4F;
 	protected Float acc_speed = 0F; // accumulated speed
 	protected Absolute_Orientation speed_vct_abs_or = new Absolute_Orientation(Absolute_Orientation.EAST);
 
@@ -92,7 +92,6 @@ public abstract class Entity {
 			speed_vct_abs_or.set_abs_Orientation(abs_or.get_abs_Orientation());
 		}
 
-		//LandType lt = model.getMap().getLandType(position);
 		float BS_coeff;
 		float ACC_coeff;
 
@@ -103,27 +102,20 @@ public abstract class Entity {
 			BS_coeff = 0;
 			ACC_coeff = (float) 0.5;
 		} else {
-			BS_coeff = -1;
+			BS_coeff = -1F;
 			ACC_coeff = 1;
 		}
 
-		acc_speed = factor * (BS_coeff * base_speed + ACC_coeff * acc_speed);
+		acc_speed =  factor * (BS_coeff * base_speed + ACC_coeff * acc_speed); //+ model.getMap().getViscosity(position);
 		
-		System.out.print(acc_speed);
 	}
 
 	protected Position newPosition() {
-		/*float c_speed = 0;
-		
-		if (haveCommonChar(abs_or.get_abs_Orientation(), speed_vct_abs_or.get_abs_Orientation())) {
-			c_speed = base_speed + acc_speed;
-		} else {
-			c_speed = 0;
-		}*/
+
 		
 		newSpeed(1);
 		int angle = speed_vct_abs_or.get_abs_Angle();
-	    double angleRad = Math.toRadians(angle);  // Convert angle to radians if it's in degrees
+	    double angleRad = Math.toRadians(angle); 
 
 		
 		

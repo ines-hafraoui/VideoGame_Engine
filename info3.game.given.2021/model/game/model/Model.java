@@ -134,8 +134,8 @@ public class Model {
 
 	}
 
-	public Grid get_grid() {
-		return m_grid;
+	public Map getMap() {
+		return m_map;
 	}
 
 	public void tick(long elapsed) {
