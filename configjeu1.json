@@ -9,9 +9,11 @@
       "behaviour": "player1.gal",
       "features" : "Player.class",
       "sprite" : "fighter1.png",
-      "pickable": false  
-      “x” : 1,
-      “y” : 1
+      "pickable": false, 
+      "direction": "W",
+      "position": [500,200],
+      "team":1
+
     },
     { "name" : "PLAYER 2",
       "view" : 2,   
@@ -19,28 +21,45 @@
       "features" : "Player.class",
       "sprite" : "fighter2.png",
       "pickable": false ,
-       “x” : 100,
-      “y” : 100
+      "direction": "W",
+      "position":[200,500],
+      "team": 2
     },
-    { "name" : "BOT", 
+    { "name" : "BOT1", 
       "behaviour" : "bot.gal",
       "features" : "Bot.class",
       "sprite" : "bot.png",
-      "pickable" : true
+      "pickable" : true,
+      "direction":"W",
+      "position":[400,200],
+      "team":1
+    },
+    { "name" : "BOT2", 
+      "behaviour" : "bot.gal",
+      "features" : "Bot.class",
+      "sprite" : "bot.png",
+      "pickable" : true,
+      "direction":"W",
+      "position":[300,400],
+      "team":2
     },
  { "name" : "POWER", 
       "behaviour" : "item.gal",
       "features" : "Power.class",
       "sprite" : "power.png",
-      "pickable" : true
+      "pickable" : true,
+      "direction":"W",
+      "position":[1,1],
+      "team":0
     },
  { "name" : "BASE1", 
       "behaviour" : "base1.gal",
       "features" : "Base.class",
       "sprite" : "base.png",
       "pickable" : false,
-      “x” : 1,
-      “y” : 1
+      "direction":"W",
+      "position":[600,200],
+      "team":1
     }
 
 
@@ -50,8 +69,9 @@
       "features" : "Base.class",
       "sprite" : "base.png",
       "pickable" : false,
-      “x” : 100,
-      “y” : 100
+      "direction":"W",
+      "position":[100,400],
+      "team":2
     }
   ]
 }
