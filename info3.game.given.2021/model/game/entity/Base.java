@@ -19,6 +19,11 @@ public class Base extends Entity {
 		picked = false;
 	}
 
+	public Base(Position pos, Absolute_Orientation o, String type, int team, int nb_bot,int view, Boolean pickable) {
+		super(pos,o,type, team,nb_bot,view,pickable);
+		picked = false;
+	}
+
 	@Override
 	public void do_egg(int cat) {
 		state_action = ActionType.EGG;

@@ -27,6 +27,8 @@ public abstract class Entity {
 	protected int team;
 	protected boolean injured;
 	protected int current_nbot;
+	protected boolean pickable;
+	protected int view;
 
 	protected String type;
 	protected int index_inventory;
@@ -76,6 +78,22 @@ public abstract class Entity {
 		injured = false;
 		current_nbot = nb_bot;
 	}
+	
+	public Entity(Position p, Absolute_Orientation o, String type, int team, int nb_bot, int view,boolean pickable) {
+		position = p;
+		abs_or = o;
+		HP = 100;
+		explode = false;
+		index_inventory = 0;
+		index_bot = 0;
+		this.type = type;
+		this.team = team;
+		injured = false;
+		current_nbot = nb_bot;
+		this.view = view;
+		this.pickable = pickable;
+	}
+	
 
 	public static boolean haveCommonChar(String str1, String str2) {
 
@@ -241,6 +259,10 @@ public abstract class Entity {
 
 	public void set_automate(Automate a) {
 		aut = a;
+	}
+	
+	public void set_model(Model m ) {
+		model = m ;
 	}
 
 	public void get_state_action(String action) {

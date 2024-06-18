@@ -16,6 +16,10 @@ public class Item extends Entity{
 		super(m,p,o,type, team,nb_bot);
 	}
 
+	public Item(Position pos, Absolute_Orientation o, String type, int team, int nb_bot,int view, Boolean pickable) {
+		super(pos,o,type, team,nb_bot, view, pickable);
+	}
+
 	@Override
 	public boolean do_move() {
 		return false;

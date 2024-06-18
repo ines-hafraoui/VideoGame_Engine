@@ -24,6 +24,12 @@ public class Player extends Entity {
 	}
 
 
+	public Player(Position pos, Absolute_Orientation o, String type, int team, int nb_bot,int view, Boolean pickable) {
+		super(pos,o,type, team, nb_bot, view, pickable);
+		inventory = new ArrayList<Automate>();
+		bots = new ArrayList<Entity>();
+	}
+
 	@Override
 	public boolean do_move() {
 		Position p = newPosition();

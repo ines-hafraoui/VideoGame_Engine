@@ -21,6 +21,11 @@ public class Bot extends Entity{
 		acc_factor = 3;
 	}
 
+	public Bot(Position pos, Absolute_Orientation o, String type, int team, int nb_bot,int view, Boolean pickable) {
+		super(pos,o,type, team, nb_bot, view, pickable);
+		acc_factor = 3;
+	}
+
 	@Override
 	public boolean do_move() {
 		Position p = newPosition();

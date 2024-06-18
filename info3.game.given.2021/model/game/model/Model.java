@@ -26,8 +26,11 @@ import java.util.List;
 import game.entity.Entity;
 import game.automaton.Automate;
 import game.entity.Absolute_Orientation;
+import game.entity.Base;
+import game.entity.Bot;
 import game.entity.Entity;
 import game.entity.EntityType;
+import game.entity.Item;
 import game.entity.Player;
 import game.entity.Position;
 import game.map.Map;
@@ -49,10 +52,55 @@ public class Model {
 	public Map m_map;
 	private Absolute_Orientation m_orientation;
 	List<Entity> entities;
-	Entity[] players;
+	Entity[] Players;
 	IFactory factory;
 
 	public static final int NB_BOT = 5;
+	
+	public Model(int w, int h, ArrayList<Player> players, ArrayList<Bot> bots,
+			ArrayList<Base> base, ArrayList<Item> i)throws IOException {
+		
+		m_width = w;
+		height = h;
+		List<Position> poss = new ArrayList<Position>();
+		Players = new Entity[players.size()];
+		List<Automate> fsm_list = (List<Automate>) TestMain.loadAutomata("/home/nada/Documents/INFO3/S2/Projet_Jeu/g3/info3.game.given.2021/gal/gal/automate.gal");
+
+		// chopper les automates avant de faire ca
+		for (Player p : players) {
+			p.set_model(this);
+			entities.add(p);
+		}
+		
+		for (Bot b : bots) {
+			b.set_model(this);
+			entities.add(b);
+		}
+		
+		for (Item item : i) {
+			item.set_model(this);
+			entities.add(item);
+		}
+		
+		for (Base b : base) {
+			b.set_model(this);
+			entities.add(b);
+		}
+		
+		Position pos1 = new Position(0, 0);
+		Position pos2 = new Position(0, h);
+		Position pos3 = new Position(w, 0);
+		Position pos4 = new Position(w, h);
+		
+		poss.add(pos1);
+		poss.add(pos2);
+		poss.add(pos3);
+		poss.add(pos4);
+
+		Polygon p = new Polygon(poss);
+		m_map = new Map(p,this);
+		m_map.generateMap(m_map.getSeed());
+	}
 
 	public Model(int w, int h, IFactory f) throws IOException {
 		entities = new ArrayList<Entity>();
@@ -60,12 +108,12 @@ public class Model {
 		m_width = w;
 		height = h;
 		List<Position> poss = new ArrayList<Position>();
-		players = new Entity[1];
+		Players = new Entity[1];
 		Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.WEST);
 		Entity e = factory.newEntity(this, new Position(500, 200),ao , EntityType.PLAYER, Entity.TEAM1);
 		List<Automate> fsm_list = (List<Automate>) TestMain.loadAutomata("/home/nada/Documents/INFO3/S2/Projet_Jeu/g3/info3.game.given.2021/gal/gal/automate.gal");
 		//e.set_automate(fsm_list.get(0));
-		players[0] = e;
+		Players[0] = e;
 		//Entity e1 = factory.newEntity(this, new Position(900, 400),ao, EntityType.PLAYER, Entity.TEAM1);
 		//players[1] = e1;
 		Entity e2 = factory.newEntity(this, new Position(600, 200), ao, EntityType.FIREBALL, Entity.TEAM1);
@@ -159,7 +207,7 @@ public class Model {
 	 * method give the list of players in the world
 	 */
 	public Entity[] get_players() {
-		return players;
+		return Players;
 	}
 
 	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String arrow, int team) {

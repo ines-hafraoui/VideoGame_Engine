@@ -26,11 +26,16 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import game.entity.Base;
+import game.entity.Bot;
 import game.entity.Entity;
+import game.entity.Item;
+import game.entity.Player;
 import game.model.Model;
 import game.model.Model.ModelListener;
 import info3.controller.CanvasListener;
@@ -59,13 +64,23 @@ public class Game {
 	View m_view;
 	public Model m_model;
 	Sound m_music;
+	ArrayList<Player> players = new ArrayList<Player>();
+	ArrayList<Bot> bots = new ArrayList<Bot>();
+	ArrayList<Base> bases = new ArrayList<Base>();
+	ArrayList<Item> items = new ArrayList<Item>();
 
 	Game() throws Exception {
 		// creating a model, that would be a model
 		// in an Model-View-Controller pattern (MVC)
 		Dimension d = new Dimension(1800, 1000);
 		IFactory factory = new Game1Factory();
-		m_model = new Model(d.width, d.height, factory);
+		Parser configParse = new Parser("");
+		players = configParse.players;
+		bots = configParse.bots;
+		bases = configParse.bases;
+		items = configParse.items;
+		m_model = new Model(d.width, d.height, players, bots, bases, items);
+		//m_model = new Model(d.width, d.height, factory);
 		m_model.setListener(new SyncViewModel());
 
 		// creating a listener for all the events
