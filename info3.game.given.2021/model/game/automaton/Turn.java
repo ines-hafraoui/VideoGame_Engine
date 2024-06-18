@@ -4,15 +4,10 @@ import game.entity.Entity;
 import game.entity.Absolute_Orientation;
 
 public class Turn implements Action{
-	
-	Entity e;
+
 	Absolute_Orientation o; 
 	
-	public Turn (Absolute_Orientation or){
-		o = or;
-	}
-	public Turn(Entity e, Absolute_Orientation or) {
-		this.e = e;
+	public Turn(Absolute_Orientation or) {
 		o = or;
 	}
 	

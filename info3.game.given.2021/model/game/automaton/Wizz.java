@@ -4,12 +4,10 @@ import game.entity.Absolute_Orientation;
 import game.entity.Entity;
 
 public class Wizz implements Action{
-	
-	Entity e;
+
 	int factor;
 	
-	public Wizz(Entity e,int f) {
-		this.e = e;
+	public Wizz(int f) {
 		factor =f;
 	}
 

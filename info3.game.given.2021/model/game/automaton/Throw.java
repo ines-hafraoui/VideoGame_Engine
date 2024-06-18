@@ -5,10 +5,7 @@ import game.entity.Entity;
 
 public class Throw implements Action{
 	
-	Entity e;
-	
-	public Throw(Entity e) {
-		this.e = e;
+	public Throw() {
 	}
 
 	@Override

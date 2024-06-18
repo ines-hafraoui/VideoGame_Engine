@@ -8,7 +8,7 @@ public class Absolute_Orientation {
 	public static final String SOUTH = "S";
 	public static final String EAST = "E";
 	public static final String WEST = "W";
-	public static final String NNORTH_E = "NE";
+	public static final String NORTH_E = "NE";
 	public static final String NORTH_W = "NW";
 	public static final String SOUTH_E = "SE";
 	public static final String SOUTH_W = "SW";

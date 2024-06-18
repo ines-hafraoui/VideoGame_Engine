@@ -1,6 +1,11 @@
 package game.map;
 
+import game.automaton.Relative_Orientation;
+import game.entity.Absolute_Orientation;
+import game.entity.Entity;
 import game.entity.Position;
+import game.model.Model;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -9,6 +14,7 @@ public class Map {
 
 	private int seed;
 	private List<Biome> biomes;
+	protected Model m_model;
 
 	private Polygon borders; // Vertices in the order that create the polygon that makes the boundaries of
 								// the map.
@@ -207,6 +213,94 @@ public class Map {
 		return polygons;
 
 	}
+
+	public void tick(long elapsed) {
+		for (Entity e : m_model.get_entities()) {
+			e.tick(elapsed);
+		}
+		
+	}
+	
+	/*
+	 * get_entity return an entity who's around this entity at a distance distance
+	 */
+
+	public Entity get_entity(int distance, String type, float currentx, float currenty) {
+		for (Entity entity : m_model.get_entities()) {
+			if (entity.get_type().equals(type)) {
+				float dx = entity.get_x() - currentx; 
+				float dy = entity.get_y() - currenty;
+				
+				float dist = (float) Math.sqrt(dx * dx + dy * dy);
+				if (dist <= distance)
+					return entity;
+			}
+		}
+		return null;
+	}
+		
+
+	public boolean eval_abs(Absolute_Orientation dir, float positionX, float positionY, int porte) {
+		float newX = positionX; 
+		float newY = positionY;
+		
+		
+		switch (dir.get_abs_Orientation()) {
+		case "N" :
+			newY += porte;
+			break;
+		case "S" : 
+			newY -= porte;
+			break;
+		case "W" : 
+			newX -= porte;
+			break; 
+		case "E" : 
+			newX += porte;
+			break;
+		default : 
+			break;
+		}
+		
+		return isEntityAt(newX, newY);
+	}
+
+
+	public boolean eval_rel(Relative_Orientation dir, float positionX, float positionY, int porte) {
+		float newX = positionX; 
+		float newY = positionY;
+		
+		
+		switch (dir.get_rel_Orientation()) {
+		case 'F' :
+			newY += porte;
+			break;
+		case 'B' : 
+			newY -= porte;
+			break;
+		case 'L' : 
+			newX -= porte;
+			break; 
+		case 'R' : 
+			newX += porte;
+			break;
+		default :
+			break;
+		}
+		
+		return isEntityAt(newX, newY);
+	}
+	
+	private boolean isEntityAt(float newX, float newY) {
+	
+		for (Entity e : m_model.get_entities()) {
+			if (e.get_x() == newX && e.get_y() == newY) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	
 
 

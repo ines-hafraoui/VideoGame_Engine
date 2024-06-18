@@ -23,15 +23,8 @@ public class Cell implements Condition {
 	}
 	
 	public boolean eval (Entity e) {
-		if (a==null) {
-			return e.eval_cell_rel(d,cat,portee);
-		}
-		else if (d==null) {
-			return e.eval_cell_abs(a,cat,portee);
-		}
-		else {
-			System.out.print("Orientation null !\n");
-		}
+		return e.eval_cell_rel(d,cat,0);
+
 	}
 
 }
