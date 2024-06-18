@@ -31,7 +31,6 @@ import game.entity.Player;
 import game.entity.Position;
 import game.map.Map;
 import game.map.Polygon;
-import info3.game.Grid;
 import info3.game.IFactory;
 
 
@@ -50,6 +49,7 @@ public class Model {
 	Entity[] players;
 	IFactory factory;
 
+	public static final int NB_BOT = 5;
 
 	public Model(int w, int h, IFactory f) throws IOException {
 		entities = new ArrayList<Entity>();
@@ -57,19 +57,19 @@ public class Model {
 		m_width = w;
 		height = h;
 		List<Position> poss = new ArrayList<Position>();
-		players = new Entity[2];
+		players = new Entity[1];
 		Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.WEST);
 		Entity e = factory.newEntity(this, new Position(500, 200),ao , EntityType.PLAYER, Entity.TEAM1);
 		players[0] = e;
-		Entity e1 = factory.newEntity(this, new Position(900, 400),ao, EntityType.PLAYER, Entity.TEAM1);
-		players[1] = e1;
-		Entity e2 = factory.newEntity(this, new Position(600, 200), m_orientation, EntityType.FIREBALL, Entity.TEAM1);
+		//Entity e1 = factory.newEntity(this, new Position(900, 400),ao, EntityType.PLAYER, Entity.TEAM1);
+		//players[1] = e1;
+		Entity e2 = factory.newEntity(this, new Position(600, 200), ao, EntityType.FIREBALL, Entity.TEAM1);
 		entities.add(e2);
-		Entity e3 = factory.newEntity(this, new Position(200, 200), m_orientation, EntityType.TEAMMATE, Entity.TEAM1);
+		Entity e3 = factory.newEntity(this, new Position(200, 200), ao, EntityType.TEAMMATE, Entity.TEAM1);
 		entities.add(e3);
-		Entity e4 = factory.newEntity(this, new Position(400, 400), m_orientation, EntityType.BASE, Entity.TEAM1);
+		Entity e4 = factory.newEntity(this, new Position(400, 400), ao, EntityType.BASE, Entity.TEAM1);
 		entities.add(e4);
-		Entity e5 = factory.newEntity(this, new Position(600, 600), m_orientation, EntityType.ITEM, Entity.TEAM1);
+		Entity e5 = factory.newEntity(this, new Position(600, 600), ao, EntityType.ITEM, Entity.TEAM1);
 		entities.add(e5);
 		Position pos1 = new Position(0, 0);
 		Position pos2 = new Position(0, h);
@@ -84,57 +84,6 @@ public class Model {
 		Polygon p = new Polygon(poss);
 		m_map = new Map(p,this);
 		m_map.generateMap(m_map.getSeed());
-
-	}
-
-	public Model(Grid grid, int w, int h, IFactory f) throws IOException {
-		m_width = w;
-		height = h;
-		List<Position> poss = new ArrayList<>();
-		Position pos1 = new Position(0, 0);
-		Position pos2 = new Position(0, h);
-		Position pos3 = new Position(w, 0);
-		Position pos4 = new Position(w, h);
-
-		poss.add(pos1);
-		poss.add(pos2);
-		poss.add(pos3);
-		poss.add(pos4);
-
-		Polygon p = new Polygon(poss);
-		m_map = new Map(p,this);
-		m_map.generateMap(m_map.getSeed());
-
-//		m_orientation = new Orientation('H');
-//		Head s_head = new Head(new Orientation('S'), this.get_grid(), new Position(0, 0));
-//		Snake snake = new Snake(null, this.get_grid(), s_head);
-//		Apple apple = new Apple(this.get_grid(), new Position(5, 5), null);
-//
-//		// AUTOMATON
-//		State s0 = new State();
-//		State s1 = new State();
-//
-//		Condition t = new TrueFalse(true);
-//
-//		List<Action> LA = new ArrayList<Action>();
-//		LA.add(new Move(apple));
-//
-//		Transition t01 = new Transition(s1, t, LA);
-//		Transition t10 = new Transition(s0, t, LA);
-//
-//		s0.add_transition(t01);
-//		s1.add_transition(t10);
-//
-//		Automate a_aut = new Automate(apple);
-//		a_aut.add_state(s0);
-//		a_aut.add_state(s1);
-//
-//		a_aut.addCurrentState(s0);
-//
-//		apple.set_automate(a_aut);
-//
-//		get_grid().add_entity(snake);
-//		get_grid().add_entity(apple);
 
 	}
 

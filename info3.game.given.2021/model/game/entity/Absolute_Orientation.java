@@ -45,7 +45,7 @@ public class Absolute_Orientation {
 		case (WEST):
 			return 180;
 
-		case (NNORTH_E):
+		case (NORTH_E):
 			return 315;
 
 		case (NORTH_W):
@@ -71,7 +71,7 @@ public class Absolute_Orientation {
 			return true;
 		case WEST:
 			return true;
-		case NNORTH_E:
+		case NORTH_E:
 			return true;
 		case NORTH_W:
 			return true;

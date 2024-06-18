@@ -24,7 +24,7 @@ public class Base extends Entity {
 		
 		switch(cat) {
 		case BOT : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, "BO"));
+			model.get_entities().add(model.newEntity(model,position,abs_or, "BO",team));
 			break;
 		default : 
 			break;

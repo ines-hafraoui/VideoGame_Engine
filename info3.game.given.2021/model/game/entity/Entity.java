@@ -3,7 +3,6 @@ package game.entity;
 import game.entity.Position;
 import game.map.LandType;
 import game.model.Model;
-import info3.game.Grid;
 
 import java.util.HashSet;
 import java.util.List;
@@ -20,7 +19,7 @@ public abstract class Entity {
 	protected Automate aut;
 	protected Model model;
 	protected Absolute_Orientation abs_or;
-	protected State state;
+	protected List<State> state; //To remove or to modify
 	protected int HP;
 	protected List<Automate> inventory;
 	protected List<Entity> bots;
@@ -33,7 +32,7 @@ public abstract class Entity {
 	protected int index_bot;
 
 	protected Position position;
-	protected Float base_speed = 4F;
+	protected Float base_speed = 1F;
 	protected Float acc_speed = 0F; // accumulated speed
 	protected Absolute_Orientation speed_vct_abs_or = new Absolute_Orientation(Absolute_Orientation.EAST);
 
@@ -45,7 +44,7 @@ public abstract class Entity {
 	public final static int TEAM1 = 1;
 	public final static int TEAM2 = 2;
 	public final static int NOTEAM = 0;
-
+	
 
 	public Entity(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team) {
 		aut = a;
@@ -138,12 +137,12 @@ public abstract class Entity {
 	}
 
 	public boolean eval_cell_abs(Absolute_Orientation dir, Category cat, int porte) {
-		return model.get_map().eval_abs(dir, position.getPositionX(), position.getPositionY(), porte);
+		return model.getMap().eval_abs(dir, position.getPositionX(), position.getPositionY(), porte);
 		
 	}
 	
 	public boolean eval_cell_rel(Relative_Orientation dir, Category cat, int porte) {
-		return model.get_map().eval_rel(dir, position.getPositionX(), position.getPositionY(), porte);
+		return model.getMap().eval_rel(dir, position.getPositionX(), position.getPositionY(), porte);
 		
 	}
 	

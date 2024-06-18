@@ -8,6 +8,8 @@ import game.model.Model;
 public class Player extends Entity {
 	
 	
+	//add current number of bot field
+	
 	public Player(Automate a, Model m,Position p, Absolute_Orientation o, String type, int team) {
 		super(a,m,p,o, type, team);
 		inventory = new ArrayList<Automate>();
@@ -35,10 +37,10 @@ public class Player extends Entity {
 		
 		switch(cat) {
 		case FLECHE : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.ARROW));
+			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.ARROW,team));
 			break;
 		case BOULE_FEU : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.FIRE_BALL));
+			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.FIREBALL,team));
 			break;
 		default : 
 			break;
@@ -58,7 +60,7 @@ public class Player extends Entity {
 
 	@Override
 	public Entity do_throw() {
-		int index = index_inventory%NB_BOT;
+		int index = index_inventory%Model.NB_BOT;
 		Automate a = inventory.remove(index);
 		Item new_item = new Item(a,model, position,abs_or,"I", NOTEAM);
 		return new_item;
