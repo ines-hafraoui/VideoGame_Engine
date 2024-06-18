@@ -138,8 +138,7 @@ public class Model {
 
 	}
 
-
-	public Map get_map() {
+	public Map getMap() {
 		return m_map;
 	}
 

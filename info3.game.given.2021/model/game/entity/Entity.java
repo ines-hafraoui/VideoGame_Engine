@@ -33,7 +33,7 @@ public abstract class Entity {
 	protected int index_bot;
 
 	protected Position position;
-	protected Float base_speed = 1F;
+	protected Float base_speed = 4F;
 	protected Float acc_speed = 0F; // accumulated speed
 	protected Absolute_Orientation speed_vct_abs_or = new Absolute_Orientation(Absolute_Orientation.EAST);
 
@@ -95,15 +95,13 @@ public abstract class Entity {
 	protected void newSpeed(int factor) {
 
 		if (acc_speed <= 0) {
-			acc_speed = (float) 0;
+			acc_speed = (float) base_speed;
 			speed_vct_abs_or.set_abs_Orientation(abs_or.get_abs_Orientation());
 		}
 
-		LandType lt = model.get_map().getLandType(position);
 		float BS_coeff;
 		float ACC_coeff;
 
-		float c_speed = 0;
 		if (abs_or.get_abs_Orientation().equals(speed_vct_abs_or.get_abs_Orientation())) {
 			BS_coeff = 0;
 			ACC_coeff = 1;
@@ -111,49 +109,28 @@ public abstract class Entity {
 			BS_coeff = 0;
 			ACC_coeff = (float) 0.5;
 		} else {
-			BS_coeff = -1;
+			BS_coeff = -1F;
 			ACC_coeff = 1;
 		}
 
-		acc_speed = factor * (BS_coeff * base_speed + ACC_coeff * acc_speed);
+		acc_speed =  factor * (BS_coeff * base_speed + ACC_coeff * acc_speed); //+ model.getMap().getViscosity(position);
+		
 	}
 
 	protected Position newPosition() {
-		float c_speed = 0;
-		if (haveCommonChar(abs_or.get_abs_Orientation(), speed_vct_abs_or.get_abs_Orientation())) {
-			c_speed = base_speed + acc_speed;
-		} else {
-			c_speed = 0;
-		}
-		int angle = 0;
-		int XN = 0, YN = 0, XS = 0, YS = 0, XW = 0, YW = 0, XE = 0, YE = 0;
-		if (haveCommonChar("N", speed_vct_abs_or.get_abs_Orientation())) {
-			XN = 0;
-			YN = 1;
-			angle = 0;
-		}
-		if (haveCommonChar("S", speed_vct_abs_or.get_abs_Orientation())) {
-			XS = 0;
-			YS = -1;
-			angle = 0;
-		}
-		if (haveCommonChar("W", speed_vct_abs_or.get_abs_Orientation())) {
-			XW = -1;
-			YW = 0;
-			angle = 45;
-		}
-		if (haveCommonChar("E", speed_vct_abs_or.get_abs_Orientation())) {
-			XE = 1;
-			YE = 0;
-			angle = 45;
-		}
+
+		
+		newSpeed(1);
+		int angle = speed_vct_abs_or.get_abs_Angle();
+	    double angleRad = Math.toRadians(angle); 
+
 		
 		
-		float X = (float) (Math.cos(angle) * c_speed);
-		float Y = (float) (Math.cos(angle) * c_speed);
+		float X = (float) (Math.cos(angleRad) * acc_speed);
+		float Y = (float) (Math.sin(angleRad) * acc_speed);
 		
-		position.setPositionX(X*(XN + XS + XW + XE));
-		position.setPositionY(Y*(YN + YS + YW + YE));
+		position.setPositionX(this.position.getPositionX() + X);
+		position.setPositionY(this.position.getPositionY() + Y);
 		
 		
 		return position;
