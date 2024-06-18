@@ -32,20 +32,20 @@ public class Game1Factory implements IFactory {
 	public static final String ARROW = "F";
 
 	@Override
-	public Entity newEntity(Automate a, Model m, Position p, Absolute_Orientation o, String type) {
+	public Entity newEntity(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team) {
 		switch (type) {
 		case BASE:
-			return new Base(a, m, p, o, type);
+			return new Base(a, m, p, o, type, team);
 		case ITEM:
-			return new Item(a, m, p, o, type);
+			return new Item(a, m, p, o, type, team);
 		case BOT:
-			return new Bot(a, m, p, o, type);
+			return new Bot(a, m, p, o, type, team);
 		case PLAYER:
-			return new Player(a, m, p, o, type);
+			return new Player(a, m, p, o, type, team);
 		case FIREBALL:
-			return new Fire_Ball(a,m, p, o, type);
+			return new Fire_Ball(a,m, p, o, type, team);
 		case ARROW:
-			return new Arrow(a,m, p, o, type);
+			return new Arrow(a,m, p, o, type, team);
 
 		default:
 			return null;
@@ -53,16 +53,16 @@ public class Game1Factory implements IFactory {
 	}
 
 	@Override
-	public Entity newEntity(Model m, Position p, Absolute_Orientation o, String type) {
+	public Entity newEntity(Model m, Position p, Absolute_Orientation o, String type, int team) {
 		switch (type) {
 		case BASE:
-			return new Base(m, p, o, type);
+			return new Base(m, p, o, type, team);
 		case ITEM:
-			return new Item(m, p, o, type);
+			return new Item(m, p, o, type, team);
 		case BOT:
-			return new Bot(m, p, o, type);
+			return new Bot(m, p, o, type, team);
 		case PLAYER:
-			return new Player(m, p, o, type);
+			return new Player(m, p, o, type, team);
 		default:
 			return null;
 		}

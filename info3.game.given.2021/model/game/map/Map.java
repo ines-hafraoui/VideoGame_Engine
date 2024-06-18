@@ -1,14 +1,14 @@
 package game.map;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import game.automaton.Relative_Orientation;
 import game.entity.Absolute_Orientation;
 import game.entity.Entity;
 import game.entity.Position;
 import game.model.Model;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class Map {
 
@@ -23,6 +23,14 @@ public class Map {
 		this.biomes = new ArrayList<>();
 		generateSeed();
 
+		this.borders = borders;
+	}
+
+	
+	public Map(Polygon borders, Model m) {
+		this.biomes = new ArrayList<>();
+		generateSeed();
+		m_model = m;
 		this.borders = borders;
 	}
 

@@ -1,7 +1,7 @@
 package game.map;
 
 
-public abstract class LandType {
+public class LandType {
 
     private Dimension dimension; // Dimension containing height and width
     private String name;  // Name of the LandType

@@ -223,4 +223,14 @@ public class View extends Container {
 	public int getRandomNumber(int min, int max) {
 		return (int) ((Math.random() * (max - min)) + min);
 	}
+	
+	
+	public int WorldToViewX(float x) {
+		return (int) (x * m_d.width / m_mwidth);
+	}
+	
+	public int WorldToViewY(float y) {
+		return (int) (y * m_d.height / m_mheight);
+	}
+	
 }

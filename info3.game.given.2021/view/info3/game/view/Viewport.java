@@ -78,7 +78,7 @@ public class Viewport extends Component {
         polygon.addPoint(width, height);
         polygon.addPoint(x, height);
         
-		mg.setClip(polygon);
+//		mg.setClip(polygon);
 		m_map.paint(mg,x,y);
 		
 		Iterator<Avatar> iter = m_avatars.iterator();

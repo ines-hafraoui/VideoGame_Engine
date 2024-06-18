@@ -24,10 +24,9 @@ public class MapView {
 	Viewport m_parent;
 	View m_view;
 	protected BufferedImage[] m_bgimages;
+	protected BufferedImage[] m_textureimages;
 
-	private BufferedImage[] textureImage;
-	private List<Rectangle> squares = new ArrayList<>(); // List to store squares
-	private static final int SQUARE_SIZE = 10 * View.DISPLAYSCALE; // Size of each square
+	private List<Squares> squares = new ArrayList<>(); // List to store the biomes
 
 	public MapView(int x, int y, Model model, View v) {
 		x_max = x;
@@ -40,18 +39,31 @@ public class MapView {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		genDefaultGround();
-
+		
 		try {
-			// Load the texture image
-			textureImage = View.loadSprite("resources/MiniWorldSprites/Ground/Shore.png", 1, 5);
+			m_textureimages = View.loadSprite("resources/MiniWorldSprites/Ground/Shore.png", 1, 5);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		List<Biome> b = m_model.m_map.getBiome();
-	}
 		
+		/*Generates the default ground tiles*/
+		genDefaultGround();
+
+		/*Generates the different views of the display*/
+		List<Biome> b = m_model.m_map.getBiome();
+		Iterator<Biome> iterator = b.iterator();
+		int i =0;
+		while (iterator.hasNext()) {
+			Biome bio = iterator.next();
+			Polygon p = bio.getBorders();
+			
+			squares.add(new Squares(p,m_textureimages[i]));
+			i++;
+			if(i > 4) {
+				i = 0;
+			}
+		}
+	}
 
 	public void paint(Graphics g) {
 		// printing all the basic tiles to be optimized
@@ -64,12 +76,11 @@ public class MapView {
 			}
 		}
 
-		for (Rectangle square : squares) {
-			g.drawImage(textureImage[2], square.x, square.y, SQUARE_SIZE, SQUARE_SIZE, null);
+		for (Squares square : squares) {
+			square.paint(g);
 		}
 	}
-	
-	
+
 	public void paint(Graphics g, int x, int y) {
 //		g.translate(0, 0);
 		// printing all the basic tiles to be optimized
@@ -82,32 +93,8 @@ public class MapView {
 			}
 		}
 
-		for (Rectangle square : squares) {
-			g.drawImage(textureImage[2], square.x, square.y, SQUARE_SIZE, SQUARE_SIZE, null);
-		}
-	}
-	
-	
-
-	public void PolygontoTiles(Polygon p) {
-		// Calculate the bounds of the polygon
-		Rectangle bounds = p.getBounds();
-
-		// Place multiple squares to cover the polygon
-		int startX = bounds.x - (bounds.x % SQUARE_SIZE);
-		int startY = bounds.y - (bounds.y % SQUARE_SIZE);
-		int endX = bounds.x + bounds.width;
-		int endY = bounds.y + bounds.height;
-
-		for (int y = startY; y < endY; y += SQUARE_SIZE) {
-			for (int x = startX; x < endX; x += SQUARE_SIZE) {
-				Rectangle candidateSquare = new Rectangle(x, y, SQUARE_SIZE, SQUARE_SIZE);
-
-				// Check intersection of polygon and square
-				if (p.intersects(candidateSquare)) {
-					squares.add(candidateSquare);
-				}
-			}
+		for (Squares square : squares) {
+			square.paint(g);
 		}
 	}
 
@@ -143,6 +130,10 @@ public class MapView {
 		return tab_y;
 	}
 
+	
+	/*
+	 * Here we generate the default tiling of the ground for the entire world
+	 */
 	public void genDefaultGround() {
 		BufferedImage ref = m_bgimages[0];
 		m_nrows = m_view.m_mheight / (ref.getHeight() / 2 * View.DISPLAYSCALE);

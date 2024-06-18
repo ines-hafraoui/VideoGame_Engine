@@ -4,7 +4,7 @@ import java.util.List;
 
 import game.entity.Position;
 
-public abstract class Biome {
+public class Biome {
 
     private Polygon borders; // List of positions defining the polygon borders of the biome
     private List<Plot> plots; // List of plots composing the biome

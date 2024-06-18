@@ -65,7 +65,7 @@ public class Game {
 		// in an Model-View-Controller pattern (MVC)
 		Dimension d = new Dimension(1800, 1000);
 		IFactory factory = new Game1Factory();
-		m_model = new Model(new Grid(20, 20), d.width, d.height, factory);
+		m_model = new Model(d.width, d.height, factory);
 		m_model.setListener(new SyncViewModel());
 
 		// creating a listener for all the events

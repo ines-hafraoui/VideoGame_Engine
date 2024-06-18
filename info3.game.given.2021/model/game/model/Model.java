@@ -51,18 +51,18 @@ public class Model {
 	IFactory factory;
 
 
-	public Model(Map map, int w, int h, IFactory f) throws IOException {
+	public Model(int w, int h, IFactory f) throws IOException {
 		entities = new ArrayList<Entity>();
 		factory = f;
 		m_width = w;
 		height = h;
 		List<Position> poss = new ArrayList<Position>();
-		players = new Entity[1];
+		players = new Entity[2];
 		Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.WEST);
-		Entity e = factory.newEntity(this, new Position(500, 200),ao , EntityType.PLAYER);
+		Entity e = factory.newEntity(this, new Position(500, 200),ao , EntityType.PLAYER, Entity.TEAM1);
 		players[0] = e;
-//		Entity e1 = factory.newEntity(this, new Position(900, 400),ao, EntityType.PLAYER);
-//		players[1] = e1;
+		Entity e1 = factory.newEntity(this, new Position(900, 400),ao, EntityType.PLAYER, Entity.TEAM1);
+		players[1] = e1;
 		Position pos1 = new Position(0, 0);
 		Position pos2 = new Position(0, h);
 		Position pos3 = new Position(w, 0);
@@ -74,12 +74,12 @@ public class Model {
 		poss.add(pos4);
 
 		Polygon p = new Polygon(poss);
-		m_map = new Map(p);
+		m_map = new Map(p,this);
 		m_map.generateMap(m_map.getSeed());
 
 	}
 
-	public Model(Grid grid, int w, int h) throws IOException {
+	public Model(Grid grid, int w, int h, IFactory f) throws IOException {
 		m_width = w;
 		height = h;
 		List<Position> poss = new ArrayList<>();
@@ -94,7 +94,7 @@ public class Model {
 		poss.add(pos4);
 
 		Polygon p = new Polygon(poss);
-		m_map = new Map(p);
+		m_map = new Map(p,this);
 		m_map.generateMap(m_map.getSeed());
 
 //		m_orientation = new Orientation('H');
@@ -200,9 +200,9 @@ public class Model {
 		return players;
 	}
 
-	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String arrow) {
+	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String arrow, int team) {
 
-		return factory.newEntity(model, position, abs_or, arrow);
+		return factory.newEntity(model, position, abs_or, arrow, team);
 	}
 
 	public interface ModelListener {

@@ -18,16 +18,17 @@ public class PlayerAvatar extends Avatar {
 		m_images = View.loadSprite("resources/MiniWorldSprites/Characters/Soldiers/Mounted/RedKnight.png", 12, 4);
 	}
 
-	
 	@Override
 	public void paint(Graphics g, int x, int y) {
 		BufferedImage img = m_images[m_imageIndex];
+		int xv = m_view.WorldToViewX(m_entity.get_x());
+		int yv = m_view.WorldToViewY(m_entity.get_y());
 //		m_hb.drawHealthBar(g, (int) (x + m_entity.get_x() + 25), (int) (y + m_entity.get_y() - 5 % img.getHeight()),
 //				(img.getWidth() * View.DISPLAYSCALE / 2), 5 % img.getHeight());
-		g.drawImage(img, x, y, img.getWidth() * View.DISPLAYSCALE, img.getHeight() * View.DISPLAYSCALE, null);
+		g.drawImage(img, xv, yv, img.getWidth() * View.DISPLAYSCALE, img.getHeight() * View.DISPLAYSCALE, null);
 
 //		System.out.println("pos = " + m_entity.get_x() +" " + m_entity.get_y());
-		
+
 // Animating the character based on which state it is in		
 //		switch(a_state) {
 //		case IDLE:

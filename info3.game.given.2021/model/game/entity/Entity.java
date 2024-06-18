@@ -41,6 +41,10 @@ public abstract class Entity {
 	public final static int BOULE_FEU = 2;
 	public final static int BOT = 3;
 	public final static int dt = 1;
+	
+	public final static int TEAM1 = 1;
+	public final static int TEAM2 = 2;
+	public final static int NOTEAM = 0;
 
 
 	public Entity(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team) {
