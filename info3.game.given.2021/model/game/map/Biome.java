@@ -1,11 +1,11 @@
 package game.map;
 
-import game.entity.Position;
 import java.util.List;
+
+import game.entity.Position;
 
 public class Biome {
 
-	
     private Polygon borders; // List of positions defining the polygon borders of the biome
     private List<Plot> plots; // List of plots composing the biome
     private LandType landType; //default landtype to show on the background by default.

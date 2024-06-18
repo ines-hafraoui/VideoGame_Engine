@@ -20,32 +20,20 @@
  */
 package game.model;
 
-import java.awt.Graphics;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import game.automaton.Action;
-import game.automaton.Automate;
-import game.automaton.Category;
-import game.automaton.Condition;
-import game.automaton.Direction;
-import game.automaton.Move;
-import game.automaton.State;
-import game.automaton.Transition;
-import game.automaton.TrueFalse;
-
-import game.entity.Base;
 import game.entity.Entity;
-
 import game.entity.Absolute_Orientation;
+import game.entity.Entity;
+import game.entity.EntityType;
+import game.entity.Player;
 import game.entity.Position;
 import game.map.Map;
+import game.map.Polygon;
 import info3.game.Grid;
 import info3.game.IFactory;
-import info3.game.avatar.Avatar;
-import info3.game.view.View;
+
 
 /**
  * A simple class that holds the images of a sprite for an animated cowbow.
@@ -55,17 +43,102 @@ public class Model {
 
 	long m_imageElapsed;
 	int m_width, height;
-	private Map m_map;
+
+	public Map m_map;
 	private Absolute_Orientation m_orientation;
 	List<Entity> entities;
+	Entity[] players;
 	IFactory factory;
 
-	public Model(Map map, int w, int h, IFactory f) throws IOException {
+
+	public Model(int w, int h, IFactory f) throws IOException {
 		entities = new ArrayList<Entity>();
 		factory = f;
+		m_width = w;
+		height = h;
+		List<Position> poss = new ArrayList<Position>();
+		players = new Entity[2];
+		Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.WEST);
+		Entity e = factory.newEntity(this, new Position(500, 200),ao , EntityType.PLAYER, Entity.TEAM1);
+		players[0] = e;
+		Entity e1 = factory.newEntity(this, new Position(900, 400),ao, EntityType.PLAYER, Entity.TEAM1);
+		players[1] = e1;
+		Entity e2 = factory.newEntity(this, new Position(600, 200), m_orientation, EntityType.FIREBALL, Entity.TEAM1);
+		entities.add(e2);
+		Entity e3 = factory.newEntity(this, new Position(200, 200), m_orientation, EntityType.TEAMMATE, Entity.TEAM1);
+		entities.add(e3);
+		Entity e4 = factory.newEntity(this, new Position(400, 400), m_orientation, EntityType.BASE, Entity.TEAM1);
+		entities.add(e4);
+		Entity e5 = factory.newEntity(this, new Position(600, 600), m_orientation, EntityType.ITEM, Entity.TEAM1);
+		entities.add(e5);
+		Position pos1 = new Position(0, 0);
+		Position pos2 = new Position(0, h);
+		Position pos3 = new Position(w, 0);
+		Position pos4 = new Position(w, h);
+		
+		poss.add(pos1);
+		poss.add(pos2);
+		poss.add(pos3);
+		poss.add(pos4);
+
+		Polygon p = new Polygon(poss);
+		m_map = new Map(p,this);
+		m_map.generateMap(m_map.getSeed());
+
 	}
 
-	public Map get_map() {
+	public Model(Grid grid, int w, int h, IFactory f) throws IOException {
+		m_width = w;
+		height = h;
+		List<Position> poss = new ArrayList<>();
+		Position pos1 = new Position(0, 0);
+		Position pos2 = new Position(0, h);
+		Position pos3 = new Position(w, 0);
+		Position pos4 = new Position(w, h);
+
+		poss.add(pos1);
+		poss.add(pos2);
+		poss.add(pos3);
+		poss.add(pos4);
+
+		Polygon p = new Polygon(poss);
+		m_map = new Map(p,this);
+		m_map.generateMap(m_map.getSeed());
+
+//		m_orientation = new Orientation('H');
+//		Head s_head = new Head(new Orientation('S'), this.get_grid(), new Position(0, 0));
+//		Snake snake = new Snake(null, this.get_grid(), s_head);
+//		Apple apple = new Apple(this.get_grid(), new Position(5, 5), null);
+//
+//		// AUTOMATON
+//		State s0 = new State();
+//		State s1 = new State();
+//
+//		Condition t = new TrueFalse(true);
+//
+//		List<Action> LA = new ArrayList<Action>();
+//		LA.add(new Move(apple));
+//
+//		Transition t01 = new Transition(s1, t, LA);
+//		Transition t10 = new Transition(s0, t, LA);
+//
+//		s0.add_transition(t01);
+//		s1.add_transition(t10);
+//
+//		Automate a_aut = new Automate(apple);
+//		a_aut.add_state(s0);
+//		a_aut.add_state(s1);
+//
+//		a_aut.addCurrentState(s0);
+//
+//		apple.set_automate(a_aut);
+//
+//		get_grid().add_entity(snake);
+//		get_grid().add_entity(apple);
+
+	}
+
+	public Map getMap() {
 		return m_map;
 	}
 
@@ -78,20 +151,12 @@ public class Model {
 		m_map.tick(elapsed);
 	}
 
-	public void paint(Graphics g, int width, int height) {
-		m_width = width;
-		System.out.println("orientation :" + m_orientation.abs_or + "\n");
-	}
-
-	public Absolute_Orientation getOrientation() {
-		return m_orientation;
-	}
 
 	public Entity get_entity(int distance, String t, float f, float g) {
 		Entity e = m_map.get_entity(distance, t, f, g);
 		return e;
 	}
-	
+
 	public void add_entity(Entity e) {
 		entities.add(e);
 	}
@@ -128,16 +193,43 @@ public class Model {
 		return false;
 	}
 
-	/* 
+	/*
 	 * method give the list of entity that are on the map
 	 */
 	public List<Entity> get_entities() {
 		return entities;
 	}
 
-	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String arrow) {
-	
-		return factory.newEntity(model, position, abs_or, arrow);
+	/*
+	 * method give the list of players in the world
+	 */
+	public Entity[] get_players() {
+		return players;
+	}
+
+	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String arrow, int team) {
+
+		return factory.newEntity(model, position, abs_or, arrow, team);
+	}
+
+	public interface ModelListener {
+		void addedEntity(Entity e) throws IOException;
+
+		void removedEntity(Entity e);
+	}
+
+	ModelListener m_ml;
+
+	public void setListener(ModelListener l) {
+		m_ml = l;
+	}
+
+	public int get_width() {
+		return m_width;
+	}
+
+	public int get_height() {
+		return height;
 	}
 
 }

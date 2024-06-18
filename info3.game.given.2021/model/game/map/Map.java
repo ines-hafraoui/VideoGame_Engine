@@ -1,14 +1,14 @@
 package game.map;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import game.automaton.Relative_Orientation;
 import game.entity.Absolute_Orientation;
 import game.entity.Entity;
 import game.entity.Position;
 import game.model.Model;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class Map {
 
@@ -23,6 +23,14 @@ public class Map {
 		this.biomes = new ArrayList<>();
 		generateSeed();
 
+		this.borders = borders;
+	}
+
+	
+	public Map(Polygon borders, Model m) {
+		this.biomes = new ArrayList<>();
+		generateSeed();
+		m_model = m;
 		this.borders = borders;
 	}
 
@@ -111,10 +119,35 @@ public class Map {
 
 		// Nettoyer les polygones pour maximiser leur surface
         for (Polygon polygon : polygons) {
-            polygon.cleanPolygon();
+            //polygon.cleanPolygon();
+        	biomes.add(new Biome(polygon, new LandType("LAVA", (float) 0.1)));
         }
+        
+       
 	}
 
+	
+    private float getMaxX() {
+        float maxX = Float.NEGATIVE_INFINITY;
+        for (Position vertex : borders.getVertices()) {
+            if (vertex.getPositionX() > maxX) {
+                maxX = vertex.getPositionX();
+            }
+        }
+        return maxX;
+    }
+
+    // Method to get the maximum y value of the border points
+    private float getMaxY() {
+        float maxY = Float.NEGATIVE_INFINITY;
+        for (Position vertex : borders.getVertices()) {
+            if (vertex.getPositionY() > maxY) {
+                maxY = vertex.getPositionY();
+            }
+        }
+        return maxY;
+    }
+    
 	private List<Position> generatePointsInsidePolygon(int seed) {
 		Random random = new Random(seed);
 		int numberOfPoints = random.nextInt(100) + 1;
@@ -122,8 +155,8 @@ public class Map {
 		int count = 0;
 		List<Position> positionsInsideBorders = new ArrayList<>();
 		while (count < numberOfPoints) {
-			float x = random.nextFloat();
-			float y = random.nextFloat();
+			float x = random.nextInt() % getMaxX();
+			float y = random.nextInt() % getMaxY();
 
 			Position position = new Position(x, y);
 			if (borders.containsPosition(position)) {
@@ -147,21 +180,26 @@ public class Map {
 	}
 
 	private List<Position> selectSeedPoints(int seed, List<Position> allPoints) {
-		int totalPoints = allPoints.size();
 
 		Random random = new Random(seed);
-		int numberOfSeeds = random.nextInt(totalPoints);
+		int numberOfSeeds = random.nextInt(allPoints.size());
 		List<Position> seedPoints = new ArrayList<>();
 
+		List<Position> to_remove = new ArrayList<>();
+		
 		// select seeds
 		while (seedPoints.size() < numberOfSeeds) {
-			int randomIndex = random.nextInt(totalPoints);
+			int randomIndex = random.nextInt(allPoints.size());
 			Position randomPoint = allPoints.get(randomIndex);
 
 			if (!seedPoints.contains(randomPoint)) {
 				seedPoints.add(randomPoint);
-				allPoints.remove(randomIndex);
+				to_remove.add(randomPoint);
 			}
+		}
+		
+		for (Position p:to_remove) {
+			allPoints.remove(p);
 		}
 
 		return seedPoints;
@@ -179,11 +217,12 @@ public class Map {
 
 		while (!allPoints.isEmpty()) {
 			// Assigner chaque point au polygone le plus proche
-			for (Position point : allPoints) {
 
+			for (Position point : allPoints) {
 				Polygon closestPolygon = null;
 				double minDistance = Double.MAX_VALUE;
-
+				
+				
 				for (Polygon poly : polygons) {
 					double distance = poly.getCenter().distance(point);
 					if (distance < minDistance) {
@@ -194,19 +233,23 @@ public class Map {
 
 				if (closestPolygon != null) {
 					closestPolygon.addVertex(point);
-					allPoints.remove(point);
 				}
 
 			}
-
+			
+			allPoints.clear();
 			// check for invalid polygons
 			// Vérifier les polygones avec des conditions spéciales
-			List<Position> invalidPoints = new ArrayList<>();
+			List<Polygon> invalidPolygons = new ArrayList<>();
 
 			for (Polygon poly : polygons) {
 				if (poly.getVertices().size() <= 1 || poly.getArea() == 0) {
 					allPoints.addAll(poly.getVertices());
+					invalidPolygons.add(poly);
 				}
+			}
+			for(Polygon poly : invalidPolygons) {
+				polygons.remove(poly);
 			}
 		}
 		
