@@ -141,11 +141,18 @@ public abstract class Entity {
 
 	public boolean eval_cell_abs(Absolute_Orientation dir, Category cat, int porte) {
 		return model.getMap().eval_abs(dir, position.getPositionX(), position.getPositionY(), porte);
-		
 	}
 	
 	public boolean eval_cell_rel(Relative_Orientation dir, Category cat, int porte) {
 		return model.getMap().eval_rel(dir, position.getPositionX(), position.getPositionY(), porte);
+	}
+	
+	public boolean eval_got(Category cat) {
+		return HP>0;
+	}
+	
+	public boolean eval_closest(Absolute_Orientation d, Category cat) {
+		return true;
 		
 	}
 	

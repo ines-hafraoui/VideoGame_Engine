@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import game.entity.Entity;
 import game.automaton.Automate;
+import game.automaton.Category;
 import game.entity.Absolute_Orientation;
 import game.entity.Entity;
 import game.entity.EntityType;
@@ -63,7 +64,7 @@ public class Model {
 		players = new Entity[1];
 		Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.WEST);
 		Entity e = factory.newEntity(this, new Position(500, 200),ao , EntityType.PLAYER, Entity.TEAM1);
-		List<Automate> fsm_list = (List<Automate>) TestMain.loadAutomata("/home/nada/Documents/INFO3/S2/Projet_Jeu/g3/info3.game.given.2021/gal/gal/automate.gal");
+		List<Automate> fsm_list = (List<Automate>) TestMain.loadAutomata("/home/mazerat/Bureau/Ecole/INFO3/PLE/Projet_PLE/g3/info3.game.given.2021/gal/gal/automate.gal");
 		//e.set_automate(fsm_list.get(0));
 		players[0] = e;
 		//Entity e1 = factory.newEntity(this, new Position(900, 400),ao, EntityType.PLAYER, Entity.TEAM1);
@@ -153,6 +154,13 @@ public class Model {
 	 */
 	public List<Entity> get_entities() {
 		return entities;
+	}
+	
+	public List<Entity> get_entity_team(Team t, Category cat){
+		List<Entity> list = new ArrayList();
+		for (Entity e : entities) {
+			if (e )
+		}
 	}
 
 	/*
