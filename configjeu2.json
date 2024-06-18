@@ -8,9 +8,10 @@
       "behaviour": "player1.gal",
       "features" : "Player.class",
       "sprite" : "teammate1.png",
-      "pickable": false ,
-      “x” : 1,
-      “y” : 1
+      "pickable": false,
+      "direction":"W",
+      "position":[500,200],
+      "team":1
     },
     { "name" : "PLAYER 2",
       "view" : 2,   
@@ -18,34 +19,45 @@
       "features" : "Player.class",
       "sprite" : "teammate2.png",
       "pickable": false ,
-      “x” : 2,
-      “y” : 2
+      "direction":"W",
+      "position":[550,200],
+      "team":2
     },
     { "name" : "PARASITE", 
       "behaviour" : "parasite.gal",
       "features" : "Bot.class",
       "sprite" : "parasite.png",
-      "pickable" : false
+      "pickable" : false,
+      "direction":"W",
+      "position":[100,50],
+      "team":0
     },
  { "name" : "CAPACITY", 
       "behaviour" : "item.gal",
       "features" : "Capacity.class",
       "sprite" : "capacity.png",
-      "pickable" : true
+      "pickable" : true,
+      "direction":"W",
+      "position":[1,1],
+      "team":0
     },
  { "name" : "PLANT", 
       "behaviour" : "item.gal",
       "features" : "Plant.class",
       "sprite" : "plant.png",
-      "pickable" : true
+      "pickable" : true,
+      "direction":"W",
+      "position":[50,100],
+      "team":0
     },
  { "name" : "BASE", 
       "behaviour" : "base2.gal",
       "features" : "Base.class",
       "sprite" : "base.png",
       "pickable" : false,
-      “x” : 50,
-      “y” : 50
+      "direction":"W",
+      "position":[300,300],
+      "team":0
     }
   ]
 }
