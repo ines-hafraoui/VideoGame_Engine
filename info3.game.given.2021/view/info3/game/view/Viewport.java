@@ -45,8 +45,8 @@ public class Viewport extends Component {
 		m_x = x;
 		m_y = y;
 		m_player = player;
-
-//		m_inWorldBounds = new Rectangle(m_trx,m_try,d.width,d.height);
+		translate();
+		m_inWorldBounds = new Rectangle(m_trx,m_try,d.width,d.height);
 	}
 
 	void addDisplayedAvatar(Avatar avatar) {
@@ -63,14 +63,14 @@ public class Viewport extends Component {
 
 	void translate() {
 		// Creates bounds of how much of the world can be desplayed
-		m_trx = ((int) m_player.m_entity.get_x()) - (m_d.width / 2);
-		m_try = ((int) m_player.m_entity.get_y()) - (m_d.height / 2);
+		m_trx = (((int) m_player.m_entity.get_x()) - (m_d.width / 2) * View.DISPLAYSCALE);
+		m_try = (((int) m_player.m_entity.get_y()) - (m_d.height / 2) * View.DISPLAYSCALE);
 	}
 
 	public void paint(Graphics g) {
 		translate();
-
 		Graphics mg = g.create(m_x, m_y, m_d.width, m_d.height);
+		
 //		int x = ((int) m_player.m_entity.get_x()) + m_player.m_images[0].getWidth()-100;
 //	    int y = ((int) m_player.m_entity.get_y())  + m_player.m_images[0].getHeight() -200;
 ////		mg.translate(x,y);
@@ -90,7 +90,7 @@ public class Viewport extends Component {
 		Iterator<Avatar> iter = m_avatars.iterator();
 		while (iter.hasNext()) {
 			Avatar a = iter.next();
-			a.paint(mg, m_trx, m_try);
+			a.paint(mg, -m_trx, -m_try);
 		}
 
 		m_player.paint(mg, m_d.width / 2, m_d.height / 2);

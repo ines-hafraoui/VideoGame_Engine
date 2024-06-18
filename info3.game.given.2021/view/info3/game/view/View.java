@@ -88,7 +88,7 @@ public class View extends Container {
 	}
 
 	public void paint(Graphics g) {
-		Graphics mg = g.create(0, 0, m_d.width, m_d.height);
+		Graphics mg = g.create(m_x, m_y, m_d.width, m_d.height);
 
 		switch (m_viewports.length) {
 		case 1:
@@ -141,6 +141,7 @@ public class View extends Container {
 	public void setDimension(Dimension d) {
 		m_d = d;
 	}
+
 	
 	public void setDimension(int w, int h) {
 		m_d = new Dimension(w,h);
