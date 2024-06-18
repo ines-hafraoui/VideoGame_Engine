@@ -23,30 +23,34 @@ public class Polygon {
 	}
 
 	public boolean containsPosition(Position position) {
-		int n = vertices.size();
-		boolean inside = false;
+	    int n = vertices.size();
+	    boolean inside = false;
 
-		float x = position.getPositionX();
-		float y = position.getPositionY();
+	    float x = position.getPositionX();
+	    float y = position.getPositionY();
 
-		for (int i = 0, j = n - 1; i < n; j = i++) {
-			float xi = vertices.get(i).getPositionX();
-			float yi = vertices.get(i).getPositionY();
-			float xj = vertices.get(j).getPositionX();
-			float yj = vertices.get(j).getPositionY();
+	    for (int i = 0, j = n - 1; i < n; j = i++) {
+	        float xi = vertices.get(i).getPositionX();
+	        float yi = vertices.get(i).getPositionY();
+	        float xj = vertices.get(j).getPositionX();
+	        float yj = vertices.get(j).getPositionY();
 
-			boolean onBoundary = ((yi <= y && y < yj) || (yj <= y && y < yi))
-					&& (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-			if (onBoundary)
-				return true;
+	        if (((yi <= y && y < yj) || (yj <= y && y < yi)) && 
+	            (x == (xj - xi) * (y - yi) / (yj - yi) + xi)) {
+	            return true;
+	        }
 
-			if ((yi > y) != (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) {
-				inside = !inside;
-			}
-		}
+	        if ((yi > y) != (yj > y)) {
+	            float intersectX = (xj - xi) * (y - yi) / (yj - yi) + xi;
+	            if (x < intersectX) {
+	                inside = !inside;
+	            }
+	        }
+	    }
 
-		return inside;
+	    return inside;
 	}
+
 
 	public List<Position> getVertices() {
 		return vertices;

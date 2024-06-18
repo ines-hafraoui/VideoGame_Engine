@@ -176,7 +176,7 @@ public class Map {
 	private List<Position> selectSeedPoints(int seed, List<Position> allPoints) {
 
 		Random random = new Random(seed);
-		int numberOfSeeds = random.nextInt(allPoints.size());
+		int numberOfSeeds = random.nextInt(allPoints.size()-2)+1;
 		List<Position> seedPoints = new ArrayList<>();
 
 		List<Position> to_remove = new ArrayList<>();
