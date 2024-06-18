@@ -13,19 +13,20 @@ import game.automaton.Automate;
 import game.automaton.Category;
 import game.automaton.Direction;
 import game.automaton.Relative_Orientation;
-import game.automaton.State;
+import game.entity.ActionType;
 
 public abstract class Entity {
 	protected Automate aut;
 	protected Model model;
 	protected Absolute_Orientation abs_or;
-	protected List<State> state; //To remove or to modify
+	protected String state_action;
 	protected int HP;
 	protected List<Automate> inventory;
 	protected List<Entity> bots;
 	protected boolean explode;
 	protected int team;
 	protected boolean injured;
+	protected int current_nbot;
 
 	protected String type;
 	protected int index_inventory;
@@ -46,12 +47,12 @@ public abstract class Entity {
 	public final static int NOTEAM = 0;
 	
 
-	public Entity(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team) {
+	public Entity(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team, int nb_bot) {
 		aut = a;
 		model = m;
 		position = p;
 		abs_or = o;
-		state = a.getcurrentstate();
+		state_action = ActionType.IDLE;
 		HP = 100;
 		explode = false;
 		index_inventory =0 ;
@@ -59,9 +60,10 @@ public abstract class Entity {
 		this.type = type;
 		this.team = team;
 		injured = false;
+		current_nbot = nb_bot;
 	}
 
-	public Entity(Model m, Position p, Absolute_Orientation o, String type, int team) {
+	public Entity(Model m, Position p, Absolute_Orientation o, String type, int team, int nb_bot) {
 		model = m;
 		position = p;
 		abs_or = o;
@@ -72,6 +74,7 @@ public abstract class Entity {
 		this.type = type;
 		this.team = team;
 		injured = false;
+		current_nbot = nb_bot;
 	}
 
 	public static boolean haveCommonChar(String str1, String str2) {
@@ -233,11 +236,10 @@ public abstract class Entity {
 
 	public void set_automate(Automate a) {
 		aut = a;
-		state = a.getcurrentstate();
 	}
 
-	public void get_state(Automate a) {
-		state = a.getcurrentstate();
+	public void get_state_action(String action) {
+		state_action = action;
 	}
 
 	/*

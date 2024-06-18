@@ -7,13 +7,13 @@ import game.model.Model;
 public class Fire_Ball extends Entity{
 	
 	
-	public Fire_Ball(Automate a,Model m, Position p, Absolute_Orientation o,String type, int team) {
-		super(a,m,p,o,type, team);
+	public Fire_Ball(Automate a,Model m, Position p, Absolute_Orientation o,String type, int team, int nb_bot) {
+		super(a,m,p,o,type, team, nb_bot);
 	}
 	 
 	
-	public Fire_Ball(Model m, Position p, Absolute_Orientation o,String type, int team) {
-		super(m,p,o,type, team);
+	public Fire_Ball(Model m, Position p, Absolute_Orientation o,String type, int team, int nb_bot) {
+		super(m,p,o,type, team, nb_bot);
 	}
 	
 	@Override
@@ -23,6 +23,7 @@ public class Fire_Ball extends Entity{
 
 	@Override
 	public void do_egg(int c) {
+		state_action = ActionType.EGG;
 	}
 
 	@Override
@@ -41,7 +42,9 @@ public class Fire_Ball extends Entity{
 	}
 
 	@Override
-	public void do_explode() {}
+	public void do_explode() {
+		state_action = ActionType.EXPLODE;
+	}
 
 	@Override
 	public void do_power(int p) {	}
@@ -62,7 +65,10 @@ public class Fire_Ball extends Entity{
 	}
 
 	@Override
-	public void do_turn(Absolute_Orientation o) {	}
+	public void do_turn(Absolute_Orientation o) {
+		abs_or = o;
+		state_action = ActionType.TURN;
+	}
 
 	
 	
