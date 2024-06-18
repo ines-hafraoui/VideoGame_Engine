@@ -125,8 +125,9 @@ public class Visitor implements IVisitor {
 			//return new Wait();
 			break;
 		case "Pick":
-			break; // same
+			break; //second arg of pick must be a Category
 		case "Throw":
+			//return new Throw(); // remove the entity or create another constructor
 			break;
 		case "Explode":
 			return new Explode();
@@ -195,7 +196,7 @@ public class Visitor implements IVisitor {
 	}
 
 	@Override
-	public Object build(UnaryOp unop, Object expression) {
+	public Object build(UnaryOp unop, Object expression) { // mouais a modifier
 		Expression e = (Expression) expression;
 
 		return new UnaryOp(unop.operator, e);

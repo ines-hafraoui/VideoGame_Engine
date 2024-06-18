@@ -4,7 +4,7 @@ import game.entity.Entity;
 
 public class Egg implements Action{
 
-	public Egg() {
+	public Egg(int i) {
 		
 	}
 	@Override
