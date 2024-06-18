@@ -27,6 +27,7 @@
     },
     "Bot1":
     { "name" : "BOT1", 
+      "view" : 1, 
       "behaviour" : "bot.gal",
       "features" : "Bot.class",
       "sprite" : "bot.png",
@@ -36,7 +37,8 @@
       "team":1
     },
     "Bot2":{
-       "name" : "BOT2", 
+      "name" : "BOT2",
+      "view" : 2,  
       "behaviour" : "bot.gal",
       "features" : "Bot.class",
       "sprite" : "bot.png",
@@ -46,7 +48,8 @@
       "team":2
     },
     "Power":{
-      "name" : "POWER", 
+      "name" : "POWER",
+      "view" : 0,  
       "behaviour" : "item.gal",
       "features" : "Power.class",
       "sprite" : "power.png",
@@ -56,7 +59,8 @@
       "team":0
     },
     "Base1":{ 
-      "name" : "BASE1", 
+      "name" : "BASE1",
+      "view" : 1,  
       "behaviour" : "base1.gal",
       "features" : "Base.class",
       "sprite" : "base.png",
@@ -66,7 +70,8 @@
       "team":1
     },
     "Base2":{
-      "name" : "BASE2", 
+      "name" : "BASE2",
+      "view" : 2,  
       "behaviour" : "base1.gal",
       "features" : "Base.class",
       "sprite" : "base.png",
