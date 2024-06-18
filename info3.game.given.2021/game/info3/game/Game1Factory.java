@@ -28,7 +28,7 @@ public class Game1Factory implements IFactory {
 	public static final String ITEM = "I";
 	public static final String BOT = "BO";
 	public static final String PLAYER = "J";
-	public static final String FIREBALL = "BF";
+	public static final String FIREBALL = "FB";
 	public static final String ARROW = "F";
 
 	@Override
@@ -63,6 +63,10 @@ public class Game1Factory implements IFactory {
 			return new Bot(m, p, o, type, team);
 		case PLAYER:
 			return new Player(m, p, o, type, team);
+		case FIREBALL:
+			return new Fire_Ball(m, p, o, type, team);
+		case ARROW:
+			return new Arrow(m, p, o, type, team);
 		default:
 			return null;
 		}

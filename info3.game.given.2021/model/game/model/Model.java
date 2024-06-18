@@ -63,6 +63,14 @@ public class Model {
 		players[0] = e;
 		Entity e1 = factory.newEntity(this, new Position(900, 400),ao, EntityType.PLAYER, Entity.TEAM1);
 		players[1] = e1;
+		Entity e2 = factory.newEntity(this, new Position(600, 200), m_orientation, EntityType.FIREBALL, Entity.TEAM1);
+		entities.add(e2);
+		Entity e3 = factory.newEntity(this, new Position(200, 200), m_orientation, EntityType.TEAMMATE, Entity.TEAM1);
+		entities.add(e3);
+		Entity e4 = factory.newEntity(this, new Position(400, 400), m_orientation, EntityType.BASE, Entity.TEAM1);
+		entities.add(e4);
+		Entity e5 = factory.newEntity(this, new Position(600, 600), m_orientation, EntityType.ITEM, Entity.TEAM1);
+		entities.add(e5);
 		Position pos1 = new Position(0, 0);
 		Position pos2 = new Position(0, h);
 		Position pos3 = new Position(w, 0);
