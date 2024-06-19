@@ -88,42 +88,53 @@ public abstract class Entity {
 		return !set1.isEmpty();
 	}
 
-	protected void newSpeed(int factor) {
+    private float[] polarToCartesian(float norm, float angle) {
+        float x = norm * (float)Math.cos(Math.toRadians(angle));
+        float y = norm * (float)Math.sin(Math.toRadians(angle));
+        return new float[] { x, y };
+    }
 
-		if (acc_speed <= 0) {
-			acc_speed = (float) base_speed;
-			speed_vct_abs_or.set_abs_Orientation(abs_or.get_abs_Orientation());
-		}
+    private float[] cartesianToPolar(float x, float y) {
+        float norm = (float)Math.sqrt(x * x + y * y);
+        float angle = (float)Math.toDegrees(Math.atan2(y, x));
+        return new float[] { norm, angle };
+    }
+    protected float newSpeed(int factor) {
+        if (acc_speed == 0) {
+            acc_speed = base_speed;
+            speed_vct_abs_or.set_abs_Orientation(abs_or.get_abs_Orientation());
+        }
 
-		float BS_coeff;
-		float ACC_coeff;
+        float viscosity = model.getMap().getViscosity(position);
+        float base_speed_adjusted = Math.max(0, base_speed - viscosity);
 
-		if (abs_or.get_abs_Orientation().equals(speed_vct_abs_or.get_abs_Orientation())) {
-			BS_coeff = 0;
-			ACC_coeff = 1;
-		} else if (haveCommonChar(abs_or.get_abs_Orientation(), speed_vct_abs_or.get_abs_Orientation())) {
-			BS_coeff = 0;
-			ACC_coeff = (float) 0.5;
-		} else {
-			BS_coeff = -1F;
-			ACC_coeff = 1;
-		}
+        float[] acc_cartesian = polarToCartesian(acc_speed, speed_vct_abs_or.get_abs_Angle());
+        float[] base_cartesian = polarToCartesian(base_speed_adjusted, abs_or.get_abs_Angle());
 
-		acc_speed =  factor * (BS_coeff * base_speed + ACC_coeff * acc_speed);// model.getMap().getViscosity(position);
-		
-	}
+        float x_total = base_cartesian[0];
+        float y_total = base_cartesian[1];
+
+        float[] new_speed_polar = cartesianToPolar(x_total, y_total);
+
+        acc_speed = factor * new_speed_polar[0];
+        speed_vct_abs_or.set_abs_Angle(new_speed_polar[1]);
+
+        System.out.println(acc_speed + " " + viscosity);
+
+        return acc_speed;
+    }
 
 	protected Position newPosition() {
 
 		
-		newSpeed(1);
+		float speed = newSpeed(1);
 		int angle = speed_vct_abs_or.get_abs_Angle();
 	    double angleRad = Math.toRadians(angle); 
 
 		
 		
-		float X = (float) (Math.cos(angleRad) * acc_speed);
-		float Y = (float) (Math.sin(angleRad) * acc_speed);
+		float X = (float) (Math.cos(angleRad) * speed);
+		float Y = (float) (Math.sin(angleRad) * speed);
 		
 		position.setPositionX(this.position.getPositionX() + X);
 		position.setPositionY(this.position.getPositionY() + Y);
@@ -247,7 +258,6 @@ public abstract class Entity {
 	
 	public void tick(long elpased) {
 
-		System.out.print("TICK in " + this + "\n");
 		if (aut != null) {
 			aut.step(this);
 		}

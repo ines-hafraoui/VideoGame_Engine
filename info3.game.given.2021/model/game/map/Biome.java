@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import game.entity.Position;
-import game.map.LandTypes.Lava;
+
 
 public class Biome {
 
@@ -68,26 +68,7 @@ public class Biome {
     
     public void generateBiome(int seed) {
         Random random = new Random(seed);
-
-        // Define possible biomes names
-        List<String> possibleBiomeNames = new ArrayList<>();
-        possibleBiomeNames.add("Volcano");
-        // Add other biome names here
-        
-        // Randomly assign a biome type
-        int biomeTypeIndex = random.nextInt(possibleBiomeNames.size());
-        String biomeType = possibleBiomeNames.get(biomeTypeIndex);
-
-        switch (biomeType) {
-            case "Volcano":
-                this.name = "Volcano";
-                this.landType = new Lava();
-                addLandType(new Lava());
-                break;
-            // Add other cases for different biomes
-        }
-
-        // Generate plots within the biome
+   
         int numPlots = random.nextInt(10) + 1; // Generate between 1 and 10 plots
         for (int i = 0; i < numPlots; i++) {
             Plot plot = new Plot(landType);
@@ -126,4 +107,6 @@ public class Biome {
         }
         return description.toString();
     }
+    
+    
 }

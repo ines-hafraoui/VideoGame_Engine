@@ -5,7 +5,7 @@ import game.map.LandType;
 public class Lava extends LandType {
 
 		public Lava() {
-			super("Lava", 1);
+			super("Lava", 0.7f);
 		}
 		
 }
