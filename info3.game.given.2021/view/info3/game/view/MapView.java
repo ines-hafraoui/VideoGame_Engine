@@ -28,12 +28,13 @@ public class MapView {
 
 	private List<Squares> squares = new ArrayList<>(); // List to store the biomes
 
-	public MapView(int x, int y, Model model, View v) {
+	public MapView(int x, int y, Model model, View v, Viewport parent) {
 		x_max = x;
 		y_max = y;
 		m_model = model;
 		m_view = v;
-
+		m_parent = parent;
+		
 		try {
 			m_bgimages = View.loadSprite("resources/MiniWorldSprites/Ground/TexturedGrass.png", 2, 3);
 		} catch (IOException e) {
@@ -49,7 +50,7 @@ public class MapView {
 		/* Generates the default ground tiles */
 		genDefaultGround();
 
-		/* Generates the different views of the display */
+		/* Generates the different views of the biomes */
 		List<Biome> b = m_model.m_map.getBiome();
 		Iterator<Biome> iterator = b.iterator();
 		int i = 0;
@@ -58,11 +59,11 @@ public class MapView {
 			Polygon p = bio.getBorders();
 
 			if (bio instanceof Volcano) {
-				squares.add(new Squares(p, m_textureimages[4]));
+				squares.add(new Squares(p, m_textureimages[4],m_parent));
 			} else if (bio instanceof Ocean) {
-				squares.add(new Squares(p, m_textureimages[0]));
+				squares.add(new Squares(p, m_textureimages[0],m_parent));
 			} else {
-				squares.add(new Squares(p, m_textureimages[1]));
+				squares.add(new Squares(p, m_textureimages[1],m_parent));
 
 			}
 
@@ -75,9 +76,13 @@ public class MapView {
 		for (int i = 0; i < m_ncols; i++) {
 			for (int j = 0; j < m_nrows; j++) {
 				BufferedImage img = m_bgimages[m_groundsetup[i * j + j]];
-				g.drawImage(img, i * (m_bgimages[0].getWidth() * View.DISPLAYSCALE) + x,
-						j * (m_bgimages[0].getHeight() * View.DISPLAYSCALE) + y, img.getWidth() * View.DISPLAYSCALE,
-						img.getHeight() * View.DISPLAYSCALE, null);
+				int tilex = i * (m_bgimages[0].getWidth() * View.DISPLAYSCALE) + x;
+				int tiley = j * (m_bgimages[0].getHeight() * View.DISPLAYSCALE) + y;
+				if(m_parent.withinbounds(tilex, tiley)) {
+					g.drawImage(img,tilex,
+							tiley, img.getWidth() * View.DISPLAYSCALE,
+							img.getHeight() * View.DISPLAYSCALE, null);
+				}
 			}
 		}
 
@@ -86,6 +91,10 @@ public class MapView {
 		}
 	}
 
+	
+	
+	
+	//TO BE MOVED... UNTIL WE GET THE FINAL VERSION OF PLOTS
 	private void AffichagePlots(Graphics g, Biome biome) {
 		List<Plot> plots = biome.getPlots();
 		Iterator<Plot> iterator = plots.iterator();
@@ -117,14 +126,15 @@ public class MapView {
 		}
 		return tab_y;
 	}
-
+	// END OF TO BE MOVED...
+	
 	/*
 	 * Here we generate the default tiling of the ground for the entire world
 	 */
 	public void genDefaultGround() {
 		BufferedImage ref = m_bgimages[0];
-		m_nrows = (m_view.m_mheight / ref.getHeight() * View.DISPLAYSCALE);
-		m_ncols = (m_view.m_mwidth / ref.getWidth() * View.DISPLAYSCALE);
+		m_nrows = (m_view.m_mheight / (ref.getHeight() * View.DISPLAYSCALE));
+		m_ncols = (m_view.m_mwidth / (ref.getWidth() * View.DISPLAYSCALE));
 		m_groundsetup = new int[m_nrows * m_ncols];
 		for (int i = 0; i < m_ncols; i++) {
 			for (int j = 0; j < m_nrows; j++) {
@@ -132,5 +142,4 @@ public class MapView {
 			}
 		}
 	}
-
 }

@@ -47,15 +47,10 @@ public class Viewport extends Component {
 		m_oldpositionx = (int) m_player.m_entity.get_x();
 		m_oldpositiony = (int) m_player.m_entity.get_y();
 		Caculatetranslation(m_oldpositionx, m_oldpositiony);
-		m_inWorldBounds = new Rectangle(m_trx, m_try, d.width, d.height);
-	}
-
-	void addDisplayedAvatar(Avatar avatar) {
-		// TODO Auto-generated method stub
-	}
-
-	void undisplayAvatar(Avatar avatar) {
-		// TODO Auto-generated method stub
+		m_map = new MapView(0, 0, m_model, parent, this);
+		
+		//Scaling the bounds' leeway to the zoom given to the map
+		m_inWorldBounds = new Rectangle(-20*View.DISPLAYSCALE, -20*View.DISPLAYSCALE, d.width+(20*View.DISPLAYSCALE), d.height+(20*View.DISPLAYSCALE));
 	}
 
 	void setDimension(Dimension d) {
@@ -86,5 +81,12 @@ public class Viewport extends Component {
 		}
 
 		m_player.paint(mg, m_d.width / 2, m_d.height / 2);
+	}
+
+	public boolean withinbounds(int tilex, int tiley) {
+		if (m_inWorldBounds.contains(tilex, tiley)) {
+			return true;
+		}
+		return false;
 	}
 }
