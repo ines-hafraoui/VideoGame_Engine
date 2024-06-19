@@ -159,10 +159,11 @@ public class Map {
 
 		if (!polygons.isEmpty()) {
 
-			int i = 0;
+			int i =0;
 			for (Polygon polygon : polygons) {
 				// polygon.cleanPolygon();
-				i++;
+				
+				i+= 1000;
 				Biome b = randomBiome(polygon, seed + i);
 
 				b.generateBiome(seed);
