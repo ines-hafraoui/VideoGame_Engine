@@ -65,22 +65,6 @@ public class MapView {
 		}
 	}
 
-	public void paint(Graphics g) {
-		// printing all the basic tiles to be optimized
-		for (int i = 0; i < m_ncols; i++) {
-			for (int j = 0; j < m_nrows; j++) {
-				BufferedImage img = m_bgimages[m_groundsetup[i * j + j]];
-				g.drawImage(img, j * (m_bgimages[0].getWidth() * View.DISPLAYSCALE),
-						i * (m_bgimages[0].getHeight() * View.DISPLAYSCALE), img.getWidth() * View.DISPLAYSCALE,
-						img.getHeight() * View.DISPLAYSCALE, null);
-			}
-		}
-
-		for (Squares square : squares) {
-			square.paint(g, x, y);
-		}
-	}
-
 	public void paint(Graphics g, int x, int y) {
 //		g.translate(0, 0);
 		// printing all the basic tiles to be optimized
@@ -135,8 +119,8 @@ public class MapView {
 	 */
 	public void genDefaultGround() {
 		BufferedImage ref = m_bgimages[0];
-		m_nrows = m_view.m_mheight * View.DISPLAYSCALE;
-		m_ncols = m_view.m_mwidth * View.DISPLAYSCALE;
+		m_nrows = m_view.m_mheight / (ref.getHeight() / 2 * View.DISPLAYSCALE);
+		m_ncols = m_view.m_mwidth / (ref.getWidth() / 2 * View.DISPLAYSCALE);
 		m_groundsetup = new int[m_nrows * m_ncols];
 		for (int i = 0; i < m_nrows; i++) {
 			for (int j = 0; j < m_ncols; j++) {

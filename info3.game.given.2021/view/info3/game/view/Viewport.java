@@ -48,7 +48,7 @@ public class Viewport extends Component {
 		m_player = player;
 		m_oldpositionx = (int) m_player.m_entity.get_x();
 		m_oldpositiony = (int) m_player.m_entity.get_y();
-		Caculatetranslation(m_oldpositionx,m_oldpositiony);
+		Caculatetranslation(m_oldpositionx, m_oldpositiony);
 		m_inWorldBounds = new Rectangle(m_trx, m_try, d.width, d.height);
 	}
 
@@ -64,20 +64,20 @@ public class Viewport extends Component {
 		m_d = d;
 	}
 
-	void Caculatetranslation(int x , int y) {
+	void Caculatetranslation(int x, int y) {
 		// Creates bounds of how much of the world can be desplayed
-		m_trx = x - (m_d.width / 2) * View.DISPLAYSCALE;
-		m_try = y - (m_d.height / 2) * View.DISPLAYSCALE;
+		m_trx = x * View.DISPLAYSCALE - (m_d.width / 2);
+		m_try = y * View.DISPLAYSCALE - (m_d.height / 2);
 	}
 
 	public void paint(Graphics g) {
 		int x = (int) m_player.m_entity.get_x();
 		int y = (int) m_player.m_entity.get_y();
-		
-		if(x!= m_oldpositionx || y != m_oldpositiony) {
-			Caculatetranslation(x,y);
+
+		if (x != m_oldpositionx || y != m_oldpositiony) {
+			Caculatetranslation(x, y);
 		}
-		
+
 		Graphics mg = g.create(m_x, m_y, m_d.width, m_d.height);
 		m_map.paint(mg, -m_trx, -m_try);
 
