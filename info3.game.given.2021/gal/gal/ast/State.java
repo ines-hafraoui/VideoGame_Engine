@@ -18,7 +18,7 @@
 package gal.ast;
 
 public class State extends Node {
-	
+
 	public String name;
 
 	public State(String name) {
