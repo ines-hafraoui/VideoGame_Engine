@@ -28,7 +28,7 @@ public class Key implements Condition {
 	}
 	
 	public boolean eval (Entity e) { 
-		return e.eval_key(touche);
+		return e.eval_got(touche);
 	}
 
 }

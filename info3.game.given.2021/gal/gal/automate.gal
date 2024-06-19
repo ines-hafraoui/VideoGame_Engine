@@ -1,8 +1,6 @@
 Bot_Jeu1(Beg){
 
  * (Beg): 
- | Key(FD) ? Turn(S) ; Move :(Beg)
+ | True ? Turn(E) ; Move ; Move ; Move ; Move ; Move :(Beg)
  
  }
- 
- 
