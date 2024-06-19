@@ -2,8 +2,9 @@
   "cooperative" : false,
   "timer" : -1, 
   "viscosity" : 1,
+  "nb_bot_init":5,
     "Player1":{
-      "name" : "PLAYER 1",
+      "name" : "PLAYER1",
       "view" : 1,   
       "behaviour": "player1.gal",
       "features" : "Player.class",
@@ -15,7 +16,7 @@
 
     },
     "Player2":{ 
-      "name" : "PLAYER 2",
+      "name" : "PLAYER2",
       "view" : 2,   
       "behaviour": "player2.gal",
       "features" : "Player.class",
