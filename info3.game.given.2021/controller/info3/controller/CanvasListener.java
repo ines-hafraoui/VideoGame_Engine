@@ -96,40 +96,71 @@ public class CanvasListener implements GameCanvasListener {
 		System.out.println("Key pressed: " + e.getKeyChar() + " code=" + e.getKeyCode());
 		switch(e.getKeyCode()) {
 		case 81 :// gauche joueur1 'q'
-			m_game.m_model.entities[0].get_automate().set_key(81);
+			m_game.m_model.set_key("q");
 		case 68 :// droite joueur1 'd'
-			m_game.m_model.entities[0].get_automate().set_key(68);
+			m_game.m_model.set_key("d");
 		case 90 :// haut joueur1 'z'
-			m_game.m_model.entities[0].get_automate().set_key(90);
+			m_game.m_model.set_key("z");
 		case 83 :// bas joueur1 's'
-			m_game.m_model.entities[0].get_automate().set_key(83);
+			m_game.m_model.set_key("s");
 		case 32 :// Hit joueur1 ' '
-			m_game.m_model.entities[0].get_automate().set_key(32);
+			m_game.m_model.set_key("SPACE");
 		case 65 :// Select joueur1 'a'
-			m_game.m_model.entities[0].get_automate().set_key(65);
+			m_game.m_model.set_key("a");
 		case 69 :// Accepter sélection joueur1 'e'
-			m_game.m_model.entities[0].get_automate().set_key(69);
+			m_game.m_model.set_key("e");
 			
 		case 37 :// gauche joueur2 'Flèche gauche'
-			m_game.m_model.entities[1].get_automate().set_key(37);
+			m_game.m_model.set_key("FL");
 		case 39 :// droite joueur2 'Flèche droite'
-			m_game.m_model.entities[1].get_automate().set_key(39);
+			m_game.m_model.set_key("FR");
 		case 38 :// haut joueur2 'Flèche haute'
-			m_game.m_model.entities[1].get_automate().set_key(38);
+			m_game.m_model.set_key("FU");
 		case 40 :// bas joueur2 'Flèche basse'
-			m_game.m_model.entities[1].get_automate().set_key(40);
+			m_game.m_model.set_key("FD");
 		case 517 :// Hit joueur2 '!'
-			m_game.m_model.entities[1].get_automate().set_key(517);
+			m_game.m_model.set_key("IM");
 		case 0 :// Select joueur2 'ù'
-			m_game.m_model.entities[1].get_automate().set_key(0);
+			m_game.m_model.set_key("UA");
 		case 10 :// Accepter sélection joueur2 'Entrée'
-			m_game.m_model.entities[1].get_automate().set_key(10);
+			m_game.m_model.set_key("ENTER");
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		System.out.println("Key released: " + e.getKeyChar() + " code=" + e.getKeyCode());
+		switch(e.getKeyCode()) {
+		case 81 :// gauche joueur1 'q'
+			m_game.m_model.suppr_key("q");
+		case 68 :// droite joueur1 'd'
+			m_game.m_model.suppr_key("d");
+		case 90 :// haut joueur1 'z'
+			m_game.m_model.suppr_key("z");
+		case 83 :// bas joueur1 's'
+			m_game.m_model.suppr_key("s");
+		case 32 :// Hit joueur1 ' '
+			m_game.m_model.suppr_key("SPACE");
+		case 65 :// Select joueur1 'a'
+			m_game.m_model.suppr_key("a");
+		case 69 :// Accepter sélection joueur1 'e'
+			m_game.m_model.suppr_key("e");
+			
+		case 37 :// gauche joueur2 'Flèche gauche'
+			m_game.m_model.suppr_key("FL");
+		case 39 :// droite joueur2 'Flèche droite'
+			m_game.m_model.suppr_key("FR");
+		case 38 :// haut joueur2 'Flèche haute'
+			m_game.m_model.suppr_key("FU");
+		case 40 :// bas joueur2 'Flèche basse'
+			m_game.m_model.suppr_key("FD");
+		case 517 :// Hit joueur2 '!'
+			m_game.m_model.suppr_key("IM");
+		case 0 :// Select joueur2 'ù'
+			m_game.m_model.suppr_key("UA");
+		case 10 :// Accepter sélection joueur2 'Entrée'
+			m_game.m_model.suppr_key("ENTER");
+		}
 	}
 
 	@Override

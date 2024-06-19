@@ -280,8 +280,8 @@ public abstract class Entity {
 		return cat;
 	}
 
-	protected abstract boolean eval_key(String touche) {
-		
+	public boolean eval_key(String touche) {
+		return model.get_list_touche().contains(touche);
 	}
 
 }

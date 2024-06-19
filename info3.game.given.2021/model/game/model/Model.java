@@ -50,6 +50,7 @@ public class Model {
 	public Map m_map;
 	private Absolute_Orientation m_orientation;
 	List<Entity> entities;
+	private List<String> list_touche;
 	Entity[] players;
 	IFactory factory;
 
@@ -111,6 +112,10 @@ public class Model {
 	public Entity get_entity(int distance, String t, float f, float g) {
 		Entity e = m_map.get_entity(distance, t, f, g);
 		return e;
+	}
+	
+	public List<String> get_list_touche () {
+		return this.list_touche;
 	}
 
 	public void add_entity(Entity e) {
@@ -334,6 +339,14 @@ public class Model {
 			System.out.print("Aucune Orientation !\n");
 			//throw new Exception();
 		}
+	}
+
+	public void set_key(String string) {
+		list_touche.add(string);
+	}
+
+	public void suppr_key(String string) {
+		list_touche.remove(string);
 	}
 
 }
