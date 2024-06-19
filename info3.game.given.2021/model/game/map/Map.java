@@ -141,7 +141,7 @@ public class Map {
 			break;
 		case ("Ocean"):
 			b = new Ocean(polygon, new Water());
-
+			break;
 		}
 
 		return b;
@@ -159,10 +159,12 @@ public class Map {
 
 		if (!polygons.isEmpty()) {
 
+			int i =0;
 			for (Polygon polygon : polygons) {
 				// polygon.cleanPolygon();
-
-				Biome b = randomBiome(polygon, seed);
+				
+				i+= 1000;
+				Biome b = randomBiome(polygon, seed + i);
 
 				b.generateBiome(seed);
 				biomes.add(b);
@@ -173,6 +175,7 @@ public class Map {
 			generateMap(seed + 1);
 		}
 
+		System.out.print(biomes);
 	}
 
 	private List<Position> addBorderPointsToAllPoints(List<Position> pointsInsideBorders) {
