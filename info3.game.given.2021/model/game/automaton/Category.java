@@ -25,8 +25,12 @@ public class Category {
 	
 	public String get_category(){
 		return this.cat;
-		
 	}
+	
+	public void set_category(String s) {
+		cat = s;
+	}
+	
 	public static boolean is_category(Object o) {
 		switch (o.toString()) {
 		case AUTRE:

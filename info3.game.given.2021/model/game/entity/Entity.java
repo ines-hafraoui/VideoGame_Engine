@@ -27,6 +27,7 @@ public abstract class Entity {
 	protected int team;
 	protected boolean injured;
 	protected int current_nbot;
+	protected Category cat;
 
 	protected String type;
 	protected int index_inventory;
@@ -93,6 +94,10 @@ public abstract class Entity {
 
 		return !set1.isEmpty();
 	}
+	
+	public int get_team() {
+		return team;
+	}
 
 	protected void newSpeed(int factor) {
 
@@ -151,9 +156,12 @@ public abstract class Entity {
 		return HP>0;
 	}
 	
-	public boolean eval_closest(Absolute_Orientation d, Category cat) {
-		return true;
-		
+	public boolean eval_closest(Absolute_Orientation d, Category cat, float portee) {
+		if (cat.toString() == "V") {
+			return true;
+		}
+		List<Entity> list_cat = model.list_cat(cat, team); 		//retourne tous les elements d'une categorie (meme cette entity si elle est dedans)
+		return model.eval_closest(list_cat, d, this, portee);
 	}
 	
 	public String get_type() {
@@ -268,6 +276,10 @@ public abstract class Entity {
 		if (aut != null) {
 			aut.step(this);
 		}
+	}
+
+	public Category get_category() {
+		return cat;
 	}
 
 }

@@ -10,6 +10,7 @@ public class Item extends Entity{
 	
 	public Item(Automate a, Model m,Position p, Absolute_Orientation o,String type, int team, int nb_bot) {
 		super(a,m,p,o,type, team,nb_bot);
+		this.cat.set_category("P");
 	}
 	
 	public Item(Model m,Position p, Absolute_Orientation o, String type, int team, int nb_bot) {
