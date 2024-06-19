@@ -39,10 +39,7 @@ public class MiniMap {
 	private void AffichageMiniMap(Graphics g) {
 		g.setColor(Color.GREEN);
         g.fill3DRect(minimapX, minimapY, minimapWidth, minimapHeight, true);
-        
-        System.out.println(minimapWidth);
-        System.out.println(" \n");
-        System.out.println(minimapHeight);
+      
         List<Biome> biomes = m_model.m_map.getBiome();
         for (Biome biome : biomes) {
         	if(biome instanceof Volcano) {
