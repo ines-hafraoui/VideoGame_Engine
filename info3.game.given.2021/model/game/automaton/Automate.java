@@ -9,14 +9,23 @@ public class Automate {
 
 	private List<State> states;
 	private List<State> currentStateList;
+	private String initial_state;
 	private Entity entity;
 
 	public Automate(Entity entity) {
 		states = new ArrayList<>();
 		currentStateList = new ArrayList<>();
-
 		this.entity = entity;
 	}
+
+
+	public Automate(String initial_state, List<State> states) {
+		this.states = states;
+		currentStateList = new ArrayList<>();
+		this.initial_state = initial_state;
+
+	}
+
 
 	public void add_state(State s) {
 		states.add(s);
@@ -34,12 +43,21 @@ public class Automate {
 		return currentStateList.remove(s);
 	}
 
+	public List<State> getcurrentstate() {
+		return currentStateList;
+	}
+
+	public boolean add_transition(State s1, String s2, Condition cond, List<Action> a) {
+		Transition t = new Transition(s2, cond, a);
+		return s1.add_transition(t);
+	}
+
 	public boolean blocked; // the entity will unblock the automaton once it's transition is over
 
 	public void step(Entity e) {
-		//to delete when view will be able to handle animations
+		// to delete when view will be able to handle animations
 		blocked = false;
-		
+
 		if (!blocked) {
 
 			List<State> todelete = new ArrayList<>();
@@ -50,12 +68,12 @@ public class Automate {
 					if (transition.c.eval(entity)) {
 						blocked = true;
 
-						for(Action a : transition.actionList) {
+						for (Action a : transition.actionList) {
 							a.exec(e);
 						}
-							
-						toadd.add(transition.cible);
-						todelete.add(state);
+						State s = this.getState(transition.cible);
+						toadd.add(s);
+						todelete.add(s);
 					}
 				}
 			}
@@ -68,6 +86,15 @@ public class Automate {
 			}
 
 		}
+	}
+
+	public State getState(String name) {
+		for (State s : this.states) {
+			if (s.getName().equals(name)) {
+				return s;
+			}
+		}
+		return null;
 	}
 
 }

@@ -1,21 +1,20 @@
 package game.automaton;
 
 import game.entity.Entity;
-import game.entity.Orientation;
+import game.entity.Absolute_Orientation;
 
 public class Turn implements Action{
+
+	Absolute_Orientation o; 
 	
-	Entity e;
-	Orientation o; 
-	
-	public Turn(Entity e, Orientation or) {
-		this.e = e;
+	public Turn(Absolute_Orientation or) {
 		o = or;
 	}
 	
 	@Override
 	public boolean exec(Entity e) {
-		return e.do_turn(o);
+		e.do_turn(o);
+		return true;
 	}	
 
 }

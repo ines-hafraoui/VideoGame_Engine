@@ -1,0 +1,11 @@
+
+Base_Jeu2(Beg){
+
+ * (Beg):
+ | True ? Move :(Deux)
+
+ * (Deux):
+ | True ? Move :(Beg)
+ 
+}
+

@@ -24,11 +24,15 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
+import game.entity.Entity;
 import game.model.Model;
+import game.model.Model.ModelListener;
 import info3.controller.CanvasListener;
 import info3.game.sound.RandomFileInputStream;
 import info3.game.view.GameCanvas;
@@ -49,7 +53,7 @@ public class Game {
 	}
 
 	JFrame m_frame;
-//	JLabel m_text;
+	JLabel m_text;
 	GameCanvas m_canvas;
 	CanvasListener m_listener;
 	View m_view;
@@ -59,9 +63,11 @@ public class Game {
 	Game() throws Exception {
 		// creating a model, that would be a model
 		// in an Model-View-Controller pattern (MVC)
-		Dimension d = new Dimension(1000, 1000);
-		m_model = new Model(new Grid(20, 20),d.width,d.height);
-		m_view=new View(m_model,d.width,d.height,2);
+		Dimension d = new Dimension(1800, 1000);
+		IFactory factory = new Game1Factory();
+		m_model = new Model(d.width, d.height, factory);
+		m_model.setListener(new SyncViewModel());
+
 		// creating a listener for all the events
 		// from the game canvas, that would be
 		// the controller in the MVC pattern
@@ -69,11 +75,12 @@ public class Game {
 		// creating the game canvas to render the game,
 		// that would be a part of the view in the MVC pattern
 		m_canvas = new GameCanvas(m_listener);
-
+		m_view = new View(m_model, factory, m_canvas.getMaximumSize());
+		
 		System.out.println("  - creating frame...");
 		m_frame = m_canvas.createFrame(d);
 		System.out.println("  - setting up the frame...");
-		
+
 		setupFrame();
 	}
 
@@ -163,7 +170,21 @@ public class Game {
 		g.fillRect(0, 0, width, height);
 
 		// paint
+		m_view.setDimension(width,height);
 		m_view.paint(g);
+	}
+
+	class SyncViewModel implements ModelListener {
+
+		@Override
+		public void addedEntity(Entity e) throws IOException {
+			m_view.newEntity(e);
+		}
+
+		@Override
+		public void removedEntity(Entity e) {
+			m_view.removeEntity(e);
+		}
 	}
 
 }

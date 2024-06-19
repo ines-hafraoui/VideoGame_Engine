@@ -20,27 +20,23 @@
  */
 package game.model;
 
-import java.awt.Graphics;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import game.automaton.Action;
+import game.entity.Entity;
 import game.automaton.Automate;
-import game.automaton.Condition;
-import game.automaton.Direction;
-import game.automaton.Move;
-import game.automaton.State;
-import game.automaton.Transition;
-import game.automaton.TrueFalse;
-import game.entity.Apple;
-import game.entity.Head;
-import game.entity.Orientation;
+import game.automaton.Category;
+import game.entity.Absolute_Orientation;
+import game.entity.Entity;
+import game.entity.EntityType;
+import game.entity.Player;
 import game.entity.Position;
-import game.entity.Snake;
-import info3.game.Grid;
-import info3.game.view.Avatar;
-import info3.game.view.View;
+import game.map.Map;
+import game.map.Polygon;
+import info3.game.IFactory;
+import gal.ast.export.*;
+import gal.demo.test.TestMain;
+
 
 /**
  * A simple class that holds the images of a sprite for an animated cowbow.
@@ -50,45 +46,56 @@ public class Model {
 
 	long m_imageElapsed;
 	int m_width, height;
-	private Grid m_grid;
-	private Orientation m_orientation;
 
-	public Model(Grid grid, int w, int h) throws IOException {
-		m_grid = grid;
-		m_orientation = new Orientation('H');
-		Head s_head = new Head(new Orientation('S'), this.get_grid(), new Position(0, 0));
-		Snake snake = new Snake(null, this.get_grid(), s_head);
-		Apple apple = new Apple(this.get_grid(), new Position(5, 5), null);
+	public Map m_map;
+	private Absolute_Orientation m_orientation;
+	List<Entity> entities;
+	Entity[] players;
+	IFactory factory;
 
-		// AUTOMATON
-		State s0 = new State();
-		State s1 = new State();
+	public static final int NB_BOT = 5;
 
-		Condition t = new TrueFalse(true);
+	public Model(int w, int h, IFactory f) throws IOException {
+		entities = new ArrayList<Entity>();
+		factory = f;
+		m_width = w;
+		height = h;
+		List<Position> poss = new ArrayList<Position>();
+		players = new Entity[1];
+		Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.WEST);
+		Entity e = factory.newEntity(this, new Position(500, 200),ao , EntityType.PLAYER, Entity.TEAM1);
+		List<Automate> fsm_list = (List<Automate>) TestMain.loadAutomata("/home/nada/Documents/INFO3/S2/Projet_Jeu/g3/info3.game.given.2021/gal/gal/automate.gal");
+		//e.set_automate(fsm_list.get(0));
+		players[0] = e;
+		//Entity e1 = factory.newEntity(this, new Position(900, 400),ao, EntityType.PLAYER, Entity.TEAM1);
+		//players[1] = e1;
+		Entity e2 = factory.newEntity(this, new Position(600, 200), ao, EntityType.FIREBALL, Entity.TEAM1);
+		entities.add(e2);
+		Entity e3 = factory.newEntity(this, new Position(200, 200), ao, EntityType.TEAMMATE, Entity.TEAM1);
+		e3.set_automate(fsm_list.get(0));
+		entities.add(e3);
+		Entity e4 = factory.newEntity(this, new Position(400, 400), ao, EntityType.BASE, Entity.TEAM1);
+		entities.add(e4);
+		Entity e5 = factory.newEntity(this, new Position(600, 600), ao, EntityType.ITEM, Entity.TEAM1);
+		entities.add(e5);
+		Position pos1 = new Position(0, 0);
+		Position pos2 = new Position(0, h);
+		Position pos3 = new Position(w, 0);
+		Position pos4 = new Position(w, h);
+		
+		poss.add(pos1);
+		poss.add(pos2);
+		poss.add(pos3);
+		poss.add(pos4);
 
-		List<Action> LA = new ArrayList<Action>();
-		LA.add(new Move(apple));
+		Polygon p = new Polygon(poss);
+		m_map = new Map(p,this);
+		m_map.generateMap(m_map.getSeed());
 
-		Transition t01 = new Transition(s1, t, LA);
-		Transition t10 = new Transition(s0, t, LA);
-
-		s0.add_transition(t01);
-		s1.add_transition(t10);
-
-		Automate a_aut = new Automate(apple);
-		a_aut.add_state(s0);
-		a_aut.add_state(s1);
-
-		a_aut.addCurrentState(s0);
-
-		apple.set_automate(a_aut);
-
-		get_grid().add_entity(snake);
-		get_grid().add_entity(apple);
 	}
 
-	public Grid get_grid() {
-		return m_grid;
+	public Map getMap() {
+		return m_map;
 	}
 
 	public void tick(long elapsed) {
@@ -97,16 +104,236 @@ public class Model {
 			m_imageElapsed = 0;
 		}
 
-		m_grid.tick(elapsed);
+		m_map.tick(elapsed);
 	}
 
-	public void paint(Graphics g, int width, int height) {
-		m_width = width;
-		System.out.println("orientation :" + m_orientation.orientation + "\n");
+
+	public Entity get_entity(int distance, String t, float f, float g) {
+		Entity e = m_map.get_entity(distance, t, f, g);
+		return e;
 	}
 
-	public Orientation getOrientation() {
-		return m_orientation;
+	public void add_entity(Entity e) {
+		entities.add(e);
+	}
+
+	public boolean inflict_hit(Absolute_Orientation o, int porte, String t, float currentx, float currenty) {
+		float newX = currentx; 
+		float newY = currenty;
+		
+		switch (o.get_abs_Orientation()) {
+		case "N" :
+			newY += porte;
+			break;
+		case "S" : 
+			newY -= porte;
+			break;
+		case "W" : 
+			newX -= porte;
+			break; 
+		case "E" : 
+			newX += porte;
+			break;
+		default : 
+			break;
+		}
+		
+		for (Entity entity : entities) {
+			if (entity.get_type().equals(t)) {
+				if (entity.get_x() == newX && entity.get_y() == newY) {
+					entity.get_injured();
+					return true;
+				}	
+			}
+		}
+		return false;
+	}
+
+	/*
+	 * method give the list of entity that are on the map
+	 */
+	public List<Entity> get_entities() {
+		return entities;
+	}
+
+	/*
+	 * method give the list of players in the world
+	 */
+	public Entity[] get_players() {
+		return players;
+	}
+
+	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String arrow, int team) {
+
+		return factory.newEntity(model, position, abs_or, arrow, team);
+	}
+
+	public interface ModelListener {
+		void addedEntity(Entity e) throws IOException;
+
+		void removedEntity(Entity e);
+	}
+
+	ModelListener m_ml;
+
+	public void setListener(ModelListener l) {
+		m_ml = l;
+	}
+
+	public int get_width() {
+		return m_width;
+	}
+
+	public int get_height() {
+		return height;
+	}
+
+	public List<Entity> list_cat(Category cat, int team) {
+		List<Entity> list = new ArrayList();
+		switch (cat.toString()) {
+		
+		
+		case "A":
+			for (Entity e : entities) {
+				if ( (e.get_team()!=team) && (e.get_team()!=0) && ( (e.get_type()!="FB") || (e.get_type()!="A") ) ) {
+					list.add(e);
+				}
+			}
+			break;
+		case "M":
+			for (Entity e : entities) {
+				if ( (e.get_team()!=team) && ( (e.get_type()!="FB") || (e.get_type()!="A") ) ) {
+					list.add(e);
+				}
+			}
+			break;
+		case "T":
+			for (Entity e : entities) {
+				if ( (e.get_team()==team) && (e.get_type()!="FB") && (e.get_type()!="A") ) {
+					list.add(e);
+				}
+			}
+			break;
+		case "@":
+			for (Entity e : entities) {
+				if ( (e.get_team()==team) && (e.get_type()=="J") ){
+					list.add(e);
+				}
+			}
+			break;
+		case "#":
+			for (Entity e : entities) {
+				if ( (e.get_team()!=team) && (e.get_type()=="J") ){
+					list.add(e);
+				}
+			}
+			break;
+		case "_":
+			for (Entity e : entities) {
+				list.add(e);
+			}
+			break;
+		default:
+			for (Entity e : entities) {
+				if (e.get_category().toString()==cat.toString()){
+					list.add(e);
+				}
+			}
+			break;			
+		}
+		return list;
+		
+	}
+
+	public boolean eval_closest(List<Entity> list_cat, Absolute_Orientation d, Entity entity, float portee) {
+		double p_x = entity.get_x();
+		double p_y = entity.get_y();
+		double closest_x=0;
+		double closest_y=0;
+		select_closest(list_cat,p_x,p_y,closest_x,closest_y);
+		double angle1=0,angle2=0;
+		eval_angle(d,angle1,angle2);
+		Polygon polygon = create_polygon_closest(p_x,p_y,portee,angle1,angle2);
+		Position closest = new Position((float)closest_x,(float)closest_y);
+		return polygon.containsPosition(closest);
+	}
+	
+	private void select_closest(List<Entity> list_cat, double p_x, double p_y, double closest_x, double closest_y) {
+		for (Entity e : list_cat) {
+			float tmp_x = e.get_x();
+			float tmp_y = e.get_y();
+			float min = Integer.MAX_VALUE;
+			float dist = distance(tmp_x,tmp_y,(float)p_x,(float)p_y);
+			if (dist < min) {		
+				closest_x = tmp_x;
+				closest_y = tmp_y;
+				min = dist;
+			}
+		}		
+	}
+
+	private float distance(float tmp_x, float tmp_y, float p_x, float p_y) {
+		Position p1 = new Position(p_x,p_y);
+		Position p2 = new Position(tmp_x,tmp_y);
+		return p1.distance(p2);
+	}
+
+	private Polygon create_polygon_closest(double p_x, double p_y, float portee, double angle1, double angle2) {
+		double pb_x = p_x + portee;
+		double pb_y = p_y;
+		double p1_x = (pb_x*Math.cos(angle1)) - (pb_y*Math.sin(angle1));
+		double p1_y = (pb_x*Math.sin(angle1)) + (pb_y*Math.cos(angle1));
+		double p2_x = (pb_x*Math.cos(angle2)) - (pb_y*Math.sin(angle2));
+		double p2_y = (pb_x*Math.sin(angle2)) + (pb_y*Math.cos(angle2));
+		Position p1 = new Position((float)p1_x,(float)p1_y);
+		Position p2 = new Position((float)p2_x,(float)p2_y);
+		Position p3 = new Position((float)p_x,(float)p_y);
+		List<Position> list_points = new ArrayList();
+		list_points.add(p1);
+		list_points.add(p2);
+		list_points.add(p3);
+		Polygon polygon = new Polygon(list_points);
+		return polygon;
+	}
+
+	public void eval_angle(Absolute_Orientation d, double angle1, double angle2) {
+		switch(d.toString()) {
+		case "E":
+			angle1 = 337.5;
+			angle2 = 22.5;
+			break;
+		case "SE":
+			angle1 = 22.5;
+			angle2 = 67.5;
+			break;
+		case "S":
+			angle1 = 67.5;
+			angle2 = 112.5;
+			break;
+		case "SW":
+			angle1 = 112.5;
+			angle2 = 157.5;
+			break;
+		case "W":
+			angle1 = 157.5;
+			angle2 = 202.5;
+			break;
+		case "NW":
+			angle1 = 202.5;
+			angle2 = 247.5;
+			break;
+		case "N":
+			angle1 = 247.5;
+			angle2 = 292.5;
+			break;
+		case "NE":
+			angle1 = 292.5;
+			angle2 = 337.5;
+			break;
+		default :
+			System.out.print("Aucune Orientation !\n");
+			//throw new Exception();
+		}
 	}
 
 }

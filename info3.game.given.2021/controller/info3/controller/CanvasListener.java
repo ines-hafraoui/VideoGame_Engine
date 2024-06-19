@@ -23,7 +23,10 @@ package info3.controller;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
+import game.entity.Absolute_Orientation;
+import game.entity.Entity;
 import info3.game.Game;
 import info3.game.view.GameCanvasListener;
 
@@ -36,51 +39,51 @@ public class CanvasListener implements GameCanvasListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("Mouse clicked: (" + e.getX() + "," + e.getY() + ")");
-		System.out.println("   modifiers=" + e.getModifiersEx());
-		System.out.println("   buttons=" + e.getButton());
+//		System.out.println("Mouse clicked: (" + e.getX() + "," + e.getY() + ")");
+//		System.out.println("   modifiers=" + e.getModifiersEx());
+//		System.out.println("   buttons=" + e.getButton());
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		System.out.println("Mouse pressed: (" + e.getX() + "," + e.getY() + ")");
-		System.out.println("   modifiers=" + e.getModifiersEx());
-		System.out.println("   buttons=" + e.getButton());
+//		System.out.println("Mouse pressed: (" + e.getX() + "," + e.getY() + ")");
+//		System.out.println("   modifiers=" + e.getModifiersEx());
+//		System.out.println("   buttons=" + e.getButton());
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		System.out.println("Mouse released: (" + e.getX() + "," + e.getY() + ")");
-		System.out.println("   modifiers=" + e.getModifiersEx());
-		System.out.println("   buttons=" + e.getButton());
+//		System.out.println("Mouse released: (" + e.getX() + "," + e.getY() + ")");
+//		System.out.println("   modifiers=" + e.getModifiersEx());
+//		System.out.println("   buttons=" + e.getButton());
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		System.out.println("Mouse entered: (" + e.getX() + "," + e.getY() + ")");
-		System.out.println("   modifiers=" + e.getModifiersEx());
-		System.out.println("   buttons=" + e.getButton());
+//		System.out.println("Mouse entered: (" + e.getX() + "," + e.getY() + ")");
+//		System.out.println("   modifiers=" + e.getModifiersEx());
+//		System.out.println("   buttons=" + e.getButton());
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		System.out.println("Mouse exited: (" + e.getX() + "," + e.getY() + ")");
-		System.out.println("   modifiers=" + e.getModifiersEx());
-		System.out.println("   buttons=" + e.getButton());
+//		System.out.println("Mouse exited: (" + e.getX() + "," + e.getY() + ")");
+//		System.out.println("   modifiers=" + e.getModifiersEx());
+//		System.out.println("   buttons=" + e.getButton());
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		System.out.println("Mouse dragged: (" + e.getX() + "," + e.getY() + ")");
-		System.out.println("   modifiers=" + e.getModifiersEx());
-		System.out.println("   buttons=" + e.getButton());
+//		System.out.println("Mouse dragged: (" + e.getX() + "," + e.getY() + ")");
+//		System.out.println("   modifiers=" + e.getModifiersEx());
+//		System.out.println("   buttons=" + e.getButton());
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		System.out.println("Mouse moved: (" + e.getX() + "," + e.getY() + ")");
-		System.out.println("   modifiers=" + e.getModifiersEx());
-		System.out.println("   buttons=" + e.getButton());
+//		System.out.println("Mouse moved: (" + e.getX() + "," + e.getY() + ")");
+//		System.out.println("   modifiers=" + e.getModifiersEx());
+//		System.out.println("   buttons=" + e.getButton());
 	}
 
 	@Override
