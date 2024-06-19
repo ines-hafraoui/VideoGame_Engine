@@ -214,10 +214,9 @@ public class Model {
 		for (Entity entity : entities) {
 			 if (isWithinHitbox(newX, newY, entity)) {
 		            entity.get_injured();
-		            return true;
 		        }
 		}
-		return false;
+		return true;
 	}
 
 	private boolean isWithinHitbox(float x, float y, Entity entity) {
