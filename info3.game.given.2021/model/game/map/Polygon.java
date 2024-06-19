@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.Stack;
 
 import game.entity.Position;
+import info3.game.view.View;
 
 public class Polygon {
 
@@ -184,4 +185,15 @@ public class Polygon {
         }
         return maxY;
     }
+
+	public Polygon scale(int scale) {
+		List<Position> new_vertices = new ArrayList<Position>() ;
+		for (int i = 0; i < vertices.size(); i++) {
+			Position pos = vertices.get(i);
+			int x = (int) (pos.getPositionX() * View.DISPLAYSCALE);
+			int y = (int) (pos.getPositionY() * View.DISPLAYSCALE);
+			new_vertices.add(new Position(x,y));
+		}
+		return new Polygon(new_vertices);
+	}
 }

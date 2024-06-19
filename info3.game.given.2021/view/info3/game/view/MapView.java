@@ -75,8 +75,8 @@ public class MapView {
 		for (int i = 0; i < m_ncols; i++) {
 			for (int j = 0; j < m_nrows; j++) {
 				BufferedImage img = m_bgimages[m_groundsetup[i * j + j]];
-				g.drawImage(img, j * (m_bgimages[0].getWidth() * View.DISPLAYSCALE) + x,
-						i * (m_bgimages[0].getHeight() * View.DISPLAYSCALE) + y, img.getWidth() * View.DISPLAYSCALE,
+				g.drawImage(img, i * (m_bgimages[0].getWidth() * View.DISPLAYSCALE) + x,
+						j * (m_bgimages[0].getHeight() * View.DISPLAYSCALE) + y, img.getWidth() * View.DISPLAYSCALE,
 						img.getHeight() * View.DISPLAYSCALE, null);
 			}
 		}
@@ -123,11 +123,11 @@ public class MapView {
 	 */
 	public void genDefaultGround() {
 		BufferedImage ref = m_bgimages[0];
-		m_nrows = m_view.m_mheight / (ref.getHeight() / 2 * View.DISPLAYSCALE);
-		m_ncols = m_view.m_mwidth / (ref.getWidth() / 2 * View.DISPLAYSCALE);
+		m_nrows = (m_view.m_mheight / ref.getHeight() * View.DISPLAYSCALE);
+		m_ncols = (m_view.m_mwidth / ref.getWidth() * View.DISPLAYSCALE);
 		m_groundsetup = new int[m_nrows * m_ncols];
-		for (int i = 0; i < m_nrows; i++) {
-			for (int j = 0; j < m_ncols; j++) {
+		for (int i = 0; i < m_ncols; i++) {
+			for (int j = 0; j < m_nrows; j++) {
 				m_groundsetup[i * j + j] = m_view.getRandomNumber(0, m_bgimages.length);
 			}
 		}

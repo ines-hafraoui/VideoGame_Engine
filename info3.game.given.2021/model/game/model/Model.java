@@ -57,7 +57,7 @@ public class Model {
 		List<Position> poss = new ArrayList<Position>();
 		players = new Entity[2];
 		Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.WEST);
-		Entity e = factory.newEntity(this, new Position(200, 200),ao , EntityType.PLAYER, Entity.TEAM1);
+		Entity e = factory.newEntity(this, new Position(1700, 900),ao , EntityType.PLAYER, Entity.TEAM1);
 		players[0] = e;
 		Entity e1 = factory.newEntity(this, new Position(900, 400),ao, EntityType.PLAYER, Entity.TEAM1);
 		players[1] = e1;
