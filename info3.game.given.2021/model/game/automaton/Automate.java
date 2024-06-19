@@ -18,20 +18,13 @@ public class Automate {
 		this.entity = entity;
 	}
 
-	public Automate(String initial_state) {
-		states = new ArrayList<>();
-		//states.add(initial_state);
-		currentStateList = new ArrayList<>();
-		this.initial_state = initial_state;
-		states.add(this.getState(initial_state));
 
-
-	}
 
 	public Automate(String initial_state, List<State> states) {
 		this.states = states;
 		currentStateList = new ArrayList<>();
 		this.initial_state = initial_state;
+		currentStateList.add(getState(this.initial_state));
 
 	}
 

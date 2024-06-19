@@ -1,4 +1,5 @@
 package gal.demo.test;
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import gal.ast.export.*;
@@ -24,7 +25,8 @@ public class TestMain {
 	  }
 
 	public static void main(String args[]) {
-		loadAutomata("/home/nada/Documents/INFO3/S2/Projet_Jeu/g3/info3.game.given.2021/gal/gal/automate.gal");
+		String path = new File("gal/gal/automate.gal").getAbsolutePath();
+		loadAutomata(path);
 		
 	}
 
