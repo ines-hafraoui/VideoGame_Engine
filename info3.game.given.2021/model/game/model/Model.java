@@ -20,6 +20,8 @@
  */
 package game.model;
 
+import java.util.HashMap;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,115 +54,85 @@ public class Model {
 
 	public Map m_map;
 	private Absolute_Orientation m_orientation;
-	List<Entity> entities;
-	List<Entity> Entities;
+	public java.util.Map<String, java.util.Map<String, Object>> entityConfigurations;
+	public List<Entity> entities;
 	IFactory factory;
-	public int nb_bot_init;
+	public static int nb_bot_init;
 	public int timer; 
 	public boolean cooperative;
 	public int viscosity;
+	public Parser configParse;
 
 	
-	public Model(int w, int h, ArrayList<Entity> entities, int nb_bot,int vis, int timer, boolean coop)throws IOException {
+	public Model(int w, int h, Parser parse)throws IOException {
 		
 		m_width = w;
 		height = h;
-		nb_bot_init = nb_bot;
-		viscosity = vis;
-		cooperative = coop;
-		nb_bot_init = nb_bot;
+		configParse = parse;
+		nb_bot_init = parse.nb_bot_init;
+		viscosity = parse.viscosity;
+		cooperative = parse.coop;
+		timer = parse.timer;
 		
-		
-		String galPath = new File("/gal/gal/player1.gal").getAbsolutePath();
-		Parser automateParse = new Parser(galPath);
-		Automate player1 = TestMain.loadAutomata(automateParse);
-		
-		galPath = new File("/gal/gal/player2.gal").getAbsolutePath();
-		automateParse = new Parser(galPath);
-		Automate player2 = TestMain.loadAutomata(automateParse);
-		
-		galPath = new File("/gal/gal/bot1.gal").getAbsolutePath();
-		automateParse = new Parser(galPath);
-		Automate bot1 = TestMain.loadAutomata(automateParse);
-		
-		galPath = new File("/gal/gal/bot2.gal").getAbsolutePath();
-		automateParse = new Parser(galPath);
-		Automate bot2 = TestMain.loadAutomata(automateParse);
-		
-		galPath = new File("/gal/gal/parasite.gal").getAbsolutePath();
-		automateParse = new Parser(galPath);
-		Automate parasite = TestMain.loadAutomata(automateParse);
-		
-		galPath = new File("/gal/gal/item.gal").getAbsolutePath();
-		automateParse = new Parser(galPath);
-		Automate item = TestMain.loadAutomata(automateParse);
-		
-		galPath = new File("/gal/gal/base1.gal").getAbsolutePath();
-		automateParse = new Parser(galPath);
-		Automate base1 = TestMain.loadAutomata(automateParse);
-		
-		galPath = new File("/gal/gal/base2.gal").getAbsolutePath();
-		automateParse = new Parser(galPath);
-		Automate base2 = TestMain.loadAutomata(automateParse);
-		
-		
-		List<Position> poss = new ArrayList<Position>();
-		Entities = new ArrayList<Entity>();
-		
-		for (Entity e : entities) {
-			e.set_model(this);
-			if (e instanceof Player) {
-				if (e.getView() == 1) e.set_automate(player1);
-				else e.set_automate(player2);
-			}else if (e instanceof Base) {
-				if (e.getView() == 1) e.set_automate(base1);
-				else e.set_automate(base2);
-			}else if (e instanceof Bot) {
-				if (e.getView() == 1) e.set_automate(base1);
-				else e.set_automate(base2);
-			}
-			
-			Entities.add(e);
-		}
-		
-		Position pos1 = new Position(0, 0);
-		Position pos2 = new Position(0, h);
-		Position pos3 = new Position(w, 0);
-		Position pos4 = new Position(w, h);
-		
-		poss.add(pos1);
-		poss.add(pos2);
-		poss.add(pos3);
-		poss.add(pos4);
-
-		Polygon p = new Polygon(poss);
-		m_map = new Map(p,this);
-		m_map.generateMap(m_map.getSeed());
-	}
-
-	public Model(int w, int h, IFactory f) throws IOException {
 		entities = new ArrayList<Entity>();
-		factory = f;
-		m_width = w;
-		height = h;
+		entityConfigurations = parse.entities;
+		
+		 for (java.util.Map.Entry<String, java.util.Map<String, Object>> entry : entityConfigurations.entrySet()) {
+	            String entityName = entry.getKey();
+	            java.util.Map<String, Object> properties = entry.getValue();
+
+	            // Extract common properties
+	            String direction = (String) properties.get("direction");
+	            Position pos = (Position) properties.get("position");
+	            int team = ((Number) properties.get("team")).intValue();
+	            int view = ((Number) properties.get("view")).intValue();
+	            boolean pickable = (Boolean) properties.get("pickable");
+	            String behaviour = (String) properties.get("behaviour");
+	            String sprite = (String) properties.get("sprite");
+	            
+	            Entity entity;
+	            switch (entityName) {
+	            case "Player1":
+	            case "Player2":
+	            	entity = new Player(pos, new Absolute_Orientation(direction), team, nb_bot_init, view, pickable);
+                    break;
+	            case "Bot1":
+	            case "Bot2":
+	            case "Parasite":
+	            	entity = new Bot(pos, new Absolute_Orientation(direction), team, 0, view, pickable);
+                    break;
+	            case "Base1":
+	            case "Base2":
+	            case "Base":
+	            	entity = new Base(pos, new Absolute_Orientation(direction), team, 0, view, pickable);
+                    break;
+	            case "Power":
+	            case "Capacity":
+	            case "Plant" : 
+	            	entity = new Item(pos, new Absolute_Orientation(direction), team, 0, view, pickable);
+                    break;
+                default : 
+                	entity = null;
+                	break;
+	            }
+	            
+	            if (entity != null) {
+	            	if (behaviour != null) {
+	            		String galPath = new File("/gal/gal/"+ behaviour).getAbsolutePath();
+		        		Parser automateParse = new Parser(galPath);
+		        		Automate automate = TestMain.loadAutomata(automateParse);
+		        		
+		        		entity.set_automate(automate);
+		        		entities.add(entity);
+	            	}
+	            	
+	            }
+		 }
+		
 		List<Position> poss = new ArrayList<Position>();
-		Players = new Entity[1];
-		Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.WEST);
-		Entity e = factory.newEntity(this, new Position(500, 200),ao , EntityType.PLAYER, Entity.TEAM1);
-		List<Automate> fsm_list = (List<Automate>) TestMain.loadAutomata("/home/nada/Documents/INFO3/S2/Projet_Jeu/g3/info3.game.given.2021/gal/gal/automate.gal");
-		//e.set_automate(fsm_list.get(0));
-		Players[0] = e;
-		//Entity e1 = factory.newEntity(this, new Position(900, 400),ao, EntityType.PLAYER, Entity.TEAM1);
-		//players[1] = e1;
-		Entity e2 = factory.newEntity(this, new Position(600, 200), ao, EntityType.FIREBALL, Entity.TEAM1);
-		entities.add(e2);
-		Entity e3 = factory.newEntity(this, new Position(200, 200), ao, EntityType.TEAMMATE, Entity.TEAM1);
-		e3.set_automate(fsm_list.get(0));
-		entities.add(e3);
-		Entity e4 = factory.newEntity(this, new Position(400, 400), ao, EntityType.BASE, Entity.TEAM1);
-		entities.add(e4);
-		Entity e5 = factory.newEntity(this, new Position(600, 600), ao, EntityType.ITEM, Entity.TEAM1);
-		entities.add(e5);
+		
+		
+		
 		Position pos1 = new Position(0, 0);
 		Position pos2 = new Position(0, h);
 		Position pos3 = new Position(w, 0);
@@ -174,7 +146,6 @@ public class Model {
 		Polygon p = new Polygon(poss);
 		m_map = new Map(p,this);
 		m_map.generateMap(m_map.getSeed());
-
 	}
 
 	public Map getMap() {
@@ -242,8 +213,8 @@ public class Model {
 	/*
 	 * method give the list of players in the world
 	 */
-	public Entity[] get_players() {
-		return Players;
+	public List<Entity> get_players() {
+		return entities;
 	}
 
 	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String arrow, int team) {

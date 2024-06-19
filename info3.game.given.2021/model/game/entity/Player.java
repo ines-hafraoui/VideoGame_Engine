@@ -74,7 +74,7 @@ public class Player extends Entity {
 	@Override
 	public Entity do_throw() {
 		state_action = ActionType.THROW;
-		int index = index_inventory%Model.NB_BOT;
+		int index = index_inventory%Model.nb_bot_init;
 		Automate a = inventory.remove(index);
 		Item new_item = new Item(a,model, position,abs_or, NOTEAM,0);
 		return new_item;
@@ -116,8 +116,4 @@ public class Player extends Entity {
 		newSpeed(factor);
 		return true;
 	}
-
-	
-	
-
 }

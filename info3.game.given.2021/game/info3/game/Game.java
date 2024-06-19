@@ -78,9 +78,8 @@ public class Game {
 		// Parse the config file
 		String parsePath = new File("/model/game.model/config1.json").getAbsolutePath();
 		Parser configParse = new Parser(parsePath);
-		entities = configParse.entities;
-		m_model = new Model(d.width, d.height, entities, configParse.nb_bot_init, configParse.viscosity, configParse.timer,
-				configParse.coop);
+		
+		m_model = new Model(d.width, d.height, configParse);
 		
 		m_model.setListener(new SyncViewModel());
 
