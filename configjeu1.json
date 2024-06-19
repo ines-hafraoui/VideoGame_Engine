@@ -29,7 +29,7 @@
     "Bot1":
     { "name" : "BOT1", 
       "view" : 1, 
-      "behaviour" : "bot.gal",
+      "behaviour" : "bot1.gal",
       "features" : "Bot.class",
       "sprite" : "bot.png",
       "pickable" : true,
@@ -40,7 +40,7 @@
     "Bot2":{
       "name" : "BOT2",
       "view" : 2,  
-      "behaviour" : "bot.gal",
+      "behaviour" : "bot1.gal",
       "features" : "Bot.class",
       "sprite" : "bot.png",
       "pickable" : true,
