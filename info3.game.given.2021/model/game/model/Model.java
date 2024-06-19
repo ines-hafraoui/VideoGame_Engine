@@ -33,6 +33,7 @@ import game.entity.Base;
 import game.entity.Bot;
 import game.entity.Entity;
 import game.entity.EntityType;
+import game.entity.HitBox;
 import game.entity.Item;
 import game.entity.Player;
 import game.entity.Position;
@@ -91,29 +92,30 @@ public class Model {
 	            boolean pickable = (Boolean) properties.get("pickable");
 	            String behaviour = (String) properties.get("behaviour");
 	            String sprite = (String) properties.get("sprite");
+	            HitBox hb = (HitBox) properties.get("hitbox");
 	            
 	            Entity entity;
 	            switch (entityName) {
 	            case "Player1":
 	            case "Player2":
-	            	entity = new Player(pos, new Absolute_Orientation(direction), team, nb_bot_init, view, pickable);
+	            	entity = new Player(this,pos, new Absolute_Orientation(direction), team, nb_bot_init, view, pickable,hb);
                     break;
 	            case "Bot1":
 	            case "Bot2":
 	            case "Parasite":
 	            case "Dasher":
 	            case "Arsher":
-	            	entity = new Bot(pos, new Absolute_Orientation(direction), team, 0, view, pickable);
+	            	entity = new Bot(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
                     break;
 	            case "Base1":
 	            case "Base2":
 	            case "Base":
-	            	entity = new Base(pos, new Absolute_Orientation(direction), team, 0, view, pickable);
+	            	entity = new Base(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
                     break;
 	            case "Power":
 	            case "Capacity":
 	            case "Plant" : 
-	            	entity = new Item(pos, new Absolute_Orientation(direction), team, 0, view, pickable);
+	            	entity = new Item(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
                     break;
                 default : 
                 	entity = null;

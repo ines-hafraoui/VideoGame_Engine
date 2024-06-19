@@ -17,6 +17,7 @@ import game.entity.Absolute_Orientation;
 import game.entity.Base;
 import game.entity.Bot;
 import game.entity.Entity;
+import game.entity.HitBox;
 import game.entity.Item;
 import game.entity.Player;
 import game.entity.Position;
@@ -65,7 +66,11 @@ public class Parser {
                         JSONArray positionArray = (JSONArray) entityKeyValue;
                         Position pos = new Position(((Number) positionArray.get(0)).floatValue(), ((Number) positionArray.get(1)).floatValue());
                         entityProperties.put(entityKeyStr, pos);
-                    } else {
+                    } else if ("hitbox".equals(entityKeyStr) && entityKeyValue instanceof JSONArray) {
+                        JSONArray hitBoxArray = (JSONArray) entityKeyValue;
+                        HitBox pos = new HitBox(((Number) hitBoxArray.get(0)).floatValue(), ((Number) hitBoxArray.get(1)).floatValue());
+                        entityProperties.put(entityKeyStr, pos);
+                    }else {
                         entityProperties.put(entityKeyStr, entityKeyValue);
                     }
                 }

@@ -16,15 +16,9 @@ public class Bot extends Entity{
 		acc_factor = 3;
 		type = "BO";
 	}
-	
-	public Bot(Model m,Position p, Absolute_Orientation o,int team, int nb_bot) {
-		super(m,p,o,team, nb_bot);
-		acc_factor = 3;
-		type = "BO";
-	}
 
-	public Bot(Position pos, Absolute_Orientation o, int team, int nb_bot,int view, Boolean pickable) {
-		super(pos,o,team, nb_bot, view, pickable);
+	public Bot(Model m,Position pos, Absolute_Orientation o, int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
+		super(m,pos,o,team, nb_bot, view, pickable,hb);
 		acc_factor = 3;
 		type = "BO";
 	}

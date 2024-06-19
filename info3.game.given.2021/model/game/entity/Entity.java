@@ -30,6 +30,7 @@ public abstract class Entity {
 	protected boolean pickable;
 	protected boolean selected;
 	protected int view;
+	protected HitBox hitBox;
 
 	protected String type;
 	protected int index_inventory;
@@ -65,22 +66,25 @@ public abstract class Entity {
 		current_nbot = nb_bot;
 		selected = false;
 	}
-
-	public Entity(Model m, Position p, Absolute_Orientation o, int team, int nb_bot) {
+	
+	public Entity(Model m, Position p, Absolute_Orientation o,int team, int nb_bot){
 		model = m;
 		position = p;
 		abs_or = o;
+		state_action = ActionType.IDLE;
 		HP = 100;
 		explode = false;
-		index_inventory = 0;
-		index_bot = 0;
+		index_inventory =0 ;
+		index_bot =0;
 		this.team = team;
 		injured = false;
 		current_nbot = nb_bot;
-		selected = false; 
+		selected = false;
 	}
 	
-	public Entity(Position p, Absolute_Orientation o, int team,int nb_bot, int view,boolean pickable) {
+	public Entity(Model m,Position p, Absolute_Orientation o, int team,int nb_bot, int view,boolean pickable,HitBox hb) {
+		hitBox = hb;
+		model = m;
 		position = p;
 		abs_or = o;
 		HP = 100;

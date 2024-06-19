@@ -12,14 +12,9 @@ public class Item extends Entity{
 		super(a,m,p,o,team,nb_bot);
 		type = "I";
 	}
-	
-	public Item(Model m,Position p, Absolute_Orientation o, int team, int nb_bot) {
-		super(m,p,o,team,nb_bot);
-		type = "I";
-	}
 
-	public Item(Position pos, Absolute_Orientation o,int team, int nb_bot,int view, Boolean pickable) {
-		super(pos,o,team,nb_bot, view, pickable);
+	public Item(Model m,Position pos, Absolute_Orientation o,int team, int nb_bot,int view, Boolean pickable,HitBox hb) {
+		super(m,pos,o,team,nb_bot, view, pickable,hb);
 		type = "I";
 	}
 

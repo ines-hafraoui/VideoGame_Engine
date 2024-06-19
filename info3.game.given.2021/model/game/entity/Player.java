@@ -17,17 +17,10 @@ public class Player extends Entity {
 		type = "P";
 	
 	}
-	
-	public Player(Model m,Position p, Absolute_Orientation o, int team, int nb_bot) {
-		super(m,p,o,team, nb_bot);
-		inventory = new ArrayList<Automate>();
-		bots = new ArrayList<Entity>();
-		type = "P";
-	}
 
 
-	public Player(Position pos, Absolute_Orientation o,int team, int nb_bot,int view, Boolean pickable) {
-		super(pos,o,team, nb_bot, view, pickable);
+	public Player(Model m,Position pos, Absolute_Orientation o,int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
+		super(m,pos,o,team, nb_bot, view, pickable,hb);
 		inventory = new ArrayList<Automate>();
 		type = "P";
 		bots = new ArrayList<Entity>();
