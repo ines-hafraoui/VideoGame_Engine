@@ -39,48 +39,33 @@ public class MapView {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		try {
 			m_textureimages = View.loadSprite("resources/MiniWorldSprites/Ground/Grass.png", 1, 5);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		/*Generates the default ground tiles*/
+
+		/* Generates the default ground tiles */
 		genDefaultGround();
 
-		/*Generates the different views of the display*/
+		/* Generates the different views of the display */
 		List<Biome> b = m_model.m_map.getBiome();
 		Iterator<Biome> iterator = b.iterator();
-		int i =0;
+		int i = 0;
 		while (iterator.hasNext()) {
 			Biome bio = iterator.next();
 			Polygon p = bio.getBorders();
-			
-			if(bio instanceof Volcano) {
-				squares.add(new Squares(p,m_textureimages[4]));
-			}else if(bio instanceof Ocean) {
-				squares.add(new Squares(p,m_textureimages[0]));
-			}else {
-				squares.add(new Squares(p,m_textureimages[1]));
-			}
-			
-		}
-	}
 
-	public void paint(Graphics g) {
-		// printing all the basic tiles to be optimized
-		for (int i = 0; i < m_ncols; i++) {
-			for (int j = 0; j < m_nrows; j++) {
-				BufferedImage img = m_bgimages[m_groundsetup[i * j + j]];
-				g.drawImage(img, j * (m_bgimages[0].getWidth() * View.DISPLAYSCALE),
-						i * (m_bgimages[0].getHeight() * View.DISPLAYSCALE), img.getWidth() * View.DISPLAYSCALE,
-						img.getHeight() * View.DISPLAYSCALE, null);
-			}
-		}
+			if (bio instanceof Volcano) {
+				squares.add(new Squares(p, m_textureimages[4]));
+			} else if (bio instanceof Ocean) {
+				squares.add(new Squares(p, m_textureimages[0]));
+			} else {
+				squares.add(new Squares(p, m_textureimages[1]));
 
-		for (Squares square : squares) {
-			square.paint(g);
+			}
+
 		}
 	}
 
@@ -90,14 +75,14 @@ public class MapView {
 		for (int i = 0; i < m_ncols; i++) {
 			for (int j = 0; j < m_nrows; j++) {
 				BufferedImage img = m_bgimages[m_groundsetup[i * j + j]];
-				g.drawImage(img, j * (m_bgimages[0].getWidth() * View.DISPLAYSCALE),
-						i * (m_bgimages[0].getHeight() * View.DISPLAYSCALE), img.getWidth() * View.DISPLAYSCALE,
+				g.drawImage(img, j * (m_bgimages[0].getWidth() * View.DISPLAYSCALE) + x,
+						i * (m_bgimages[0].getHeight() * View.DISPLAYSCALE) + y, img.getWidth() * View.DISPLAYSCALE,
 						img.getHeight() * View.DISPLAYSCALE, null);
 			}
 		}
 
 		for (Squares square : squares) {
-			square.paint(g);
+			square.paint(g, x, y);
 		}
 	}
 
@@ -133,7 +118,6 @@ public class MapView {
 		return tab_y;
 	}
 
-	
 	/*
 	 * Here we generate the default tiling of the ground for the entire world
 	 */

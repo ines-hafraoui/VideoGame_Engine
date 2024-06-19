@@ -75,7 +75,7 @@ public class Game {
 		// creating the game canvas to render the game,
 		// that would be a part of the view in the MVC pattern
 		m_canvas = new GameCanvas(m_listener);
-		m_view = new View(m_model, factory, m_canvas.getMaximumSize());
+		m_view = new View(m_model, factory,d);
 		
 		System.out.println("  - creating frame...");
 		m_frame = m_canvas.createFrame(d);
@@ -170,7 +170,7 @@ public class Game {
 		g.fillRect(0, 0, width, height);
 
 		// paint
-		m_view.setDimension(width,height);
+//		m_view.setDimension(width,height);
 		m_view.paint(g);
 	}
 

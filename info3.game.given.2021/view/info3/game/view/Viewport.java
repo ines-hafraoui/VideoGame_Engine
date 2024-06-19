@@ -18,9 +18,8 @@ import info3.game.avatar.Avatar;
  */
 public class Viewport extends Component {
 
-
 	private static final long serialVersionUID = 4264890697854297025L;
-	
+
 	Model m_model;
 	View m_parent;
 	IFactory m_f;
@@ -31,8 +30,11 @@ public class Viewport extends Component {
 	private MapView m_map;
 	int m_x, m_y;
 	Rectangle m_inWorldBounds;
-	Avatar m_player;	
-	
+	Avatar m_player;
+
+	int m_trx, m_try;
+	int m_oldpositionx, m_oldpositiony;
+
 	Viewport(Model model, List<Avatar> avatars, View parent, Dimension d, int x, int y, Avatar player, MapView m) {
 		m_parent = parent;
 		m_model = model;
@@ -43,11 +45,10 @@ public class Viewport extends Component {
 		m_x = x;
 		m_y = y;
 		m_player = player;
-		
-		//Creates bounds of how much of the world can be desplayed
-		int wx = ((int) player.m_entity.get_x())- (d.width/2);
-		int wy = ((int) player.m_entity.get_y()) - (d.height/2);
-		m_inWorldBounds = new Rectangle(wx,wy,d.width,d.height);
+		m_oldpositionx = (int) m_player.m_entity.get_x();
+		m_oldpositiony = (int) m_player.m_entity.get_y();
+		Caculatetranslation(m_oldpositionx, m_oldpositiony);
+		m_inWorldBounds = new Rectangle(m_trx, m_try, d.width, d.height);
 	}
 
 	void addDisplayedAvatar(Avatar avatar) {
@@ -61,31 +62,30 @@ public class Viewport extends Component {
 	void setDimension(Dimension d) {
 		m_d = d;
 	}
-	
+
+	void Caculatetranslation(int x, int y) {
+		// Creates bounds of how much of the world can be desplayed
+		m_trx = x * View.DISPLAYSCALE - (m_d.width / 2);
+		m_try = y * View.DISPLAYSCALE - (m_d.height / 2);
+	}
+
 	public void paint(Graphics g) {
+		int x = (int) m_player.m_entity.get_x();
+		int y = (int) m_player.m_entity.get_y();
+
+		if (x != m_oldpositionx || y != m_oldpositiony) {
+			Caculatetranslation(x, y);
+		}
+
 		Graphics mg = g.create(m_x, m_y, m_d.width, m_d.height);
-		int x = ((int) m_player.m_entity.get_x()) + m_player.m_images[0].getWidth()-100;
-	    int y = ((int) m_player.m_entity.get_y())  + m_player.m_images[0].getHeight() -200;
-//		mg.translate(x,y);
-		 // Create a polygon
-        Polygon polygon = new Polygon();
-       
-        int width = (int) m_player.m_entity.get_x()+100;
-        int height =  (int) m_player.m_entity.get_y()+200;
-        polygon.addPoint(x, y);
-        polygon.addPoint(width, y);
-        polygon.addPoint(width, height);
-        polygon.addPoint(x, height);
-        
-//		mg.setClip(polygon);
-		m_map.paint(mg,x,y);
-		
+		m_map.paint(mg, -m_trx, -m_try);
+
 		Iterator<Avatar> iter = m_avatars.iterator();
 		while (iter.hasNext()) {
 			Avatar a = iter.next();
-			a.paint(mg, m_x, m_y);
+			a.paint(mg, -m_trx, -m_try);
 		}
-		
-		m_player.paint(mg,  ((int) m_player.m_entity.get_x()), ((int) m_player.m_entity.get_y()));
+
+		m_player.paint(mg, m_d.width / 2, m_d.height / 2);
 	}
 }
