@@ -27,9 +27,31 @@
     "Parasite":{
       "name" : "PARASITE", 
       "view" : 0, 
-      "behaviour" : "parasite.gal",
+      "behaviour" : "bot2.gal",
       "features" : "Bot.class",
       "sprite" : "parasite.png",
+      "pickable" : false,
+      "direction":"W",
+      "position":[100,50],
+      "team":0
+    },
+     "Dasher":{
+      "name" : "DASHER", 
+      "view" : 0, 
+      "behaviour" : "dasher.gal",
+      "features" : "Bot.class",
+      "sprite" : "dasher.png",
+      "pickable" : false,
+      "direction":"W",
+      "position":[100,50],
+      "team":0
+    },
+     "Archer":{
+      "name" : "ARCHER", 
+      "view" : 0, 
+      "behaviour" : "arsher.gal",
+      "features" : "Bot.class",
+      "sprite" : "arsher.png",
       "pickable" : false,
       "direction":"W",
       "position":[100,50],
