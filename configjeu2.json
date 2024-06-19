@@ -46,7 +46,8 @@
       "position":[1,1],
       "team":0
     },
- { "name" : "PLANT", 
+    "Plant":{
+      "name" : "PLANT", 
       "behaviour" : "item.gal",
       "view" : 0, 
       "features" : "Plant.class",
