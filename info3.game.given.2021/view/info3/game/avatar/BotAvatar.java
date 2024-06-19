@@ -23,7 +23,7 @@ public class BotAvatar extends Avatar {
 	public void paint(Graphics g, int x, int y) {
 		BufferedImage img = m_images[m_imageIndex];
 		g.drawImage(img, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - (img.getWidth() * View.DISPLAYSCALE),
-				y + (int) m_entity.get_y() * View.DISPLAYSCALE - (img.getHeight() * View.DISPLAYSCALE),
+				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - (img.getHeight() * View.DISPLAYSCALE),
 				img.getWidth() * View.DISPLAYSCALE, img.getHeight() * View.DISPLAYSCALE, null);
 		m_hb.drawHealthBar(g, x + (int) m_entity.get_x(),
 				y + (int) m_entity.get_y() - (5 % img.getHeight() * View.DISPLAYSCALE),

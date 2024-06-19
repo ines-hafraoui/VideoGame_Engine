@@ -19,8 +19,8 @@ public class BaseAvatar extends Avatar {
 	@Override
 	public void paint(Graphics g, int x, int y) {
 		BufferedImage img = m_images[m_imageIndex];
-		g.drawImage(img, x + (int) m_entity.get_x() * View.DISPLAYSCALE - (img.getWidth() * View.DISPLAYSCALE),
-				y + (int) m_entity.get_y() - (img.getHeight() * View.DISPLAYSCALE * View.DISPLAYSCALE),
+		g.drawImage(img, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - (img.getWidth() * View.DISPLAYSCALE),
+				(y + (int) m_entity.get_y() * View.DISPLAYSCALE)- (img.getHeight() * View.DISPLAYSCALE),
 				img.getWidth() * View.DISPLAYSCALE, img.getHeight() * View.DISPLAYSCALE, null);
 	}
 }

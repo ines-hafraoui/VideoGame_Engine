@@ -24,7 +24,6 @@ public class Viewport extends Component {
 	View m_parent;
 	IFactory m_f;
 	InventoryMenu m_inventory;
-	MiniMap m_minimap;
 	List<Avatar> m_avatars;
 	Dimension m_d;
 	private MapView m_map;
