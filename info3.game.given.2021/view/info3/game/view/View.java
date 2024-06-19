@@ -234,5 +234,12 @@ public class View extends Container {
 	public int WorldToViewY(float y) {
 		return (int) (y * m_d.height / m_mheight);
 	}
+
+	public List<Avatar> getAvatars() {
+		return m_avatars;
+	}
 	
+	public List<Avatar> getPlayers() {
+		return m_players;
+	}
 }
