@@ -12,6 +12,7 @@
       "pickable": false, 
       "direction": "W",
       "position": [500,200],
+      "hitbox":[5,10],
       "team":1
 
     },
@@ -24,6 +25,7 @@
       "pickable": false ,
       "direction": "W",
       "position":[200,500],
+      "hitbox":[5,10],
       "team": 2
     },
     "Bot1":
@@ -35,6 +37,7 @@
       "pickable" : true,
       "direction":"W",
       "position":[400,200],
+      "hitbox":[2,5],
       "team":1
     },
     "Bot2":{
@@ -46,6 +49,7 @@
       "pickable" : true,
       "direction":"W",
       "position":[300,400],
+      "hitbox":[2,5],
       "team":2
     },
     "Power":{
@@ -68,6 +72,7 @@
       "pickable" : false,
       "direction":"W",
       "position":[600,200],
+      "hitbox":[10,10],
       "team":1
     },
     "Base2":{
@@ -79,6 +84,7 @@
       "pickable" : false,
       "direction":"W",
       "position":[100,400],
+      "hitbox":[10,10],
       "team":2
     }
 }
