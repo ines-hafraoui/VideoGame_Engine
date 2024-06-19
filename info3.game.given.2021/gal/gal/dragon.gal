@@ -1,0 +1,16 @@
+Dragon(beg){
+
+ * (beg): 
+ | not(Got(T)) ? Explode :(Mort)
+ | Cell(d,A,10) ? Turn(d) :(fight)
+ | True ? 25 % Turn(W) ; Move / 25 % Turn(E) ; Move / 25 % Turn(E) ; Move / 25 % Turn(S) ; Move :(beg)
+ 
+ * (fight):
+ | Cell(F,A,2) ? Hit(F,A,2) :(beg)
+ | not(Cell(F,A,2))? Egg(2) :(beg)
+
+ * (Mort):
+ | True ? :(Mort)
+
+}
+

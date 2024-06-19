@@ -77,6 +77,8 @@ public class Model {
 		entities = new ArrayList<Entity>();
 		entityConfigurations = parse.entities;
 		
+		// create all entities from the info that gave us the Parser
+		
 		 for (java.util.Map.Entry<String, java.util.Map<String, Object>> entry : entityConfigurations.entrySet()) {
 	            String entityName = entry.getKey();
 	            java.util.Map<String, Object> properties = entry.getValue();
@@ -130,8 +132,6 @@ public class Model {
 		 }
 		
 		List<Position> poss = new ArrayList<Position>();
-		
-		
 		
 		Position pos1 = new Position(0, 0);
 		Position pos2 = new Position(0, h);
