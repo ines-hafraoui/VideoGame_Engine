@@ -10,23 +10,26 @@ public class Player extends Entity {
 	
 	//add current number of bot field
 	
-	public Player(Automate a, Model m,Position p, Absolute_Orientation o, String type, int team, int nb_bot) {
-		super(a,m,p,o, type, team, nb_bot);
+	public Player(Automate a, Model m,Position p, Absolute_Orientation o, int team, int nb_bot) {
+		super(a,m,p,o, team, nb_bot);
 		inventory = new ArrayList<Automate>();
 		bots = new ArrayList<Entity>();
+		type = "P";
 	
 	}
 	
-	public Player(Model m,Position p, Absolute_Orientation o, String type, int team, int nb_bot) {
-		super(m,p,o,type, team, nb_bot);
+	public Player(Model m,Position p, Absolute_Orientation o, int team, int nb_bot) {
+		super(m,p,o,team, nb_bot);
 		inventory = new ArrayList<Automate>();
 		bots = new ArrayList<Entity>();
+		type = "P";
 	}
 
 
-	public Player(Position pos, Absolute_Orientation o, String type, int team, int nb_bot,int view, Boolean pickable) {
-		super(pos,o,type, team, nb_bot, view, pickable);
+	public Player(Position pos, Absolute_Orientation o,int team, int nb_bot,int view, Boolean pickable) {
+		super(pos,o,team, nb_bot, view, pickable);
 		inventory = new ArrayList<Automate>();
+		type = "P";
 		bots = new ArrayList<Entity>();
 	}
 
@@ -73,7 +76,7 @@ public class Player extends Entity {
 		state_action = ActionType.THROW;
 		int index = index_inventory%Model.NB_BOT;
 		Automate a = inventory.remove(index);
-		Item new_item = new Item(a,model, position,abs_or,"I", NOTEAM,0);
+		Item new_item = new Item(a,model, position,abs_or, NOTEAM,0);
 		return new_item;
 	}
 

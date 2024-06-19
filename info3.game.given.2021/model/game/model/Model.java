@@ -20,6 +20,7 @@
  */
 package game.model;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,39 +53,74 @@ public class Model {
 	public Map m_map;
 	private Absolute_Orientation m_orientation;
 	List<Entity> entities;
-	Entity[] Players;
+	List<Entity> Entities;
 	IFactory factory;
+	public int nb_bot_init;
+	public int timer; 
+	public boolean cooperative;
+	public int viscosity;
 
-	public static final int NB_BOT = 5;
 	
-	public Model(int w, int h, ArrayList<Player> players, ArrayList<Bot> bots,
-			ArrayList<Base> base, ArrayList<Item> i)throws IOException {
+	public Model(int w, int h, ArrayList<Entity> entities, int nb_bot,int vis, int timer, boolean coop)throws IOException {
 		
 		m_width = w;
 		height = h;
+		nb_bot_init = nb_bot;
+		viscosity = vis;
+		cooperative = coop;
+		nb_bot_init = nb_bot;
+		
+		
+		String galPath = new File("/gal/gal/player1.gal").getAbsolutePath();
+		Parser automateParse = new Parser(galPath);
+		Automate player1 = TestMain.loadAutomata(automateParse);
+		
+		galPath = new File("/gal/gal/player2.gal").getAbsolutePath();
+		automateParse = new Parser(galPath);
+		Automate player2 = TestMain.loadAutomata(automateParse);
+		
+		galPath = new File("/gal/gal/bot1.gal").getAbsolutePath();
+		automateParse = new Parser(galPath);
+		Automate bot1 = TestMain.loadAutomata(automateParse);
+		
+		galPath = new File("/gal/gal/bot2.gal").getAbsolutePath();
+		automateParse = new Parser(galPath);
+		Automate bot2 = TestMain.loadAutomata(automateParse);
+		
+		galPath = new File("/gal/gal/parasite.gal").getAbsolutePath();
+		automateParse = new Parser(galPath);
+		Automate parasite = TestMain.loadAutomata(automateParse);
+		
+		galPath = new File("/gal/gal/item.gal").getAbsolutePath();
+		automateParse = new Parser(galPath);
+		Automate item = TestMain.loadAutomata(automateParse);
+		
+		galPath = new File("/gal/gal/base1.gal").getAbsolutePath();
+		automateParse = new Parser(galPath);
+		Automate base1 = TestMain.loadAutomata(automateParse);
+		
+		galPath = new File("/gal/gal/base2.gal").getAbsolutePath();
+		automateParse = new Parser(galPath);
+		Automate base2 = TestMain.loadAutomata(automateParse);
+		
+		
 		List<Position> poss = new ArrayList<Position>();
-		Players = new Entity[players.size()];
-		List<Automate> fsm_list = (List<Automate>) TestMain.loadAutomata("/home/nada/Documents/INFO3/S2/Projet_Jeu/g3/info3.game.given.2021/gal/gal/automate.gal");
-
-		// chopper les automates avant de faire ca
-		for (Player p : players) {
-			p.set_model(this);
-			entities.add(p);
-		}
+		Entities = new ArrayList<Entity>();
 		
-		for (Bot b : bots) {
-			b.set_model(this);
-			entities.add(b);
-		}
-		
-		for (Item item : i) {
-			item.set_model(this);
-			entities.add(item);
-		}
-		
-		for (Base b : base) {
-			b.set_model(this);
-			entities.add(b);
+		for (Entity e : entities) {
+			e.set_model(this);
+			if (e instanceof Player) {
+				if (e.getView() == 1) e.set_automate(player1);
+				else e.set_automate(player2);
+			}else if (e instanceof Base) {
+				if (e.getView() == 1) e.set_automate(base1);
+				else e.set_automate(base2);
+			}else if (e instanceof Bot) {
+				if (e.getView() == 1) e.set_automate(base1);
+				else e.set_automate(base2);
+			}
+			
+			Entities.add(e);
 		}
 		
 		Position pos1 = new Position(0, 0);

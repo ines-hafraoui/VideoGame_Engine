@@ -26,6 +26,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -38,10 +39,12 @@ import game.entity.Item;
 import game.entity.Player;
 import game.model.Model;
 import game.model.Model.ModelListener;
+import game.model.Parser;
 import info3.controller.CanvasListener;
 import info3.game.sound.RandomFileInputStream;
 import info3.game.view.GameCanvas;
 import info3.game.view.View;
+
 
 public class Game {
 
@@ -64,23 +67,21 @@ public class Game {
 	View m_view;
 	public Model m_model;
 	Sound m_music;
-	ArrayList<Player> players = new ArrayList<Player>();
-	ArrayList<Bot> bots = new ArrayList<Bot>();
-	ArrayList<Base> bases = new ArrayList<Base>();
-	ArrayList<Item> items = new ArrayList<Item>();
+	ArrayList<Entity> entities = new ArrayList<Entity>();
 
 	Game() throws Exception {
 		// creating a model, that would be a model
 		// in an Model-View-Controller pattern (MVC)
 		Dimension d = new Dimension(1800, 1000);
 		IFactory factory = new Game1Factory();
-		Parser configParse = new Parser("");
-		players = configParse.players;
-		bots = configParse.bots;
-		bases = configParse.bases;
-		items = configParse.items;
-		m_model = new Model(d.width, d.height, players, bots, bases, items);
-		//m_model = new Model(d.width, d.height, factory);
+		
+		// Parse the config file
+		String parsePath = new File("/model/game.model/config1.json").getAbsolutePath();
+		Parser configParse = new Parser(parsePath);
+		entities = configParse.entities;
+		m_model = new Model(d.width, d.height, entities, configParse.nb_bot_init, configParse.viscosity, configParse.timer,
+				configParse.coop);
+		
 		m_model.setListener(new SyncViewModel());
 
 		// creating a listener for all the events

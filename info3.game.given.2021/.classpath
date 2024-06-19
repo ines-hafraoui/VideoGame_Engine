@@ -11,7 +11,6 @@
 	<classpathentry kind="src" path="game"/>
 	<classpathentry kind="src" path="controller"/>
 	<classpathentry kind="src" path="gal"/>
-	<classpathentry kind="src" path="JSONParser"/>
 	<classpathentry kind="lib" path="/home/nada/Downloads/json-20240303.jar"/>
 	<classpathentry kind="lib" path="/home/nada/Downloads/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>

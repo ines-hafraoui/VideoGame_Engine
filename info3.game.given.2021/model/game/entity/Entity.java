@@ -28,6 +28,7 @@ public abstract class Entity {
 	protected boolean injured;
 	protected int current_nbot;
 	protected boolean pickable;
+	protected boolean selected;
 	protected int view;
 
 	protected String type;
@@ -49,7 +50,7 @@ public abstract class Entity {
 	public final static int NOTEAM = 0;
 	
 
-	public Entity(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team, int nb_bot) {
+	public Entity(Automate a, Model m, Position p, Absolute_Orientation o, int team, int nb_bot) {
 		aut = a;
 		model = m;
 		position = p;
@@ -59,13 +60,13 @@ public abstract class Entity {
 		explode = false;
 		index_inventory =0 ;
 		index_bot =0;
-		this.type = type;
 		this.team = team;
 		injured = false;
 		current_nbot = nb_bot;
+		selected = false;
 	}
 
-	public Entity(Model m, Position p, Absolute_Orientation o, String type, int team, int nb_bot) {
+	public Entity(Model m, Position p, Absolute_Orientation o, int team, int nb_bot) {
 		model = m;
 		position = p;
 		abs_or = o;
@@ -73,25 +74,25 @@ public abstract class Entity {
 		explode = false;
 		index_inventory = 0;
 		index_bot = 0;
-		this.type = type;
 		this.team = team;
 		injured = false;
 		current_nbot = nb_bot;
+		selected = false; 
 	}
 	
-	public Entity(Position p, Absolute_Orientation o, String type, int team, int nb_bot, int view,boolean pickable) {
+	public Entity(Position p, Absolute_Orientation o, int team,int nb_bot, int view,boolean pickable) {
 		position = p;
 		abs_or = o;
 		HP = 100;
 		explode = false;
 		index_inventory = 0;
 		index_bot = 0;
-		this.type = type;
 		this.team = team;
 		injured = false;
 		current_nbot = nb_bot;
 		this.view = view;
 		this.pickable = pickable;
+		selected = false;
 	}
 	
 
@@ -181,6 +182,10 @@ public abstract class Entity {
 
 	public float get_y() {
 		return position.getPositionY();
+	}
+	
+	public int getView() {
+		return view;
 	}
 
 	public void reduce_HP(int r) {

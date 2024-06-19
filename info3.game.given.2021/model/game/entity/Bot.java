@@ -11,19 +11,22 @@ public class Bot extends Entity{
 	
 	private int acc_factor;
 	
-	public Bot(Automate a, Model m,Position p, Absolute_Orientation o,String type, int team, int nb_bot) {
-		super(a,m,p,o,type, team, nb_bot);
+	public Bot(Automate a, Model m,Position p, Absolute_Orientation o,int team, int nb_bot) {
+		super(a,m,p,o,team, nb_bot);
 		acc_factor = 3;
+		type = "BO";
 	}
 	
-	public Bot(Model m,Position p, Absolute_Orientation o, String type, int team, int nb_bot) {
-		super(m,p,o,type, team, nb_bot);
+	public Bot(Model m,Position p, Absolute_Orientation o,int team, int nb_bot) {
+		super(m,p,o,team, nb_bot);
 		acc_factor = 3;
+		type = "BO";
 	}
 
-	public Bot(Position pos, Absolute_Orientation o, String type, int team, int nb_bot,int view, Boolean pickable) {
-		super(pos,o,type, team, nb_bot, view, pickable);
+	public Bot(Position pos, Absolute_Orientation o, int team, int nb_bot,int view, Boolean pickable) {
+		super(pos,o,team, nb_bot, view, pickable);
 		acc_factor = 3;
+		type = "BO";
 	}
 
 	@Override
