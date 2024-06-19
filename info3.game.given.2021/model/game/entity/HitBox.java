@@ -11,19 +11,19 @@ public class HitBox {
     }
     
 
-    public float getWidth() {
+    public float getHbWidth() {
         return x; 
     }
 
-    public float getHeight() {
+    public float getHbHeight() {
         return y; 
     }
 
-    public void setWidth(float x) {
+    public void setHbWidth(float x) {
         this.x = x; 
     }
 
-    public void setHeight(float y) {
+    public void setHbHeight(float y) {
         this.y = y; 
     }
     

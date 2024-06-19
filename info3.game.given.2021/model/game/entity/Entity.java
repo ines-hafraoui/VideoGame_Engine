@@ -191,6 +191,10 @@ public abstract class Entity {
 	public int getView() {
 		return view;
 	}
+	
+	public HitBox getHitBox() {
+		return hitBox;
+	}
 
 	public void reduce_HP(int r) {
 		HP = HP - r;

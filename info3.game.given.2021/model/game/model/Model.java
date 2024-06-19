@@ -191,19 +191,43 @@ public class Model {
 		case "E" : 
 			newX += porte;
 			break;
+		case "NE" : 
+			newY += porte;
+			newX += porte;
+			break;
+		case "NW" : 
+			newY += porte;
+			newX -= porte;
+			break;
+		case "SE" : 
+			newY -= porte;
+			newX += porte;
+			break;
+		case "SW" : 
+			newY -= porte;
+			newX -= porte;
+			break;
 		default : 
 			break;
 		}
 		
 		for (Entity entity : entities) {
-			if (entity.get_type().equals(t)) {
-				if (entity.get_x() == newX && entity.get_y() == newY) {
-					entity.get_injured();
-					return true;
-				}	
-			}
+			 if (isWithinHitbox(newX, newY, entity)) {
+		            entity.get_injured();
+		            return true;
+		        }
 		}
 		return false;
+	}
+
+	private boolean isWithinHitbox(float x, float y, Entity entity) {
+		float entityX = entity.get_x();
+	    float entityY = entity.get_y();
+	    float hitboxWidth = entity.getHitBox().getHbWidth(); // Largeur de la hitbox
+	    float hitboxHeight = entity.getHitBox().getHbHeight(); // Hauteur de la hitbox
+
+	    return (x >= entityX && x <= entityX + hitboxWidth) && 
+	           (y >= entityY && y <= entityY + hitboxHeight);
 	}
 
 	/*
