@@ -92,11 +92,15 @@ public class Map {
 		float maxZ = Float.NEGATIVE_INFINITY;
 
 		Biome biome = getBiome(position);
-		for (Plot plot : biome.getPlots()) {
 
-			if (plot.getBorders().containsPosition(position) && plot.getPosition().getPositionZ() >= maxZ) {
-				highestPlot = plot;
-				maxZ = plot.getPosition().getPositionZ();
+		if (biome != null) {
+
+			for (Plot plot : biome.getPlots()) {
+
+				if (plot.getBorders().containsPosition(position) && plot.getPosition().getPositionZ() >= maxZ) {
+					highestPlot = plot;
+					maxZ = plot.getPosition().getPositionZ();
+				}
 			}
 		}
 
@@ -135,13 +139,14 @@ public class Map {
 		case ("Volcano"):
 			b = new Volcano(polygon, new Lava());
 			break;
-		case ("Ocean") :
+		case ("Ocean"):
 			b = new Ocean(polygon, new Water());
-			
+
 		}
-		
+
 		return b;
 	}
+
 	public void generateMap(int seed) {
 
 		List<Position> pointsInsideBorders = borders.generatePointsInsidePolygon(seed);
@@ -158,7 +163,6 @@ public class Map {
 				// polygon.cleanPolygon();
 
 				Biome b = randomBiome(polygon, seed);
-				
 
 				b.generateBiome(seed);
 				biomes.add(b);

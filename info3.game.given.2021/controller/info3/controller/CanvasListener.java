@@ -88,12 +88,12 @@ public class CanvasListener implements GameCanvasListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		System.out.println("Key typed: " + e.getKeyChar() + " code=" + e.getKeyCode());
+		//System.out.println("Key typed: " + e.getKeyChar() + " code=" + e.getKeyCode());
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println("Key pressed: " + e.getKeyChar() + " code=" + e.getKeyCode());
+		//System.out.println("Key pressed: " + e.getKeyChar() + " code=" + e.getKeyCode());
 		if (e.getKeyCode() == 37) {// gauche
 			Entity[] es =m_game.m_model.get_players();
 			Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.WEST);
@@ -123,7 +123,7 @@ public class CanvasListener implements GameCanvasListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		System.out.println("Key released: " + e.getKeyChar() + " code=" + e.getKeyCode());
+		//System.out.println("Key released: " + e.getKeyChar() + " code=" + e.getKeyCode());
 	}
 
 	@Override

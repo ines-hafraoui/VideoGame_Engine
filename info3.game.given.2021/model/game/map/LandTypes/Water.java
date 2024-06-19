@@ -4,6 +4,6 @@ import game.map.LandType;
 
 public class Water extends LandType {
 	public Water() {
-		super("Water", 1);
+		super("Water", 0.7F);
 	}
 }
