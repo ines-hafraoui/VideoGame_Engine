@@ -125,12 +125,10 @@ public abstract class Entity {
 	}
 
 	protected Position newPosition() {
-
 		
 		newSpeed(1);
 		int angle = speed_vct_abs_or.get_abs_Angle();
 	    double angleRad = Math.toRadians(angle); 
-
 		
 		
 		float X = (float) (Math.cos(angleRad) * acc_speed);
@@ -280,6 +278,10 @@ public abstract class Entity {
 
 	public Category get_category() {
 		return cat;
+	}
+
+	protected abstract boolean eval_key(String touche) {
+		
 	}
 
 }
