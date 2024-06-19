@@ -2,13 +2,13 @@ package info3.game.view;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.Iterator;
+
 import java.util.List;
 
 import game.entity.Position;
 import game.map.Biome;
 import game.map.Polygon;
+import game.map.Biomes.*;
 import game.model.Model;
 
 public class MiniMap {
@@ -23,8 +23,8 @@ public class MiniMap {
 		m_model = model;
 		minimapWidth = v.m_d.width/10;
 		minimapHeight = v.m_d.height/10;
-		minimapX = 400;
-		minimapY = 400;
+		minimapX = 500;
+		minimapY = 500;
 	}
 
 	public void paint(Graphics g) {
@@ -37,9 +37,15 @@ public class MiniMap {
 //		g.setColor(Color.CYAN);
 //        g.fill3DRect(minimapX, minimapY, minimapWidth, minimapHeight, true);
 
-        g.setColor(Color.GREEN);
         List<Biome> biomes = m_model.m_map.getBiome();
         for (Biome biome : biomes) {
+        	if(biome instanceof Volcano) {
+        		g.setColor(Color.YELLOW);
+        	}else if(biome instanceof Ocean) {
+        		g.setColor(Color.BLUE);
+        	}else {
+        		g.setColor(Color.GREEN);
+        	}
             Polygon polygon = biome.getBorders();
             List<Position> vertices = polygon.getVertices();
             int[] xPoints = new int[vertices.size()];
