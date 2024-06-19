@@ -1,20 +1,19 @@
 package game.entity;
 
-import java.util.ArrayList;
 
 import game.automaton.Automate;
-import game.automaton.Category;
 import game.model.Model;
 
 public class Item extends Entity{
 	
+	Automate stock;
+	
 	public Item(Automate a, Model m,Position p, Absolute_Orientation o,String type, int team) {
 		super(a,m,p,o,type, team);
+		
+		aut = a;
 	}
 	
-	public Item(Model m,Position p, Absolute_Orientation o, String type, int team) {
-		super(m,p,o,type, team);
-	}
 
 	@Override
 	public boolean do_move() {

@@ -18,7 +18,6 @@ public abstract class Entity {
 	protected Absolute_Orientation abs_or;
 	protected List<State> state; //To remove or to modify
 	protected int HP;
-	protected List<Automate> inventory;
 	protected List<Entity> bots;
 	protected boolean explode;
 	protected int team;
