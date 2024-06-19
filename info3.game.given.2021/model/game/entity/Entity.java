@@ -150,7 +150,7 @@ public abstract class Entity {
 		return model.getMap().eval_rel(dir, position.getPositionX(), position.getPositionY(), porte);
 	}
 	
-	public boolean eval_got(Category cat) {
+	public boolean eval_got() {
 		return HP>0;
 	}
 	
@@ -225,7 +225,7 @@ public abstract class Entity {
 	 * take smth from the floor at a certain distance from itself
 	 * param : t for the type of Entity
 	 */
-	public abstract boolean do_pick(String t,int distance);
+	public abstract boolean do_pick(int distance);
 
 	// throw what is in its bag at the index. It will create an entity that will be
 	// paint by the view
@@ -254,6 +254,8 @@ public abstract class Entity {
 
 	public void set_automate(Automate a) {
 		aut = a;
+		a.set_entity(this);
+		
 	}
 
 	public void get_state_action(String action) {

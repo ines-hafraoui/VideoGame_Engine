@@ -23,6 +23,7 @@ public class Automate {
 		this.states = states;
 		currentStateList = new ArrayList<>();
 		this.initial_state = initial_state;
+		currentStateList.add(getState(this.initial_state));
 
 	}
 
@@ -73,7 +74,7 @@ public class Automate {
 						}
 						State s = this.getState(transition.cible);
 						toadd.add(s);
-						todelete.add(s);
+						todelete.add(state);
 					}
 				}
 			}
@@ -96,5 +97,14 @@ public class Automate {
 		}
 		return null;
 	}
+	
+	public void set_entity(Entity e) {
+		this.entity = e;
+	}
+	public Entity get_entity() {
+		return this.entity;
+	}
+	
+	
 
 }

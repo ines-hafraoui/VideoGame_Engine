@@ -23,7 +23,7 @@ public class Hit implements Action {
 
 	@Override
 	public boolean exec(Entity e) {
-		return e.do_hit(or, type, porte);
+		return e.do_hit(e.get_abs_or(), type, porte);
 	}
 	
 

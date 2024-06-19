@@ -10,14 +10,14 @@ import game.automaton.Automate;
 
 public class TestMain {
 	
-	 public static List<Automate> loadAutomata(String filename) {
-	    List<Automate> fsm_list;
+	 public static Automate loadAutomata(String filename) {
+	    Automate fsm_list;
 	    
 	    try {
 	      AST ast = (AST) Parser.from_file(filename);
 	      //Testvisitor v = new Testvisitor();
 	      Visitor v = new Visitor();
-	      fsm_list =  (List<Automate>) ast.accept(v);
+	      fsm_list = (Automate) ast.accept(v);
 	      return fsm_list;
 	    } catch (Exception ex) {
 	      return null;
@@ -25,7 +25,7 @@ public class TestMain {
 	  }
 
 	public static void main(String args[]) {
-		String path = new File("gal/gal/automate.gal").getAbsolutePath();
+		String path = new File("gal/gal/test.gal").getAbsolutePath();
 		
 		loadAutomata(path);
 		
