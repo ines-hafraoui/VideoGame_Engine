@@ -9,15 +9,15 @@ import game.automaton.Automate;
 
 public class TestMain {
 	
-	 public static List<Automate> loadAutomata(String filename) {
-	    List<Automate> fsm_list;
+	 public static Automate loadAutomata(String filename) {
+	    Automate fsm;
 	    
 	    try {
 	      AST ast = (AST) Parser.from_file(filename);
 	      //Testvisitor v = new Testvisitor();
 	      Visitor v = new Visitor();
-	      fsm_list =  (List<Automate>) ast.accept(v);
-	      return fsm_list;
+	      fsm =  (Automate) ast.accept(v);
+	      return fsm;
 	    } catch (Exception ex) {
 	      return null;
 	    }

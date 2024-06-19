@@ -76,7 +76,7 @@ public class Game {
 		IFactory factory = new Game1Factory();
 		
 		// Parse the config file
-		String parsePath = new File("/model/game.model/config1.json").getAbsolutePath();
+		String parsePath = new File("model/configjeu1.json").getAbsolutePath();
 		Parser configParse = new Parser(parsePath);
 		
 		m_model = new Model(d.width, d.height, configParse);

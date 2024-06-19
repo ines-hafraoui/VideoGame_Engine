@@ -45,7 +45,7 @@ public class Parser {
 		
 		coop = (Boolean) jo.get("cooperative");
 		timer = ((Number) jo.get("timer")).intValue();
-		viscosity = ((Number) jo.get("voscosity")).intValue();
+		viscosity = ((Number) jo.get("viscosity")).intValue();
 		nb_bot_init =((Number) jo.get("nb_bot_init")).intValue();
 		
 		
@@ -115,5 +115,6 @@ public class Parser {
 //			}	
 //		}	
 	}
-
 }
+
+

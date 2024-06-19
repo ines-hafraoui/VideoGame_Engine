@@ -101,6 +101,8 @@ public class Model {
 	            case "Bot1":
 	            case "Bot2":
 	            case "Parasite":
+	            case "Dasher":
+	            case "Arsher":
 	            	entity = new Bot(pos, new Absolute_Orientation(direction), team, 0, view, pickable);
                     break;
 	            case "Base1":
@@ -121,8 +123,7 @@ public class Model {
 	            if (entity != null) {
 	            	if (behaviour != null) {
 	            		String galPath = new File("/gal/gal/"+ behaviour).getAbsolutePath();
-		        		Parser automateParse = new Parser(galPath);
-		        		Automate automate = TestMain.loadAutomata(automateParse);
+		        		Automate automate = TestMain.loadAutomata(galPath);
 		        		
 		        		entity.set_automate(automate);
 		        		entities.add(entity);
