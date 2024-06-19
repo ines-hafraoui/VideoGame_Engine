@@ -1,0 +1,95 @@
+{
+  "cooperative" : true,
+  "timer" : 120, 
+  "viscosity" : 0,
+  "Player1":{ 
+      "name" : "PLAYER 1",
+      "view" : 1,   
+      "behaviour": "player1.gal",
+      "features" : "Player.class",
+      "sprite" : "teammate1.png",
+      "pickable": false,
+      "direction":"W",
+      "position":[500,200],
+      "team":1
+    },
+    "Player2":{
+      "name" : "PLAYER 2",
+      "view" : 2,   
+      "behaviour": "player2.gal",
+      "features" : "Player.class",
+      "sprite" : "teammate2.png",
+      "pickable": false ,
+      "direction":"W",
+      "position":[550,200],
+      "team":2
+    },
+    "Parasite":{
+      "name" : "PARASITE", 
+      "view" : 0, 
+      "behaviour" : "bot2.gal",
+      "features" : "Bot.class",
+      "sprite" : "parasite.png",
+      "pickable" : false,
+      "direction":"W",
+      "position":[100,50],
+      "team":0
+    },
+     "Dasher":{
+      "name" : "DASHER", 
+      "view" : 0, 
+      "behaviour" : "dasher.gal",
+      "features" : "Bot.class",
+      "sprite" : "dasher.png",
+      "pickable" : false,
+      "direction":"W",
+      "position":[100,50],
+      "team":0
+    },
+     "Archer":{
+      "name" : "ARCHER", 
+      "view" : 0, 
+      "behaviour" : "arsher.gal",
+      "features" : "Bot.class",
+      "sprite" : "arsher.png",
+      "pickable" : false,
+      "direction":"W",
+      "position":[100,50],
+      "team":0
+    },
+    "Capacity":{
+      "name" : "CAPACITY", 
+      "view" : 0, 
+      "behaviour" : "item.gal",
+      "features" : "Capacity.class",
+      "sprite" : "capacity.png",
+      "pickable" : true,
+      "direction":"W",
+      "position":[1,1],
+      "team":0
+    },
+    "Plant":{
+      "name" : "PLANT", 
+      "behaviour" : "item.gal",
+      "view" : 0, 
+      "features" : "Plant.class",
+      "sprite" : "plant.png",
+      "pickable" : true,
+      "direction":"W",
+      "position":[50,100],
+      "team":0
+    },
+    "Base":{
+      "name" : "BASE", 
+      "view" : 0,  
+      "behaviour" : "base2.gal",
+      "features" : "Base.class",
+      "sprite" : "base.png",
+      "pickable" : false,
+      "direction":"W",
+      "position":[300,300],
+      "team":0
+    }
+  
+}
+
