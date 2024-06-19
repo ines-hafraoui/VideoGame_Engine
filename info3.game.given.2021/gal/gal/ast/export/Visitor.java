@@ -399,7 +399,7 @@ public class Visitor implements IVisitor {
 	@Override
 	public Object build(AST ast, List<Object> automata) {
 		System.out.println("succeed");
-		return automata; // parse only the first automaton of gal file
+		return automata.get(0); // parse only the first automaton of gal file
 	}
 
 }
