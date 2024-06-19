@@ -11,6 +11,7 @@
       "pickable": false,
       "direction":"W",
       "position":[500,200],
+      "hitbox":[5,10],
       "team":1
     },
     "Player2":{
@@ -22,6 +23,7 @@
       "pickable": false ,
       "direction":"W",
       "position":[550,200],
+      "hitbox":[5,10],
       "team":2
     },
     "Parasite":{
@@ -33,6 +35,7 @@
       "pickable" : false,
       "direction":"W",
       "position":[100,50],
+      "hitbox":[2,5],
       "team":0
     },
      "Dasher":{
@@ -44,6 +47,7 @@
       "pickable" : false,
       "direction":"W",
       "position":[100,50],
+      "hitbox":[2,5],
       "team":0
     },
      "Archer":{
@@ -55,6 +59,7 @@
       "pickable" : false,
       "direction":"W",
       "position":[100,50],
+      "hitbox":[2,5],
       "team":0
     },
     "Capacity":{
@@ -77,6 +82,7 @@
       "pickable" : true,
       "direction":"W",
       "position":[50,100],
+      "hitbox":[2,5],
       "team":0
     },
     "Base":{
@@ -88,6 +94,7 @@
       "pickable" : false,
       "direction":"W",
       "position":[300,300],
+      "hitbox":[10,10],
       "team":0
     }
   
