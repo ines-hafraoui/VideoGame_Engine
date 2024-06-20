@@ -212,4 +212,9 @@ public class View extends Container {
 	public List<Avatar> getPlayers() {
 		return m_players;
 	}
+
+	public void newEntity(Entity e) {
+		// TODO Auto-generated method stub
+		
+	}
 }
