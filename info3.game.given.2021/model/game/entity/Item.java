@@ -14,6 +14,9 @@ public class Item extends Entity{
 		aut = a;
 	}
 	
+	public Item(Model m,Position p, Absolute_Orientation o, String type, int team) {
+		super(m,p,o,type, team);
+	}
 
 	@Override
 	public boolean do_move() {
