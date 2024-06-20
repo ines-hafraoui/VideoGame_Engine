@@ -1,12 +1,11 @@
-Dasher(beg){
+Dasher(Beg){
 
- * (beg): 
- | not(Got(T)) ? Explode :(Mort)
- | Cell(d,A,10) ? Turn(d) ; Wizz(10) :(beg)
- | True ? 25 % Turn(W) ; Move / 25 % Turn(E) ; Move / 25 % Turn(E) ; Move / 25 % Turn(S) ; Move :(beg)																										
+ * (Beg): 
+ | !(Got(T)) ? Explode :(Mort)
+ | Cell(d,A,10) ? Turn(d) ; Wizz(10) :(Beg)
+ | True ? 25 % Turn(W) ; Move / 25 % Turn(E) ; Move / 25 % Turn(E) ; Move / 25 % Turn(S) ; Move :(Beg)																										
 
  * (Mort):
  | True ? :(Mort)
 
 }
-
