@@ -76,7 +76,8 @@ public class Model {
 		
 		entities = new ArrayList<Entity>();
 		entityConfigurations = parse.entities;
-		players = new Entity[2];
+		players = new Entity[parse.nb_player];
+		 int i = 0;
 		
 		// create all entities from the info that gave us the Parser
 		
@@ -121,7 +122,7 @@ public class Model {
                 	entity = null;
                 	break;
 	            }
-	            int i = 0;
+	           
 	            if (entity != null) {
 	            	if (behaviour != null) {
 //	            		String galPath = new File("gal/gal/"+ behaviour).getAbsolutePath();

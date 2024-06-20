@@ -37,6 +37,7 @@ public class Parser {
 	public int timer; 
 	public int viscosity;
 	public int nb_bot_init;
+	public int nb_player;
 	public boolean coop;
 	
 	public Parser(String Filename) throws FileNotFoundException, IOException, ParseException{
@@ -48,6 +49,7 @@ public class Parser {
 		timer = ((Number) jo.get("timer")).intValue();
 		viscosity = ((Number) jo.get("viscosity")).intValue();
 		nb_bot_init =((Number) jo.get("nb_bot_init")).intValue();
+		nb_player =((Number) jo.get("nb_player")).intValue();
 		
 		
 		for (Object key : jo.keySet()) {
