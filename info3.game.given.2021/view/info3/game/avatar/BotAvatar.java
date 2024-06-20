@@ -16,11 +16,17 @@ public class BotAvatar extends Avatar {
 	public BotAvatar(Entity e, View v) throws IOException {
 		super(e, v);
 		m_imageIndex = 0;
-		m_images = View.loadSprite("resources/MiniWorldSprites/Characters/Monsters/Demons/PurpleDemon.png", 8, 6);
+		if (e.get_team() == 1) {
+			m_images = View.loadSprite("resources/MiniWorldSprites/Characters/Monsters/Demons/RedDemon.png", 8, 6);
+		} else
+			m_images = View.loadSprite("resources/MiniWorldSprites/Characters/Monsters/Demons/PurpleDemon.png", 8, 6);
 	}
 
 	@Override
 	public void paint(Graphics g, int x, int y) {
+		if (m_entity.get_state_action() != null) {
+			a_state = StateToString(m_entity.get_state_action());
+		}
 		BufferedImage img = m_images[m_imageIndex];
 		g.drawImage(img, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - (img.getWidth() * View.DISPLAYSCALE),
 				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - (img.getHeight() * View.DISPLAYSCALE),

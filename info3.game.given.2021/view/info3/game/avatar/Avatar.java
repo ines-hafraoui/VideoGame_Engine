@@ -13,13 +13,13 @@ import game.entity.Entity;
 import info3.game.view.View;
 
 public abstract class Avatar {
-	
+
 	public static final int HIT = 1;
 	public static final int WALK = 2;
 	public static final int IDLE = 3;
-	
+
 	protected int a_state;
-	
+
 	public Entity m_entity;
 	protected View m_view;
 	public BufferedImage[] m_images;
@@ -32,7 +32,7 @@ public abstract class Avatar {
 		m_valid = true;
 		a_state = IDLE;
 	}
-	
+
 	public Avatar(Entity e, View v) {
 		m_view = v;
 		m_entity = e;
@@ -44,4 +44,13 @@ public abstract class Avatar {
 
 	public abstract void paint(Graphics g, int x, int y);
 
+	public int StateToString(String s) {
+		if (s.equals("HIT")) {
+			return HIT;
+		} else if (s.equals("WALK")) {
+			return WALK;
+		} else {
+			return IDLE;
+		}
+	}
 }

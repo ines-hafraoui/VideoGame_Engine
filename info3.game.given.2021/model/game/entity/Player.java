@@ -110,4 +110,8 @@ public class Player extends Entity {
 		newSpeed(factor);
 		return true;
 	}
+	
+	public List<Item> get_inventory(){
+		return inventory;
+	}
 }

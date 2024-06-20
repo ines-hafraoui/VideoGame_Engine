@@ -299,8 +299,12 @@ public abstract class Entity {
 		model = m ;
 	}
 
-	public void get_state_action(String action) {
+	public void set_state_action(String action) {
 		state_action = action;
+	}
+	
+	public String get_state_action() {
+		return state_action;
 	}
 
 	/*
