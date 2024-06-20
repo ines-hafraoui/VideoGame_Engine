@@ -23,6 +23,7 @@ public abstract class Entity {
 	protected int team;
 	protected boolean injured;
 	protected int current_nbot;
+	protected int nb_bot_init;
 	protected Category cat;
 	protected boolean pickable;
 	protected boolean selected;
@@ -61,6 +62,7 @@ public abstract class Entity {
 		this.team = team;
 		injured = false;
 		current_nbot = nb_bot;
+		nb_bot_init = nb_bot;
 		selected = false;
 	}
 	
@@ -76,6 +78,7 @@ public abstract class Entity {
 		this.team = team;
 		injured = false;
 		current_nbot = nb_bot;
+		nb_bot_init = nb_bot;
 		selected = false;
 	}
 	
@@ -91,6 +94,7 @@ public abstract class Entity {
 		this.team = team;
 		injured = false;
 		current_nbot = nb_bot;
+		nb_bot_init = nb_bot;
 		this.view = view;
 		this.pickable = pickable;
 		selected = false;
@@ -213,6 +217,10 @@ public abstract class Entity {
 	
 	public HitBox getHitBox() {
 		return hitBox;
+	}
+	
+	public int getCurrentNbot() {
+		return current_nbot;
 	}
 
 	public void reduce_HP(int r) {
