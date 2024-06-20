@@ -124,9 +124,9 @@ public class Model {
 	            int i = 0;
 	            if (entity != null) {
 	            	if (behaviour != null) {
-	            		String galPath = new File("/gal/gal/"+ behaviour).getAbsolutePath();
-		        		Automate automate = TestMain.loadAutomata(galPath);
-		        		entity.set_automate(automate);
+//	            		String galPath = new File("gal/gal/"+ behaviour).getAbsolutePath();
+//		        		Automate automate = TestMain.loadAutomata(galPath);
+//		        		entity.set_automate(automate);
 		        		if (entity instanceof Player) {
 		        			players[i] = entity;
 		        			i++;

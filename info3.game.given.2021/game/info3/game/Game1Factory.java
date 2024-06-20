@@ -8,6 +8,7 @@ import game.entity.Arrow;
 import game.entity.Base;
 import game.entity.Bot;
 import game.entity.Entity;
+import game.entity.EntityType;
 import game.entity.Fire_Ball;
 import game.entity.Item;
 import game.entity.Player;
@@ -24,27 +25,20 @@ import info3.game.view.View;
 
 public class Game1Factory implements IFactory {
 
-	public static final String BASE = "BA";
-	public static final String ITEM = "I";
-	public static final String BOT = "BO";
-	public static final String PLAYER = "J";
-	public static final String FIREBALL = "FB";
-	public static final String ARROW = "F";
-
 	@Override
 	public Entity newEntity(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team) {
 		switch (type) {
-		case BASE:
+		case EntityType.BASE:
 			return new Base(a, m, p, o,team,0);
-		case ITEM:
+		case EntityType.ITEM:
 			return new Item(a, m, p, o, team,0);
-		case BOT:
+		case EntityType.TEAMMATE:
 			return new Bot(a, m, p, o,team,0);
-		case PLAYER:
+		case EntityType.PLAYER:
 			return new Player(a, m, p, o,team,Model.nb_bot_init);
-		case FIREBALL:
+		case EntityType.FIREBALL:
 			return new Fire_Ball(a,m, p, o, team,0);
-		case ARROW:
+		case EntityType.ARROW:
 			return new Arrow(a,m, p, o, type, team,0);
 
 		default:
@@ -55,17 +49,17 @@ public class Game1Factory implements IFactory {
 	@Override
 	public Entity newEntity(Model m, Position p, Absolute_Orientation o, String type, int team) {
 		switch (type) {
-		case BASE:
+		case EntityType.BASE:
 			return new Base(m, p, o, type, team,0);
-		case ITEM:
+		case EntityType.ITEM:
 			return new Item(m, p, o, type, team,0);
-		case BOT:
+		case EntityType.TEAMMATE:
 			return new Bot(m, p, o, type, team,0);
-		case PLAYER:
+		case EntityType.PLAYER:
 			return new Player(m, p, o, type, team,Model.NB_BOT);
-		case FIREBALL:
+		case EntityType.FIREBALL:
 			return new Fire_Ball(m, p, o, type, team,0);
-		case ARROW:
+		case EntityType.ARROW:
 			return new Arrow(m, p, o, type, team,0);
 		default:
 			return null;
@@ -75,17 +69,17 @@ public class Game1Factory implements IFactory {
 	@Override
 	public Avatar newAvatar(Entity e, View v) throws IOException {
 		switch (e.get_type()) {
-		case BASE:
+		case EntityType.BASE:
 			return new BaseAvatar(e, v);
-		case ITEM:
+		case EntityType.ITEM:
 			return new ItemAvatar(e, v);
-		case BOT:
+		case EntityType.TEAMMATE:
 			return new BotAvatar(e, v);
-		case PLAYER:
+		case EntityType.PLAYER:
 			return new PlayerAvatar(e, v);
-		case FIREBALL:
+		case EntityType.FIREBALL:
 			return new FireBallAvatar(e, v);
-		case ARROW:
+		case EntityType.ARROW:
 			return new ArrowAvatar(e, v);
 		default:
 			return null;
