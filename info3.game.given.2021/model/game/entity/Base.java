@@ -12,13 +12,13 @@ public class Base extends Entity {
 	public Base(Automate a, Model m,Position p, Absolute_Orientation o , int team, int nb_bot) {
 		super(a,m,p,o,team, nb_bot);
 		picked = false;
-		type = "BA";
+		type = EntityType.BASE;
 	}
 
 	public Base(Model m,Position pos, Absolute_Orientation o, int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
 		super(m,pos,o,team,nb_bot,view,pickable,hb);
 		picked = false;
-		type = "BA";
+		type = EntityType.BASE;
 	}
 
 	@Override
@@ -31,6 +31,7 @@ public class Base extends Entity {
 			Automate a = model.automates.get(EntityType.TEAMMATE);
 			e.set_automate(a);
 			model.get_entities().add(e);
+			state_action = ActionType.EGG;
 			break;
 		default : 
 			break;

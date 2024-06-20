@@ -39,13 +39,20 @@ public class Player extends Entity {
 	@Override
 	public void do_egg(int cat) {
 		
+		Entity e;
+		Automate a;
+		
 		switch(cat) {
 		case FLECHE : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.ARROW,team, 0,0,false,new HitBox(2,2)));
+			e = model.newEntity(model,position,abs_or, EntityType.ARROW,team, 0,0,false,new HitBox(2,2));
+			a = model.automates.get(EntityType.ARROW);
+			e.set_automate(a);
 			state_action = ActionType.EGG;
 			break;
 		case BOULE_FEU : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.FIREBALL,team, 0,0,false,new HitBox(2,2)));
+			e = model.newEntity(model,position,abs_or, EntityType.FIREBALL,team, 0,0,false,new HitBox(2,2));
+			a = model.automates.get(EntityType.FIREBALL);
+			e.set_automate(a);
 			state_action = ActionType.EGG;
 			break;
 		default : 
@@ -60,32 +67,31 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public boolean do_pick(int distance) {
-		if (nb_item_inventory < this.nb_bot_init) {
-			state_action = ActionType.PICK;
-			Item item = (Item) model.get_entity(distance,"I",this.get_x(), this.get_y());	// ask the model to give it the entity (whiwh is an item) at the distance d
-			inventory[nb_item_inventory] = item;
-			return true;
-		}
+	public boolean do_pick(int distance) {	// a refaire
+//		if (nb_item_inventory < this.nb_bot_init) {
+//			state_action = ActionType.PICK;
+//			Item item = (Item) model.get_entity(distance,"I",this.get_x(), this.get_y());	// ask the model to give it the entity (whiwh is an item) at the distance d
+//			inventory[nb_item_inventory] = item;
+//			return true;
+//		}
 		return false;
 	}
 
 	@Override
 	public Entity do_throw() {
-
-		state_action = ActionType.THROW;
 		
-		 if (nb_item_inventory != 0) {
-		        int index = index_inventory % Model.nb_bot_init;
-		        Item item = inventory[index];
-		        // Déplacer les éléments suivants vers la gauche
-		        for (int i = index; i < nb_item_inventory - 1; i++) {
-		            inventory[i] = inventory[i + 1];
-		        }
-		        inventory[nb_item_inventory - 1] = null; // Mettre le dernier élément à null
-		        nb_item_inventory--; // Décrémenter le nombre d'items
-		        return item;
-		 }
+	 if (nb_item_inventory != 0) {
+		state_action = ActionType.THROW;
+        int index = index_inventory % Model.nb_bot_init;
+        Item item = inventory[index];
+        // move element to the left
+        for (int i = index; i < nb_item_inventory - 1; i++) {
+            inventory[i] = inventory[i + 1];
+        }
+        inventory[nb_item_inventory - 1] = null; // last element is null
+        nb_item_inventory--;
+        return item;
+	 }
 		 return null;
 	}
 
@@ -107,12 +113,12 @@ public class Player extends Entity {
 			Entity e = bots.get(index_bot);
 			Item item = inventory[index_inventory];
 			if (item != null) {
-	            // Déplacer les éléments suivants vers la gauche
+	            // move element to the left
 	            for (int i = index_inventory; i < nb_item_inventory - 1; i++) {
 	                inventory[i] = inventory[i + 1];
 	            }
-	            inventory[nb_item_inventory - 1] = null; // Mettre le dernier élément à null
-	            nb_item_inventory--; // Décrémenter le nombre d'items
+	            inventory[nb_item_inventory - 1] = null; // last element is null
+	            nb_item_inventory--;
 	            
 	            e.aut = item.get_automate();
 	            index_inventory = 0;

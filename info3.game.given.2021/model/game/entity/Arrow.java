@@ -8,12 +8,17 @@ public class Arrow extends Entity{
 	
 	public Arrow(Automate a,Model m, Position p, Absolute_Orientation o,int team, int nb_bot) {
 		super(m,p,o,team, nb_bot);
-		type = "A";
+		type = EntityType.ARROW;
 	}
 	
 	public Arrow(Model m, Position p, Absolute_Orientation o,int team, int nb_bot) {
 		super(m,p,o,team,nb_bot);
-		type = "A";
+		type = EntityType.ARROW;
+	}
+	
+	public Arrow(Model m,Position p, Absolute_Orientation o, int team,int nb_bot, int view,boolean pickable,HitBox hb) {
+		super(m,p,o,team,nb_bot,view,pickable,hb);
+		type = EntityType.FIREBALL;
 	}
 
 	@Override

@@ -9,12 +9,12 @@ public class Item extends Entity{
 	public Item(Automate a, Model m,Position p, Absolute_Orientation o,int team, int nb_bot) {
 		super(a,m,p,o,team,nb_bot);
 		this.cat.set_category("P");
-		type = "I";
+		type = EntityType.ITEM;
 	}
 
 	public Item(Model m,Position pos, Absolute_Orientation o,int team, int nb_bot,int view, Boolean pickable,HitBox hb) {
 		super(m,pos,o,team,nb_bot, view, pickable,hb);
-		type = "I";
+		type = EntityType.ITEM;
 	}
 
 	@Override
