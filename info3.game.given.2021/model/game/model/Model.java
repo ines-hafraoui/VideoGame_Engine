@@ -100,6 +100,7 @@ public class Model {
 			case "Player2":
 				entity = new Player(this, pos, new Absolute_Orientation(direction), team, nb_bot_init, view, pickable,
 						hb);
+				((Player)entity).get_inventory().add(new Item(this, pos, new Absolute_Orientation(direction), team, 0, view, pickable, hb));
 				break;
 			case "Bot1":
 			case "Bot2":

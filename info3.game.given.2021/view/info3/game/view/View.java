@@ -82,13 +82,14 @@ public class View extends Container {
 		//Asks the minimap to display itself within the overall view so that it is shared by both players
 		m_minimap.paint(mg);
 		long timer=m_model.get_timer();
+		Affichage_timer(mg, timer);
 	}
 	
 	public void Affichage_timer(Graphics mg,long timer) {
-		mg.setColor(Color.RED); // Set the color for the timer text
+		mg.setColor(Color.WHITE); // Set the color for the timer text
 	    mg.setFont(getFont());
 	    String timeString = formatTime(timer); // Format timer into a readable format
-	    mg.drawString(timeString, 400, 400);
+	    mg.drawString(timeString, m_d.width/2, 400);
 	}
 	
 	private String formatTime(long millis) {
