@@ -1,0 +1,11 @@
+Item(beg){	
+
+ * (beg):
+ | not(Got(T)) ? Explode :(picked)
+ | True ? Wait :(beg)
+ 
+ * (picked):
+ | True ? :(picked)
+
+}
+

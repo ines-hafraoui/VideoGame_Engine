@@ -9,14 +9,16 @@ public class Base extends Entity {
 	
 	boolean picked; 
 	
-	public Base(Automate a, Model m,Position p, Absolute_Orientation o , String type, int team, int nb_bot) {
-		super(a,m,p,o,type, team, nb_bot);
+	public Base(Automate a, Model m,Position p, Absolute_Orientation o , int team, int nb_bot) {
+		super(a,m,p,o,team, nb_bot);
 		picked = false;
+		type = "BA";
 	}
-	
-	public Base(Model m,Position p, Absolute_Orientation o ,String type, int team, int nb_bot) {
-		super(m,p,o,type, team,nb_bot);
+
+	public Base(Model m,Position pos, Absolute_Orientation o, int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
+		super(m,pos,o,team,nb_bot,view,pickable,hb);
 		picked = false;
+		type = "BA";
 	}
 
 	@Override

@@ -35,6 +35,7 @@ public class View extends Container {
 	private List<Avatar> m_avatars;
 	private List<Avatar> m_players;
 	MapView m_map;
+	MiniMap m_minimap;
 
 	public View(Model model, IFactory f, Dimension d) {
 		m_model = model;
@@ -45,6 +46,7 @@ public class View extends Container {
 		m_avatars = new LinkedList<Avatar>();
 		m_players = new LinkedList<Avatar>();
 		m_map = new MapView(0, 0, m_model,this);
+		m_minimap = new MiniMap(this, m_model);// EAST SOUTH
 
 		List<Entity> entities = m_model.get_entities();
 		Iterator<Entity> iter = entities.iterator();
@@ -84,7 +86,6 @@ public class View extends Container {
 		}
 
 		setViewports();
-
 	}
 
 	public void paint(Graphics g) {
@@ -102,6 +103,7 @@ public class View extends Container {
 		default:
 			throw new IllegalArgumentException("You have more than 2 players");
 		}
+		m_minimap.paint(mg);
 	}
 
 	public int get_x() {

@@ -1,0 +1,12 @@
+Fleche(beg){
+ 
+  * (beg):
+  | Cell(F,V,1) ? 95 % Move(F) / Explode :(beg)
+  | not(Got(T)) ? :(Mort)
+  | Cell(F,A,1) ? Hit(F,A,1) ; Explode :(Mort)
+  
+  * (Mort):
+  | True ? :(Mort)
+  
+}
+

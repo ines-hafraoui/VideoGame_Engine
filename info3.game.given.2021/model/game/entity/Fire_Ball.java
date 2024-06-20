@@ -7,13 +7,15 @@ import game.model.Model;
 public class Fire_Ball extends Entity{
 	
 	
-	public Fire_Ball(Automate a,Model m, Position p, Absolute_Orientation o,String type, int team, int nb_bot) {
-		super(a,m,p,o,type, team, nb_bot);
+	public Fire_Ball(Automate a,Model m, Position p, Absolute_Orientation o,int team, int nb_bot) {
+		super(a,m,p,o, team, nb_bot);
+		type = "FB";
 	}
 	 
 	
-	public Fire_Ball(Model m, Position p, Absolute_Orientation o,String type, int team, int nb_bot) {
-		super(m,p,o,type, team, nb_bot);
+	public Fire_Ball(Model m, Position p, Absolute_Orientation o,int team, int nb_bot) {
+		super(m,p,o,team, nb_bot);
+		type = "FB";
 	}
 	
 	@Override

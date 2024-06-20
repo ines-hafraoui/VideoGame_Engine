@@ -1,20 +1,25 @@
 package game.entity;
 
-import java.util.ArrayList;
 
 import game.automaton.Automate;
-import game.automaton.Category;
 import game.model.Model;
 
 public class Item extends Entity{
 	
+<<<<<<< HEAD
 	public Item(Automate a, Model m,Position p, Absolute_Orientation o,String type, int team, int nb_bot) {
 		super(a,m,p,o,type, team,nb_bot);
 		this.cat.set_category("P");
+=======
+	public Item(Automate a, Model m,Position p, Absolute_Orientation o,int team, int nb_bot) {
+		super(a,m,p,o,team,nb_bot);
+		type = "I";
+>>>>>>> Model
 	}
-	
-	public Item(Model m,Position p, Absolute_Orientation o, String type, int team, int nb_bot) {
-		super(m,p,o,type, team,nb_bot);
+
+	public Item(Model m,Position pos, Absolute_Orientation o,int team, int nb_bot,int view, Boolean pickable,HitBox hb) {
+		super(m,pos,o,team,nb_bot, view, pickable,hb);
+		type = "I";
 	}
 
 	@Override

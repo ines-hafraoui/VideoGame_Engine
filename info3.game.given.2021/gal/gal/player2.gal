@@ -1,0 +1,41 @@
+Joueur_2(beg){
+
+ * (beg): 
+ | not(Got(T)) ? Explode :(Mort)
+ | Key(FU) & Key(FL) ? Turn(NW) ; Move(NW) :(beg)
+ | Key(FU) & Key(FR) ? Turn(NE) ; Move(NE) :(beg)
+ | Key(FD) & Key(FL) ? Turn(SW) ; Move(SW) :(beg)
+ | Key(FD) & Key(FR) ? Turn(SE) ; Move(SE) :(beg)
+ | Key(F) ? Turn(F) ; Move(F) :(beg)
+ | Key(m) ? :(fight)
+ | Key(l) ? :(select1)
+ | Cell(H,P,1) ? Pick(P,1) :(beg)
+ | not(Cell(H,A,20)) ? :(regen)
+ | True ? Wait :(beg)
+ 
+ * (regen):
+ | not(Cell(H,A,20)) ? Power :(regen)
+ | Cell(H,A,20) ? :(beg)
+ 
+ * (fight):
+ | Cell(d,A,2) ? Turn(d) ; Hit(d,2) :(beg)
+ | not(Cell(d,A,2)) ? Egg(1) :(beg)
+ 
+ * (select1):
+ | Key(l) ? :(beg)
+ | Key(FR) ? Wait(1) :(select1)
+ | Key(FL) ? Wait(-1) :(select1)
+ | Key(ENTER) ? Wait(0) :(select2)
+ 
+ * (select2):
+ | Key(l) ? :(beg)
+ | Key(FR) ? Wait(1) :(select2)
+ | Key(FL) ? Wait(-1) :(select2)
+ | Key(ENTER) ? Get :(beg)
+ | Key(p) ? Throw :(beg)
+  
+ * (Mort):
+ | True ? :(Mort)
+ 
+}
+

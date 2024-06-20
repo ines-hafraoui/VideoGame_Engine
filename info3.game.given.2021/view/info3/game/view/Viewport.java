@@ -39,7 +39,6 @@ public class Viewport extends Component {
 		m_d = d;
 		m_avatars = avatars;
 		m_map = m;
-		m_minimap = new MiniMap();// EAST SOUTH
 		m_inventory = new InventoryMenu(); // SOUTH
 		m_x = x;
 		m_y = y;

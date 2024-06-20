@@ -88,11 +88,12 @@ public class CanvasListener implements GameCanvasListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		System.out.println("Key typed: " + e.getKeyChar() + " code=" + e.getKeyCode());
+		//System.out.println("Key typed: " + e.getKeyChar() + " code=" + e.getKeyCode());
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+<<<<<<< HEAD
 		System.out.println("Key pressed: " + e.getKeyChar() + " code=" + e.getKeyCode());
 		switch(e.getKeyCode()) {
 		case 81 :// gauche joueur1 'q'
@@ -124,11 +125,39 @@ public class CanvasListener implements GameCanvasListener {
 			m_game.m_model.set_key("UA");
 		case 10 :// Accepter sélection joueur2 'Entrée'
 			m_game.m_model.set_key("ENTER");
+=======
+		//System.out.println("Key pressed: " + e.getKeyChar() + " code=" + e.getKeyCode());
+		if (e.getKeyCode() == 37) {// gauche
+			Entity[] es =m_game.m_model.get_players();
+			Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.WEST);
+			es[0].do_turn(ao);
+			es[0].do_move();
+		}
+		if (e.getKeyCode() == 39) {// droite
+			Entity[] es =m_game.m_model.get_players();
+			Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.EAST);
+			es[0].do_turn(ao);
+			es[0].do_move();
+		}
+		if (e.getKeyCode() == 38) {// haut
+			Entity[] es =m_game.m_model.get_players();
+			Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.NORTH);
+			es[0].do_turn(ao);
+			es[0].do_move();
+		}
+		if (e.getKeyCode() == 40) {// bas
+			Entity[] es =m_game.m_model.get_players();
+			Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.SOUTH);
+			es[0].do_turn(ao);
+			es[0].do_move();
+
+>>>>>>> Model
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+<<<<<<< HEAD
 		System.out.println("Key released: " + e.getKeyChar() + " code=" + e.getKeyCode());
 		switch(e.getKeyCode()) {
 		case 81 :// gauche joueur1 'q'
@@ -161,6 +190,9 @@ public class CanvasListener implements GameCanvasListener {
 		case 10 :// Accepter sélection joueur2 'Entrée'
 			m_game.m_model.suppr_key("ENTER");
 		}
+=======
+		//System.out.println("Key released: " + e.getKeyChar() + " code=" + e.getKeyCode());
+>>>>>>> Model
 	}
 
 	@Override

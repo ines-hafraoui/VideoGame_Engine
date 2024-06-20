@@ -7,5 +7,5 @@ public class EntityType {
 	public static final String PARASITE = "P";
 	public static final String FIREBALL = "FB";
 	public static final String ARROW = "A";
-	public static final String PLAYER = "J";
+	public static final String PLAYER = "P";
 }

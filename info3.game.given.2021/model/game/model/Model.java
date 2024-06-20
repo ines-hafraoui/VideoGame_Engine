@@ -20,6 +20,10 @@
  */
 package game.model;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> Model
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,14 +32,16 @@ import game.entity.Entity;
 import game.automaton.Automate;
 import game.automaton.Category;
 import game.entity.Absolute_Orientation;
-import game.entity.Entity;
-import game.entity.EntityType;
+import game.entity.Base;
+import game.entity.Bot;
+import game.entity.HitBox;
+import game.entity.Item;
 import game.entity.Player;
+
 import game.entity.Position;
 import game.map.Map;
 import game.map.Polygon;
 import info3.game.IFactory;
-import gal.ast.export.*;
 import gal.demo.test.TestMain;
 
 
@@ -50,19 +56,98 @@ public class Model {
 
 	public Map m_map;
 	private Absolute_Orientation m_orientation;
+<<<<<<< HEAD
 	List<Entity> entities;
 	private List<String> list_touche;
 	Entity[] players;
+=======
+	public java.util.Map<String, java.util.Map<String, Object>> entityConfigurations;
+	public List<Entity> entities;
+	public Entity[] players;
+>>>>>>> Model
 	IFactory factory;
+	public static int nb_bot_init;
+	public int timer; 
+	public boolean cooperative;
+	public int viscosity;
+	public Parser configParse;
 
-	public static final int NB_BOT = 5;
-
-	public Model(int w, int h, IFactory f) throws IOException {
-		entities = new ArrayList<Entity>();
-		factory = f;
+	
+	public Model(int w, int h, Parser parse)throws IOException {
+		
 		m_width = w;
 		height = h;
+		configParse = parse;
+		nb_bot_init = parse.nb_bot_init;
+		viscosity = parse.viscosity;
+		cooperative = parse.coop;
+		timer = parse.timer;
+		
+		entities = new ArrayList<Entity>();
+		entityConfigurations = parse.entities;
+		players = new Entity[2];
+		
+		// create all entities from the info that gave us the Parser
+		
+		 for (java.util.Map.Entry<String, java.util.Map<String, Object>> entry : entityConfigurations.entrySet()) {
+	            String entityName = entry.getKey();
+	            java.util.Map<String, Object> properties = entry.getValue();
+
+	            // Extract common properties
+	            String direction = (String) properties.get("direction");
+	            Position pos = (Position) properties.get("position");
+	            int team = ((Number) properties.get("team")).intValue();
+	            int view = ((Number) properties.get("view")).intValue();
+	            boolean pickable = (Boolean) properties.get("pickable");
+	            String behaviour = (String) properties.get("behaviour");
+	            String sprite = (String) properties.get("sprite");
+	            HitBox hb = (HitBox) properties.get("hitbox");
+	            
+	            Entity entity;
+	            switch (entityName) {
+	            case "Player1":
+	            case "Player2":
+	            	entity = new Player(this,pos, new Absolute_Orientation(direction), team, nb_bot_init, view, pickable,hb);
+                    break;
+	            case "Bot1":
+	            case "Bot2":
+	            case "Parasite":
+	            case "Dasher":
+	            case "Arsher":
+	            	entity = new Bot(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
+                    break;
+	            case "Base1":
+	            case "Base2":
+	            case "Base":
+	            	entity = new Base(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
+                    break;
+	            case "Power":
+	            case "Capacity":
+	            case "Plant" : 
+	            	entity = new Item(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
+                    break;
+                default : 
+                	entity = null;
+                	break;
+	            }
+	            int i = 0;
+	            if (entity != null) {
+	            	if (behaviour != null) {
+	            		String galPath = new File("/gal/gal/"+ behaviour).getAbsolutePath();
+		        		Automate automate = TestMain.loadAutomata(galPath);
+		        		entity.set_automate(automate);
+		        		if (entity instanceof Player) {
+		        			players[i] = entity;
+		        			i++;
+		        		}
+		        		entities.add(entity);
+	            	}
+	            	
+	            }
+		 }
+		
 		List<Position> poss = new ArrayList<Position>();
+<<<<<<< HEAD
 		players = new Entity[1];
 		Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.WEST);
 		Entity e = factory.newEntity(this, new Position(500, 200),ao , EntityType.PLAYER, Entity.TEAM1);
@@ -81,6 +166,9 @@ public class Model {
 		entities.add(e4);
 		Entity e5 = factory.newEntity(this, new Position(600, 600), ao, EntityType.ITEM, Entity.TEAM1);
 		entities.add(e5);
+=======
+		
+>>>>>>> Model
 		Position pos1 = new Position(0, 0);
 		Position pos2 = new Position(0, h);
 		Position pos3 = new Position(w, 0);
@@ -94,7 +182,6 @@ public class Model {
 		Polygon p = new Polygon(poss);
 		m_map = new Map(p,this);
 		m_map.generateMap(m_map.getSeed());
-
 	}
 
 	public Map getMap() {
@@ -141,19 +228,42 @@ public class Model {
 		case "E" : 
 			newX += porte;
 			break;
+		case "NE" : 
+			newY += porte;
+			newX += porte;
+			break;
+		case "NW" : 
+			newY += porte;
+			newX -= porte;
+			break;
+		case "SE" : 
+			newY -= porte;
+			newX += porte;
+			break;
+		case "SW" : 
+			newY -= porte;
+			newX -= porte;
+			break;
 		default : 
 			break;
 		}
 		
 		for (Entity entity : entities) {
-			if (entity.get_type().equals(t)) {
-				if (entity.get_x() == newX && entity.get_y() == newY) {
-					entity.get_injured();
-					return true;
-				}	
-			}
+			 if (isWithinHitbox(newX, newY, entity)) {
+		            entity.get_injured();
+		        }
 		}
-		return false;
+		return true;
+	}
+
+	private boolean isWithinHitbox(float x, float y, Entity entity) {
+		float entityX = entity.get_x();
+	    float entityY = entity.get_y();
+	    float hitboxWidth = entity.getHitBox().getHbWidth(); // Largeur de la hitbox
+	    float hitboxHeight = entity.getHitBox().getHbHeight(); // Hauteur de la hitbox
+
+	    return (x >= entityX && x <= entityX + hitboxWidth) && 
+	           (y >= entityY && y <= entityY + hitboxHeight);
 	}
 
 	/*

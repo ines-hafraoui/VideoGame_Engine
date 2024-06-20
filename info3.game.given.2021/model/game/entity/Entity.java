@@ -1,17 +1,14 @@
 package game.entity;
 
-import game.entity.Position;
-import game.map.LandType;
+
 import game.model.Model;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Vector;
 
 import game.automaton.Automate;
 import game.automaton.Category;
-import game.automaton.Direction;
 import game.automaton.Relative_Orientation;
 import game.entity.ActionType;
 
@@ -21,13 +18,19 @@ public abstract class Entity {
 	protected Absolute_Orientation abs_or;
 	protected String state_action;
 	protected int HP;
-	protected List<Automate> inventory;
 	protected List<Entity> bots;
 	protected boolean explode;
 	protected int team;
 	protected boolean injured;
 	protected int current_nbot;
+<<<<<<< HEAD
 	protected Category cat;
+=======
+	protected boolean pickable;
+	protected boolean selected;
+	protected int view;
+	protected HitBox hitBox;
+>>>>>>> Model
 
 	protected String type;
 	protected int index_inventory;
@@ -48,7 +51,7 @@ public abstract class Entity {
 	public final static int NOTEAM = 0;
 	
 
-	public Entity(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team, int nb_bot) {
+	public Entity(Automate a, Model m, Position p, Absolute_Orientation o, int team, int nb_bot) {
 		aut = a;
 		model = m;
 		position = p;
@@ -58,13 +61,29 @@ public abstract class Entity {
 		explode = false;
 		index_inventory =0 ;
 		index_bot =0;
-		this.type = type;
 		this.team = team;
 		injured = false;
 		current_nbot = nb_bot;
+		selected = false;
 	}
-
-	public Entity(Model m, Position p, Absolute_Orientation o, String type, int team, int nb_bot) {
+	
+	public Entity(Model m, Position p, Absolute_Orientation o,int team, int nb_bot){
+		model = m;
+		position = p;
+		abs_or = o;
+		state_action = ActionType.IDLE;
+		HP = 100;
+		explode = false;
+		index_inventory =0 ;
+		index_bot =0;
+		this.team = team;
+		injured = false;
+		current_nbot = nb_bot;
+		selected = false;
+	}
+	
+	public Entity(Model m,Position p, Absolute_Orientation o, int team,int nb_bot, int view,boolean pickable,HitBox hb) {
+		hitBox = hb;
 		model = m;
 		position = p;
 		abs_or = o;
@@ -72,11 +91,14 @@ public abstract class Entity {
 		explode = false;
 		index_inventory = 0;
 		index_bot = 0;
-		this.type = type;
 		this.team = team;
 		injured = false;
 		current_nbot = nb_bot;
+		this.view = view;
+		this.pickable = pickable;
+		selected = false;
 	}
+	
 
 	public static boolean haveCommonChar(String str1, String str2) {
 
@@ -99,40 +121,50 @@ public abstract class Entity {
 		return team;
 	}
 
-	protected void newSpeed(int factor) {
+    private float[] polarToCartesian(float norm, float angle) {
+        float x = norm * (float)Math.cos(Math.toRadians(angle));
+        float y = norm * (float)Math.sin(Math.toRadians(angle));
+        return new float[] { x, y };
+    }
 
-		if (acc_speed <= 0) {
-			acc_speed = (float) base_speed;
-			speed_vct_abs_or.set_abs_Orientation(abs_or.get_abs_Orientation());
-		}
+    private float[] cartesianToPolar(float x, float y) {
+        float norm = (float)Math.sqrt(x * x + y * y);
+        float angle = (float)Math.toDegrees(Math.atan2(y, x));
+        return new float[] { norm, angle };
+    }
+    protected float newSpeed(int factor) {
+        if (acc_speed == 0) {
+            acc_speed = base_speed;
+            speed_vct_abs_or.set_abs_Orientation(abs_or.get_abs_Orientation());
+        }
 
-		float BS_coeff;
-		float ACC_coeff;
+        float viscosity = model.getMap().getViscosity(position);
+        float base_speed_adjusted = Math.max(0, base_speed - viscosity);
 
-		if (abs_or.get_abs_Orientation().equals(speed_vct_abs_or.get_abs_Orientation())) {
-			BS_coeff = 0;
-			ACC_coeff = 1;
-		} else if (haveCommonChar(abs_or.get_abs_Orientation(), speed_vct_abs_or.get_abs_Orientation())) {
-			BS_coeff = 0;
-			ACC_coeff = (float) 0.5;
-		} else {
-			BS_coeff = -1F;
-			ACC_coeff = 1;
-		}
+        float[] acc_cartesian = polarToCartesian(acc_speed, speed_vct_abs_or.get_abs_Angle());
+        float[] base_cartesian = polarToCartesian(base_speed_adjusted, abs_or.get_abs_Angle());
 
-		acc_speed =  factor * (BS_coeff * base_speed + ACC_coeff * acc_speed); //+ model.getMap().getViscosity(position);
-		
-	}
+        float x_total = base_cartesian[0];
+        float y_total = base_cartesian[1];
+
+        float[] new_speed_polar = cartesianToPolar(x_total, y_total);
+
+        acc_speed = factor * new_speed_polar[0];
+        speed_vct_abs_or.set_abs_Angle(new_speed_polar[1]);
+
+
+        return acc_speed;
+    }
 
 	protected Position newPosition() {
 		
-		newSpeed(1);
+		float speed = newSpeed(1);
 		int angle = speed_vct_abs_or.get_abs_Angle();
 	    double angleRad = Math.toRadians(angle); 
 		
 		
-		float X = (float) (Math.cos(angleRad) * acc_speed);
-		float Y = (float) (Math.sin(angleRad) * acc_speed);
+		float X = (float) (Math.cos(angleRad) * speed);
+		float Y = (float) (Math.sin(angleRad) * speed);
 		
 		position.setPositionX(this.position.getPositionX() + X);
 		position.setPositionY(this.position.getPositionY() + Y);
@@ -176,6 +208,14 @@ public abstract class Entity {
 
 	public float get_y() {
 		return position.getPositionY();
+	}
+	
+	public int getView() {
+		return view;
+	}
+	
+	public HitBox getHitBox() {
+		return hitBox;
 	}
 
 	public void reduce_HP(int r) {
@@ -257,6 +297,10 @@ public abstract class Entity {
 		a.set_entity(this);
 		
 	}
+	
+	public void set_model(Model m ) {
+		model = m ;
+	}
 
 	public void get_state_action(String action) {
 		state_action = action;
@@ -272,7 +316,6 @@ public abstract class Entity {
 	
 	public void tick(long elpased) {
 
-		System.out.print("TICK in " + this + "\n");
 		if (aut != null) {
 			aut.step(this);
 		}
