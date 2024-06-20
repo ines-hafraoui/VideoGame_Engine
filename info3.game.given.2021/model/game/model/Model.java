@@ -57,6 +57,7 @@ public class Model {
 	private Absolute_Orientation m_orientation;
 	public java.util.Map<String, java.util.Map<String, Object>> entityConfigurations;
 	public List<Entity> entities;
+	public Entity[] players;
 	IFactory factory;
 	public static int nb_bot_init;
 	public int timer; 
@@ -77,6 +78,7 @@ public class Model {
 		
 		entities = new ArrayList<Entity>();
 		entityConfigurations = parse.entities;
+		players = new Entity[2];
 		
 		// create all entities from the info that gave us the Parser
 		
@@ -121,13 +123,16 @@ public class Model {
                 	entity = null;
                 	break;
 	            }
-	            
+	            int i = 0;
 	            if (entity != null) {
 	            	if (behaviour != null) {
 	            		String galPath = new File("/gal/gal/"+ behaviour).getAbsolutePath();
 		        		Automate automate = TestMain.loadAutomata(galPath);
-		        		
 		        		entity.set_automate(automate);
+		        		if (entity instanceof Player) {
+		        			players[i] = entity;
+		        			i++;
+		        		}
 		        		entities.add(entity);
 	            	}
 	            	
@@ -239,8 +244,8 @@ public class Model {
 	/*
 	 * method give the list of players in the world
 	 */
-	public List<Entity> get_players() {
-		return entities;
+	public Entity[] get_players() {
+		return players;
 	}
 
 	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String arrow, int team) {
