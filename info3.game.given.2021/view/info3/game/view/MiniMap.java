@@ -15,7 +15,7 @@ import info3.game.avatar.Avatar;
 public class MiniMap {
 
 	// OVERALL SIZE OF THE MINIMAP
-	static final int MINIMAPSCALE = 10;
+	static final int MINIMAPSCALE = 8;
 
 	private int minimapWidth;
 	private int minimapHeight;
@@ -43,7 +43,8 @@ public class MiniMap {
 	}
 
 	private void AffichageMiniMap(Graphics g) {
-		g.setColor(Color.GREEN);
+		Color prairieGreen = new Color(77, 164, 9);
+		g.setColor(prairieGreen);
 		g.fillRect(minimapX, minimapY, minimapWidth, minimapHeight);
 
 		List<Biome> biomes = m_model.m_map.getBiome();

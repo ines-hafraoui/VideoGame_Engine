@@ -31,9 +31,9 @@ public class BotAvatar extends Avatar {
 		g.drawImage(img, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - (img.getWidth() * View.DISPLAYSCALE),
 				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - (img.getHeight() * View.DISPLAYSCALE),
 				img.getWidth() * View.DISPLAYSCALE, img.getHeight() * View.DISPLAYSCALE, null);
-		m_hb.drawHealthBar(g, x + (int) m_entity.get_x(),
-				y + (int) m_entity.get_y() - (5 % img.getHeight() * View.DISPLAYSCALE),
-				(img.getWidth() * View.DISPLAYSCALE), 5 % img.getHeight());
+		m_hb.drawHealthBar(g, x + (int) m_entity.get_x() - (img.getWidth() * View.DISPLAYSCALE),
+				y + (int) m_entity.get_y() - (img.getHeight() * View.DISPLAYSCALE) - 5 % img.getHeight(),
+				(img.getWidth() * View.DISPLAYSCALE), 5 % img.getHeight(),this.m_entity.get_HP());
 	}
 
 	@Override
