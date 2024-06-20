@@ -24,7 +24,7 @@ public class View extends Container {
 	private static final long serialVersionUID = 5772029785230806250L;
 
 	// How much of the world we will be showing in each Viewport
-	public static final int DISPLAYSCALE = 8;
+	public static final int DISPLAYSCALE = 1;
 
 	private Model m_model;
 	private int m_x = 0, m_y = 0;
