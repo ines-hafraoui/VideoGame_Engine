@@ -20,7 +20,6 @@
  */
 package game.model;
 
-import java.util.HashMap;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,22 +28,16 @@ import java.util.List;
 import game.entity.Entity;
 import game.automaton.Automate;
 import game.entity.Absolute_Orientation;
-<<<<<<< HEAD
 import game.entity.Base;
 import game.entity.Bot;
-import game.entity.Entity;
-import game.entity.EntityType;
 import game.entity.HitBox;
 import game.entity.Item;
 import game.entity.Player;
-=======
-import game.entity.EntityType;
->>>>>>> MapDev
+
 import game.entity.Position;
 import game.map.Map;
 import game.map.Polygon;
 import info3.game.IFactory;
-import gal.ast.export.*;
 import gal.demo.test.TestMain;
 
 

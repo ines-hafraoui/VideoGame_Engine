@@ -320,7 +320,6 @@ public class Map {
 		float newY = positionY;
 
 		switch (dir.get_rel_Orientation()) {
-<<<<<<< HEAD
 		case "F" :
 			newY += porte;
 			break;
@@ -331,18 +330,6 @@ public class Map {
 			newX -= porte;
 			break; 
 		case "R" : 
-=======
-		case 'F':
-			newY += porte;
-			break;
-		case 'B':
-			newY -= porte;
-			break;
-		case 'L':
-			newX -= porte;
-			break;
-		case 'R':
->>>>>>> MapDev
 			newX += porte;
 			break;
 		default:
