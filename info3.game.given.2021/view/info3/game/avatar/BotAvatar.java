@@ -34,6 +34,10 @@ public class BotAvatar extends Avatar {
 		m_hb.drawHealthBar(g, x + (int) m_entity.get_x(),
 				y + (int) m_entity.get_y() - (5 % img.getHeight() * View.DISPLAYSCALE),
 				(img.getWidth() * View.DISPLAYSCALE), 5 % img.getHeight());
+	}
+
+	@Override
+	protected void configureAnimation() {
 		String abs_or = m_entity.get_abs_or().get_abs_Orientation();
 		switch (a_state) {
 		case IDLE:
@@ -107,7 +111,6 @@ public class BotAvatar extends Avatar {
 			m_imageIndex++;
 			lastUpdateTime = currentTime; // Réinitialiser le dernier temps de mise à jour
 		}
-
 	}
 
 }

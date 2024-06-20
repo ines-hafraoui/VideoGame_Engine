@@ -27,12 +27,6 @@ public abstract class Avatar {
 	protected HealthBar m_hb;
 	boolean m_valid;
 
-	public Avatar() {
-		m_hb = new HealthBar(this);
-		m_valid = true;
-		a_state = IDLE;
-	}
-
 	public Avatar(Entity e, View v) {
 		m_view = v;
 		m_entity = e;
@@ -40,6 +34,9 @@ public abstract class Avatar {
 		m_view.addAvatar(this);
 		m_valid = true;
 		a_state = HIT;
+	}
+	
+	public Avatar() {
 	}
 
 	public abstract void paint(Graphics g, int x, int y);
@@ -53,4 +50,17 @@ public abstract class Avatar {
 			return IDLE;
 		}
 	}
+
+	public void paintmainplayer(Graphics g, int x, int y) {
+		BufferedImage img = m_images[m_imageIndex];
+		g.drawImage(img, x - (img.getWidth() * View.DISPLAYSCALE), y - (img.getHeight() * View.DISPLAYSCALE),
+				img.getWidth() * View.DISPLAYSCALE, img.getHeight() * View.DISPLAYSCALE, null);
+		m_hb.drawHealthBar(g, x + (int) m_entity.get_x() - (img.getWidth() * View.DISPLAYSCALE),
+				y + (int) m_entity.get_y() - (img.getHeight() * View.DISPLAYSCALE) - 5 % img.getHeight(),
+				(img.getWidth() * View.DISPLAYSCALE), 5 % img.getHeight());
+		configureAnimation();
+	}
+
+	protected abstract void configureAnimation();
+
 }

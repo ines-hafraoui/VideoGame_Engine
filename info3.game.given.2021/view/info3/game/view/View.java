@@ -214,11 +214,11 @@ public class View extends Container {
 	}
 
 	public int WorldToViewX(float x) {
-		return (int) (x * m_d.width / m_mwidth);
+		return (int) ((x*View.DISPLAYSCALE) * m_d.width / m_mwidth);
 	}
 
 	public int WorldToViewY(float y) {
-		return (int) (y * m_d.height / m_mheight);
+		return (int) ((y*View.DISPLAYSCALE) * m_d.height / m_mheight);
 	}
 
 	public List<Avatar> getAvatars() {

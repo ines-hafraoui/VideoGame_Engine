@@ -43,8 +43,8 @@ public class Viewport extends Component {
 		m_avatars = avatars;
 		m_map = m;
 		try {
-			if(player.m_entity instanceof Player) {
-				m_inventory = new InventoryMenu(this,(Player)player.m_entity);
+			if (player.m_entity instanceof Player) {
+				m_inventory = new InventoryMenu(this, (Player) player.m_entity);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -56,9 +56,10 @@ public class Viewport extends Component {
 		m_oldpositiony = (int) m_player.m_entity.get_y();
 		Caculatetranslation(m_oldpositionx, m_oldpositiony);
 		m_map = new MapView(0, 0, m_model, parent, this);
-		
-		//Scaling the bounds' leeway to the zoom given to the map
-		m_inWorldBounds = new Rectangle(-20*View.DISPLAYSCALE, -20*View.DISPLAYSCALE, d.width+(20*View.DISPLAYSCALE), d.height+(20*View.DISPLAYSCALE));
+
+		// Scaling the bounds' leeway to the zoom given to the map
+		m_inWorldBounds = new Rectangle(-20 * View.DISPLAYSCALE, -20 * View.DISPLAYSCALE,
+				d.width + (20 * View.DISPLAYSCALE), d.height + (20 * View.DISPLAYSCALE));
 	}
 
 	void setDimension(Dimension d) {
@@ -88,12 +89,13 @@ public class Viewport extends Component {
 			a.paint(mg, -m_trx, -m_try);
 		}
 
-		m_player.paint(mg, m_d.width / 2, m_d.height / 2);
+		m_player.paintmainplayer(mg, m_d.width / 2, m_d.height / 2);
 		try {
 			m_inventory.paint(mg);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	public boolean withinbounds(int tilex, int tiley) {
