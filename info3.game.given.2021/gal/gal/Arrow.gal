@@ -1,8 +1,8 @@
 Arrow(Beg){
  
   * (Beg):
+  | !(Got(Power)) ? :(Mort)
   | Cell(F,V,1) ? 95 % Move(F) / Explode :(Beg)
-  | !(Got(T)) ? :(Mort)
   | Cell(F,A,1) ? Hit(F,A,1) ; Explode :(Mort)
   
   * (Mort):
