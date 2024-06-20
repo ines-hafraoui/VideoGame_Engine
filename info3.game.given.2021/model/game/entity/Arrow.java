@@ -39,7 +39,7 @@ public class Arrow extends Entity{
 	public void do_explode() {}
 
 	@Override
-	public void do_power(int p) {	}
+	public void do_rest(int p) {	}
 
 	@Override
 	public boolean do_jump() {

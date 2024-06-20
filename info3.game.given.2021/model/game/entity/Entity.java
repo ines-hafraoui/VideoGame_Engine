@@ -231,7 +231,7 @@ public abstract class Entity {
 	
 	public void do_got(String s) {
 		if (s.equals("Power"))
-			this.do_power(5);
+			this.do_rest(5);
 	}
 	
 	
@@ -273,7 +273,7 @@ public abstract class Entity {
 		explode = true;
 	}
 
-	public abstract void do_power(int p);
+	public abstract void do_rest(int p);
 
 	// method to fly
 	public abstract boolean do_jump();

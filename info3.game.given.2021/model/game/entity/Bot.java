@@ -73,7 +73,7 @@ public class Bot extends Entity{
 
 
 	@Override
-	public void do_power(int p) {
+	public void do_rest(int p) {
 		HP += p;
 		state_action = ActionType.POWER;
 	}

@@ -75,7 +75,7 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public void do_power(int p) {
+	public void do_rest(int p) {
 		state_action = ActionType.POWER;
 		HP+=p;
 	}

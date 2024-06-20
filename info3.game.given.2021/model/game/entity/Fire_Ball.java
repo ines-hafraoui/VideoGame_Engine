@@ -49,7 +49,7 @@ public class Fire_Ball extends Entity{
 	}
 
 	@Override
-	public void do_power(int p) {	}
+	public void do_rest(int p) {	}
 
 	@Override
 	public boolean do_jump() {
