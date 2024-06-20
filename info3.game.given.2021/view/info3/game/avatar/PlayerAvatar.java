@@ -28,7 +28,7 @@ public class PlayerAvatar extends Avatar {
 //		int xv = m_view.WorldToViewX(m_entity.get_x());
 //		int yv = m_view.WorldToViewY(m_entity.get_y());
 //		g.drawImage(img, xv, yv, img.getWidth() * View.DISPLAYSCALE, img.getHeight() * View.DISPLAYSCALE, null);
-		g.drawImage(img, x + (int) m_entity.get_x()- (img.getWidth() * View.DISPLAYSCALE), y + (int) m_entity.get_y()- (img.getHeight() * View.DISPLAYSCALE),
+		g.drawImage(img, x - (img.getWidth() * View.DISPLAYSCALE/2), y - (img.getHeight() * View.DISPLAYSCALE/2),
 				img.getWidth() * View.DISPLAYSCALE, img.getHeight() * View.DISPLAYSCALE, null);
 		m_hb.drawHealthBar(g, x + (int) m_entity.get_x() - (img.getWidth() * View.DISPLAYSCALE),
 				y + (int) m_entity.get_y() - (img.getHeight() * View.DISPLAYSCALE) - 5 % img.getHeight(),

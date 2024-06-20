@@ -20,9 +20,8 @@ public class ArrowAvatar extends Avatar {
 	@Override
 	public void paint(Graphics g, int x, int y) {
 		BufferedImage img = m_images[m_imageIndex];
-		g.drawImage(img, x + (int) m_entity.get_x(),
-				y + (int) m_entity.get_y(), img.getWidth() * View.DISPLAYSCALE,
-				img.getHeight() * View.DISPLAYSCALE, null);
+		g.drawImage(img, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - (img.getWidth() * View.DISPLAYSCALE)
+				,  (y + (int) m_entity.get_y() * View.DISPLAYSCALE) - (img.getWidth() * View.DISPLAYSCALE),img.getWidth() * View.DISPLAYSCALE, img.getHeight() * View.DISPLAYSCALE, null);
 		String abs_or = m_entity.get_abs_or().get_abs_Orientation();
 		switch (abs_or) {
 		case Absolute_Orientation.NORTH:

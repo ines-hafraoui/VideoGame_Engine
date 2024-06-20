@@ -148,15 +148,21 @@ public class Model {
 		
 		List<Position> poss = new ArrayList<Position>();
 <<<<<<< HEAD
+<<<<<<< HEAD
 		players = new Entity[1];
 		Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.WEST);
 		Entity e = factory.newEntity(this, new Position(500, 200),ao , EntityType.PLAYER, Entity.TEAM1);
 		String path = new File("gal/gal/test.gal").getAbsolutePath();
 		Automate fsm_list = TestMain.loadAutomata(path);
 		//e.set_automate(fsm_list.get(0));
+=======
+		players = new Entity[2];
+		Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.WEST);
+		Entity e = factory.newEntity(this, new Position(1700, 900),ao , EntityType.PLAYER, Entity.TEAM1);
+>>>>>>> origin/View
 		players[0] = e;
-		//Entity e1 = factory.newEntity(this, new Position(900, 400),ao, EntityType.PLAYER, Entity.TEAM1);
-		//players[1] = e1;
+		Entity e1 = factory.newEntity(this, new Position(900, 400),ao, EntityType.PLAYER, Entity.TEAM1);
+		players[1] = e1;
 		Entity e2 = factory.newEntity(this, new Position(600, 200), ao, EntityType.FIREBALL, Entity.TEAM1);
 		entities.add(e2);
 		Entity e3 = factory.newEntity(this, new Position(200, 200), ao, EntityType.TEAMMATE, Entity.TEAM1);

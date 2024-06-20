@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Polygon;
 import java.awt.Rectangle;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,74 +19,80 @@ import info3.game.avatar.Avatar;
  */
 public class Viewport extends Component {
 
-
 	private static final long serialVersionUID = 4264890697854297025L;
-	
+
 	Model m_model;
 	View m_parent;
 	IFactory m_f;
 	InventoryMenu m_inventory;
-	MiniMap m_minimap;
 	List<Avatar> m_avatars;
 	Dimension m_d;
 	private MapView m_map;
 	int m_x, m_y;
 	Rectangle m_inWorldBounds;
-	Avatar m_player;	
-	
+	Avatar m_player;
+
+	int m_trx, m_try;
+	int m_oldpositionx, m_oldpositiony;
+
 	Viewport(Model model, List<Avatar> avatars, View parent, Dimension d, int x, int y, Avatar player, MapView m) {
 		m_parent = parent;
 		m_model = model;
 		m_d = d;
 		m_avatars = avatars;
 		m_map = m;
-		m_inventory = new InventoryMenu(); // SOUTH
+		try {
+			m_inventory = new InventoryMenu(this);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} // SOUTH
 		m_x = x;
 		m_y = y;
 		m_player = player;
+		m_oldpositionx = (int) m_player.m_entity.get_x();
+		m_oldpositiony = (int) m_player.m_entity.get_y();
+		Caculatetranslation(m_oldpositionx, m_oldpositiony);
+		m_map = new MapView(0, 0, m_model, parent, this);
 		
-		//Creates bounds of how much of the world can be desplayed
-		int wx = ((int) player.m_entity.get_x())- (d.width/2);
-		int wy = ((int) player.m_entity.get_y()) - (d.height/2);
-		m_inWorldBounds = new Rectangle(wx,wy,d.width,d.height);
-	}
-
-	void addDisplayedAvatar(Avatar avatar) {
-		// TODO Auto-generated method stub
-	}
-
-	void undisplayAvatar(Avatar avatar) {
-		// TODO Auto-generated method stub
+		//Scaling the bounds' leeway to the zoom given to the map
+		m_inWorldBounds = new Rectangle(-20*View.DISPLAYSCALE, -20*View.DISPLAYSCALE, d.width+(20*View.DISPLAYSCALE), d.height+(20*View.DISPLAYSCALE));
 	}
 
 	void setDimension(Dimension d) {
 		m_d = d;
 	}
-	
+
+	void Caculatetranslation(int x, int y) {
+		// Creates bounds of how much of the world can be desplayed
+		m_trx = x * View.DISPLAYSCALE - (m_d.width / 2);
+		m_try = y * View.DISPLAYSCALE - (m_d.height / 2);
+	}
+
 	public void paint(Graphics g) {
+		int x = (int) m_player.m_entity.get_x();
+		int y = (int) m_player.m_entity.get_y();
+
+		if (x != m_oldpositionx || y != m_oldpositiony) {
+			Caculatetranslation(x, y);
+		}
+
 		Graphics mg = g.create(m_x, m_y, m_d.width, m_d.height);
-		int x = ((int) m_player.m_entity.get_x()) + m_player.m_images[0].getWidth()-100;
-	    int y = ((int) m_player.m_entity.get_y())  + m_player.m_images[0].getHeight() -200;
-//		mg.translate(x,y);
-		 // Create a polygon
-        Polygon polygon = new Polygon();
-       
-        int width = (int) m_player.m_entity.get_x()+100;
-        int height =  (int) m_player.m_entity.get_y()+200;
-        polygon.addPoint(x, y);
-        polygon.addPoint(width, y);
-        polygon.addPoint(width, height);
-        polygon.addPoint(x, height);
-        
-//		mg.setClip(polygon);
-		m_map.paint(mg,x,y);
-		
+		m_map.paint(mg, -m_trx, -m_try);
+
 		Iterator<Avatar> iter = m_avatars.iterator();
 		while (iter.hasNext()) {
 			Avatar a = iter.next();
-			a.paint(mg, m_x, m_y);
+			a.paint(mg, -m_trx, -m_try);
 		}
-		
-		m_player.paint(mg,  ((int) m_player.m_entity.get_x()), ((int) m_player.m_entity.get_y()));
+
+		m_player.paint(mg, m_d.width / 2, m_d.height / 2);
+		m_inventory.paint(mg);
+	}
+
+	public boolean withinbounds(int tilex, int tiley) {
+		if (m_inWorldBounds.contains(tilex, tiley)) {
+			return true;
+		}
+		return false;
 	}
 }
