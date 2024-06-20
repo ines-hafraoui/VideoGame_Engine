@@ -20,10 +20,6 @@
  */
 package game.model;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> Model
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,15 +52,10 @@ public class Model {
 
 	public Map m_map;
 	private Absolute_Orientation m_orientation;
-<<<<<<< HEAD
-	List<Entity> entities;
 	private List<String> list_touche;
 	Entity[] players;
-=======
 	public java.util.Map<String, java.util.Map<String, Object>> entityConfigurations;
 	public List<Entity> entities;
-	public Entity[] players;
->>>>>>> Model
 	IFactory factory;
 	public static int nb_bot_init;
 	public int timer; 
@@ -147,34 +138,7 @@ public class Model {
 		 }
 		
 		List<Position> poss = new ArrayList<Position>();
-<<<<<<< HEAD
-<<<<<<< HEAD
-		players = new Entity[1];
-		Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.WEST);
-		Entity e = factory.newEntity(this, new Position(500, 200),ao , EntityType.PLAYER, Entity.TEAM1);
-		String path = new File("gal/gal/test.gal").getAbsolutePath();
-		Automate fsm_list = TestMain.loadAutomata(path);
-		//e.set_automate(fsm_list.get(0));
-=======
-		players = new Entity[2];
-		Absolute_Orientation ao = new Absolute_Orientation(Absolute_Orientation.WEST);
-		Entity e = factory.newEntity(this, new Position(1700, 900),ao , EntityType.PLAYER, Entity.TEAM1);
->>>>>>> origin/View
-		players[0] = e;
-		Entity e1 = factory.newEntity(this, new Position(900, 400),ao, EntityType.PLAYER, Entity.TEAM1);
-		players[1] = e1;
-		Entity e2 = factory.newEntity(this, new Position(600, 200), ao, EntityType.FIREBALL, Entity.TEAM1);
-		entities.add(e2);
-		Entity e3 = factory.newEntity(this, new Position(200, 200), ao, EntityType.TEAMMATE, Entity.TEAM1);
-		e3.set_automate(fsm_list);
-		entities.add(e3);
-		Entity e4 = factory.newEntity(this, new Position(400, 400), ao, EntityType.BASE, Entity.TEAM1);
-		entities.add(e4);
-		Entity e5 = factory.newEntity(this, new Position(600, 600), ao, EntityType.ITEM, Entity.TEAM1);
-		entities.add(e5);
-=======
-		
->>>>>>> Model
+
 		Position pos1 = new Position(0, 0);
 		Position pos2 = new Position(0, h);
 		Position pos3 = new Position(w, 0);
