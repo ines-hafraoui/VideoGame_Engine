@@ -9,7 +9,7 @@ Joueur_2(Beg){
  | Key(f) ? Turn(F) ; Move(F) :(Beg)
  | Key(m) ? :(Fight)
  | Key(l) ? :(Select1)
- | Cell(H,P,1) ? Pick(P,1) :(Beg)
+ | Cell(H,P,1) ? Pick(1) :(Beg)
  | !(Cell(H,A,20)) ? :(Regen)
  | True ? Wait(0,0) :(Beg)
  
@@ -17,7 +17,7 @@ Joueur_2(Beg){
  | !(Cell(H,A,20)) & Got(Power) ? :(Regen)
  
  * (Fight):
- | Cell(d,A,2) ? Turn(d) ; Hit(d,2) :(Beg)
+ | Cell(d,A,2) ? Turn(d) ; Hit(d,A,2) :(Beg)
  | !(Cell(d,A,2)) ? Egg(1) :(Beg)
  
  * (Select1):
