@@ -24,7 +24,7 @@ public class View extends Container {
 	private static final long serialVersionUID = 5772029785230806250L;
 
 	// How much of the world we will be showing in each Viewport
-	public static final int DISPLAYSCALE = 4; 
+	public static final int DISPLAYSCALE = 8;
 
 	private Model m_model;
 	private int m_x = 0, m_y = 0;
@@ -45,8 +45,7 @@ public class View extends Container {
 		m_d = d;
 		m_avatars = new LinkedList<Avatar>();
 		m_players = new LinkedList<Avatar>();
-		m_map = new MapView(0, 0, m_model,this);
-		m_minimap = new MiniMap(this, m_model);// EAST SOUTH
+		m_minimap = new MiniMap(this, m_model);
 
 		List<Entity> entities = m_model.get_entities();
 		Iterator<Entity> iter = entities.iterator();
@@ -61,31 +60,6 @@ public class View extends Container {
 
 		setViewports();
 
-	}
-
-	public View(Model model, int x, int y, Dimension d, IFactory f) {
-		m_model = model;
-		m_mwidth = model.get_width() * DISPLAYSCALE;
-		m_mheight = model.get_height() * DISPLAYSCALE;
-		m_x = x;
-		m_y = y;
-		m_f = f;
-		m_model = model;
-		m_d = d;
-
-		m_avatars = new LinkedList<Avatar>();
-		List<Entity> entities = m_model.get_entities();
-		Iterator<Entity> iter = entities.iterator();
-		while (iter.hasNext()) {
-			Entity e = iter.next();
-			try {
-				m_f.newAvatar(e, this);
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		}
-
-		setViewports();
 	}
 
 	public void paint(Graphics g) {
@@ -104,6 +78,8 @@ public class View extends Container {
 		default:
 			throw new IllegalArgumentException("You have more than 2 players");
 		}
+		
+		//Asks the minimap to display itself within the overall view so that it is shared by both players
 		m_minimap.paint(mg);
 	}
 
@@ -114,17 +90,11 @@ public class View extends Container {
 	public int get_y() {
 		return m_y;
 	}
-
-	public void newEntity(Entity e) throws IOException {
-		// ajouter un avatar à la liste et notifier le/s viewport/s
-		Avatar a = m_f.newAvatar(e, this);
-	}
-
-	public void removeEntity(Entity e) {
-		// parcourir la liste d'avatar puis l'enlever de celle-ci et notifier le/s
-		// viewport/s
-	}
-
+	
+	/*
+	 * THE FOLLOWING 4 METHODS ARE MEANT TO BE CALLED BY THE MODEL LISTENER ONCE
+	 * SOMETHING HAPPENS IN THE WORLD
+	 */
 	public void addAvatar(Avatar a) {
 		m_avatars.add(a);
 	}
@@ -145,15 +115,14 @@ public class View extends Container {
 		m_d = d;
 	}
 
-	
 	public void setDimension(int w, int h) {
-		m_d = new Dimension(w,h);
+		m_d = new Dimension(w, h);
 		switch (m_viewports.length) {
 		case 1:
 			m_viewports[0].setDimension(m_d);
 			break;
 		case 2:
-			Dimension d = new Dimension(w/2,h);
+			Dimension d = new Dimension(w / 2, h);
 			m_viewports[0].setDimension(d);
 			m_viewports[1].setDimension(d);
 			break;
@@ -201,7 +170,7 @@ public class View extends Container {
 		for (int i = 0; i < players.length; i++) {
 			try {
 				Avatar a = m_f.newAvatar(players[i], this);
-				m_viewports[i] = new Viewport(m_model, m_avatars, this, vp_d, i * (m_d.width / plen), 0, a,m_map);
+				m_viewports[i] = new Viewport(m_model, m_avatars, this, vp_d, i * (m_d.width / plen), 0, a, m_map);
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -227,12 +196,11 @@ public class View extends Container {
 	public int getRandomNumber(int min, int max) {
 		return (int) ((Math.random() * (max - min)) + min);
 	}
-	
-	
+
 	public int WorldToViewX(float x) {
 		return (int) (x * m_d.width / m_mwidth);
 	}
-	
+
 	public int WorldToViewY(float y) {
 		return (int) (y * m_d.height / m_mheight);
 	}
@@ -240,7 +208,7 @@ public class View extends Container {
 	public List<Avatar> getAvatars() {
 		return m_avatars;
 	}
-	
+
 	public List<Avatar> getPlayers() {
 		return m_players;
 	}
