@@ -3,6 +3,7 @@
   "timer" : -1, 
   "viscosity" : 1,
   "nb_bot_init":5,
+  "nb_player":2,
     "Player1":{
       "name" : "PLAYER1",
       "view" : 1,   
