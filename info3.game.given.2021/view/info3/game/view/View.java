@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -87,9 +88,9 @@ public class View extends Container {
 	
 	public void Affichage_timer(Graphics mg,long timer) {
 		mg.setColor(Color.WHITE); // Set the color for the timer text
-	    mg.setFont(getFont());
+	    mg.setFont(new Font("Arial", Font.BOLD, 20%m_d.width));
 	    String timeString = formatTime(timer); // Format timer into a readable format
-	    mg.drawString(timeString, m_d.width/2, 400);
+	    mg.drawString(timeString, 10%m_d.width, 20%m_d.height);
 	}
 	
 	private String formatTime(long millis) {

@@ -11,7 +11,7 @@ import info3.game.view.View;
 public class BotAvatar extends Avatar {
 
 	private long lastUpdateTime; // Temps depuis la dernière mise à jour de l'animation
-	private static final long ANIMATION_INTERVAL = 500; // 500 ms entre les mises à jour
+	private static final long ANIMATION_INTERVAL = 400; // 500 ms entre les mises à jour
 
 	public BotAvatar(Entity e, View v) throws IOException {
 		super(e, v);
@@ -34,6 +34,7 @@ public class BotAvatar extends Avatar {
 		m_hb.drawHealthBar(g, x + (int) m_entity.get_x() - (img.getWidth() * View.DISPLAYSCALE),
 				y + (int) m_entity.get_y() - (img.getHeight() * View.DISPLAYSCALE) - 5 % img.getHeight(),
 				(img.getWidth() * View.DISPLAYSCALE), 5 % img.getHeight(),this.m_entity.get_HP());
+		configureAnimation();
 	}
 
 	@Override

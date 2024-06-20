@@ -43,18 +43,20 @@ public class MiniMap {
 	}
 
 	private void AffichageMiniMap(Graphics g) {
-		Color prairieGreen = new Color(77, 164, 9);
-		g.setColor(prairieGreen);
+		Color color_prairie = new Color(95, 225, 20);
+		Color color_volcano = new Color(206, 215, 5);
+		Color color_ocean = new Color(5, 193, 215);
+		g.setColor(color_prairie);
 		g.fillRect(minimapX, minimapY, minimapWidth, minimapHeight);
 
 		List<Biome> biomes = m_model.m_map.getBiome();
 		for (Biome biome : biomes) {
 			if (biome instanceof Volcano) {
-				g.setColor(Color.YELLOW);
+				g.setColor(color_volcano);
 			} else if (biome instanceof Ocean) {
-				g.setColor(Color.BLUE);
+				g.setColor(color_ocean);
 			} else {
-				g.setColor(Color.GREEN);
+				g.setColor(color_prairie);
 			}
 			Polygon polygon = biome.getBorders();
 			List<Position> vertices = polygon.getVertices();
