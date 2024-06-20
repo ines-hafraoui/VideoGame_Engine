@@ -18,20 +18,12 @@ public class Automate {
 		this.entity = entity;
 	}
 
-	public Automate(String initial_state) {
-		states = new ArrayList<>();
-		//states.add(initial_state);
-		currentStateList = new ArrayList<>();
-		this.initial_state = initial_state;
-		states.add(this.getState(initial_state));
-
-
-	}
 
 	public Automate(String initial_state, List<State> states) {
 		this.states = states;
 		currentStateList = new ArrayList<>();
 		this.initial_state = initial_state;
+		currentStateList.add(getState(this.initial_state));
 
 	}
 
@@ -82,7 +74,7 @@ public class Automate {
 						}
 						State s = this.getState(transition.cible);
 						toadd.add(s);
-						todelete.add(s);
+						todelete.add(state);
 					}
 				}
 			}
@@ -105,5 +97,14 @@ public class Automate {
 		}
 		return null;
 	}
+	
+	public void set_entity(Entity e) {
+		this.entity = e;
+	}
+	public Entity get_entity() {
+		return this.entity;
+	}
+	
+	
 
 }

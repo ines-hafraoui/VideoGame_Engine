@@ -1,0 +1,6 @@
+Base_Jeu2(Beg){
+
+ * (Beg):
+ | Cell(H,P,5) ? Pick(P,5) :(Beg)
+
+}

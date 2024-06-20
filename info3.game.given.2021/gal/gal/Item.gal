@@ -1,0 +1,10 @@
+Item(Beg){	
+
+ * (Beg):
+ | !(Got(T)) ? Explode :(Picked)
+ | True ? Wait(0,0) :(Beg)
+ 
+ * (Picked):
+ | True ? :(Picked)
+
+}

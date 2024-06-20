@@ -4,15 +4,13 @@ import game.entity.Entity;
 
 public class Power implements Action {
 
-	int increm;
 	
-	public Power(int p) {
-		increm = p;
+	public Power() {
 	}
 
 	@Override
 	public boolean exec(Entity e) {
-		e.do_power(increm);
+		e.do_power(5);
 		return true;
 	}
 

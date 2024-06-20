@@ -9,18 +9,19 @@ public class Base extends Entity {
 	
 	boolean picked; 
 	
-	public Base(Automate a, Model m,Position p, Absolute_Orientation o , String type, int team) {
-		super(a,m,p,o,type, team);
+	public Base(Automate a, Model m,Position p, Absolute_Orientation o , String type, int team, int nb_bot) {
+		super(a,m,p,o,type, team, nb_bot);
 		picked = false;
 	}
 	
-	public Base(Model m,Position p, Absolute_Orientation o ,String type, int team) {
-		super(m,p,o,type, team);
+	public Base(Model m,Position p, Absolute_Orientation o ,String type, int team, int nb_bot) {
+		super(m,p,o,type, team,nb_bot);
 		picked = false;
 	}
 
 	@Override
 	public void do_egg(int cat) {
+		state_action = ActionType.EGG;
 		
 		switch(cat) {
 		case BOT : 

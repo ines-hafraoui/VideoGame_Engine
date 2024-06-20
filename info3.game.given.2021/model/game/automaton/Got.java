@@ -4,16 +4,10 @@ import game.entity.Entity;
 
 public class Got implements Condition {
 	
-	Category cat; 
-
-	
-	public Got (Category c) {
-		cat = c;
-
-	}
+	//quoiqu'il arrive on evalue les HP de l'entite donc inutile de mettre quelconque champ
 	
 	public boolean eval (Entity e) {
-		return e.eval_got(cat);
+		return e.eval_got();
 	}
 
 }

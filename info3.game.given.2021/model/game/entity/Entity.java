@@ -13,19 +13,21 @@ import game.automaton.Automate;
 import game.automaton.Category;
 import game.automaton.Direction;
 import game.automaton.Relative_Orientation;
-import game.automaton.State;
+import game.entity.ActionType;
 
 public abstract class Entity {
 	protected Automate aut;
 	protected Model model;
 	protected Absolute_Orientation abs_or;
-	protected List<State> state; //To remove or to modify
+	protected String state_action;
 	protected int HP;
 	protected List<Automate> inventory;
 	protected List<Entity> bots;
 	protected boolean explode;
 	protected int team;
 	protected boolean injured;
+	protected int current_nbot;
+	protected Category cat;
 
 	protected String type;
 	protected int index_inventory;
@@ -46,12 +48,12 @@ public abstract class Entity {
 	public final static int NOTEAM = 0;
 	
 
-	public Entity(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team) {
+	public Entity(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team, int nb_bot) {
 		aut = a;
 		model = m;
 		position = p;
 		abs_or = o;
-		state = a.getcurrentstate();
+		state_action = ActionType.IDLE;
 		HP = 100;
 		explode = false;
 		index_inventory =0 ;
@@ -59,9 +61,10 @@ public abstract class Entity {
 		this.type = type;
 		this.team = team;
 		injured = false;
+		current_nbot = nb_bot;
 	}
 
-	public Entity(Model m, Position p, Absolute_Orientation o, String type, int team) {
+	public Entity(Model m, Position p, Absolute_Orientation o, String type, int team, int nb_bot) {
 		model = m;
 		position = p;
 		abs_or = o;
@@ -72,6 +75,7 @@ public abstract class Entity {
 		this.type = type;
 		this.team = team;
 		injured = false;
+		current_nbot = nb_bot;
 	}
 
 	public static boolean haveCommonChar(String str1, String str2) {
@@ -89,6 +93,10 @@ public abstract class Entity {
 		set1.retainAll(set2);
 
 		return !set1.isEmpty();
+	}
+	
+	public int get_team() {
+		return team;
 	}
 
 	protected void newSpeed(int factor) {
@@ -117,12 +125,10 @@ public abstract class Entity {
 	}
 
 	protected Position newPosition() {
-
 		
 		newSpeed(1);
 		int angle = speed_vct_abs_or.get_abs_Angle();
 	    double angleRad = Math.toRadians(angle); 
-
 		
 		
 		float X = (float) (Math.cos(angleRad) * acc_speed);
@@ -138,12 +144,22 @@ public abstract class Entity {
 
 	public boolean eval_cell_abs(Absolute_Orientation dir, Category cat, int porte) {
 		return model.getMap().eval_abs(dir, position.getPositionX(), position.getPositionY(), porte);
-		
 	}
 	
 	public boolean eval_cell_rel(Relative_Orientation dir, Category cat, int porte) {
 		return model.getMap().eval_rel(dir, position.getPositionX(), position.getPositionY(), porte);
-		
+	}
+	
+	public boolean eval_got() {
+		return HP>0;
+	}
+	
+	public boolean eval_closest(Absolute_Orientation d, Category cat, float portee) {
+		if (cat.toString() == "V") {
+			return true;
+		}
+		List<Entity> list_cat = model.list_cat(cat, team); 		//retourne tous les elements d'une categorie (meme cette entity si elle est dedans)
+		return model.eval_closest(list_cat, d, this, portee);
 	}
 	
 	public String get_type() {
@@ -175,6 +191,11 @@ public abstract class Entity {
 
 	public abstract void do_egg(int cat);
 	
+	public void do_got(String s) {
+		if (s.equals("Power"))
+			this.do_power(5);
+	}
+	
 	
 	/*
 	 * an entity always
@@ -204,7 +225,7 @@ public abstract class Entity {
 	 * take smth from the floor at a certain distance from itself
 	 * param : t for the type of Entity
 	 */
-	public abstract boolean do_pick(String t,int distance);
+	public abstract boolean do_pick(int distance);
 
 	// throw what is in its bag at the index. It will create an entity that will be
 	// paint by the view
@@ -233,11 +254,12 @@ public abstract class Entity {
 
 	public void set_automate(Automate a) {
 		aut = a;
-		state = a.getcurrentstate();
+		a.set_entity(this);
+		
 	}
 
-	public void get_state(Automate a) {
-		state = a.getcurrentstate();
+	public void get_state_action(String action) {
+		state_action = action;
 	}
 
 	/*
@@ -254,6 +276,14 @@ public abstract class Entity {
 		if (aut != null) {
 			aut.step(this);
 		}
+	}
+
+	public Category get_category() {
+		return cat;
+	}
+
+	public boolean eval_key(String touche) {
+		return model.get_list_touche().contains(touche);
 	}
 
 }

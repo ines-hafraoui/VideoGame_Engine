@@ -8,12 +8,13 @@ import game.model.Model;
 
 public class Item extends Entity{
 	
-	public Item(Automate a, Model m,Position p, Absolute_Orientation o,String type, int team) {
-		super(a,m,p,o,type, team);
+	public Item(Automate a, Model m,Position p, Absolute_Orientation o,String type, int team, int nb_bot) {
+		super(a,m,p,o,type, team,nb_bot);
+		this.cat.set_category("P");
 	}
 	
-	public Item(Model m,Position p, Absolute_Orientation o, String type, int team) {
-		super(m,p,o,type, team);
+	public Item(Model m,Position p, Absolute_Orientation o, String type, int team, int nb_bot) {
+		super(m,p,o,type, team,nb_bot);
 	}
 
 	@Override
@@ -23,6 +24,7 @@ public class Item extends Entity{
 
 	@Override
 	public void do_egg(int c) {
+		state_action = ActionType.EGG;
 	}
 
 	@Override
@@ -41,10 +43,12 @@ public class Item extends Entity{
 	}
 
 	@Override
-	public void do_explode() {}
+	public void do_explode() {
+		state_action = ActionType.EXPLODE;
+	}
 
 	@Override
-	public void do_power(int p) {	}
+	public void do_power(int p) {}
 
 	@Override
 	public boolean do_jump() {
@@ -62,6 +66,9 @@ public class Item extends Entity{
 	}
 
 	@Override
-	public void do_turn(Absolute_Orientation o) {	}
+	public void do_turn(Absolute_Orientation o) {	
+		abs_or = o;
+		state_action = ActionType.TURN;
+	}
 	
 }
