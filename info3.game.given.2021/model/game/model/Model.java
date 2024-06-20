@@ -23,6 +23,7 @@ package game.model;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import game.entity.Entity;
 import game.automaton.Automate;
@@ -55,6 +56,7 @@ public class Model {
 	private List<String> list_touche;
 	Entity[] players;
 	public java.util.Map<String, java.util.Map<String, Object>> entityConfigurations;
+	public java.util.Map<String, Automate> automates;
 	public List<Entity> entities;
 	IFactory factory;
 	public static int nb_bot_init;
@@ -64,7 +66,7 @@ public class Model {
 	public Parser configParse;
 
 	
-	public Model(int w, int h, Parser parse)throws IOException {
+	public Model(int w, int h, Parser parse, IFactory f)throws IOException {
 		
 		m_width = w;
 		height = h;
@@ -73,8 +75,10 @@ public class Model {
 		viscosity = parse.viscosity;
 		cooperative = parse.coop;
 		timer = parse.timer;
+		factory = f;
 		
 		entities = new ArrayList<Entity>();
+		automates = new HashMap<>();
 		entityConfigurations = parse.entities;
 		players = new Entity[parse.nb_player];
 		 int i = 0;
@@ -105,7 +109,7 @@ public class Model {
 	            case "Bot2":
 	            case "Parasite":
 	            case "Dasher":
-	            case "Arsher":
+	            case "Archer":
 	            	entity = new Bot(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
                     break;
 	            case "Base1":
@@ -134,6 +138,7 @@ public class Model {
 			        			i++;
 			        		}
 			        		entities.add(entity);
+			        		automates.put(entity.get_type(), automate);
 		        		}	
 	            	}	
 	            }
@@ -252,9 +257,9 @@ public class Model {
 		return players;
 	}
 
-	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String arrow, int team) {
+	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String arrow, int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
 
-		return factory.newEntity(model, position, abs_or, arrow, team);
+		return factory.newEntity(model, position, abs_or, arrow, team, nb_bot,view, pickable,hb);
 	}
 
 	public interface ModelListener {

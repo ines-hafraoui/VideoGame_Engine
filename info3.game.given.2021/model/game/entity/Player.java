@@ -40,11 +40,11 @@ public class Player extends Entity {
 		
 		switch(cat) {
 		case FLECHE : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.ARROW,team));
+			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.ARROW,team, 0,0,false,new HitBox(2,2)));
 			state_action = ActionType.EGG;
 			break;
 		case BOULE_FEU : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.FIREBALL,team));
+			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.FIREBALL,team, 0,0,false,new HitBox(2,2)));
 			state_action = ActionType.EGG;
 			break;
 		default : 

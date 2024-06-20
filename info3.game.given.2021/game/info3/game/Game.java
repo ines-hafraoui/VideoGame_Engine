@@ -75,7 +75,7 @@ public class Game {
 		String parsePath = new File("model/configjeu1.json").getAbsolutePath();
 		Parser configParse = new Parser(parsePath);
 
-		m_model = new Model(d.width, d.height, configParse);
+		m_model = new Model(d.width, d.height, configParse, factory);
 
 		m_model.setListener(new SyncViewModel());
 

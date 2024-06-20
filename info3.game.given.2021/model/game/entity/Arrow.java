@@ -6,12 +6,12 @@ import game.model.Model;
 
 public class Arrow extends Entity{
 	
-	public Arrow(Automate a,Model m, Position p, Absolute_Orientation o,String type, int team, int nb_bot) {
+	public Arrow(Automate a,Model m, Position p, Absolute_Orientation o,int team, int nb_bot) {
 		super(m,p,o,team, nb_bot);
 		type = "A";
 	}
 	
-	public Arrow(Model m, Position p, Absolute_Orientation o,String type, int team, int nb_bot) {
+	public Arrow(Model m, Position p, Absolute_Orientation o,int team, int nb_bot) {
 		super(m,p,o,team,nb_bot);
 		type = "A";
 	}

@@ -267,7 +267,11 @@ public class Map {
 	}
 
 	public void tick(long elapsed) {
-		for (Entity e : m_model.get_entities()) {
+		List<Entity> l_entity = m_model.get_entities();
+		int size = l_entity.size();
+		
+		for (int i = 0; i< size ; i++) {
+			Entity e = l_entity.get(i);
 			e.tick(elapsed);
 		}
 

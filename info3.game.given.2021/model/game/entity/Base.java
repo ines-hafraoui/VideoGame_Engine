@@ -27,7 +27,10 @@ public class Base extends Entity {
 		
 		switch(cat) {
 		case BOT : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, "BO",team));
+			Entity e = model.newEntity(model,position,abs_or, "BO",team,0,view,false, new HitBox(10,10));
+			Automate a = model.automates.get(EntityType.TEAMMATE);
+			e.set_automate(a);
+			model.get_entities().add(e);
 			break;
 		default : 
 			break;
