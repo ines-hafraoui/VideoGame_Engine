@@ -64,8 +64,12 @@ public class Automate {
 			List<State> todelete = new ArrayList<>();
 			List<State> toadd = new ArrayList<>();
 
-			for (State state : currentStateList) {
-				for (Transition transition : state.get_transitionList()) {
+			int size = currentStateList.size();
+			for (int i = 0; i< size; i++) {
+				State state = currentStateList.get(i);
+				int size2 = state.get_transitionList().size();
+				for (int j =0; j<size2; j++ ) {
+					Transition transition = state.get_transitionList().get(j);
 					if (transition.c.eval(entity)) {
 						blocked = true;
 
