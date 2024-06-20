@@ -18,6 +18,9 @@ import game.model.Model;
 
 public class Map {
 
+	private static final int NB_POINTS = 1000;
+	private static final int BIOME_RATIO = 8; // THE BIGGER THE SMALLER THE BIOMES
+
 	private int seed;
 	private List<Biome> biomes;
 	private final List<String> biomesNames = Collections.unmodifiableList(Arrays.asList("Volcano", "Ocean"));
@@ -149,7 +152,7 @@ public class Map {
 
 	public void generateMap(int seed) {
 
-		List<Position> pointsInsideBorders = borders.generatePointsInsidePolygon(seed);
+		List<Position> pointsInsideBorders = borders.generatePointsInsidePolygon(seed, 3, NB_POINTS);
 
 		List<Position> allPoints = addBorderPointsToAllPoints(pointsInsideBorders);
 
@@ -192,7 +195,7 @@ public class Map {
 	private List<Position> selectSeedPoints(int seed, List<Position> allPoints) {
 
 		Random random = new Random(seed);
-		int numberOfSeeds = random.nextInt(allPoints.size() - 2) + 1;
+		int numberOfSeeds = NB_POINTS/BIOME_RATIO;
 		List<Position> seedPoints = new ArrayList<>();
 
 		List<Position> to_remove = new ArrayList<>();

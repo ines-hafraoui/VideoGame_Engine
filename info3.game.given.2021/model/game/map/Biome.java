@@ -9,6 +9,7 @@ import game.entity.Position;
 
 public class Biome {
 
+	private static final int NB_PLOTS = 10;
     private Polygon borders; // List of positions defining the polygon borders of the biome
     private List<Plot> plots = new ArrayList<Plot>(); // List of plots composing the biome
     
@@ -69,7 +70,7 @@ public class Biome {
     public void generateBiome(int seed) {
         Random random = new Random(seed);
    
-        int numPlots = random.nextInt(10) + 1; // Generate between 1 and 10 plots
+        int numPlots = random.nextInt(NB_PLOTS) + 1; 
         for (int i = 0; i < numPlots; i++) {
             Plot plot = new Plot(landType);
 
@@ -78,7 +79,7 @@ public class Biome {
             
             
             Polygon b = new Polygon();
-            for (Position v : borders.generatePointsInsidePolygon(plotLandTypeIndex)) {
+            for (Position v : borders.generatePointsInsidePolygon(plotLandTypeIndex, 0, NB_PLOTS)) {
             	b.addVertex(v);
             }
             plot.setBorders(b);
