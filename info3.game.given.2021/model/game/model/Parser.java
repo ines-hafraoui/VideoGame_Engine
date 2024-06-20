@@ -10,7 +10,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import game.entity.Absolute_Orientation;
+import game.entity.Base;
+import game.entity.Bot;
 import game.entity.HitBox;
+import game.entity.Item;
+import game.entity.Player;
 import game.entity.Position;
 
 
@@ -20,7 +25,7 @@ public class Parser {
 	
 	//public ArrayList<Entity> entities = new ArrayList<Entity>();
 	public Map<String, Map<String, Object>> entities = new HashMap<>();
-	public Map<String, Map<String, Object>> sprites = new HashMap<>();
+	public Map<String, Object> sprites = new HashMap<>();
 	
 	public int timer; 
 	public int viscosity;
@@ -51,7 +56,9 @@ public class Parser {
                 for (Object entityKey : entityJson.keySet()) {
                     String entityKeyStr = (String) entityKey;
                     Object entityKeyValue = entityJson.get(entityKeyStr);
-
+                    
+                    String name = (String)jo.get("name");
+                    
                     if ("position".equals(entityKeyStr) && entityKeyValue instanceof JSONArray) {
                         JSONArray positionArray = (JSONArray) entityKeyValue;
                         Position pos = new Position(((Number) positionArray.get(0)).floatValue(), ((Number) positionArray.get(1)).floatValue());
@@ -60,8 +67,10 @@ public class Parser {
                         JSONArray hitBoxArray = (JSONArray) entityKeyValue;
                         HitBox pos = new HitBox(((Number) hitBoxArray.get(0)).floatValue(), ((Number) hitBoxArray.get(1)).floatValue());
                         entityProperties.put(entityKeyStr, pos);
+                    } else if ("sprite".equals(entityKeyStr) && entityKeyValue instanceof JSONArray){
+                    	sprites.put(convertString(name), entityKeyValue);
                     }else {
-                        entityProperties.put(entityKeyStr, entityKeyValue);
+                    	entityProperties.put(entityKeyStr, entityKeyValue);
                     }
                 }
 
@@ -69,46 +78,32 @@ public class Parser {
             }
         }
 		
-		// find all entities on the file
-//		Set<String> keys = jo.keySet();
-//		String[] keysArray = keys.toArray(new String[keys.size()]);
-//
-//		for (int i = 0; i < keysArray.length; i++) {
-//			String key = keysArray[i];
-//			
-//			JSONObject keyDetails = (JSONObject) jo.get(key);
-//			String name = (String) keyDetails.get("name");
-//			Number view = (Number)keyDetails.get("view");
-//			String behaviors = (String) keyDetails.get("behaviour");
-//			String features = (String) keyDetails.get("features");
-//			String sprite = (String) keyDetails.get("sprite");
-//			Boolean pickable = (Boolean) keyDetails.get("pickable");
-//			String orientation = (String) keyDetails.get("direction");
-//			JSONArray position = (JSONArray) keyDetails.get("position");
-//			Number team = (Number) keyDetails.get("team");
-//			
-//			Position pos = new Position((float)position.get(0),(float)position.get(1));
-//			
-//			switch(name) {
-//			case "BOT1":
-//			case "BOT2":
-//				for(int j=0; j<nb_bot_init;j++) {
-//					entities.add(new Bot(pos, new Absolute_Orientation(orientation),team.intValue(),nb_bot_init, view.intValue(),pickable));
-//				}
-//				break;
-//			case "BASE1":
-//			case "BASE2":
-//				entities.add(new Base(pos, new Absolute_Orientation(orientation),team.intValue(),nb_bot_init, view.intValue(),pickable));
-//				break;
-//			case "PLAYER1":
-//			case "PLAYER2":
-//				entities.add(new Player(pos, new Absolute_Orientation(orientation),team.intValue(),nb_bot_init, view.intValue(),pickable));
-//				break;
-//			default : 
-//				entities.add(new Item(pos, new Absolute_Orientation(orientation),team.intValue(),nb_bot_init, view.intValue(),pickable));
-//				break;
-//			}	
-//		}	
+
+	}
+
+	private String convertString(String name) {
+		
+		switch (name) {
+		case "Player1":
+        case "Player2":
+            return "P";
+        case "Bot1":
+        case "Bot2":
+        case "Parasite":
+        case "Dasher":
+        case "Arsher":
+            return "BO";
+        case "Base1":
+        case "Base2":
+        case "Base":
+            return "BA";
+        case "Power":
+        case "Capacity":
+        case "Plant" : 
+            return "I";
+        default : 
+        	return "";
+		}
 	}
 }
 
