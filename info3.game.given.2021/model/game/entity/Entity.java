@@ -180,6 +180,7 @@ public abstract class Entity {
 	}
 	
 	public boolean eval_got() {
+		System.out.print(HP);
 		return HP>0;
 	}
 	

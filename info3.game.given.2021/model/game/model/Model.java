@@ -343,6 +343,7 @@ public class Model {
 		eval_angle(d,angle1,angle2);
 		Polygon polygon = create_polygon_closest(p_x,p_y,portee,angle1,angle2);
 		Position closest = new Position((float)closest_x,(float)closest_y);
+		System.out.print(polygon.containsPosition(closest));
 		return polygon.containsPosition(closest);
 	}
 	
