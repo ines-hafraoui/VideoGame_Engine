@@ -23,4 +23,10 @@ public class ItemAvatar extends Avatar {
 				, (y + (int) m_entity.get_y() * View.DISPLAYSCALE) - (img.getWidth() * View.DISPLAYSCALE), img.getWidth() * View.DISPLAYSCALE,
 				img.getHeight() * View.DISPLAYSCALE, null);
 	}
+
+	@Override
+	protected void configureAnimation() {
+		// TODO Auto-generated method stub
+		
+	}
 }

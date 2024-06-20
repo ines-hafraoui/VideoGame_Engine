@@ -27,4 +27,10 @@ public class FireBallAvatar extends Avatar {
 
 	}
 
+	@Override
+	protected void configureAnimation() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

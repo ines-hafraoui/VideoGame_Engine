@@ -85,7 +85,7 @@ public class Viewport extends Component {
 			a.paint(mg, -m_trx, -m_try);
 		}
 
-		m_player.paint(mg, m_d.width / 2, m_d.height / 2);
+		m_player.paintmainplayer(mg, m_d.width / 2, m_d.height / 2);
 		m_inventory.paint(mg);
 	}
 
