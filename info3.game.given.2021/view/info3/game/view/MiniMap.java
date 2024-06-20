@@ -71,6 +71,11 @@ public class MiniMap {
 			g.fillRect(minimapX + (int) (avatar.m_entity.get_x()) / 10, minimapY + (int) (avatar.m_entity.get_y()) / 10,
 					4, 4);
 		}
-
+		g.setColor(Color.MAGENTA);
+		List<Avatar> List_pl = m_view.getPlayers();
+		for (Avatar player : List_pl) {
+			g.fillRect(minimapX + (int) (player.m_entity.get_x()) / 10, minimapY + (int) (player.m_entity.get_y()) / 10,
+					4, 4);
+		}
 	}
 }

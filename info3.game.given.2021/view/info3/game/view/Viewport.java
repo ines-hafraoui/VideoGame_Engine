@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Polygon;
 import java.awt.Rectangle;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -40,7 +41,11 @@ public class Viewport extends Component {
 		m_d = d;
 		m_avatars = avatars;
 		m_map = m;
-		m_inventory = new InventoryMenu(); // SOUTH
+		try {
+			m_inventory = new InventoryMenu(this);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} // SOUTH
 		m_x = x;
 		m_y = y;
 		m_player = player;
@@ -86,5 +91,6 @@ public class Viewport extends Component {
 		}
 
 		m_player.paint(mg, m_d.width / 2, m_d.height / 2);
+		m_inventory.paint(mg);
 	}
 }
