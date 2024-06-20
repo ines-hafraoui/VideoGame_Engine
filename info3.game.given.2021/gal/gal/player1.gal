@@ -1,7 +1,7 @@
 Joueur_1(Beg){
 
  * (Beg): 
- | !(Got(T)) ? Explode :(Mort)
+ | !(Got(Power)) ? Explode :(Mort)
  | Key(z) & Key(q) ? Turn(NW) ; Move(NW) :(Beg)
  | Key(z) & Key(d) ? Turn(NE) ; Move(NE) :(Beg)
  | Key(s) & Key(q) ? Turn(SW) ; Move(SW) :(Beg)
@@ -17,20 +17,38 @@ Joueur_1(Beg){
  | True ? Wait(0,0) :(Beg)
  
 * (Regen):
- | !(Cell(H,A,20)) & Got(Power) ? :(Regen)
+ | !(Got(Power)) ? Explode :(Mort)
+ | !(Cell(H,A,20)) ? Rest(5) :(Regen)
  | Cell(H,A,20) ? :(Beg)
  
  * (Fight):
- | Cell(d,A,2) ? Turn(d) ; Hit(d,A,2) :(Beg)
- | !(Cell(d,A,2)) ? Egg(1) :(Beg)
+ | !(Got(Power)) ? Explode :(Mort)
+ | Cell(E,A,2) ? Turn(E) ; Hit(E,A,2) :(Beg)
+ | Cell(SE,A,2) ? Turn(SE) ; Hit(SE,A,2) :(Beg)
+ | Cell(S,A,2) ? Turn(S) ; Hit(S,A,2) :(Beg)
+ | Cell(SW,A,2) ? Turn(SW) ; Hit(SW,A,2) :(Beg)
+ | Cell(W,A,2) ? Turn(W) ; Hit(W,A,2) :(Beg)
+ | Cell(NW,A,2) ? Turn(NW) ; Hit(NW,A,2) :(Beg)
+ | Cell(N,A,2) ? Turn(N) ; Hit(N,A,2) :(Beg)
+ | Cell(NE,A,2) ? Turn(NE) ; Hit(NE,A,2) :(Beg)
+ | !(Cell(E,A,2)) ? Egg(1) :(Beg)
+ | !(Cell(SE,A,2)) ? Egg(1) :(Beg)
+ | !(Cell(S,A,2)) ? Egg(1) :(Beg)
+ | !(Cell(SW,A,2)) ? Egg(1) :(Beg)
+ | !(Cell(W,A,2)) ? Egg(1) :(Beg)
+ | !(Cell(NW,A,2)) ? Egg(1) :(Beg)
+ | !(Cell(N,A,2)) ? Egg(1) :(Beg)
+ | !(Cell(NE,A,2)) ? Egg(1) :(Beg)
  
  * (Select1):
+ | !(Got(Power)) ? Explode :(Mort)
  | Key(a) ? :(Beg)
  | Key(d) ? Wait(1,1) :(Select1)
  | Key(q) ? Wait(2,1) :(Select1)
  | Key(e) ? Wait(0,1) :(Select2)
  
  * (Select2):
+ | !(Got(Power)) ? Explode :(Mort)
  | Key(l) ? :(Beg)
  | Key(FR) ? Wait(1,2) :(Select2)
  | Key(FL) ? Wait(2,2) :(Select2)
