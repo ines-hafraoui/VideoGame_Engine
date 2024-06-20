@@ -20,6 +20,7 @@ public class Parser {
 	
 	//public ArrayList<Entity> entities = new ArrayList<Entity>();
 	public Map<String, Map<String, Object>> entities = new HashMap<>();
+	public Map<String, Map<String, Object>> sprites = new HashMap<>();
 	
 	public int timer; 
 	public int viscosity;

@@ -35,7 +35,7 @@ public class Base extends Entity {
 	}
 
 	@Override
-	public void do_power(int p) {}
+	public void do_rest(int p) {}
 	
 	@Override
 	public Entity do_throw() {
