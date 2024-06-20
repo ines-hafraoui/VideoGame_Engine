@@ -73,7 +73,7 @@ public class Model {
 		viscosity = parse.viscosity;
 		cooperative = parse.coop;
 		timer = parse.timer;
-		
+		list_touche = new ArrayList();
 		entities = new ArrayList<Entity>();
 		entityConfigurations = parse.entities;
 		players = new Entity[parse.nb_player];
@@ -425,7 +425,9 @@ public class Model {
 	}
 
 	public void set_key(String string) {
-		list_touche.add(string);
+		if (!list_touche.contains(string)) {
+			list_touche.add(string);
+		}
 	}
 
 	public void suppr_key(String string) {

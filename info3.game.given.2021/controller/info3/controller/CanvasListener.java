@@ -98,34 +98,46 @@ public class CanvasListener implements GameCanvasListener {
 		switch(e.getKeyCode()) {
 		case 81 :// gauche joueur1 'q'
 			m_game.m_model.set_key("q");
+			break;
 		case 68 :// droite joueur1 'd'
 			m_game.m_model.set_key("d");
+			break;
 		case 90 :// haut joueur1 'z'
 			m_game.m_model.set_key("z");
+			break;
 		case 83 :// bas joueur1 's'
 			m_game.m_model.set_key("s");
+			break;
 		case 32 :// Hit joueur1 ' '
 			m_game.m_model.set_key("SPACE");
+			break;
 		case 65 :// Select joueur1 'a'
 			m_game.m_model.set_key("a");
+			break;
 		case 69 :// Accepter sélection joueur1 'e'
 			m_game.m_model.set_key("e");
-			
+			break;			
 		case 37 :// gauche joueur2 'Flèche gauche'
 			m_game.m_model.set_key("FL");
+			break;
 		case 39 :// droite joueur2 'Flèche droite'
 			m_game.m_model.set_key("FR");
+			break;
 		case 38 :// haut joueur2 'Flèche haute'
 			m_game.m_model.set_key("FU");
+			break;
 		case 40 :// bas joueur2 'Flèche basse'
 			m_game.m_model.set_key("FD");
+			break;
 		case 517 :// Hit joueur2 '!'
 			m_game.m_model.set_key("IM");
+			break;
 		case 0 :// Select joueur2 'ù'
 			m_game.m_model.set_key("UA");
+			break;
 		case 10 :// Accepter sélection joueur2 'Entrée'
 			m_game.m_model.set_key("ENTER");
-
+			break;
 		}
 	}
 
@@ -136,33 +148,46 @@ public class CanvasListener implements GameCanvasListener {
 		switch(e.getKeyCode()) {
 		case 81 :// gauche joueur1 'q'
 			m_game.m_model.suppr_key("q");
+			break;
 		case 68 :// droite joueur1 'd'
 			m_game.m_model.suppr_key("d");
+			break;
 		case 90 :// haut joueur1 'z'
 			m_game.m_model.suppr_key("z");
+			break;
 		case 83 :// bas joueur1 's'
 			m_game.m_model.suppr_key("s");
+			break;
 		case 32 :// Hit joueur1 ' '
 			m_game.m_model.suppr_key("SPACE");
+			break;
 		case 65 :// Select joueur1 'a'
 			m_game.m_model.suppr_key("a");
+			break;
 		case 69 :// Accepter sélection joueur1 'e'
 			m_game.m_model.suppr_key("e");
-			
+			break;
 		case 37 :// gauche joueur2 'Flèche gauche'
 			m_game.m_model.suppr_key("FL");
+			break;
 		case 39 :// droite joueur2 'Flèche droite'
 			m_game.m_model.suppr_key("FR");
+			break;
 		case 38 :// haut joueur2 'Flèche haute'
 			m_game.m_model.suppr_key("FU");
+			break;
 		case 40 :// bas joueur2 'Flèche basse'
 			m_game.m_model.suppr_key("FD");
+			break;
 		case 517 :// Hit joueur2 '!'
 			m_game.m_model.suppr_key("IM");
+			break;
 		case 0 :// Select joueur2 'ù'
 			m_game.m_model.suppr_key("UA");
+			break;
 		case 10 :// Accepter sélection joueur2 'Entrée'
 			m_game.m_model.suppr_key("ENTER");
+			break;
 		}
 
 	}
