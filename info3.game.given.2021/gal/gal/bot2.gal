@@ -1,14 +1,15 @@
-Bot_Jeu2(beg){
+Bot_Jeu2(Beg){
 
- * (beg): 
- | not(Got(T)) ? Explode :(Mort)
- | Cell(d,A,1) ? Turn(d) ; Hit(d,A,1) :(beg)
- | Closest(d,A) ? Turn(d) ; Move :(beg)
+ * (Beg): 
+ | !(Got(T)) ? Explode :(Mort)
+ | Cell(d,A,1) ? Turn(d) ; Hit(d,A,1) :(Beg)
+ | Closest(d,A) ? Turn(d) ; Move :(Beg)
  
  * (Mort):
  | True ? :(Mort)
  
  * (Hit):
- | True ? :(beg)
+ | True ? :(Beg)
 }
+
 
