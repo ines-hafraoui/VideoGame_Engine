@@ -1,13 +1,14 @@
 Base_Jeu1(Beg){
 
  * (Beg):
- | !(Got(T)) ? Explode :(Mort)
+ | !(Got(Power)) ? Explode :(Mort)
  | True ? 1 % Egg(3) / Wait(0,0) :(Beg)
  
  * (Mort):
  | True ? :(Mort)
  
  * (Hit):
+ | !(Got(Power)) ? Explode :(Mort)
  | True ? :(Beg)
 
 }

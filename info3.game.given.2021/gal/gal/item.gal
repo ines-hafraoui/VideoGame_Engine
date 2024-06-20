@@ -1,7 +1,7 @@
 Item(Beg){	
 
  * (Beg):
- | !(Got(T)) ? Explode :(Picked)
+ | !(Got(Power)) ? Explode :(Picked)
  | True ? Wait(0,0) :(Beg)
  
  * (Picked):
