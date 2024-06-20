@@ -12,7 +12,7 @@ Joueur_1(Beg){
  | Key(s) ? Turn(S) ; Move(F) :(Beg)
  | Key(SPACE) ? :(Fight)
  | Key(a) ? :(Select1)
- | Cell(H,P,1) ? Pick(P,1) :(Beg)
+ | Cell(H,P,1) ? Pick(1) :(Beg)
  | !(Cell(H,A,20)) ? :(Regen)
  | True ? Wait(0,0) :(Beg)
  
