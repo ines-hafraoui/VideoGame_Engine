@@ -23,7 +23,8 @@ public class Cell implements Condition {
 	}
 	
 	public boolean eval (Entity e) {
-		return e.eval_cell_rel(d,cat,0);
+		if (a != null) return e.eval_cell_abs(a, cat, portee); 
+		return e.eval_cell_rel(d,cat,portee);
 
 	}
 

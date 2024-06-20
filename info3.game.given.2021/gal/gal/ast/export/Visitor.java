@@ -159,7 +159,10 @@ public class Visitor implements IVisitor {
 			return new Cell(o, c, Integer.valueOf(parameters.get(2).toString()));
 
 		case "True":
-			return true;
+			return new TrueFalse(true);
+			
+		case "Got":
+			return new Got();
 
 		}
 		return true;

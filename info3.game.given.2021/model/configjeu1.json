@@ -32,7 +32,7 @@
     "Bot1":
     { "name" : "BOT1", 
       "view" : 1, 
-      "behaviour" : "bot1.gal",
+      "behaviour" : "archer.gal",
       "features" : "Bot.class",
       "sprite" : "bot.png",
       "pickable" : true,

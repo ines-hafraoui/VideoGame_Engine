@@ -125,7 +125,7 @@ public class Model {
 	           
 	            if (entity != null) {
 	            	if (behaviour != null) {
-	            		String galPath = new File("gal/gal/"+ behaviour).getAbsolutePath();
+	            		String galPath = new File("gal/gal/Arrow.gal").getAbsolutePath();
 		        		Automate automate = TestMain.loadAutomata(galPath);
 
 		        		if (automate != null) {

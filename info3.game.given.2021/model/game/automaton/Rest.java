@@ -10,8 +10,8 @@ public class Rest implements Action{
 	}
 	@Override
 	public boolean exec(Entity e) {
-		return e.do_rest(this.value);
-		
+		e.do_rest(this.value); //THIS MUST RETURN BOOLEAN
+		return true;
 	}
 
 }

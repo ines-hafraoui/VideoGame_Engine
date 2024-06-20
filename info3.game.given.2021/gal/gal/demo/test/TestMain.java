@@ -28,7 +28,7 @@ public class TestMain {
 	  }
 
 	public static void main(String args[]) {
-		String path = new File("gal/gal/test.gal").getAbsolutePath();
+		String path = new File("gal/gal/Arrow.gal").getAbsolutePath();
 		
 		loadAutomata(path);
 		
