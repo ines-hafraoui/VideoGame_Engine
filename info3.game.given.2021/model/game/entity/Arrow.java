@@ -31,11 +31,6 @@ public class Arrow extends Entity{
 	}
 
 	@Override
-	public boolean do_pick(String t,int distance) {
-		return false;
-	}
-
-	@Override
 	public Entity do_throw() {
 		return null;
 	}
@@ -63,6 +58,12 @@ public class Arrow extends Entity{
 
 	@Override
 	public void do_turn(Absolute_Orientation o) {	}
+
+	@Override
+	public boolean do_pick(int distance) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 
 }

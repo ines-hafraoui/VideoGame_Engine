@@ -59,9 +59,9 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public boolean do_pick(String t,int distance) {
+	public boolean do_pick(int distance) {
 		state_action = ActionType.PICK;
-		Item item = (Item) model.get_entity(distance, t, this.get_x(), this.get_y());	// ask the model to give it the entity (whiwh is an item) at the distance d 
+		Item item = (Item) model.get_entity(distance,"I",this.get_x(), this.get_y());	// ask the model to give it the entity (whiwh is an item) at the distance d 
 		return inventory.add(item);
 	}
 

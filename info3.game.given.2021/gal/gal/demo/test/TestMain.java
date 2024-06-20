@@ -11,23 +11,17 @@ import game.automaton.Automate;
 public class TestMain {
 	
 	 public static Automate loadAutomata(String filename) {
-<<<<<<< HEAD
-	    Automate fsm_list;
-=======
+
 	    Automate fsm;
->>>>>>> Model
 	    
 	    try {
 	      AST ast = (AST) Parser.from_file(filename);
 	      //Testvisitor v = new Testvisitor();
 	      Visitor v = new Visitor();
-<<<<<<< HEAD
-	      fsm_list = (Automate) ast.accept(v);
-	      return fsm_list;
-=======
+
 	      fsm =  (Automate) ast.accept(v);
 	      return fsm;
->>>>>>> Model
+
 	    } catch (Exception ex) {
 	      return null;
 	    }

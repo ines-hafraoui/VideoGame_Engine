@@ -34,7 +34,7 @@ public class Fire_Ball extends Entity{
 	}
 
 	@Override
-	public boolean do_pick(String t,int distance) {
+	public boolean do_pick(int distance) {
 		return false;
 	}
 

@@ -35,15 +35,15 @@ public class Game1Factory implements IFactory {
 	public Entity newEntity(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team) {
 		switch (type) {
 		case BASE:
-			return new Base(a, m, p, o, type, team,0);
+			return new Base(a, m, p, o,team,0);
 		case ITEM:
-			return new Item(a, m, p, o, type, team,0);
+			return new Item(a, m, p, o, team,0);
 		case BOT:
-			return new Bot(a, m, p, o, type, team,0);
+			return new Bot(a, m, p, o,team,0);
 		case PLAYER:
-			return new Player(a, m, p, o, type, team,Model.NB_BOT);
+			return new Player(a, m, p, o,team,Model.nb_bot_init);
 		case FIREBALL:
-			return new Fire_Ball(a,m, p, o, type, team,0);
+			return new Fire_Ball(a,m, p, o, team,0);
 		case ARROW:
 			return new Arrow(a,m, p, o, type, team,0);
 

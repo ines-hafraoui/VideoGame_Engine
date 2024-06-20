@@ -23,14 +23,11 @@ public abstract class Entity {
 	protected int team;
 	protected boolean injured;
 	protected int current_nbot;
-<<<<<<< HEAD
 	protected Category cat;
-=======
 	protected boolean pickable;
 	protected boolean selected;
 	protected int view;
 	protected HitBox hitBox;
->>>>>>> Model
 
 	protected String type;
 	protected int index_inventory;
