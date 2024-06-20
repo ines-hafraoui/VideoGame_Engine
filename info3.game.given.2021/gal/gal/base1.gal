@@ -1,14 +1,14 @@
-Base_Jeu1(beg){
+Base_Jeu1(Beg){
 
- * (beg):
- | not(Got(T)) ? Explode :(Mort)
- | True ? 0,01 % Egg(3) / Wait(0) :(beg)
+ * (Beg):
+ | !(Got(T)) ? Explode :(Mort)
+ | True ? 1 % Egg(3) / Wait(0,0) :(Beg)
  
  * (Mort):
  | True ? :(Mort)
  
  * (Hit):
- | True ? :(beg)
+ | True ? :(Beg)
 
 }
 

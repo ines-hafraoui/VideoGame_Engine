@@ -1,4 +1,4 @@
-Fleche(Beg){
+Arrow(Beg){
  
   * (Beg):
   | Cell(F,V,1) ? 95 % Move(F) / Explode :(Beg)
@@ -9,4 +9,5 @@ Fleche(Beg){
   | True ? :(Mort)
   
 }
+
 

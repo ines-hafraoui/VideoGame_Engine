@@ -1,7 +1,7 @@
-Base_Jeu2(beg){
+Base_Jeu2(Beg){
 
- * (beg):
- | Cell(H,P,5) ? Pick((DIRECTION ?)P,5) :(beg)
+ * (Beg):
+ | Cell(H,P,5) ? Pick(P,5) :(Beg)
 
 }
 
