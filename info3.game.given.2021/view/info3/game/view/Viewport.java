@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
+import game.entity.Player;
 import game.model.Model;
 import info3.game.IFactory;
 import info3.game.avatar.Avatar;
@@ -42,7 +43,9 @@ public class Viewport extends Component {
 		m_avatars = avatars;
 		m_map = m;
 		try {
-			m_inventory = new InventoryMenu(this);
+			if(player.m_entity instanceof Player) {
+				m_inventory = new InventoryMenu(this,(Player)player.m_entity);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} // SOUTH
@@ -86,7 +89,11 @@ public class Viewport extends Component {
 		}
 
 		m_player.paint(mg, m_d.width / 2, m_d.height / 2);
-		m_inventory.paint(mg);
+		try {
+			m_inventory.paint(mg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public boolean withinbounds(int tilex, int tiley) {

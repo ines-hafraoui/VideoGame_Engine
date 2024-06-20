@@ -66,7 +66,6 @@ public class MapView {
 				squares.add(new Squares(p, m_textureimages[1],m_parent));
 
 			}
-
 		}
 	}
 
@@ -95,9 +94,8 @@ public class MapView {
 	
 	
 	//TO BE MOVED... UNTIL WE GET THE FINAL VERSION OF PLOTS
-	private void AffichagePlots(Graphics g, Biome biome) {
-		List<Plot> plots = biome.getPlots();
-		Iterator<Plot> iterator = plots.iterator();
+	private void AffichagePlots(Graphics g, List<Plot> L_plot) {
+		Iterator<Plot> iterator = L_plot.iterator();
 		while (iterator.hasNext()) {
 			Plot plot = iterator.next();
 			Polygon p = plot.getBorders();
