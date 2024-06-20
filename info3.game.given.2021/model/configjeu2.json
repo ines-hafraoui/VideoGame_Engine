@@ -2,6 +2,8 @@
   "cooperative" : true,
   "timer" : 120, 
   "viscosity" : 0,
+  "nb_bot_init":5,
+  "nb_player": 2,
   "Player1":{ 
       "name" : "PLAYER 1",
       "view" : 1,   
