@@ -16,17 +16,7 @@ public class Item extends Entity{
 		super(m,pos,o,team,nb_bot, view, pickable,hb);
 		type = "I";
 	}
-
-	@Override
-	public boolean do_move() {
-		return false;
-	}
-
-	@Override
-	public void do_egg(int c) {
-		state_action = ActionType.EGG;
-	}
-
+	
 	@Override
 	public boolean do_hit(Absolute_Orientation o,  String t, int porte) {
 		return false;
@@ -44,15 +34,7 @@ public class Item extends Entity{
 
 	@Override
 	public void do_explode() {
-		state_action = ActionType.EXPLODE;
-	}
-
-	@Override
-	public void do_rest(int p) {}
-
-	@Override
-	public boolean do_jump() {
-		return false;
+		
 	}
 
 	@Override
@@ -63,12 +45,6 @@ public class Item extends Entity{
 	@Override
 	public boolean do_get() {
 		return false;
-	}
-
-	@Override
-	public void do_turn(Absolute_Orientation o) {	
-		abs_or = o;
-		state_action = ActionType.TURN;
 	}
 	
 }

@@ -24,44 +24,6 @@ public class Bot extends Entity{
 	}
 
 	@Override
-	public boolean do_move() {
-		Position p = newPosition();
-		if (p == null) return false;
-		position = p;
-		state_action = ActionType.MOVE;
-		return true;
-	}
-
-	@Override
-	public void do_egg(int cat) {
-		
-		switch(cat) {
-		case FLECHE : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.ARROW,team));
-			state_action = ActionType.EGG;
-			break;
-		case BOULE_FEU : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.FIREBALL,team));
-			state_action = ActionType.EGG;
-			break;
-		default : 
-			break;
-		}
-	}
-
-	@Override
-	public void do_turn(Absolute_Orientation o) {
-		state_action = ActionType.TURN;
-		abs_or = o;
-	}
-
-	@Override
-	public boolean do_hit(Absolute_Orientation o,  String t, int porte) {
-		state_action = ActionType.HIT;
-		return model.inflict_hit(o, porte, t, this.get_x(), this.get_y());
-	}
-
-	@Override
 	public boolean do_pick(int distance) {
 		return false;
 	}
@@ -69,18 +31,6 @@ public class Bot extends Entity{
 	@Override
 	public Entity do_throw() {
 		return null;
-	}
-
-
-	@Override
-	public void do_rest(int p) {
-		HP += p;
-		state_action = ActionType.POWER;
-	}
-
-	@Override
-	public boolean do_jump() {
-		return false;
 	}
 
 	@Override
@@ -94,7 +44,6 @@ public class Bot extends Entity{
 	public boolean do_get() {
 		return false;
 	}
-	
 	
 
 }

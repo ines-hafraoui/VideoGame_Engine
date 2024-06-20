@@ -17,16 +17,6 @@ public class Fire_Ball extends Entity{
 		super(m,p,o,team, nb_bot);
 		type = "FB";
 	}
-	
-	@Override
-	public boolean do_move() {
-		return false;
-	}
-
-	@Override
-	public void do_egg(int c) {
-		state_action = ActionType.EGG;
-	}
 
 	@Override
 	public boolean do_hit(Absolute_Orientation o,  String t, int porte) {
@@ -49,14 +39,6 @@ public class Fire_Ball extends Entity{
 	}
 
 	@Override
-	public void do_rest(int p) {	}
-
-	@Override
-	public boolean do_jump() {
-		return false;
-	}
-
-	@Override
 	public boolean do_wizz(int factor) {
 		return false;
 	}
@@ -65,14 +47,6 @@ public class Fire_Ball extends Entity{
 	public boolean do_get() {
 		return false;
 	}
-
-	@Override
-	public void do_turn(Absolute_Orientation o) {
-		abs_or = o;
-		state_action = ActionType.TURN;
-	}
-
-	
 	
 
 }

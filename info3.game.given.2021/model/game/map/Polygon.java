@@ -196,4 +196,60 @@ public class Polygon {
 		}
 		return new Polygon(new_vertices);
 	}
+	
+    public boolean intersectsWith(Polygon other) {
+        int size1 = this.vertices.size();
+        int size2 = other.vertices.size();
+
+        for (int i = 0; i < size1; i++) {
+            Position p1 = this.vertices.get(i);
+            Position p2 = this.vertices.get((i + 1) % size1);
+
+            for (int j = 0; j < size2; j++) {
+                Position p3 = other.vertices.get(j);
+                Position p4 = other.vertices.get((j + 1) % size2);
+
+                if (segmentsIntersect(p1, p2, p3, p4)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private boolean segmentsIntersect(Position p1, Position p2, Position p3, Position p4) {
+        float x1 = p1.getPositionX();
+        float y1 = p1.getPositionY();
+        float x2 = p2.getPositionX();
+        float y2 = p2.getPositionY();
+        float x3 = p3.getPositionX();
+        float y3 = p3.getPositionY();
+        float x4 = p4.getPositionX();
+        float y4 = p4.getPositionY();
+
+        float d1 = direction(x3, y3, x4, y4, x1, y1);
+        float d2 = direction(x3, y3, x4, y4, x2, y2);
+        float d3 = direction(x1, y1, x2, y2, x3, y3);
+        float d4 = direction(x1, y1, x2, y2, x4, y4);
+
+        if (d1 * d2 < 0 && d3 * d4 < 0) {
+            return true;
+        }
+
+        if (d1 == 0 && onSegment(x3, y3, x4, y4, x1, y1)) return true;
+        if (d2 == 0 && onSegment(x3, y3, x4, y4, x2, y2)) return true;
+        if (d3 == 0 && onSegment(x1, y1, x2, y2, x3, y3)) return true;
+        if (d4 == 0 && onSegment(x1, y1, x2, y2, x4, y4)) return true;
+
+        return false;
+    }
+
+    private float direction(float xi, float yi, float xj, float yj, float xk, float yk) {
+        return (xk - xi) * (yj - yi) - (xj - xi) * (yk - yi);
+    }
+
+    private boolean onSegment(float xi, float yi, float xj, float yj, float xk, float yk) {
+        return Math.min(xi, xj) <= xk && xk <= Math.max(xi, xj) && Math.min(yi, yj) <= yk && yk <= Math.max(yi, yj);
+    }
 }

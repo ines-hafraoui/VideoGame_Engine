@@ -28,37 +28,6 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public boolean do_move() {
-		Position p = newPosition();
-		if (p == null) return false;
-		position = p;
-		return true;
-	}
-
-	@Override
-	public void do_egg(int cat) {
-		
-		switch(cat) {
-		case FLECHE : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.ARROW,team));
-			state_action = ActionType.EGG;
-			break;
-		case BOULE_FEU : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.FIREBALL,team));
-			state_action = ActionType.EGG;
-			break;
-		default : 
-			break;
-		}
-	}
-
-	@Override
-	public boolean do_hit(Absolute_Orientation o, String t, int porte) {
-		state_action = ActionType.HIT;
-		return model.inflict_hit(o, porte, t, this.get_x(), this.get_y());
-	}
-
-	@Override
 	public boolean do_pick(int distance) {
 		state_action = ActionType.PICK;
 		Item item = (Item) model.get_entity(distance,"I",this.get_x(), this.get_y());	// ask the model to give it the entity (whiwh is an item) at the distance d 
@@ -75,18 +44,6 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public void do_rest(int p) {
-		state_action = ActionType.POWER;
-		HP+=p;
-	}
-
-	@Override
-	public void do_turn(Absolute_Orientation o) {
-		abs_or = o;
-		state_action = ActionType.TURN;
-	}
-
-	@Override
 	public boolean do_get() {
 		Entity e = bots.get(index_bot);
 		Item item = inventory.remove(index_inventory);
@@ -96,11 +53,6 @@ public class Player extends Entity {
 			index_bot = 0;
 			return true;
 		}
-		return false;
-	}
-	
-	@Override
-	public boolean do_jump() {
 		return false;
 	}
 

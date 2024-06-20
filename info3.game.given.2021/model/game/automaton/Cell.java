@@ -23,9 +23,16 @@ public class Cell implements Condition {
 	}
 	
 	public boolean eval (Entity e) {
-		if (a != null) return e.eval_cell_abs(a, cat, portee); 
-		return e.eval_cell_rel(d,cat,portee);
-
+		if (a==null) {
+			return e.eval_cell_rel(d,cat,0);
+		}
+		else if (d==null) {
+			return e.eval_cell_abs(a,cat,0);
+		}
+		else {
+			System.out.print("All directions null\n");
+			return false;
+		}
 	}
 
 }

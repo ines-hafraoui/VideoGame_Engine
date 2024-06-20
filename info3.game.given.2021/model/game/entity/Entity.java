@@ -3,6 +3,7 @@ package game.entity;
 
 import game.model.Model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,6 +29,8 @@ public abstract class Entity {
 	protected boolean selected;
 	protected int view;
 	protected HitBox hitBox;
+	private List<Entity> list_adversary;
+	private Entity Player_mate;
 
 	protected String type;
 	protected int index_inventory;
@@ -117,6 +120,14 @@ public abstract class Entity {
 	public int get_team() {
 		return team;
 	}
+	
+	public Entity get_player_mate() {
+		return this.Player_mate;
+	}
+	
+	public List<Entity> get_list_adversary(){
+		return this.list_adversary;
+	}
 
     private float[] polarToCartesian(float norm, float angle) {
         float x = norm * (float)Math.cos(Math.toRadians(angle));
@@ -172,11 +183,12 @@ public abstract class Entity {
 	}
 
 	public boolean eval_cell_abs(Absolute_Orientation dir, Category cat, int porte) {
-		return model.getMap().eval_abs(dir, position.getPositionX(), position.getPositionY(), porte);
+		return model.eval_cell(dir,cat,porte,this);
 	}
 	
 	public boolean eval_cell_rel(Relative_Orientation dir, Category cat, int porte) {
-		return model.getMap().eval_rel(dir, position.getPositionX(), position.getPositionY(), porte);
+		abs_or.set_abs_Orientation(model.from_rel_to_abs_orientation(abs_or,dir));
+		return eval_cell_abs(abs_or,cat,porte);
 	}
 	
 	public boolean eval_got() {
@@ -188,8 +200,16 @@ public abstract class Entity {
 		if (cat.toString() == "V") {
 			return true;
 		}
-		List<Entity> list_cat = model.list_cat(cat, team); 		//retourne tous les elements d'une categorie (meme cette entity si elle est dedans)
-		return model.eval_closest(list_cat, d, this, portee);
+		List<Entity> list_cat = new ArrayList();
+		if (cat.toString() != "A" && cat.toString() != "@") {
+			list_cat = model.list_cat(cat, team); 		//retourne tous les elements d'une categorie (meme cette entity si elle est dedans)
+			return model.eval_closest(list_cat, d, this, portee);
+		}
+		else if (cat.toString() == "@") {
+			list_cat.add(Player_mate);
+			return model.eval_closest(list_cat, d, this, portee);
+		}
+		return model.eval_closest(list_adversary, d, this, portee);
 	}
 	
 	public String get_type() {
@@ -215,19 +235,38 @@ public abstract class Entity {
 	public HitBox getHitBox() {
 		return hitBox;
 	}
-
-	public void reduce_HP(int r) {
-		HP = HP - r;
-	}
 	
 	public void get_injured() {
 		injured = true;
 		HP -= 10;
 	}
 
-	public abstract boolean do_move();
+	public boolean do_move() {
+		Position p = newPosition();
+		if (p == null) return false;
+		position = p;
+		state_action = ActionType.MOVE;
+		return true;
+	}
 
-	public abstract void do_egg(int cat);
+	public void do_egg(int cat) {
+		switch(cat) {
+		case FLECHE : 
+			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.ARROW,team));
+			state_action = ActionType.EGG;
+			break;
+		case BOULE_FEU : 
+			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.FIREBALL,team));
+			state_action = ActionType.EGG;
+			break;
+		case BOT : 
+			model.get_entities().add(model.newEntity(model,position,abs_or, "BO",team));
+			state_action = ActionType.EGG;
+			break;
+		default : 
+			break;
+		}
+	}
 	
 	public void do_got(String s) {
 		if (s.equals("Power"))
@@ -238,7 +277,9 @@ public abstract class Entity {
 	/*
 	 * an entity always
 	 */
-	public abstract boolean do_hit(Absolute_Orientation o, String type, int porte);
+	public boolean do_hit(Absolute_Orientation o, String type, int porte) {
+		return model.do_hit(o,type,porte,this);
+	}
 
 	
 	/*
@@ -271,12 +312,22 @@ public abstract class Entity {
 
 	public void do_explode() {
 		explode = true;
+		state_action = ActionType.EXPLODE;
 	}
 
-	public abstract void do_rest(int p);
+	public boolean do_rest(int p) {
+		state_action = ActionType.REST;
+		if (HP > 0) {
+			HP+=p;
+			return HP>0;
+		}
+		return false;
+	}
 
 	// method to fly
-	public abstract boolean do_jump();
+	public boolean do_jump() {
+		return false;
+	}
 
 	// method for speed move
 	public abstract boolean do_wizz(int factor);
@@ -284,7 +335,10 @@ public abstract class Entity {
 	// take an automate from its bag and link it to the entity (bot)
 	public abstract boolean do_get();
 
-	public abstract void do_turn(Absolute_Orientation o);
+	public void do_turn(Absolute_Orientation o) {
+		abs_or = o;
+		state_action = ActionType.TURN;
+	}
 
 	/*
 	 * set the automate of the entity can use this methode to change the automate

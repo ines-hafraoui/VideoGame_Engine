@@ -27,6 +27,7 @@ import java.util.List;
 import game.entity.Entity;
 import game.automaton.Automate;
 import game.automaton.Category;
+import game.automaton.Relative_Orientation;
 import game.entity.Absolute_Orientation;
 import game.entity.Base;
 import game.entity.Bot;
@@ -184,61 +185,6 @@ public class Model {
 		entities.add(e);
 	}
 
-	public boolean inflict_hit(Absolute_Orientation o, int porte, String t, float currentx, float currenty) {
-		float newX = currentx; 
-		float newY = currenty;
-		
-		switch (o.get_abs_Orientation()) {
-		case "N" :
-			newY += porte;
-			break;
-		case "S" : 
-			newY -= porte;
-			break;
-		case "W" : 
-			newX -= porte;
-			break; 
-		case "E" : 
-			newX += porte;
-			break;
-		case "NE" : 
-			newY += porte;
-			newX += porte;
-			break;
-		case "NW" : 
-			newY += porte;
-			newX -= porte;
-			break;
-		case "SE" : 
-			newY -= porte;
-			newX += porte;
-			break;
-		case "SW" : 
-			newY -= porte;
-			newX -= porte;
-			break;
-		default : 
-			break;
-		}
-		
-		for (Entity entity : entities) {
-			 if (isWithinHitbox(newX, newY, entity)) {
-		            entity.get_injured();
-		        }
-		}
-		return true;
-	}
-
-	private boolean isWithinHitbox(float x, float y, Entity entity) {
-		float entityX = entity.get_x();
-	    float entityY = entity.get_y();
-	    float hitboxWidth = entity.getHitBox().getHbWidth(); // Largeur de la hitbox
-	    float hitboxHeight = entity.getHitBox().getHbHeight(); // Hauteur de la hitbox
-
-	    return (x >= entityX && x <= entityX + hitboxWidth) && 
-	           (y >= entityY && y <= entityY + hitboxHeight);
-	}
-
 	/*
 	 * method give the list of entity that are on the map
 	 */
@@ -343,7 +289,7 @@ public class Model {
 		select_closest(list_cat,p_x,p_y,closest_x,closest_y);
 		double angle1=0,angle2=0;
 		eval_angle(d,angle1,angle2);
-		Polygon polygon = create_polygon_closest(p_x,p_y,portee,angle1,angle2);
+		Polygon polygon = create_polygon_direction(p_x,p_y,portee,angle1,angle2);
 		Position closest = new Position((float)closest_x,(float)closest_y);
 		System.out.print(polygon.containsPosition(closest));
 		return polygon.containsPosition(closest);
@@ -369,7 +315,7 @@ public class Model {
 		return p1.distance(p2);
 	}
 
-	private Polygon create_polygon_closest(double p_x, double p_y, float portee, double angle1, double angle2) {
+	private Polygon create_polygon_direction(double p_x, double p_y, float portee, double angle1, double angle2) {
 		double pb_x = p_x + portee;
 		double pb_y = p_y;
 		double p1_x = (pb_x*Math.cos(angle1)) - (pb_y*Math.sin(angle1));
@@ -437,4 +383,98 @@ public class Model {
 		list_touche.remove(string);
 	}
 
+	public boolean do_hit(Absolute_Orientation o, String type, int porte, Entity e) {
+		double p_x = e.get_x();
+		double p_y = e.get_y();
+		double angle1=0,angle2=0;
+		eval_angle(o,angle1,angle2);
+		Polygon polygon = create_polygon_direction(p_x,p_y,porte,angle1,angle2);
+		for (Entity entity : entities) {
+			if (entity.getHitBox().get_polygon().intersectsWith(polygon)) {
+				entity.get_injured();
+			}
+		}
+		return true;
+	}
+
+	public String from_rel_to_abs_orientation(Absolute_Orientation abs,Relative_Orientation rel) {
+		switch(rel.rel_or) {
+		case "H":
+			return abs.toString();
+		case "F":
+			return abs.toString();
+		case "B":
+			switch (abs.abs_or) {
+			case "N":
+				return "S";
+			case "NE":
+				return "SW";
+			case "E":
+				return "W";
+			case "SE":
+				return "NW";
+			case "S":
+				return "N";
+			case "SW":
+				return "NE";
+			case "W":
+				return "E";
+			case "NW":
+				return "SE";
+			}
+		case "R":
+			switch (abs.abs_or) {
+			case "N":
+				return "E";
+			case "NE":
+				return "SE";
+			case "E":
+				return "S";
+			case "SE":
+				return "SW";
+			case "S":
+				return "W";
+			case "SW":
+				return "NW";
+			case "W":
+				return "N";
+			case "NW":
+				return "NE";
+			}
+		case "L":
+			switch (abs.abs_or) {
+			case "N":
+				return "W";
+			case "NE":
+				return "NW";
+			case "E":
+				return "N";
+			case "SE":
+				return "NE";
+			case "S":
+				return "W";
+			case "SW":
+				return "SE";
+			case "W":
+				return "S";
+			case "NW":
+				return "SW";
+			}
+		}
+		return null;
+	}
+
+	public boolean eval_cell(Absolute_Orientation dir, Category cat, int porte, Entity e) {
+		double p_x = e.get_x();
+		double p_y = e.get_y();
+		double angle1=0,angle2=0;
+		eval_angle(dir,angle1,angle2);
+		Polygon polygon = create_polygon_direction(p_x,p_y,porte,angle1,angle2);
+		for (Entity entity : entities) {
+			if (entity.getHitBox().get_polygon().intersectsWith(polygon)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

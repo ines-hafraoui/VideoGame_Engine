@@ -22,43 +22,14 @@ public class Base extends Entity {
 	}
 
 	@Override
-	public void do_egg(int cat) {
-		state_action = ActionType.EGG;
-		
-		switch(cat) {
-		case BOT : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, "BO",team));
-			break;
-		default : 
-			break;
-		}
-	}
-
-	@Override
-	public void do_rest(int p) {}
-	
-	@Override
 	public Entity do_throw() {
 		return null;
 	}
-	
-	@Override
-	public boolean do_move() {
-		return false;
-	}
 
-	@Override
-	public boolean do_jump() {
-		return false;
-	}
-	
 	@Override
 	public boolean do_wizz(int factor) {
 		return false;
 	}
-	
-	@Override
-	public void do_turn(Absolute_Orientation o) {	}
 
 	@Override
 	public boolean do_hit(Absolute_Orientation o, String t, int porte) {

@@ -17,15 +17,6 @@ public class Arrow extends Entity{
 	}
 
 	@Override
-	public boolean do_move() {
-		return false;
-	}
-
-	@Override
-	public void do_egg(int c) {
-	}
-
-	@Override
 	public boolean do_hit(Absolute_Orientation o,  String t, int porte) {
 		return false;
 	}
@@ -33,17 +24,6 @@ public class Arrow extends Entity{
 	@Override
 	public Entity do_throw() {
 		return null;
-	}
-
-	@Override
-	public void do_explode() {}
-
-	@Override
-	public void do_rest(int p) {	}
-
-	@Override
-	public boolean do_jump() {
-		return false;
 	}
 
 	@Override
@@ -55,9 +35,6 @@ public class Arrow extends Entity{
 	public boolean do_get() {
 		return false;
 	}
-
-	@Override
-	public void do_turn(Absolute_Orientation o) {	}
 
 	@Override
 	public boolean do_pick(int distance) {
