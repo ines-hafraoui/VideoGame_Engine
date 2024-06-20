@@ -1,16 +1,23 @@
 package game.entity;
 
-import java.util.ArrayList;
 
 import game.automaton.Automate;
-import game.automaton.Category;
 import game.model.Model;
 
 public class Item extends Entity{
 	
+<<<<<<< HEAD
 	public Item(Automate a, Model m,Position p, Absolute_Orientation o,int team, int nb_bot) {
 		super(a,m,p,o,team,nb_bot);
 		type = "I";
+=======
+	Automate stock;
+	
+	public Item(Automate a, Model m,Position p, Absolute_Orientation o,String type, int team) {
+		super(a,m,p,o,type, team);
+		
+		aut = a;
+>>>>>>> MapDev
 	}
 
 	public Item(Model m,Position pos, Absolute_Orientation o,int team, int nb_bot,int view, Boolean pickable,HitBox hb) {

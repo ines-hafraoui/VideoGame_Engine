@@ -3,7 +3,6 @@ package game.entity;
 public class Absolute_Orientation {
 
 	public String abs_or;
-
 	public static final String NORTH = "N";
 	public static final String SOUTH = "S";
 	public static final String EAST = "E";
@@ -24,7 +23,31 @@ public class Absolute_Orientation {
 	public void set_abs_Orientation(String orientation) {
 		abs_or = orientation;
 	}
+    public void set_abs_Angle(float angle) {
+        angle = angle % 360;
+        if (angle < 0) {
+            angle += 360;
+        }
 
+        if ((angle >= 337.5 && angle < 360) || (angle >= 0 && angle < 22.5)) {
+            abs_or = EAST;
+        } else if (angle >= 22.5 && angle < 67.5) {
+            abs_or = SOUTH_E;
+        } else if (angle >= 67.5 && angle < 112.5) {
+            abs_or = SOUTH;
+        } else if (angle >= 112.5 && angle < 157.5) {
+            abs_or = SOUTH_W;
+        } else if (angle >= 157.5 && angle < 202.5) {
+            abs_or = WEST;
+        } else if (angle >= 202.5 && angle < 247.5) {
+            abs_or = NORTH_W;
+        } else if (angle >= 247.5 && angle < 292.5) {
+            abs_or = NORTH;
+        } else if (angle >= 292.5 && angle < 337.5) {
+            abs_or = NORTH_E;
+        }
+    }
+	
 	/*
 	 * When looking back to this fucntion don't forget that 
 	 * the Y axis on the map is inverted. going up on the screen is going down onthe referential.

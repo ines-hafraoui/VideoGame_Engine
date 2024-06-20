@@ -9,6 +9,9 @@ import game.entity.Entity;
 import info3.game.view.View;
 
 public class PlayerAvatar extends Avatar {
+	
+	private long lastUpdateTime; // Temps depuis la dernière mise à jour de l'animation
+	private static final long ANIMATION_INTERVAL = 500; // 500 ms entre les mises à jour
 
 	public PlayerAvatar(Entity e, View v) throws IOException {
 		super();
@@ -25,7 +28,7 @@ public class PlayerAvatar extends Avatar {
 //		int xv = m_view.WorldToViewX(m_entity.get_x());
 //		int yv = m_view.WorldToViewY(m_entity.get_y());
 //		g.drawImage(img, xv, yv, img.getWidth() * View.DISPLAYSCALE, img.getHeight() * View.DISPLAYSCALE, null);
-		g.drawImage(img, x - (img.getWidth() * View.DISPLAYSCALE), y - (img.getHeight() * View.DISPLAYSCALE),
+		g.drawImage(img, x + (int) m_entity.get_x()- (img.getWidth() * View.DISPLAYSCALE), y + (int) m_entity.get_y()- (img.getHeight() * View.DISPLAYSCALE),
 				img.getWidth() * View.DISPLAYSCALE, img.getHeight() * View.DISPLAYSCALE, null);
 		m_hb.drawHealthBar(g, x + (int) m_entity.get_x() - (img.getWidth() * View.DISPLAYSCALE),
 				y + (int) m_entity.get_y() - (img.getHeight() * View.DISPLAYSCALE) - 5 % img.getHeight(),
@@ -34,62 +37,77 @@ public class PlayerAvatar extends Avatar {
 		String abs_or = m_entity.get_abs_or().get_abs_Orientation();
 		switch (a_state) {
 		case IDLE:
-			if (m_imageIndex >= 29)
-				m_imageIndex = 28;
-			else
-				m_imageIndex++;
+			if(m_imageIndex<4) {
+				m_imageIndex = 4;
+			}
+			if (m_imageIndex >= 5)
+				m_imageIndex = 4;
 			break;
 		case WALK:
-			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or == Absolute_Orientation.SOUTH_E
-					|| abs_or == Absolute_Orientation.SOUTH_W) {
-				if (m_imageIndex >= 4)
+			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
+					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
+				if(m_imageIndex<0) {
+					m_imageIndex = 0;
+				}
+				if (m_imageIndex >= 3)
 					m_imageIndex = 0;
 				else
 					m_imageIndex++;
-			} else if (m_entity.get_abs_or().get_abs_Orientation() == Absolute_Orientation.NORTH
-					|| abs_or == Absolute_Orientation.NORTH_E || abs_or == Absolute_Orientation.NORTH_W) {
-				if (m_imageIndex >= 10)
-					m_imageIndex = 6;
-				else
-					m_imageIndex++;
-			} else if (m_entity.get_abs_or().get_abs_Orientation() == Absolute_Orientation.EAST) {
-				if (m_imageIndex >= 16)
+			}else if (abs_or.equals(Absolute_Orientation.NORTH) || abs_or.equals(Absolute_Orientation.NORTH_E)
+					|| abs_or.equals(Absolute_Orientation.NORTH_W)) {
+				if(m_imageIndex<36) {
+					m_imageIndex = 36;
+				}
+				if (m_imageIndex >= 39)
+					m_imageIndex = 36;
+			}else if (abs_or.equals(Absolute_Orientation.EAST)) {
+				if(m_imageIndex<12) {
 					m_imageIndex = 12;
-				else
-					m_imageIndex++;
+				}
+				if (m_imageIndex >= 15)
+					m_imageIndex = 12;
 			} else {// WEST
-				if (m_imageIndex >= 22)
-					m_imageIndex = 18;
-				else
-					m_imageIndex++;
+				if(m_imageIndex<24) {
+					m_imageIndex = 24;
+				}
+				if (m_imageIndex >= 25)
+					m_imageIndex = 24;
 			}
 			break;
 		case HIT:
-			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or == Absolute_Orientation.SOUTH_E
-					|| abs_or == Absolute_Orientation.SOUTH_W) {
-				if (m_imageIndex >= 29)
-					m_imageIndex = 24;
-				else
-					m_imageIndex++;
-			} else if (m_entity.get_abs_or().get_abs_Orientation() == Absolute_Orientation.NORTH
-					|| abs_or == Absolute_Orientation.NORTH_E || abs_or == Absolute_Orientation.NORTH_W) {
+			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
+					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
+				if(m_imageIndex<8) {
+					m_imageIndex = 8;
+				}
+				if (m_imageIndex >= 11)
+					m_imageIndex = 8;
+			} else if (abs_or.equals(Absolute_Orientation.NORTH) || abs_or.equals(Absolute_Orientation.NORTH_E)
+					|| abs_or.equals(Absolute_Orientation.NORTH_W)) {
+				if(m_imageIndex<20) {
+					m_imageIndex = 20;
+				}
 				if (m_imageIndex >= 35)
 					m_imageIndex = 30;
-				else
-					m_imageIndex++;
-			} else if (m_entity.get_abs_or().get_abs_Orientation() == Absolute_Orientation.EAST) {
-				if (m_imageIndex >= 41)
-					m_imageIndex = 36;
-				else
-					m_imageIndex++;
+			} else if (abs_or.equals(Absolute_Orientation.EAST)) {
+				if(m_imageIndex<20) {
+					m_imageIndex = 20;
+				}
+				if (m_imageIndex >= 23)
+					m_imageIndex = 20;
 			} else {// WEST
+				if(m_imageIndex<44) {
+					m_imageIndex = 44;
+				}
 				if (m_imageIndex >= 47)
-					m_imageIndex = 42;
-				else
-					m_imageIndex++;
+					m_imageIndex = 44;
 			}
 			break;
 		}
-		m_imageIndex++;
+		long currentTime = System.currentTimeMillis();
+		if (currentTime - lastUpdateTime > ANIMATION_INTERVAL) {
+			m_imageIndex++;
+			lastUpdateTime = currentTime; // Réinitialiser le dernier temps de mise à jour
+		}
 	}
 }

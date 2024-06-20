@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 import java.util.Stack;
 
 import game.entity.Position;
@@ -22,30 +23,34 @@ public class Polygon {
 	}
 
 	public boolean containsPosition(Position position) {
-		int n = vertices.size();
-		boolean inside = false;
+	    int n = vertices.size();
+	    boolean inside = false;
 
-		float x = position.getPositionX();
-		float y = position.getPositionY();
+	    float x = position.getPositionX();
+	    float y = position.getPositionY();
 
-		for (int i = 0, j = n - 1; i < n; j = i++) {
-			float xi = vertices.get(i).getPositionX();
-			float yi = vertices.get(i).getPositionY();
-			float xj = vertices.get(j).getPositionX();
-			float yj = vertices.get(j).getPositionY();
+	    for (int i = 0, j = n - 1; i < n; j = i++) {
+	        float xi = vertices.get(i).getPositionX();
+	        float yi = vertices.get(i).getPositionY();
+	        float xj = vertices.get(j).getPositionX();
+	        float yj = vertices.get(j).getPositionY();
 
-			boolean onBoundary = ((yi <= y && y < yj) || (yj <= y && y < yi))
-					&& (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-			if (onBoundary)
-				return true;
+	        if (((yi <= y && y < yj) || (yj <= y && y < yi)) && 
+	            (x == (xj - xi) * (y - yi) / (yj - yi) + xi)) {
+	            return true;
+	        }
 
-			if ((yi > y) != (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) {
-				inside = !inside;
-			}
-		}
+	        if ((yi > y) != (yj > y)) {
+	            float intersectX = (xj - xi) * (y - yi) / (yj - yi) + xi;
+	            if (x < intersectX) {
+	                inside = !inside;
+	            }
+	        }
+	    }
 
-		return inside;
+	    return inside;
 	}
+
 
 	public List<Position> getVertices() {
 		return vertices;
@@ -61,55 +66,6 @@ public class Polygon {
 
 	public void removeVertex(Position position) {
 		vertices.remove(position);
-	}
-
-	public void cleanPolygon() {
-		this.vertices = convexHull(vertices);
-	}
-
-	private List<Position> convexHull(List<Position> points) {
-		if (points.size() < 3) {
-			return points;
-		}
-
-		// Find the point with the smallest y-coordinate (and x in case of tie)
-		Position start = Collections.min(points,
-				Comparator.comparing(Position::getPositionY).thenComparing(Position::getPositionX));
-
-		// Sort points by angle with the start point
-		points.sort((a, b) -> {
-			if (a.equals(start))
-				return -1;
-			if (b.equals(start))
-				return 1;
-			float angleA = angle(start, a);
-			float angleB = angle(start, b);
-			return Float.compare(angleA, angleB);
-		});
-
-		Stack<Position> hull = new Stack<>();
-		hull.push(start);
-		hull.push(points.get(1));
-
-		for (int i = 2; i < points.size(); i++) {
-			Position top = hull.pop();
-			while (!hull.isEmpty() && !isCounterClockwise(hull.peek(), top, points.get(i))) {
-				top = hull.pop();
-			}
-			hull.push(top);
-			hull.push(points.get(i));
-		}
-
-		return new ArrayList<>(hull);
-	}
-
-	private float angle(Position a, Position b) {
-		return (float) Math.atan2(b.getPositionY() - a.getPositionY(), b.getPositionX() - a.getPositionX());
-	}
-
-	private boolean isCounterClockwise(Position a, Position b, Position c) {
-		return (b.getPositionX() - a.getPositionX()) * (c.getPositionY() - a.getPositionY())
-				- (b.getPositionY() - a.getPositionY()) * (c.getPositionX() - a.getPositionX()) > 0;
 	}
 
 	public float getArea() {
@@ -187,4 +143,45 @@ public class Polygon {
         return r.intersectsLine(p1.getPositionX(), p1.getPositionY(), p2.getPositionX(), p2.getPositionY());
     }
 
+	
+	public List<Position> generatePointsInsidePolygon(int seed) {
+		Random random = new Random(seed);
+		int numberOfPoints = random.nextInt(1000)%100 + 1;
+
+		int count = 0;
+		List<Position> positionsInsideBorders = new ArrayList<>();
+		while (count < numberOfPoints) {
+			float x = random.nextInt() % getMaxX();
+			float y = random.nextInt() % getMaxY();
+
+			Position position = new Position(x, y);
+			if (containsPosition(position)) {
+				positionsInsideBorders.add(position);
+				count++;
+			}
+		}
+
+		return positionsInsideBorders;
+	}
+	
+    public float getMaxX() {
+        float maxX = Float.NEGATIVE_INFINITY;
+        for (Position vertex : getVertices()) {
+            if (vertex.getPositionX() > maxX) {
+                maxX = vertex.getPositionX();
+            }
+        }
+        return maxX;
+    }
+
+    // Method to get the maximum y value of the border points
+    public float getMaxY() {
+        float maxY = Float.NEGATIVE_INFINITY;
+        for (Position vertex : getVertices()) {
+            if (vertex.getPositionY() > maxY) {
+                maxY = vertex.getPositionY();
+            }
+        }
+        return maxY;
+    }
 }

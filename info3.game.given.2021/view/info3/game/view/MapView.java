@@ -2,7 +2,6 @@ package info3.game.view;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,6 +12,7 @@ import game.entity.Position;
 import game.map.Biome;
 import game.map.Plot;
 import game.map.Polygon;
+import game.map.Biomes.*;
 import game.model.Model;
 
 public class MapView {
@@ -41,7 +41,7 @@ public class MapView {
 		}
 		
 		try {
-			m_textureimages = View.loadSprite("resources/MiniWorldSprites/Ground/Shore.png", 1, 5);
+			m_textureimages = View.loadSprite("resources/MiniWorldSprites/Ground/Grass.png", 1, 5);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -57,11 +57,14 @@ public class MapView {
 			Biome bio = iterator.next();
 			Polygon p = bio.getBorders();
 			
-			squares.add(new Squares(p,m_textureimages[i]));
-			i++;
-			if(i > 4) {
-				i = 0;
+			if(bio instanceof Volcano) {
+				squares.add(new Squares(p,m_textureimages[4]));
+			}else if(bio instanceof Ocean) {
+				squares.add(new Squares(p,m_textureimages[0]));
+			}else {
+				squares.add(new Squares(p,m_textureimages[1]));
 			}
+			
 		}
 	}
 
