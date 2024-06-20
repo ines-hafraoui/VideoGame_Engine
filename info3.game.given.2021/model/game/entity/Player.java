@@ -88,14 +88,18 @@ public class Player extends Entity {
 
 	@Override
 	public boolean do_get() {
-		Entity e = bots.get(index_bot);
-		Item item = inventory.remove(index_inventory);
-		if (item != null) {
-			e.aut = item.get_automate(); 
-			index_inventory =0;
-			index_bot = 0;
-			return true;
+		if (bots.size() != 0) {
+			Entity e = bots.get(index_bot);
+			Item item = inventory.remove(index_inventory);
+			if (item != null) {
+				e.aut = item.get_automate(); 
+				index_inventory =0;
+				index_bot = 0;
+				return true;
+			}
+			return false;
 		}
+		
 		return false;
 	}
 	
