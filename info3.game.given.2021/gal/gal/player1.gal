@@ -21,7 +21,7 @@ Joueur_1(Beg){
  | Cell(H,A,20) ? :(Beg)
  
  * (Fight):
- | Cell(d,A,2) ? Turn(d) ; Hit(d,2) :(Beg)
+ | Cell(d,A,2) ? Turn(d) ; Hit(d,A,2) :(Beg)
  | !(Cell(d,A,2)) ? Egg(1) :(Beg)
  
  * (Select1):
