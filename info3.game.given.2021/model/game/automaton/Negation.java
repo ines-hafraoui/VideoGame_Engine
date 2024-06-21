@@ -10,7 +10,7 @@ public class Negation extends Condition {
 	}
 	@Override
 	boolean eval(Entity e) {
-		return eval_negation(e);
+		return !c.eval(e);
 	}
 
 }

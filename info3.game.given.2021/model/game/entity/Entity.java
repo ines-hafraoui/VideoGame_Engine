@@ -217,6 +217,8 @@ public abstract class Entity {
 		return model.eval_closest(list_adversary, d, this, portee);
 	}
 	
+
+	
 	public String get_type() {
 		return type;
 	}
