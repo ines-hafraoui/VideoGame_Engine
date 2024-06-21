@@ -24,16 +24,6 @@ public class Bot extends Entity{
 	}
 
 	@Override
-
-	public boolean do_move() {
-		Position p = newPosition();
-		if (p == null) return false;
-		position = p;
-		state_action = ActionType.MOVE;
-		return true;
-	}
-
-	@Override
 	public void do_egg(int cat) {
 		
 		Entity e;
