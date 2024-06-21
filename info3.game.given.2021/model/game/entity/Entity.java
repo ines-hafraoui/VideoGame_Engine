@@ -258,7 +258,8 @@ public abstract class Entity {
 	
 	public void get_injured() {
 		injured = true;
-		if (HP-10 <0) {
+		int h = HP-10;
+		if (h<0) {
 			this.do_explode();
 		}else {
 			HP -= 10;
@@ -355,9 +356,10 @@ public abstract class Entity {
 
 	public boolean do_rest(int p) {
 		state_action = ActionType.REST;
-		if (HP > 0 && HP+p<100) {
+		int h = HP+p;
+		if (HP > 0 && h<100) {
 			HP+=p;
-			return HP>0;
+			return true;
 		}
 		return false;
 	}

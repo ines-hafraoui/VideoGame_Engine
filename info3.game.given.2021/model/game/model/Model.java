@@ -456,22 +456,31 @@ public class Model {
 		double angle1=0,angle2=0;
 		eval_angle(o,angle1,angle2);
 		Polygon polygon = create_polygon_direction(p_x,p_y,porte,angle1,angle2);
+		List<Entity> todelete = new ArrayList<Entity>();
 		for (Entity entity : entities) {
 			if (entity.getHitBox().get_polygon().intersectsWith(polygon)) {
 				entity.get_injured();
 				if (entity.get_state_action() == ActionType.EXPLODE) {
-					removeEntity(entity);
+					todelete = removeEntity(entity);
 				}
 			}
+		}
+		for (Entity en : todelete) {
+			entities.remove(en);
 		}
 		return true;
 	}
 
-	private void removeEntity(Entity entity) {
-		for (Entity e : entities) {
+	private List<Entity> removeEntity(Entity entity) {
+		int size = entities.size();
+		List<Entity> todelete = new ArrayList<Entity>();
+		for (int i = 0; i<size; i++) {
+			Entity e = entities.get(i);
 			if (e == entity)
-				entities.remove(entity);
+				todelete.add(e);
 		}
+		return todelete;
+		
 		
 	}
 
