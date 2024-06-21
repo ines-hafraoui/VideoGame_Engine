@@ -45,7 +45,7 @@ public abstract class Avatar {
 	public int StateToString(String s) {
 		if (s.equals("HIT")) {
 			return HIT;
-		} else if (s.equals("WALK")) {
+		} else if (s.equals("MOVE")) {
 			return WALK;
 		} else {
 			return IDLE;

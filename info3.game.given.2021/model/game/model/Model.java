@@ -27,9 +27,16 @@ import java.util.HashMap;
 import java.util.List;
 import game.entity.Entity;
 import game.entity.EntityType;
+import game.automaton.Action;
 import game.automaton.Automate;
 import game.automaton.Category;
+import game.automaton.Key;
+import game.automaton.Move;
 import game.automaton.Relative_Orientation;
+import game.automaton.State;
+import game.automaton.Transition;
+import game.automaton.TrueFalse;
+import game.automaton.Turn;
 import game.entity.Absolute_Orientation;
 import game.entity.Base;
 import game.entity.Bot;
@@ -132,8 +139,42 @@ public class Model {
 	            if (entity != null) {
 	            	if (behaviour != null) {
 	            		String galPath = new File("gal/gal/Arrow.gal").getAbsolutePath();
-		        		Automate automate = TestMain.loadAutomata(galPath);
-
+		        		//Automate automate = TestMain.loadAutomata(galPath);
+	            		List<State> list_state = new ArrayList(); 	//Creation automate à la main de ici
+	            		List<Transition> list_trans = new ArrayList();
+	            		List<Action> list_action1 = new ArrayList();
+	            		List<Action> list_action2 = new ArrayList();
+	            		List<Action> list_action3 = new ArrayList();
+	            		List<Action> list_action4 = new ArrayList();
+	            		Move am = new Move();
+	            		Turn ae = new Turn(new Absolute_Orientation("E"));
+	            		Turn as = new Turn(new Absolute_Orientation("S"));
+	            		Turn aw = new Turn(new Absolute_Orientation("W"));
+	            		Turn an = new Turn(new Absolute_Orientation("N"));
+	            		list_action1.add(ae);
+	            		list_action1.add(am);
+	            		list_action2.add(as);
+	            		list_action2.add(am);
+	            		list_action3.add(aw);
+	            		list_action3.add(am);
+	            		list_action4.add(an);
+	            		list_action4.add(am);
+	            		
+	            		Key cu = new Key("FU");
+	            		Key cd = new Key("FD");
+	            		Key cr = new Key("FR");
+	            		Key cl = new Key("FL");
+	            		Transition t1 = new Transition("Init",cr,list_action1);
+	            		Transition t2 = new Transition("Init",cd,list_action2);
+	            		Transition t3 = new Transition("Init",cl,list_action3);
+	            		Transition t4 = new Transition("Init",cu,list_action4);
+	            		list_trans.add(t1);
+	            		list_trans.add(t2);
+	            		list_trans.add(t3);
+	            		list_trans.add(t4);
+	            		State s1= new State(list_trans,"Init");
+	            		list_state.add(s1);
+	            		Automate automate = new Automate("Init",list_state);	// A là
 		        		if (automate != null) {
 		        			entity.set_automate(automate);
 			        		if (entity instanceof Player) {
@@ -398,36 +439,36 @@ public class Model {
 	}
 
 	public void eval_angle(Absolute_Orientation d, double angle1, double angle2) {
-		switch (d.toString()) {
-		case "E":
+		switch (d.get_abs_Orientation()) {
+		case Absolute_Orientation.EAST:
 			angle1 = 337.5;
 			angle2 = 22.5;
 			break;
-		case "SE":
+		case Absolute_Orientation.SOUTH_E:
 			angle1 = 22.5;
 			angle2 = 67.5;
 			break;
-		case "S":
+		case Absolute_Orientation.SOUTH:
 			angle1 = 67.5;
 			angle2 = 112.5;
 			break;
-		case "SW":
+		case Absolute_Orientation.SOUTH_W:
 			angle1 = 112.5;
 			angle2 = 157.5;
 			break;
-		case "W":
+		case Absolute_Orientation.WEST:
 			angle1 = 157.5;
 			angle2 = 202.5;
 			break;
-		case "NW":
+		case Absolute_Orientation.NORTH_W:
 			angle1 = 202.5;
 			angle2 = 247.5;
 			break;
-		case "N":
+		case Absolute_Orientation.NORTH:
 			angle1 = 247.5;
 			angle2 = 292.5;
 			break;
-		case "NE":
+		case Absolute_Orientation.NORTH_E:
 			angle1 = 292.5;
 			angle2 = 337.5;
 			break;
