@@ -65,7 +65,7 @@ public class MiniMap {
 	}
 
 	private void AffichageEntity(Graphics g) {
-		g.setColor(Color.RED);
+		g.setColor(Color.MAGENTA);
 		List<Avatar> List_av = m_view.getAvatars();
 		for (Avatar avatar : List_av) {
 			g.fillRect(minimapX + (int) (avatar.m_entity.get_x()) / 10, minimapY + (int) (avatar.m_entity.get_y()) / 10,
@@ -74,8 +74,15 @@ public class MiniMap {
 		g.setColor(Color.MAGENTA);
 		List<Avatar> List_pl = m_view.getPlayers();
 		for (Avatar player : List_pl) {
-			g.fillRect(minimapX + (int) (player.m_entity.get_x()) / 10, minimapY + (int) (player.m_entity.get_y()) / 10,
-					4, 4);
+			if (player.m_entity.get_team() == 1) {
+				g.setColor(Color.RED);
+				g.fillRect(minimapX + (int) (player.m_entity.get_x()) / 10,
+						minimapY + (int) (player.m_entity.get_y()) / 10, 4, 4);
+			} else {
+				g.setColor(Color.CYAN);
+				g.fillRect(minimapX + (int) (player.m_entity.get_x()) / 10,
+						minimapY + (int) (player.m_entity.get_y()) / 10, 4, 4);
+			}
 		}
 	}
 }

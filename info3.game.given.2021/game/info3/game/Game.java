@@ -27,6 +27,8 @@ import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -61,6 +63,8 @@ public class Game {
 	View m_view;
 	public Model m_model;
 	Sound m_music;
+	public Map<String, Object> sprites = new HashMap<>();
+
 
 	Game() throws Exception {
 		// creating a model, that would be a model
@@ -71,7 +75,7 @@ public class Game {
 		String parsePath = new File("model/configjeu1.json").getAbsolutePath();
 		Parser configParse = new Parser(parsePath);
 
-		m_model = new Model(d.width, d.height, configParse);
+		m_model = new Model(d.width, d.height, configParse, factory);
 
 		m_model.setListener(new SyncViewModel());
 
@@ -82,6 +86,7 @@ public class Game {
 		// creating the game canvas to render the game,
 		// that would be a part of the view in the MVC pattern
 		m_canvas = new GameCanvas(m_listener);
+		sprites = configParse.sprites;
 		m_view = new View(m_model, factory, d);
 
 		System.out.println("  - creating frame...");

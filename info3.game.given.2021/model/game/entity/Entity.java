@@ -24,6 +24,7 @@ public abstract class Entity {
 	protected int team;
 	protected boolean injured;
 	protected int current_nbot;
+	protected int nb_bot_init;
 	protected Category cat;
 	protected boolean pickable;
 	protected boolean selected;
@@ -64,6 +65,7 @@ public abstract class Entity {
 		this.team = team;
 		injured = false;
 		current_nbot = nb_bot;
+		nb_bot_init = nb_bot;
 		selected = false;
 	}
 	
@@ -79,6 +81,7 @@ public abstract class Entity {
 		this.team = team;
 		injured = false;
 		current_nbot = nb_bot;
+		nb_bot_init = nb_bot;
 		selected = false;
 	}
 	
@@ -94,6 +97,7 @@ public abstract class Entity {
 		this.team = team;
 		injured = false;
 		current_nbot = nb_bot;
+		nb_bot_init = nb_bot;
 		this.view = view;
 		this.pickable = pickable;
 		selected = false;
@@ -236,6 +240,22 @@ public abstract class Entity {
 		return hitBox;
 	}
 	
+	 public void addHitBox(HitBox h) {
+    	 this.getHitBox().setHbWidth(h.getHbWidth()); 
+    	 this.getHitBox().setHbHeight(h.getHbHeight());
+         this.getHitBox().setEntity(h.getEntity());
+         this.getHitBox().setPolygone();
+    	
+    }
+	
+	public int getCurrentNbot() {
+		return current_nbot;
+	}
+
+	public void reduce_HP(int r) {
+		HP = HP - r;
+	}
+	
 	public void get_injured() {
 		injured = true;
 		HP -= 10;
@@ -354,8 +374,12 @@ public abstract class Entity {
 		model = m ;
 	}
 
-	public void get_state_action(String action) {
+	public void set_state_action(String action) {
 		state_action = action;
+	}
+	
+	public String get_state_action() {
+		return state_action;
 	}
 
 	/*

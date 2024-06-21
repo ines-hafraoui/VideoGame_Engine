@@ -7,51 +7,114 @@ import game.automaton.Automate;
 import game.model.Model;
 
 public class Player extends Entity {
-	protected List<Item> inventory;
+	protected Item inventory[];
+	protected int nb_item_inventory;
 	
 	//add current number of bot field
 
 	public Player(Automate a, Model m,Position p, Absolute_Orientation o, int team, int nb_bot) {
 		super(a,m,p,o, team, nb_bot);
-		inventory = new ArrayList<Item>();
+		inventory = new Item[nb_bot];
 		bots = new ArrayList<Entity>();
-		type = "P";
+		type = EntityType.PLAYER;
 	
 	}
 	
 
 	public Player(Model m,Position pos, Absolute_Orientation o,int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
 		super(m,pos,o,team, nb_bot, view, pickable,hb);
-		inventory = new ArrayList<Item>();
+		inventory = new Item[nb_bot];
 		type = EntityType.PLAYER;
 		bots = new ArrayList<Entity>();
 	}
 
+	public boolean do_move() {
+		Position p = newPosition();
+		if (p == null) return false;
+		position = p;
+		return true;
+	}
+
 	@Override
-	public boolean do_pick(int distance) {
-		state_action = ActionType.PICK;
-		Item item = (Item) model.get_entity(distance,"I",this.get_x(), this.get_y());	// ask the model to give it the entity (whiwh is an item) at the distance d 
-		return inventory.add(item);
+	public void do_egg(int cat) {
+		
+		Entity e;
+		Automate a;
+		
+		switch(cat) {
+		case FLECHE : 
+			e = model.newEntity(model,position,abs_or, EntityType.ARROW,team, 0,0,false,null);
+			e.addHitBox(new HitBox(e,2,2));
+			a = model.automates.get(EntityType.ARROW);
+			e.set_automate(a);
+			state_action = ActionType.EGG;
+			break;
+		case BOULE_FEU : 
+			e = model.newEntity(model,position,abs_or, EntityType.FIREBALL,team, 0,0,false,null);
+			e.addHitBox(new HitBox(e,2,2));
+			a = model.automates.get(EntityType.FIREBALL);
+			e.set_automate(a);
+			state_action = ActionType.EGG;
+			break;
+		default : 
+			break;
+		}
+	}
+
+	@Override
+	public boolean do_hit(Absolute_Orientation o, String t, int porte) {
+		state_action = ActionType.HIT;
+		return model.inflict_hit(o, porte, t, this.get_x(), this.get_y());
+	}
+
+	@Override
+	public boolean do_pick(int distance) {	// a refaire
+//		if (nb_item_inventory < this.nb_bot_init) {
+//			state_action = ActionType.PICK;
+//			Item item = (Item) model.get_entity(distance,"I",this.get_x(), this.get_y());	// ask the model to give it the entity (whiwh is an item) at the distance d
+//			inventory[nb_item_inventory] = item;
+//			return true;
+//		}
+		return false;
 	}
 
 	@Override
 	public Entity do_throw() {
-
+		
+	 if (nb_item_inventory != 0) {
 		state_action = ActionType.THROW;
-		int index = index_inventory%Model.nb_bot_init;
-		Item item = inventory.remove(index);
-		return item;
+        int index = index_inventory % Model.nb_bot_init;
+        Item item = inventory[index];
+        // move element to the left
+        for (int i = index; i < nb_item_inventory - 1; i++) {
+            inventory[i] = inventory[i + 1];
+        }
+        inventory[nb_item_inventory - 1] = null; // last element is null
+        nb_item_inventory--;
+        return item;
+	 }
+		 return null;
 	}
 
 	@Override
 	public boolean do_get() {
-		Entity e = bots.get(index_bot);
-		Item item = inventory.remove(index_inventory);
-		if (item != null) {
-			e.aut = item.get_automate(); 
-			index_inventory =0;
-			index_bot = 0;
-			return true;
+		if (bots.size() != 0) {
+			Entity e = bots.get(index_bot);
+			Item item = inventory[index_inventory];
+			if (item != null) {
+	            // move element to the left
+	            for (int i = index_inventory; i < nb_item_inventory - 1; i++) {
+	                inventory[i] = inventory[i + 1];
+	            }
+	            inventory[nb_item_inventory - 1] = null; // last element is null
+	            nb_item_inventory--;
+	            
+	            e.aut = item.get_automate();
+	            index_inventory = 0;
+	            index_bot = 0;
+	            return true;
+	        }
+			return false;
 		}
 		return false;
 	}
@@ -61,5 +124,9 @@ public class Player extends Entity {
 		state_action = ActionType.WIZZ;
 		newSpeed(factor);
 		return true;
+	}
+	
+	public Item[] get_inventory(){
+		return inventory;
 	}
 }
