@@ -13,9 +13,8 @@ public class HitBox {
     private Polygon polygon;
 
     public HitBox(float x, float y) {
-        this.width = width; 
-        this.height = height;
-        polygon = create_polygon();
+        width = x; 
+        height = y;
     }
     
 
@@ -37,6 +36,11 @@ public class HitBox {
 
     public void setHbHeight(float y) {
         this.height = y; 
+    }
+    
+    public void setEntity(Entity e) {
+        this.e =e; 
+        polygon = create_polygon();
     }
     
 

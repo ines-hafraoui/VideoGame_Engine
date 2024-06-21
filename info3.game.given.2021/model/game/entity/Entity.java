@@ -101,6 +101,7 @@ public abstract class Entity {
 		this.view = view;
 		this.pickable = pickable;
 		selected = false;
+		hitBox.setEntity(this);	
 	}
 	
 

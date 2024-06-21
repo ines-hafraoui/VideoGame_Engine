@@ -34,12 +34,12 @@ public class InventoryMenu {
 
 	public void paint(Graphics g) throws IOException {
 		int w = m_image.getWidth() * INVENTORYSIZE;
-		List<Item> L_item = m_player.get_inventory();
+		Item[] L_item = m_player.get_inventory();
 		for (int i = 0; i < NBCASE; i++) {
 			g.drawImage(m_image, InventoryX + i * w, InventoryY, w, m_image.getHeight() * INVENTORYSIZE, null);
-			if (L_item.size() > i) {
-				if (L_item.get(i) != null) {
-					Item item = L_item.get(i);
+			if (L_item.length > i) {
+				if (L_item[i] != null) {
+					Item item = L_item[i];
 					ItemAvatar item_avatar = new ItemAvatar();
 					g.drawImage(item_avatar.get_images()[0], InventoryX + i * w, InventoryY, w,
 							m_image.getHeight() * INVENTORYSIZE, null);
