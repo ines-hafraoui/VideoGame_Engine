@@ -66,7 +66,7 @@ public class Parser {
                         entityProperties.put(entityKeyStr, pos);
                     } else if ("hitbox".equals(entityKeyStr) && entityKeyValue instanceof JSONArray) {
                         JSONArray hitBoxArray = (JSONArray) entityKeyValue;
-                        HitBox hb = new HitBox(null, ((Number) hitBoxArray.get(0)).floatValue(), ((Number) hitBoxArray.get(1)).floatValue());
+                        HitBox hb = new HitBox(((Number) hitBoxArray.get(0)).floatValue(), ((Number) hitBoxArray.get(1)).floatValue());
                         entityProperties.put(entityKeyStr, hb);
                     } else if ("sprite".equals(entityKeyStr) && entityKeyValue instanceof JSONArray){
                     	sprites.put(convertString(name), entityKeyValue);

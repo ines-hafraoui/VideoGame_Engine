@@ -40,14 +40,12 @@ public class Bot extends Entity{
 		
 		switch(cat) {
 		case FLECHE : 
-			e = model.newEntity(model,position,abs_or, EntityType.ARROW,team,0,0,false,null);
-			e.addHitBox(new HitBox(e,10,10));
+			e = model.newEntity(model,position,abs_or, EntityType.ARROW,team,0,0,false,new HitBox(10,10));
 			model.get_entities().add(e);
 			state_action = ActionType.EGG;
 			break;
 		case BOULE_FEU :
-			e = model.newEntity(model,position,abs_or, EntityType.FIREBALL,team,0,0,false,null);
-			e.addHitBox(new HitBox(e,10,10));
+			e = model.newEntity(model,position,abs_or, EntityType.FIREBALL,team,0,0,false,new HitBox(10,10));
 			model.get_entities().add(e);
 			state_action = ActionType.EGG;
 			break;

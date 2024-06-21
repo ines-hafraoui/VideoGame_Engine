@@ -243,7 +243,6 @@ public abstract class Entity {
 	 public void addHitBox(HitBox h) {
     	 this.getHitBox().setHbWidth(h.getHbWidth()); 
     	 this.getHitBox().setHbHeight(h.getHbHeight());
-         this.getHitBox().setEntity(h.getEntity());
          this.getHitBox().setPolygone();
     	
     }
@@ -270,17 +269,29 @@ public abstract class Entity {
 	}
 
 	public void do_egg(int cat) {
+		
+		Entity e;
+		Automate a;
 		switch(cat) {
 		case FLECHE : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.ARROW,team));
+			e = model.newEntity(model,position,abs_or, EntityType.ARROW,team,0,0,false,new HitBox(2,2));
+			model.get_entities().add(e);
+			a = model.automates.get(EntityType.ARROW);
+			e.set_automate(a);
 			state_action = ActionType.EGG;
 			break;
-		case BOULE_FEU : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.FIREBALL,team));
+		case BOULE_FEU :
+			e = model.newEntity(model,position,abs_or, EntityType.FIREBALL,team,0,0,false,new HitBox(2,2));
+			model.get_entities().add(e);
+			a = model.automates.get(EntityType.FIREBALL);
+			e.set_automate(a);
 			state_action = ActionType.EGG;
 			break;
-		case BOT : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, "BO",team));
+		case BOT :  
+			e = model.newEntity(model,position,abs_or, EntityType.TEAMMATE,team, 0,0,false,new HitBox(2,2));
+			model.get_entities().add(e);
+			a = model.automates.get(EntityType.TEAMMATE);
+			e.set_automate(a);
 			state_action = ActionType.EGG;
 			break;
 		default : 

@@ -35,31 +35,6 @@ public class Player extends Entity {
 		return true;
 	}
 
-	@Override
-	public void do_egg(int cat) {
-		
-		Entity e;
-		Automate a;
-		
-		switch(cat) {
-		case FLECHE : 
-			e = model.newEntity(model,position,abs_or, EntityType.ARROW,team, 0,0,false,null);
-			e.addHitBox(new HitBox(e,2,2));
-			a = model.automates.get(EntityType.ARROW);
-			e.set_automate(a);
-			state_action = ActionType.EGG;
-			break;
-		case BOULE_FEU : 
-			e = model.newEntity(model,position,abs_or, EntityType.FIREBALL,team, 0,0,false,null);
-			e.addHitBox(new HitBox(e,2,2));
-			a = model.automates.get(EntityType.FIREBALL);
-			e.set_automate(a);
-			state_action = ActionType.EGG;
-			break;
-		default : 
-			break;
-		}
-	}
 
 	@Override
 	public boolean do_hit(Absolute_Orientation o, String t, int porte) {
