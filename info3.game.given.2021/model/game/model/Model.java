@@ -27,9 +27,11 @@ import java.util.HashMap;
 import java.util.List;
 import game.entity.Entity;
 import game.entity.EntityType;
+import game.entity.Fire_Ball;
 import game.automaton.Action;
 import game.automaton.Automate;
 import game.automaton.Category;
+import game.automaton.Hit;
 import game.automaton.Key;
 import game.automaton.Move;
 import game.automaton.Relative_Orientation;
@@ -38,6 +40,8 @@ import game.automaton.Transition;
 import game.automaton.TrueFalse;
 import game.automaton.Turn;
 import game.entity.Absolute_Orientation;
+import game.entity.ActionType;
+import game.entity.Arrow;
 import game.entity.Base;
 import game.entity.Bot;
 import game.entity.HitBox;
@@ -99,7 +103,7 @@ public class Model {
 			java.util.Map<String, Object> properties = entry.getValue();
 
 	            // Extract common properties
-	            String direction = (String) properties.get("direction");
+	           String direction = (String) properties.get("direction");
 	            Position pos = (Position) properties.get("position");
 	            int team = ((Number) properties.get("team")).intValue();
 	            int view = ((Number) properties.get("view")).intValue();
@@ -121,6 +125,12 @@ public class Model {
 	            case "Archer":
 	            	entity = new Bot(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
                     break;
+	            case "Arrow":
+	            	entity = new Arrow(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
+                    break;
+	            case "FireBall":
+	            	entity = new Fire_Ball(this,pos,new Absolute_Orientation(direction), team, 0, view, pickable,hb);
+                    break;
 	            case "Base1":
 	            case "Base2":
 	            case "Base":
@@ -129,7 +139,7 @@ public class Model {
 	            case "Power":
 	            case "Capacity":
 	            case "Plant" : 
-	            	entity = new Item(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
+	            	entity = new Item(this,pos,new Absolute_Orientation(direction), team, 0, view, pickable,hb);
                     break;
                 default : 
                 	entity = null;
@@ -138,43 +148,49 @@ public class Model {
 	           
 	            if (entity != null) {
 	            	if (behaviour != null) {
-	            		String galPath = new File("gal/gal/Arrow.gal").getAbsolutePath();
-		        		//Automate automate = TestMain.loadAutomata(galPath);
-	            		List<State> list_state = new ArrayList(); 	//Creation automate à la main de ici
-	            		List<Transition> list_trans = new ArrayList();
-	            		List<Action> list_action1 = new ArrayList();
-	            		List<Action> list_action2 = new ArrayList();
-	            		List<Action> list_action3 = new ArrayList();
-	            		List<Action> list_action4 = new ArrayList();
-	            		Move am = new Move();
-	            		Turn ae = new Turn(new Absolute_Orientation("E"));
-	            		Turn as = new Turn(new Absolute_Orientation("S"));
-	            		Turn aw = new Turn(new Absolute_Orientation("W"));
-	            		Turn an = new Turn(new Absolute_Orientation("N"));
-	            		list_action1.add(ae);
-	            		list_action1.add(am);
-	            		list_action2.add(as);
-	            		list_action2.add(am);
-	            		list_action3.add(aw);
-	            		list_action3.add(am);
-	            		list_action4.add(an);
-	            		list_action4.add(am);
-	            		
-	            		Key cu = new Key("FU");
-	            		Key cd = new Key("FD");
-	            		Key cr = new Key("FR");
-	            		Key cl = new Key("FL");
-	            		Transition t1 = new Transition("Init",cr,list_action1);
-	            		Transition t2 = new Transition("Init",cd,list_action2);
-	            		Transition t3 = new Transition("Init",cl,list_action3);
-	            		Transition t4 = new Transition("Init",cu,list_action4);
-	            		list_trans.add(t1);
-	            		list_trans.add(t2);
-	            		list_trans.add(t3);
-	            		list_trans.add(t4);
-	            		State s1= new State(list_trans,"Init");
-	            		list_state.add(s1);
-	            		Automate automate = new Automate("Init",list_state);	// A là
+	            		String galPath = new File("gal/gal/"+behaviour).getAbsolutePath();
+		        		Automate automate = TestMain.loadAutomata(galPath);
+//	            		List<State> list_state = new ArrayList(); 	//Creation automate à la main de ici
+//	            		List<Transition> list_trans = new ArrayList();
+//	            		List<Action> list_action1 = new ArrayList();
+//	            		List<Action> list_action2 = new ArrayList();
+//	            		List<Action> list_action3 = new ArrayList();
+//	            		List<Action> list_action4 = new ArrayList();
+//	            		List<Action> list_action5 = new ArrayList();
+//	            		Move am = new Move();
+//	            		Turn ae = new Turn(new Absolute_Orientation("E"));
+//	            		Turn as = new Turn(new Absolute_Orientation("S"));
+//	            		Turn aw = new Turn(new Absolute_Orientation("W"));
+//	            		Turn an = new Turn(new Absolute_Orientation("N"));
+//	            		Hit ah = new Hit(new Absolute_Orientation("S"),"A",2);
+//	            		list_action1.add(ae);
+//	            		list_action1.add(am);
+//	            		list_action2.add(as);
+//	            		list_action2.add(am);
+//	            		list_action3.add(aw);
+//	            		list_action3.add(am);
+//	            		list_action4.add(an);
+//	            		list_action4.add(am);
+//	            		list_action5.add(ah);
+//	            		Key cu = new Key("FU");
+//	            		Key cd = new Key("FD");
+//	            		Key cr = new Key("FR");
+//	            		Key cl = new Key("FL");
+//	            		Key ce = new Key("ENTER");
+//	            		Transition t1 = new Transition("Init",cr,list_action1);
+//	            		Transition t2 = new Transition("Init",cd,list_action2);
+//	            		Transition t3 = new Transition("Init",cl,list_action3);
+//	            		Transition t4 = new Transition("Init",cu,list_action4);
+//	            		Transition t5 = new Transition("Init",ce,list_action5);
+//	            		list_trans.add(t1);
+//	            		list_trans.add(t2);
+//	            		list_trans.add(t3);
+//	            		list_trans.add(t4);
+//	            		list_trans.add(t5);
+//
+//	            		State s1= new State(list_trans,"Init");
+//	            		list_state.add(s1);
+//	            		Automate automate = new Automate("Init",list_state);	// A là
 		        		if (automate != null) {
 		        			entity.set_automate(automate);
 			        		if (entity instanceof Player) {
@@ -231,61 +247,6 @@ public class Model {
 	public void add_entity(Entity e) {
 		entities.add(e);
 	}
-
-	public boolean inflict_hit(Absolute_Orientation o, int porte, String t, float currentx, float currenty) {
-		float newX = currentx;
-		float newY = currenty;
-
-		switch (o.get_abs_Orientation()) {
-		case "N":
-			newY += porte;
-			break;
-		case "S":
-			newY -= porte;
-			break;
-		case "W":
-			newX -= porte;
-			break;
-		case "E":
-			newX += porte;
-			break;
-		case "NE":
-			newY += porte;
-			newX += porte;
-			break;
-		case "NW":
-			newY += porte;
-			newX -= porte;
-			break;
-		case "SE":
-			newY -= porte;
-			newX += porte;
-			break;
-		case "SW":
-			newY -= porte;
-			newX -= porte;
-			break;
-		default:
-			break;
-		}
-
-		for (Entity entity : entities) {
-			if (isWithinHitbox(newX, newY, entity)) {
-				entity.get_injured();
-			}
-		}
-		return true;
-	}
-
-	private boolean isWithinHitbox(float x, float y, Entity entity) {
-		float entityX = entity.get_x();
-		float entityY = entity.get_y();
-		float hitboxWidth = entity.getHitBox().getHbWidth(); // Largeur de la hitbox
-		float hitboxHeight = entity.getHitBox().getHbHeight(); // Hauteur de la hitbox
-
-		return (x >= entityX && x <= entityX + hitboxWidth) && (y >= entityY && y <= entityY + hitboxHeight);
-	}
-
 	/*
 	 * method give the list of entity that are on the map
 	 */
@@ -498,20 +459,40 @@ public class Model {
 		double angle1=0,angle2=0;
 		eval_angle(o,angle1,angle2);
 		Polygon polygon = create_polygon_direction(p_x,p_y,porte,angle1,angle2);
+		List<Entity> todelete = new ArrayList<Entity>();
 		for (Entity entity : entities) {
 			if (entity.getHitBox().get_polygon().intersectsWith(polygon)) {
 				entity.get_injured();
+				if (entity.get_state_action() == ActionType.EXPLODE) {
+					todelete = removeEntity(entity);
+				}
 			}
 		}
+		for (Entity en : todelete) {
+			entities.remove(en);
+		}
 		return true;
+	}
+
+	private List<Entity> removeEntity(Entity entity) {
+		int size = entities.size();
+		List<Entity> todelete = new ArrayList<Entity>();
+		for (int i = 0; i<size; i++) {
+			Entity e = entities.get(i);
+			if (e == entity)
+				todelete.add(e);
+		}
+		return todelete;
+		
+		
 	}
 
 	public String from_rel_to_abs_orientation(Absolute_Orientation abs,Relative_Orientation rel) {
 		switch(rel.rel_or) {
 		case "H":
-			return abs.toString();
+			return abs.get_abs_Orientation();
 		case "F":
-			return abs.toString();
+			return abs.get_abs_Orientation();
 		case "B":
 			switch (abs.abs_or) {
 			case "N":

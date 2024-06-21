@@ -43,7 +43,6 @@ public class PlayerAvatar extends Avatar {
 	@Override
 	protected void configureAnimation() {
 		String abs_or = m_entity.get_abs_or().get_abs_Orientation();
-		System.out.print(abs_or);
 		switch (a_state) {
 		case IDLE:
 			if (m_imageIndex < 4) {
