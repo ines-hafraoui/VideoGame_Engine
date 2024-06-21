@@ -18,7 +18,7 @@ public class Arrow extends Entity{
 	
 	public Arrow(Model m,Position p, Absolute_Orientation o, int team,int nb_bot, int view,boolean pickable,HitBox hb) {
 		super(m,p,o,team,nb_bot,view,pickable,hb);
-		type = EntityType.FIREBALL;
+		type = EntityType.ARROW;
 	}
 
 

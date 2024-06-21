@@ -27,11 +27,13 @@ import java.util.HashMap;
 import java.util.List;
 import game.entity.Entity;
 import game.entity.EntityType;
+import game.entity.Fire_Ball;
 import game.automaton.Automate;
 import game.automaton.Category;
 import game.automaton.Relative_Orientation;
 import game.entity.Absolute_Orientation;
 import game.entity.ActionType;
+import game.entity.Arrow;
 import game.entity.Base;
 import game.entity.Bot;
 import game.entity.HitBox;
@@ -114,6 +116,12 @@ public class Model {
 	            case "Dasher":
 	            case "Archer":
 	            	entity = new Bot(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
+                    break;
+	            case "Arrow":
+	            	entity = new Arrow(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
+                    break;
+	            case "FireBall":
+	            	entity = new Fire_Ball(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
                     break;
 	            case "Base1":
 	            case "Base2":
