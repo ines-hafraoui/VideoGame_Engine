@@ -31,6 +31,7 @@ import game.automaton.Automate;
 import game.automaton.Category;
 import game.automaton.Relative_Orientation;
 import game.entity.Absolute_Orientation;
+import game.entity.ActionType;
 import game.entity.Base;
 import game.entity.Bot;
 import game.entity.HitBox;
@@ -196,31 +197,31 @@ public class Model {
 		float newY = currenty;
 
 		switch (o.get_abs_Orientation()) {
-		case "N":
+		case Absolute_Orientation.NORTH:
 			newY += porte;
 			break;
-		case "S":
+		case Absolute_Orientation.SOUTH:
 			newY -= porte;
 			break;
-		case "W":
+		case Absolute_Orientation.WEST:
 			newX -= porte;
 			break;
-		case "E":
+		case Absolute_Orientation.EAST:
 			newX += porte;
 			break;
-		case "NE":
+		case Absolute_Orientation.NORTH_E:
 			newY += porte;
 			newX += porte;
 			break;
-		case "NW":
+		case Absolute_Orientation.NORTH_W:
 			newY += porte;
 			newX -= porte;
 			break;
-		case "SE":
+		case Absolute_Orientation.SOUTH_E:
 			newY -= porte;
 			newX += porte;
 			break;
-		case "SW":
+		case Absolute_Orientation.SOUTH_W:
 			newY -= porte;
 			newX -= porte;
 			break;
@@ -457,9 +458,20 @@ public class Model {
 		for (Entity entity : entities) {
 			if (entity.getHitBox().get_polygon().intersectsWith(polygon)) {
 				entity.get_injured();
+				if (entity.get_state_action() == ActionType.EXPLODE) {
+					removeEntity(entity);
+				}
 			}
 		}
 		return true;
+	}
+
+	private void removeEntity(Entity entity) {
+		for (Entity e : entities) {
+			if (e == entity)
+				entities.remove(entity);
+		}
+		
 	}
 
 	public String from_rel_to_abs_orientation(Absolute_Orientation abs,Relative_Orientation rel) {

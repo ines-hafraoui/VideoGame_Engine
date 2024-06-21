@@ -21,10 +21,6 @@ public class Arrow extends Entity{
 		type = EntityType.FIREBALL;
 	}
 
-	@Override
-	public boolean do_hit(Absolute_Orientation o,  String t, int porte) {
-		return false;
-	}
 
 	@Override
 	public Entity do_throw() {

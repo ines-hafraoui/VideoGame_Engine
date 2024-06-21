@@ -59,9 +59,9 @@ public class Game1Factory implements IFactory {
 		case EntityType.PLAYER:
 			return new Player(m, p, o,team, nb_bot, view, pickable, hb);
 		case EntityType.FIREBALL:
-			return new Fire_Ball(m, p, o,team, nb_bot);
+			return new Fire_Ball(m, p, o,team, nb_bot, view, pickable, hb);
 		case EntityType.ARROW:
-			return new Arrow(m, p, o, team,nb_bot);
+			return new Arrow(m, p, o, team,nb_bot, view, pickable, hb);
 		default:
 			return null;
 		}
