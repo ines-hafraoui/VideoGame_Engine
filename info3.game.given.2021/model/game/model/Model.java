@@ -263,9 +263,8 @@ public class Model {
 
 	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String type, int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
 		Entity e =factory.newEntity(model, position, abs_or, type ,team, nb_bot,view, pickable,hb);
-		if(m_ml != null) {
+		if(m_ml != null) 
 			m_ml.addedEntity(e);
-		}
 		return e;
 	}
 
@@ -470,6 +469,8 @@ public class Model {
 		}
 		for (Entity en : todelete) {
 			entities.remove(en);
+			if(m_ml != null)
+				m_ml.removedEntity(e);
 		}
 		return true;
 	}
