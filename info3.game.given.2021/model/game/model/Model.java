@@ -103,7 +103,7 @@ public class Model {
 			java.util.Map<String, Object> properties = entry.getValue();
 
 	            // Extract common properties
-	            String direction = (String) properties.get("direction");
+	           String direction = (String) properties.get("direction");
 	            Position pos = (Position) properties.get("position");
 	            int team = ((Number) properties.get("team")).intValue();
 	            int view = ((Number) properties.get("view")).intValue();
@@ -129,7 +129,7 @@ public class Model {
 	            	entity = new Arrow(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
                     break;
 	            case "FireBall":
-	            	entity = new Fire_Ball(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
+	            	entity = new Fire_Ball(this,pos,new Absolute_Orientation(direction), team, 0, view, pickable,hb);
                     break;
 	            case "Base1":
 	            case "Base2":
@@ -139,7 +139,7 @@ public class Model {
 	            case "Power":
 	            case "Capacity":
 	            case "Plant" : 
-	            	entity = new Item(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
+	            	entity = new Item(this,pos,new Absolute_Orientation(direction), team, 0, view, pickable,hb);
                     break;
                 default : 
                 	entity = null;
@@ -478,9 +478,9 @@ public class Model {
 	public String from_rel_to_abs_orientation(Absolute_Orientation abs,Relative_Orientation rel) {
 		switch(rel.rel_or) {
 		case "H":
-			return abs.toString();
+			return abs.get_abs_Orientation();
 		case "F":
-			return abs.toString();
+			return abs.get_abs_Orientation();
 		case "B":
 			switch (abs.abs_or) {
 			case "N":
