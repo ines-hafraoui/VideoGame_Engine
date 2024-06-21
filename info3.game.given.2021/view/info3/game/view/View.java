@@ -47,7 +47,8 @@ public class View extends Container {
 		m_avatars = new LinkedList<Avatar>();
 		m_players = new LinkedList<Avatar>();
 		m_minimap = new MiniMap(this, m_model);
-
+		
+		//Creates every avatar made at initialization
 		List<Entity> entities = m_model.get_entities();
 		Iterator<Entity> iter = entities.iterator();
 		while (iter.hasNext()) {
@@ -60,7 +61,6 @@ public class View extends Container {
 		}
 
 		setViewports();
-
 	}
 
 	public void paint(Graphics g) {
@@ -210,10 +210,6 @@ public class View extends Container {
 		}
 	}
 
-	public int getRandomNumber(int min, int max) {
-		return (int) ((Math.random() * (max - min)) + min);
-	}
-
 	public int WorldToViewX(float x) {
 		return (int) ((x*View.DISPLAYSCALE) * m_d.width / m_mwidth);
 	}
@@ -231,7 +227,20 @@ public class View extends Container {
 	}
 
 	public void newEntity(Entity e) {
-		// TODO Auto-generated method stub
-		
+		try {
+			m_f.newAvatar(e, this);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+	}
+
+	public void removedEntity(Entity e) {
+		Iterator<Avatar> iter = m_avatars.iterator();
+		while (iter.hasNext()) {
+			Avatar a = iter.next();
+			if(a.m_entity.equals(a)) {
+				m_avatars.remove(a);
+			}
+		}
 	}
 }

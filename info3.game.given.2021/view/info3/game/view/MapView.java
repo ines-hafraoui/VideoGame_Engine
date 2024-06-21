@@ -136,8 +136,14 @@ public class MapView {
 		m_groundsetup = new int[m_nrows * m_ncols];
 		for (int i = 0; i < m_ncols; i++) {
 			for (int j = 0; j < m_nrows; j++) {
-				m_groundsetup[i * j + j] = m_view.getRandomNumber(0, m_bgimages.length);
+				m_groundsetup[i * j + j] = getRandomNumber(0, m_bgimages.length);
 			}
 		}
 	}
+	
+
+	public static int getRandomNumber(int min, int max) {
+		return (int) ((Math.random() * (max - min)) + min);
+	}
+
 }

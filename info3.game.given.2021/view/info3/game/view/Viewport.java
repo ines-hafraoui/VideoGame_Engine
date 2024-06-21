@@ -42,13 +42,15 @@ public class Viewport extends Component {
 		m_d = d;
 		m_avatars = avatars;
 		m_map = m;
+
 		try {
 			if (player.m_entity instanceof Player) {
 				m_inventory = new InventoryMenu(this, (Player) player.m_entity);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		} // SOUTH
+		}
+
 		m_x = x;
 		m_y = y;
 		m_player = player;
@@ -86,7 +88,9 @@ public class Viewport extends Component {
 		Iterator<Avatar> iter = m_avatars.iterator();
 		while (iter.hasNext()) {
 			Avatar a = iter.next();
-			a.paint(mg, -m_trx, -m_try);
+			if (!a.equals(m_player) && a.within(m_inWorldBounds, -m_trx, -m_try)) {
+				a.paint(mg, -m_trx, -m_try);
+			}
 		}
 
 		m_player.paintmainplayer(mg, m_d.width / 2, m_d.height / 2);

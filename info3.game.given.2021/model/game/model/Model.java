@@ -156,8 +156,8 @@ public class Model {
 
 		poss.add(pos1);
 		poss.add(pos2);
-		poss.add(pos3);
 		poss.add(pos4);
+		poss.add(pos3);
 
 		Polygon p = new Polygon(poss);
 		m_map = new Map(p, this);
@@ -260,12 +260,15 @@ public class Model {
 	}
 
 	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String type, int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
-
-		return factory.newEntity(model, position, abs_or, type ,team, nb_bot,view, pickable,hb);
+		Entity e =factory.newEntity(model, position, abs_or, type ,team, nb_bot,view, pickable,hb);
+		if(m_ml != null) {
+			m_ml.addedEntity(e);
+		}
+		return e;
 	}
 
 	public interface ModelListener {
-		void addedEntity(Entity e) throws IOException;
+		void addedEntity(Entity e);
 
 		void removedEntity(Entity e);
 	}

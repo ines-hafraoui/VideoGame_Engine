@@ -187,13 +187,13 @@ public class Game {
 	class SyncViewModel implements ModelListener {
 
 		@Override
-		public void addedEntity(Entity e) throws IOException {
+		public void addedEntity(Entity e) {
 			m_view.newEntity(e);
 		}
 
 		@Override
 		public void removedEntity(Entity e) {
-			m_view.newEntity(e);
+			m_view.removedEntity(e);
 		}
 	}
 
