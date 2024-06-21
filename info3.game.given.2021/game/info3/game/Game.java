@@ -86,11 +86,13 @@ public class Game {
 		// creating the game canvas to render the game,
 		// that would be a part of the view in the MVC pattern
 		m_canvas = new GameCanvas(m_listener);
+
 		sprites = configParse.sprites;
-		m_view = new View(m_model, factory, d);
+		Dimension viewd = new Dimension(1000, 700);
+		m_view = new View(m_model, factory, viewd);
 
 		System.out.println("  - creating frame...");
-		m_frame = m_canvas.createFrame(d);
+		m_frame = m_canvas.createFrame(viewd);
 		System.out.println("  - setting up the frame...");
 
 		setupFrame();
@@ -106,10 +108,6 @@ public class Game {
 		m_frame.setLayout(new BorderLayout());
 
 		m_frame.add(m_canvas, BorderLayout.CENTER);
-
-//		m_text = new JLabel();
-//		m_text.setText("Tick: 0ms FPS=0");
-//		m_frame.add(m_text, BorderLayout.NORTH);
 
 		// center the window on the screen
 		m_frame.setLocationRelativeTo(null);

@@ -15,22 +15,28 @@ public class ItemAvatar extends Avatar {
 		m_imageIndex = 0;
 		m_images = View.loadSprite("resources/MiniWorldSprites/Miscellaneous/Chests.png", 1, 2);
 	}
-	
+
 	public ItemAvatar() throws IOException {
+		super();
 		m_imageIndex = 0;
 		m_images = View.loadSprite("resources/MiniWorldSprites/Miscellaneous/Chests.png", 1, 2);
 	}
 
-
 	@Override
 	public void paint(Graphics g, int x, int y) {
 		BufferedImage img = m_images[m_imageIndex];
-		g.drawImage(img,  (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - (img.getWidth() * View.DISPLAYSCALE)
-				, (y + (int) m_entity.get_y() * View.DISPLAYSCALE) - (img.getWidth() * View.DISPLAYSCALE), img.getWidth() * View.DISPLAYSCALE,
-				img.getHeight() * View.DISPLAYSCALE, null);
+		g.drawImage(img, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - (img.getWidth() * View.DISPLAYSCALE),
+				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - (img.getWidth() * View.DISPLAYSCALE),
+				img.getWidth() * View.DISPLAYSCALE, img.getHeight() * View.DISPLAYSCALE, null);
 	}
-	
+
 	public BufferedImage[] get_images() {
 		return m_images;
+	}
+
+	@Override
+	protected void configureAnimation() {
+		// TODO Auto-generated method stub
+
 	}
 }

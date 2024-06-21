@@ -415,5 +415,8 @@ public abstract class Entity {
 	public boolean eval_key(String touche) {
 		return model.get_list_touche().contains(touche);
 	}
+	public int get_HP() {
+		return HP;
+	}
 
 }

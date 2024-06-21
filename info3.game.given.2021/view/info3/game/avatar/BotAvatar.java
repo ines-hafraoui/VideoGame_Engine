@@ -11,7 +11,7 @@ import info3.game.view.View;
 public class BotAvatar extends Avatar {
 
 	private long lastUpdateTime; // Temps depuis la dernière mise à jour de l'animation
-	private static final long ANIMATION_INTERVAL = 500; // 500 ms entre les mises à jour
+	private static final long ANIMATION_INTERVAL = 400; // 500 ms entre les mises à jour
 
 	public BotAvatar(Entity e, View v) throws IOException {
 		super(e, v);
@@ -31,9 +31,14 @@ public class BotAvatar extends Avatar {
 		g.drawImage(img, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - (img.getWidth() * View.DISPLAYSCALE),
 				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - (img.getHeight() * View.DISPLAYSCALE),
 				img.getWidth() * View.DISPLAYSCALE, img.getHeight() * View.DISPLAYSCALE, null);
-		m_hb.drawHealthBar(g, x + (int) m_entity.get_x(),
-				y + (int) m_entity.get_y() - (5 % img.getHeight() * View.DISPLAYSCALE),
-				(img.getWidth() * View.DISPLAYSCALE), 5 % img.getHeight());
+		m_hb.drawHealthBar(g, x + (int) m_entity.get_x() - (img.getWidth() * View.DISPLAYSCALE),
+				y + (int) m_entity.get_y() - (img.getHeight() * View.DISPLAYSCALE) - 5 % img.getHeight(),
+				(img.getWidth() * View.DISPLAYSCALE), 5 % img.getHeight(),this.m_entity.get_HP());
+		configureAnimation();
+	}
+
+	@Override
+	protected void configureAnimation() {
 		String abs_or = m_entity.get_abs_or().get_abs_Orientation();
 		switch (a_state) {
 		case IDLE:
@@ -107,7 +112,6 @@ public class BotAvatar extends Avatar {
 			m_imageIndex++;
 			lastUpdateTime = currentTime; // Réinitialiser le dernier temps de mise à jour
 		}
-
 	}
 
 }

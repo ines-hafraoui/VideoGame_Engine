@@ -87,10 +87,4 @@ public class Game1Factory implements IFactory {
 		}
 	}
 
-	@Override
-	public Entity newEntity(Model m, Position p, Absolute_Orientation o, String type, int team) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

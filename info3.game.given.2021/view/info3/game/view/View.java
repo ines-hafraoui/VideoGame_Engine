@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -82,13 +83,14 @@ public class View extends Container {
 		//Asks the minimap to display itself within the overall view so that it is shared by both players
 		m_minimap.paint(mg);
 		long timer=m_model.get_timer();
+		Affichage_timer(mg, timer);
 	}
 	
 	public void Affichage_timer(Graphics mg,long timer) {
-		mg.setColor(Color.RED); // Set the color for the timer text
-	    mg.setFont(getFont());
+		mg.setColor(Color.WHITE); // Set the color for the timer text
+	    mg.setFont(new Font("Arial", Font.BOLD, 20%m_d.width));
 	    String timeString = formatTime(timer); // Format timer into a readable format
-	    mg.drawString(timeString, 400, 400);
+	    mg.drawString(timeString, 10%m_d.width, 20%m_d.height);
 	}
 	
 	private String formatTime(long millis) {
@@ -213,11 +215,11 @@ public class View extends Container {
 	}
 
 	public int WorldToViewX(float x) {
-		return (int) (x * m_d.width / m_mwidth);
+		return (int) ((x*View.DISPLAYSCALE) * m_d.width / m_mwidth);
 	}
 
 	public int WorldToViewY(float y) {
-		return (int) (y * m_d.height / m_mheight);
+		return (int) ((y*View.DISPLAYSCALE) * m_d.height / m_mheight);
 	}
 
 	public List<Avatar> getAvatars() {

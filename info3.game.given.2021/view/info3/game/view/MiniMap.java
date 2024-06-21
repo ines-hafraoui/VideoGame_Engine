@@ -14,6 +14,9 @@ import info3.game.avatar.Avatar;
 
 public class MiniMap {
 
+	// OVERALL SIZE OF THE MINIMAP
+	static final int MINIMAPSCALE = 8;
+
 	private int minimapWidth;
 	private int minimapHeight;
 	private int minimapX;
@@ -24,9 +27,12 @@ public class MiniMap {
 	public MiniMap(View v, Model model) {
 		m_view = v;
 		m_model = model;
-		minimapWidth = v.m_d.width / 10;
-		minimapHeight = v.m_d.height / 10;
+		minimapWidth = v.m_d.width / MINIMAPSCALE;
+		minimapHeight = v.m_d.height / MINIMAPSCALE;
+
+		// To center the x axis on the window
 		minimapX = (v.m_d.width - minimapWidth) / 2;
+		// To fix it to the bottom of the window
 		minimapY = v.m_d.height - minimapHeight - 50;
 	}
 
@@ -37,17 +43,20 @@ public class MiniMap {
 	}
 
 	private void AffichageMiniMap(Graphics g) {
-		g.setColor(Color.GREEN);
+		Color color_prairie = new Color(95, 225, 20);
+		Color color_volcano = new Color(206, 215, 5);
+		Color color_ocean = new Color(5, 193, 215);
+		g.setColor(color_prairie);
 		g.fillRect(minimapX, minimapY, minimapWidth, minimapHeight);
 
 		List<Biome> biomes = m_model.m_map.getBiome();
 		for (Biome biome : biomes) {
 			if (biome instanceof Volcano) {
-				g.setColor(Color.YELLOW);
+				g.setColor(color_volcano);
 			} else if (biome instanceof Ocean) {
-				g.setColor(Color.BLUE);
+				g.setColor(color_ocean);
 			} else {
-				g.setColor(Color.GREEN);
+				g.setColor(color_prairie);
 			}
 			Polygon polygon = biome.getBorders();
 			List<Position> vertices = polygon.getVertices();
@@ -56,8 +65,8 @@ public class MiniMap {
 
 			int i = 0;
 			for (Position pos : vertices) {
-				xPoints[i] = (int) (pos.getPositionX() / 10) + minimapX;
-				yPoints[i] = (int) (pos.getPositionY() / 10) + minimapY;
+				xPoints[i] = m_view.WorldToViewX(pos.getPositionX()) / MINIMAPSCALE + minimapX;
+				yPoints[i] = m_view.WorldToViewY(pos.getPositionY()) / MINIMAPSCALE + minimapY;
 				i++;
 			}
 			g.fillPolygon(xPoints, yPoints, vertices.size());
@@ -68,7 +77,7 @@ public class MiniMap {
 		g.setColor(Color.MAGENTA);
 		List<Avatar> List_av = m_view.getAvatars();
 		for (Avatar avatar : List_av) {
-			g.fillRect(minimapX + (int) (avatar.m_entity.get_x()) / 10, minimapY + (int) (avatar.m_entity.get_y()) / 10,
+			g.fillRect(minimapX +  m_view.WorldToViewX(avatar.m_entity.get_x()) / MINIMAPSCALE, minimapY + m_view.WorldToViewY(avatar.m_entity.get_y()) / MINIMAPSCALE,
 					4, 4);
 		}
 		g.setColor(Color.MAGENTA);
@@ -76,12 +85,12 @@ public class MiniMap {
 		for (Avatar player : List_pl) {
 			if (player.m_entity.get_team() == 1) {
 				g.setColor(Color.RED);
-				g.fillRect(minimapX + (int) (player.m_entity.get_x()) / 10,
-						minimapY + (int) (player.m_entity.get_y()) / 10, 4, 4);
+				g.fillRect(minimapX +  m_view.WorldToViewX(player.m_entity.get_x()) / MINIMAPSCALE, minimapY + m_view.WorldToViewY(player.m_entity.get_y()) / MINIMAPSCALE,
+						4, 4);
 			} else {
 				g.setColor(Color.CYAN);
-				g.fillRect(minimapX + (int) (player.m_entity.get_x()) / 10,
-						minimapY + (int) (player.m_entity.get_y()) / 10, 4, 4);
+				g.fillRect(minimapX +  m_view.WorldToViewX(player.m_entity.get_x()) / MINIMAPSCALE, minimapY + m_view.WorldToViewY(player.m_entity.get_y()) / MINIMAPSCALE,
+						4, 4);
 			}
 		}
 	}
