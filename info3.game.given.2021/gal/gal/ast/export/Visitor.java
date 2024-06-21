@@ -300,8 +300,6 @@ public class Visitor implements IVisitor {
 				game.automaton.Category cat = new game.automaton.Category(e.parameters.get(1).toString());
 				int portee = Integer.parseInt(e.parameters.get(2).toString());
 				return new Cell(ad, cat, portee);
-
-			
 			}
 		} else {
 			return expression;
