@@ -70,7 +70,7 @@ public class Automate {
 			for ( State state : currentStateList) {
 				for ( Transition transition : state.get_transitionList()) {
 					
-					if (!(r.nextInt(Integer.MAX_VALUE) <= transition.c.percent)) {
+					if (transition.c.percent != -1 && !(r.nextInt(Integer.MAX_VALUE) <= transition.c.percent)) {
 						continue;
 					}
 					
@@ -79,7 +79,7 @@ public class Automate {
 
 						for (Action a : transition.actionList) {
 							
-							if (r.nextInt(Integer.MAX_VALUE) <= a.percent) {
+							if (a.percent == -1 || r.nextInt(Integer.MAX_VALUE) <= a.percent) {
 								a.exec(e);
 							}
 

@@ -139,9 +139,9 @@ public class Model {
 	           
 	            if (entity != null) {
 	            	if (behaviour != null) {
-	            		String galPath = new File("gal/gal/Arrow.gal").getAbsolutePath();
-		        		//Automate automate = TestMain.loadAutomata(galPath);
-	            		List<State> list_state = new ArrayList(); 	//Creation automate à la main de ici
+	            		String galPath = new File("gal/gal/dasher.gal").getAbsolutePath();
+		        		Automate automate = TestMain.loadAutomata(galPath);
+	            		/*List<State> list_state = new ArrayList(); 	//Creation automate à la main de ici
 	            		List<Transition> list_trans = new ArrayList();
 	            		List<Action> list_action1 = new ArrayList();
 	            		List<Action> list_action2 = new ArrayList();
@@ -181,7 +181,7 @@ public class Model {
 
 	            		State s1= new State(list_trans,"Init");
 	            		list_state.add(s1);
-	            		Automate automate = new Automate("Init",list_state);	// A là
+	            		Automate automate = new Automate("Init",list_state);*/	// A là
 		        		if (automate != null) {
 		        			entity.set_automate(automate);
 			        		if (entity instanceof Player) {
