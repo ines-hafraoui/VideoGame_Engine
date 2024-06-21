@@ -16,11 +16,7 @@ public class Item extends Entity{
 		super(m,pos,o,team,nb_bot, view, pickable,hb);
 		type = EntityType.ITEM;
 	}
-	
-	@Override
-	public boolean do_hit(Absolute_Orientation o,  String t, int porte) {
-		return false;
-	}
+
 
 	@Override
 	public boolean do_pick(int distance) {

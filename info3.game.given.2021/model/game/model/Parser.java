@@ -68,8 +68,8 @@ public class Parser {
                         JSONArray hitBoxArray = (JSONArray) entityKeyValue;
                         HitBox hb = new HitBox(((Number) hitBoxArray.get(0)).floatValue(), ((Number) hitBoxArray.get(1)).floatValue());
                         entityProperties.put(entityKeyStr, hb);
-                    } else if ("sprite".equals(entityKeyStr) && entityKeyValue instanceof JSONArray){
-                    	sprites.put(convertString(name), entityKeyValue);
+                    } else if ("sprite".equals(entityKeyStr)){
+                    	sprites.put(convertString(keyStr), entityKeyValue);
                     }else {
                     	entityProperties.put(entityKeyStr, entityKeyValue);
                     }
@@ -88,6 +88,10 @@ public class Parser {
 		case "Player1":
         case "Player2":
             return EntityType.PLAYER;
+        case "Arrow": 
+        	return EntityType.ARROW;
+        case "FireBall":
+        	return EntityType.FIREBALL;
         case "Bot1":
         case "Bot2":
         case "Parasite":

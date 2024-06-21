@@ -258,7 +258,12 @@ public abstract class Entity {
 	
 	public void get_injured() {
 		injured = true;
-		HP -= 10;
+		if (HP-10 <0) {
+			this.do_explode();
+		}else {
+			HP -= 10;
+		}
+		
 	}
 
 	public boolean do_move() {
@@ -310,6 +315,7 @@ public abstract class Entity {
 	 * an entity always
 	 */
 	public boolean do_hit(Absolute_Orientation o, String type, int porte) {
+		state_action = ActionType.HIT;
 		return model.do_hit(o,type,porte,this);
 	}
 
@@ -349,7 +355,7 @@ public abstract class Entity {
 
 	public boolean do_rest(int p) {
 		state_action = ActionType.REST;
-		if (HP > 0) {
+		if (HP > 0 && HP+p<100) {
 			HP+=p;
 			return HP>0;
 		}

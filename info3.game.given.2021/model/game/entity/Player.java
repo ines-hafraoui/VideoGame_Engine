@@ -27,13 +27,7 @@ public class Player extends Entity {
 		type = EntityType.PLAYER;
 		bots = new ArrayList<Entity>();
 	}
-
-	@Override
-	public boolean do_hit(Absolute_Orientation o, String t, int porte) {
-		state_action = ActionType.HIT;
-		return model.inflict_hit(o, porte, t, this.get_x(), this.get_y());
-	}
-
+	
 	@Override
 	public boolean do_pick(int distance) {	// a refaire
 //		if (nb_item_inventory < this.nb_bot_init) {
