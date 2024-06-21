@@ -18,22 +18,15 @@ import info3.game.avatar.Avatar;
  * A Viewport is centered around one or two entities of type Player
  * So the view shows what is happening around those players
  */
-public class Viewport extends Component {
+public class Viewport extends AViewport {
 
 	private static final long serialVersionUID = 4264890697854297025L;
 
-	Model m_model;
-	View m_parent;
-	IFactory m_f;
+	
 	InventoryMenu m_inventory;
 	List<Avatar> m_avatars;
-	Dimension m_d;
 	private MapView m_map;
-	int m_x, m_y;
-	Rectangle m_inWorldBounds;
 	Avatar m_player;
-
-	int m_trx, m_try;
 	int m_oldpositionx, m_oldpositiony;
 
 	Viewport(Model model, List<Avatar> avatars, View parent, Dimension d, int x, int y, Avatar player, MapView m) {
@@ -64,16 +57,6 @@ public class Viewport extends Component {
 				d.width + (20 * View.DISPLAYSCALE), d.height + (20 * View.DISPLAYSCALE));
 	}
 
-	void setDimension(Dimension d) {
-		m_d = d;
-	}
-
-	void Caculatetranslation(int x, int y) {
-		// Creates bounds of how much of the world can be desplayed
-		m_trx = x * View.DISPLAYSCALE - (m_d.width / 2);
-		m_try = y * View.DISPLAYSCALE - (m_d.height / 2);
-	}
-
 	public void paint(Graphics g) {
 		int x = (int) m_player.m_entity.get_x();
 		int y = (int) m_player.m_entity.get_y();
@@ -102,10 +85,7 @@ public class Viewport extends Component {
 
 	}
 
-	public boolean withinbounds(int tilex, int tiley) {
-		if (m_inWorldBounds.contains(tilex, tiley)) {
-			return true;
-		}
-		return false;
+	public void setX(int x) {
+		m_x = x;
 	}
 }

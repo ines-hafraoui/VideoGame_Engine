@@ -1,6 +1,7 @@
 package info3.game.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -21,14 +22,14 @@ public class MapView {
 	private int[] m_groundsetup;
 	private int m_ncols, m_nrows;
 	private Model m_model;
-	Viewport m_parent;
+	AViewport m_parent;
 	View m_view;
 	protected BufferedImage[] m_bgimages;
 	protected BufferedImage[] m_textureimages;
 
 	private List<Squares> squares = new ArrayList<>(); // List to store the biomes
 
-	public MapView(int x, int y, Model model, View v, Viewport parent) {
+	public MapView(int x, int y, Model model, View v, AViewport parent) {
 		x_max = x;
 		y_max = y;
 		m_model = model;
@@ -145,5 +146,4 @@ public class MapView {
 	public static int getRandomNumber(int min, int max) {
 		return (int) ((Math.random() * (max - min)) + min);
 	}
-
 }
