@@ -315,7 +315,9 @@ public abstract class Entity {
 	 * an entity always
 	 */
 	public boolean do_hit(Absolute_Orientation o, String type, int porte) {
+		System.out.println("\n\nDO_HITTTT\n\n");
 		state_action = ActionType.HIT;
+		aut.blocked=true;
 		return model.do_hit(o,type,porte,this);
 	}
 

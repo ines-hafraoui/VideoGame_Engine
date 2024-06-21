@@ -14,6 +14,8 @@ public class Automate {
 
 	private String initial_state;
 	private Entity entity;
+	
+	private List<Action> action_buffer = new ArrayList<Action>();
 
 	public Automate(Entity entity) {
 
@@ -57,9 +59,8 @@ public class Automate {
 	public boolean blocked; // the entity will unblock the automaton once it's transition is over
 
 	public void step(Entity e) {
-
+		
 		if (!blocked) {
-
 			List<State> todelete = new ArrayList<>();
 			List<State> toadd = new ArrayList<>();
 
@@ -69,7 +70,7 @@ public class Automate {
 						blocked = true;
 
 						for (Action a : transition.actionList) {
-							a.exec(e);
+							action_buffer.add(a);
 						}
 						State s = this.getState(transition.cible);
 						toadd.add(s);
@@ -84,8 +85,7 @@ public class Automate {
 			for (State state : toadd) {
 				currentStateList.add(state);
 			}
-
-		}
+			}
 	}
 
 	public State getState(String name) {
@@ -103,7 +103,6 @@ public class Automate {
 	public Entity get_entity() {
 		return this.entity;
 	}
-	
 	
 
 }
