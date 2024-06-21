@@ -88,8 +88,11 @@ public class Game {
 		m_canvas = new GameCanvas(m_listener);
 
 		sprites = configParse.sprites;
+		for (Map.Entry<String, Object> entry : sprites.entrySet()) {
+            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue()+"\n");
+        }
 		Dimension viewd = new Dimension(1000, 700);
-		m_view = new View(m_model, factory, viewd);
+		m_view = new View(m_model, factory, viewd,sprites);
 
 		System.out.println("  - creating frame...");
 		m_frame = m_canvas.createFrame(viewd);

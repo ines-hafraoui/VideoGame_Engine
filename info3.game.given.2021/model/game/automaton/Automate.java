@@ -15,6 +15,8 @@ public class Automate {
 
 	private String initial_state;
 	private Entity entity;
+	
+	private List<Action> action_buffer = new ArrayList<Action>();
 
 	public Automate(Entity entity) {
 
@@ -57,32 +59,19 @@ public class Automate {
 
 	public boolean blocked; // the entity will unblock the automaton once it's transition is over
 
-	public void step(Entity e) {
-		// to delete when view will be able to handle animations
-		blocked = false;
-		Random r = new Random();
-
+public void step(Entity e) {
+		
 		if (!blocked) {
-
 			List<State> todelete = new ArrayList<>();
 			List<State> toadd = new ArrayList<>();
 
 			for ( State state : currentStateList) {
 				for ( Transition transition : state.get_transitionList()) {
-					
-					if (transition.c.percent != -1 && !(r.nextInt(Integer.MAX_VALUE) <= transition.c.percent)) {
-						continue;
-					}
-					
 					if (transition.c.eval(entity)) {
 						blocked = true;
 
 						for (Action a : transition.actionList) {
-							
-							if (a.percent == -1 || r.nextInt(Integer.MAX_VALUE) <= a.percent) {
-								a.exec(e);
-							}
-
+							action_buffer.add(a);
 						}
 						State s = this.getState(transition.cible);
 						toadd.add(s);
@@ -97,9 +86,9 @@ public class Automate {
 			for (State state : toadd) {
 				currentStateList.add(state);
 			}
-
-		}
+			}
 	}
+
 
 	public State getState(String name) {
 		for (State s : this.states) {
@@ -116,7 +105,6 @@ public class Automate {
 	public Entity get_entity() {
 		return this.entity;
 	}
-	
 	
 
 }
