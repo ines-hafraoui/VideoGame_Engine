@@ -355,7 +355,7 @@ public abstract class Entity {
 
 	public boolean do_rest(int p) {
 		state_action = ActionType.REST;
-		if (HP > 0) {
+		if (HP > 0 && HP+p<100) {
 			HP+=p;
 			return HP>0;
 		}
