@@ -6,14 +6,19 @@ import game.model.Model;
 
 public class Arrow extends Entity{
 	
-	public Arrow(Automate a,Model m, Position p, Absolute_Orientation o,String type, int team, int nb_bot) {
+	public Arrow(Automate a,Model m, Position p, Absolute_Orientation o,int team, int nb_bot) {
 		super(m,p,o,team, nb_bot);
-		type = "A";
+		type = EntityType.ARROW;
 	}
 	
-	public Arrow(Model m, Position p, Absolute_Orientation o,String type, int team, int nb_bot) {
+	public Arrow(Model m, Position p, Absolute_Orientation o,int team, int nb_bot) {
 		super(m,p,o,team,nb_bot);
-		type = "A";
+		type = EntityType.ARROW;
+	}
+	
+	public Arrow(Model m,Position p, Absolute_Orientation o, int team,int nb_bot, int view,boolean pickable,HitBox hb) {
+		super(m,p,o,team,nb_bot,view,pickable,hb);
+		type = EntityType.FIREBALL;
 	}
 
 	@Override
@@ -39,7 +44,7 @@ public class Arrow extends Entity{
 	public void do_explode() {}
 
 	@Override
-	public void do_power(int p) {	}
+	public void do_rest(int p) {	}
 
 	@Override
 	public boolean do_jump() {

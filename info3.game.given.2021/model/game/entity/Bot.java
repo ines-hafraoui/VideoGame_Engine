@@ -14,13 +14,13 @@ public class Bot extends Entity{
 	public Bot(Automate a, Model m,Position p, Absolute_Orientation o,int team, int nb_bot) {
 		super(a,m,p,o,team, nb_bot);
 		acc_factor = 3;
-		type = "BO";
+		type = EntityType.TEAMMATE;
 	}
 
 	public Bot(Model m,Position pos, Absolute_Orientation o, int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
 		super(m,pos,o,team, nb_bot, view, pickable,hb);
 		acc_factor = 3;
-		type = "BO";
+		type = EntityType.TEAMMATE;
 	}
 
 	@Override
@@ -37,11 +37,11 @@ public class Bot extends Entity{
 		
 		switch(cat) {
 		case FLECHE : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.ARROW,team));
+			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.ARROW,team,0,0,false,new HitBox(2,2)));
 			state_action = ActionType.EGG;
 			break;
 		case BOULE_FEU : 
-			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.FIREBALL,team));
+			model.get_entities().add(model.newEntity(model,position,abs_or, EntityType.FIREBALL,team, 0,0,false,new HitBox(2,2)));
 			state_action = ActionType.EGG;
 			break;
 		default : 
@@ -73,7 +73,7 @@ public class Bot extends Entity{
 
 
 	@Override
-	public void do_power(int p) {
+	public void do_rest(int p) {
 		HP += p;
 		state_action = ActionType.POWER;
 	}

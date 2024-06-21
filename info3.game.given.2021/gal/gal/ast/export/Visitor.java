@@ -139,8 +139,8 @@ public class Visitor implements IVisitor {
 			return new Throw();
 		case "Explode":
 			return new Explode();
-		case "Power":
-			return new Power();
+		case "Rest":
+			return new Rest(Integer.parseInt(parameters.get(0).toString()));
 		case "Jump":
 			return new Jump();
 			

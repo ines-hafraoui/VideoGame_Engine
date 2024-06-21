@@ -1,15 +1,31 @@
-Bot_Jeu1(beg){
+Bot_Jeu1(Beg){
 
- * (beg): 
- | not(Got(T)) ? Explode :(Mort)
- | Cell(d,A,1) ? Turn(d) ; Hit(d,A,1) :(beg)
- | Closest(d,@) ? Turn(d) ; Move :(beg)
+ * (Beg): 
+ | !(Got(Power)) ? Explode :(Mort)
+ | Cell(E,A,1) ? Turn(E) ; Hit(E,A,1) :(Beg)
+ | Cell(SE,A,1) ? Turn(SE) ; Hit(SE,A,1) :(Beg)
+ | Cell(S,A,1) ? Turn(S) ; Hit(S,A,1) :(Beg)
+ | Cell(SW,A,1) ? Turn(SW) ; Hit(SW,A,1) :(Beg)
+ | Cell(W,A,1) ? Turn(W) ; Hit(W,A,1) :(Beg)
+ | Cell(NW,A,1) ? Turn(NW) ; Hit(NW,A,1) :(Beg)
+ | Cell(N,A,1) ? Turn(N) ; Hit(N,A,1) :(Beg)
+ | Cell(NE,A,1) ? Turn(NE) ; Hit(NE,A,1) :(Beg)
+ | Closest(E,@) ? Turn(E) ; Move :(Beg)
+ | Closest(SE,@) ? Turn(SE) ; Move :(Beg)
+ | Closest(S,@) ? Turn(S) ; Move :(Beg)
+ | Closest(SW,@) ? Turn(SW) ; Move :(Beg)
+ | Closest(W,@) ? Turn(W) ; Move :(Beg)
+ | Closest(NW,@) ? Turn(NW) ; Move :(Beg)
+ | Closest(N,@) ? Turn(N) ; Move :(Beg)
+ | Closest(NE,@) ? Turn(NE) ; Move :(Beg)
  
  * (Mort):
  | True ? :(Mort)
  
  * (Hit):
- | True ? :(beg)
+ | !(Got(Power)) ? Explode :(Mort)
+ | True ? :(Beg)
  
 }
+
 

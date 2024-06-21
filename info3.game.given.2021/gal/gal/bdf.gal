@@ -1,8 +1,9 @@
-BDF(beg){
+BDF(Beg){
  
-  * (beg):
+  * (Beg):
+  | !(Got(Power)) ? Explode :(Mort)
   | Cell(H,A,1) / Cell(F,A,1) ? Hit(H,A,2) ; Explode :(Mort)
-  | Cell(F,V,1) ? Move :(beg)
+  | Cell(F,V,1) ? Move :(Beg)
   
   * (Mort):
   | True ? :(Mort)

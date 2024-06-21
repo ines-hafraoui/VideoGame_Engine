@@ -1,11 +1,19 @@
 Archer(Beg){
 
  * (Beg): 
- | !(Got(T)) ? Explode :(Mort)
- | Cell(d,A,10) ? Turn(d) ; Egg(1) :(Beg)
+ | !(Got(Power)) ? Explode :(Mort)
+ | Cell(E,A,10) ? Turn(E) ; Egg(1) :(Beg)
+ | Cell(SE,A,10) ? Turn(SE) ; Egg(1) :(Beg)
+ | Cell(S,A,10) ? Turn(S) ; Egg(1) :(Beg)
+ | Cell(SW,A,10) ? Turn(SW) ; Egg(1) :(Beg)
+ | Cell(W,A,10) ? Turn(W) ; Egg(1) :(Beg)
+ | Cell(NW,A,10) ? Turn(NW) ; Egg(1) :(Beg)
+ | Cell(N,A,10) ? Turn(N) ; Egg(1) :(Beg)
+ | Cell(NE,A,10) ? Turn(NE) ; Egg(1) :(Beg)
  | True ? 25 % Turn(W) ; Move / 25 % Turn(E) ; Move / 25 % Turn(E) ; Move / 25 % Turn(S) ; Move :(Beg)
 
  * (Mort):
  | True ? :(Mort)
 
 }
+

@@ -9,13 +9,18 @@ public class Fire_Ball extends Entity{
 	
 	public Fire_Ball(Automate a,Model m, Position p, Absolute_Orientation o,int team, int nb_bot) {
 		super(a,m,p,o, team, nb_bot);
-		type = "FB";
+		type = EntityType.FIREBALL;
 	}
 	 
 	
 	public Fire_Ball(Model m, Position p, Absolute_Orientation o,int team, int nb_bot) {
 		super(m,p,o,team, nb_bot);
-		type = "FB";
+		type = EntityType.FIREBALL;
+	}
+	
+	public Fire_Ball(Model m,Position p, Absolute_Orientation o, int team,int nb_bot, int view,boolean pickable,HitBox hb) {
+		super(m,p,o,team,nb_bot,view,pickable,hb);
+		type = EntityType.FIREBALL;
 	}
 	
 	@Override
@@ -49,7 +54,7 @@ public class Fire_Ball extends Entity{
 	}
 
 	@Override
-	public void do_power(int p) {	}
+	public void do_rest(int p) {	}
 
 	@Override
 	public boolean do_jump() {

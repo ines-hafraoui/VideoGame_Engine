@@ -23,8 +23,10 @@ package game.model;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import game.entity.Entity;
+import game.entity.EntityType;
 import game.automaton.Automate;
 import game.automaton.Category;
 import game.entity.Absolute_Orientation;
@@ -54,6 +56,7 @@ public class Model {
 	private List<String> list_touche;
 	Entity[] players;
 	public java.util.Map<String, java.util.Map<String, Object>> entityConfigurations;
+	public java.util.Map<String, Automate> automates;
 	public List<Entity> entities;
 	IFactory factory;
 	public static int nb_bot_init;
@@ -63,7 +66,8 @@ public class Model {
 	public Parser configParse;
 	private static long TIMER=0;
 
-	public Model(int w, int h, Parser parse) throws IOException {
+	
+	public Model(int w, int h, Parser parse, IFactory f)throws IOException {
 
 		m_width = w;
 		height = h;
@@ -72,8 +76,10 @@ public class Model {
 		viscosity = parse.viscosity;
 		cooperative = parse.coop;
 		timer = parse.timer;
-
+		factory = f;
+		
 		entities = new ArrayList<Entity>();
+		automates = new HashMap<>();
 		entityConfigurations = parse.entities;
 		players = new Entity[parse.nb_player];
 		int i = 0;
@@ -84,60 +90,61 @@ public class Model {
 			String entityName = entry.getKey();
 			java.util.Map<String, Object> properties = entry.getValue();
 
-			// Extract common properties
-			String direction = (String) properties.get("direction");
-			Position pos = (Position) properties.get("position");
-			int team = ((Number) properties.get("team")).intValue();
-			int view = ((Number) properties.get("view")).intValue();
-			boolean pickable = (Boolean) properties.get("pickable");
-			String behaviour = (String) properties.get("behaviour");
-			String sprite = (String) properties.get("sprite");
-			HitBox hb = (HitBox) properties.get("hitbox");
-
-			Entity entity;
-			switch (entityName) {
-			case "Player1":
-			case "Player2":
-				entity = new Player(this, pos, new Absolute_Orientation(direction), team, nb_bot_init, view, pickable,
-						hb);
-				break;
-			case "Bot1":
-			case "Bot2":
-			case "Parasite":
-			case "Dasher":
-			case "Arsher":
-				entity = new Bot(this, pos, new Absolute_Orientation(direction), team, 0, view, pickable, hb);
-				break;
-			case "Base1":
-			case "Base2":
-			case "Base":
-				entity = new Base(this, pos, new Absolute_Orientation(direction), team, 0, view, pickable, hb);
-				break;
-			case "Power":
-			case "Capacity":
-			case "Plant":
-				entity = new Item(this, pos, new Absolute_Orientation(direction), team, 0, view, pickable, hb);
-				break;
-			default:
-				entity = null;
-				break;
-			}
-
-			if (entity != null) {
-				if (behaviour != null) {
-//	            		String galPath = new File("gal/gal/"+ behaviour).getAbsolutePath();
-//		        		Automate automate = TestMain.loadAutomata(galPath);
-//		        		entity.set_automate(automate);
-					if (entity instanceof Player) {
-						players[i] = entity;
-						i++;
-					}
-					entities.add(entity);
-				}
-
-			}
-		}
-
+	            // Extract common properties
+	            String direction = (String) properties.get("direction");
+	            Position pos = (Position) properties.get("position");
+	            int team = ((Number) properties.get("team")).intValue();
+	            int view = ((Number) properties.get("view")).intValue();
+	            boolean pickable = (Boolean) properties.get("pickable");
+	            String behaviour = (String) properties.get("behaviour");
+	            String sprite = (String) properties.get("sprite");
+	            HitBox hb = (HitBox) properties.get("hitbox");
+	            
+	            Entity entity;
+	            switch (entityName) {
+	            case "Player1":
+	            case "Player2":
+	            	entity = new Player(this,pos, new Absolute_Orientation(direction), team, nb_bot_init, view, pickable,hb);
+                    break;
+	            case "Bot1":
+	            case "Bot2":
+	            case "Parasite":
+	            case "Dasher":
+	            case "Archer":
+	            	entity = new Bot(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
+                    break;
+	            case "Base1":
+	            case "Base2":
+	            case "Base":
+	            	entity = new Base(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
+                    break;
+	            case "Power":
+	            case "Capacity":
+	            case "Plant" : 
+	            	entity = new Item(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
+                    break;
+                default : 
+                	entity = null;
+                	break;
+	            }
+	           
+	            if (entity != null) {
+	            	if (behaviour != null) {
+	            		String galPath = new File("gal/gal/"+ behaviour).getAbsolutePath();
+		        		Automate automate = TestMain.loadAutomata(galPath);
+		        		if (automate != null) {
+		        			entity.set_automate(automate);
+			        		if (entity instanceof Player) {
+			        			players[i] = entity;
+			        			i++;
+			        		}
+			        		entities.add(entity);
+			        		automates.put(entity.get_type(), automate);
+		        		}	
+	            	}	
+	            }
+		 }
+		
 		List<Position> poss = new ArrayList<Position>();
 
 		Position pos1 = new Position(0, 0);
@@ -250,9 +257,9 @@ public class Model {
 		return players;
 	}
 
-	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String arrow, int team) {
+	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String type, int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
 
-		return factory.newEntity(model, position, abs_or, arrow, team);
+		return factory.newEntity(model, position, abs_or, type ,team, nb_bot,view, pickable,hb);
 	}
 
 	public interface ModelListener {
