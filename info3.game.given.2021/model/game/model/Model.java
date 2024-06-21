@@ -131,7 +131,7 @@ public class Model {
 	           
 	            if (entity != null) {
 	            	if (behaviour != null) {
-	            		String galPath = new File("gal/gal/Arrow.gal").getAbsolutePath();
+	            		String galPath = new File("gal/gal/"+behaviour).getAbsolutePath();
 		        		Automate automate = TestMain.loadAutomata(galPath);
 
 		        		if (automate != null) {
@@ -395,36 +395,36 @@ public class Model {
 	}
 
 	public void eval_angle(Absolute_Orientation d, double angle1, double angle2) {
-		switch (d.toString()) {
-		case "E":
+		switch (d.get_abs_Orientation()) {
+		case Absolute_Orientation.EAST:
 			angle1 = 337.5;
 			angle2 = 22.5;
 			break;
-		case "SE":
+		case Absolute_Orientation.SOUTH_E:
 			angle1 = 22.5;
 			angle2 = 67.5;
 			break;
-		case "S":
+		case Absolute_Orientation.SOUTH:
 			angle1 = 67.5;
 			angle2 = 112.5;
 			break;
-		case "SW":
+		case Absolute_Orientation.SOUTH_W:
 			angle1 = 112.5;
 			angle2 = 157.5;
 			break;
-		case "W":
+		case Absolute_Orientation.WEST:
 			angle1 = 157.5;
 			angle2 = 202.5;
 			break;
-		case "NW":
+		case Absolute_Orientation.NORTH_W:
 			angle1 = 202.5;
 			angle2 = 247.5;
 			break;
-		case "N":
+		case Absolute_Orientation.NORTH:
 			angle1 = 247.5;
 			angle2 = 292.5;
 			break;
-		case "NE":
+		case Absolute_Orientation.NORTH_E:
 			angle1 = 292.5;
 			angle2 = 337.5;
 			break;
