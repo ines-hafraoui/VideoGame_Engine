@@ -139,7 +139,7 @@ public class Model {
 	           
 	            if (entity != null) {
 	            	if (behaviour != null) {
-	            		String galPath = new File("gal/gal/dasher.gal").getAbsolutePath();
+	            		String galPath = new File("gal/gal/bdf.gal").getAbsolutePath();
 		        		Automate automate = TestMain.loadAutomata(galPath);
 	            		/*List<State> list_state = new ArrayList(); 	//Creation automate à la main de ici
 	            		List<Transition> list_trans = new ArrayList();

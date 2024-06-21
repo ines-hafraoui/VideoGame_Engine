@@ -28,7 +28,7 @@ public class TestMain {
 	  }
 
 	public static void main(String args[]) throws Exception {
-		String path = new File("gal/gal/dasher.gal").getAbsolutePath();
+		String path = new File("gal/gal/bdf.gal").getAbsolutePath();
 		
 		loadAutomata(path);
 		

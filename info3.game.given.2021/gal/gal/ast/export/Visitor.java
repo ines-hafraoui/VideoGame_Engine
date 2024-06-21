@@ -80,13 +80,13 @@ public class Visitor implements IVisitor {
 	public Object build(FunCall funcall, List<Object> parameters) {
 
 		Object func = null;
-		
+
 		switch (funcall.name) { // pas sur que le premier élément de parameters est l'entite
 		case "Egg":
 			func = new Egg(Integer.parseInt(parameters.get(0).toString()));
 			break;
 		case "Move":
-			func =  new Move();
+			func = new Move();
 			break;
 		case "Turn":
 			Absolute_Orientation a = new Absolute_Orientation(parameters.get(0).toString());
@@ -94,7 +94,7 @@ public class Visitor implements IVisitor {
 			break;
 
 		case "Die":
-			func =  new Die();
+			func = new Die();
 			break;
 
 		case "Hit":
@@ -103,41 +103,41 @@ public class Visitor implements IVisitor {
 				Absolute_Orientation ao = new Absolute_Orientation(parameters.get(0).toString());
 				String t = parameters.get(1).toString();
 				int range = Integer.parseInt(parameters.get(2).toString());
-				func =  new Hit(ao, t, range);
+				func = new Hit(ao, t, range);
 				break;
 			}
 			Relative_Orientation ro = new Relative_Orientation(parameters.get(0).toString());
 			String t = parameters.get(1).toString();
-			int range =Integer.parseInt(parameters.get(2).toString());
-			func =  new Hit(ro, t, range);
+			int range = Integer.parseInt(parameters.get(2).toString());
+			func = new Hit(ro, t, range);
 			break;
 
 		case "Wait":
-			func =  new Wait(Integer.valueOf(parameters.get(0).toString()),
+			func = new Wait(Integer.valueOf(parameters.get(0).toString()),
 					Integer.valueOf(parameters.get(1).toString()));
 			break;
 		case "Pick":
-			func =  new Pick(Integer.parseInt(parameters.get(0).toString()));
+			func = new Pick(Integer.parseInt(parameters.get(0).toString()));
 			break;
 		case "Throw":
-			func =  new Throw();
+			func = new Throw();
 			break;
-			
+
 		case "Explode":
-			func =  new Explode();
+			func = new Explode();
 			break;
 		case "Rest":
 			func = new Rest(Integer.parseInt(parameters.get(0).toString()));
 			break;
 		case "Jump":
-			func =  new Jump();
+			func = new Jump();
 			break;
-			
+
 		case "Wizz":
-			func =  new Wizz(Integer.parseInt(parameters.get(0).toString()));
+			func = new Wizz(Integer.parseInt(parameters.get(0).toString()));
 			break;
 		case "Get":
-			func =  new Get();
+			func = new Get();
 			break;
 		case "Cell":
 			if (Relative_Orientation.is_relative_orientation(parameters.get(0))) {
@@ -148,30 +148,29 @@ public class Visitor implements IVisitor {
 			}
 			Absolute_Orientation o = new Absolute_Orientation(parameters.get(0).toString());
 			game.automaton.Category c = new game.automaton.Category(parameters.get(1).toString());
-			func =  new Cell(o, c, Integer.valueOf(parameters.get(2).toString()));
+			func = new Cell(o, c, Integer.valueOf(parameters.get(2).toString()));
 			break;
 
 		case "True":
-			func =  new TrueFalse(true);
+			func = new TrueFalse(true);
 			break;
-			
+
 		case "Got":
-			func =  new Got();
+			func = new Got();
 			break;
 
 		}
-		
+
 		if (func == null) {
 			return true;
 		}
-		
+
 		if (func instanceof game.automaton.Condition) {
 			((game.automaton.Condition) func).percent = funcall.percent;
-		}
-		else {
+		} else {
 			((Action) func).percent = funcall.percent;
 		}
-		
+
 		return func;
 	}
 
@@ -200,14 +199,13 @@ public class Visitor implements IVisitor {
 				return new game.automaton.Conjonction((game.automaton.Condition) left,
 						(game.automaton.Condition) right);
 			}
-			return new game.automaton.Conjonction((game.automaton.Condition) left, new TrueFalse((Boolean)right));
-		}
-		else {
+			return new game.automaton.Conjonction((game.automaton.Condition) left, new TrueFalse((Boolean) right));
+		} else {
 			if (right instanceof game.automaton.Condition) {
 				return new game.automaton.Conjonction(new TrueFalse((Boolean) left), (game.automaton.Condition) right);
 			}
 		}
-		return new game.automaton.Conjonction(new TrueFalse((Boolean)left), new TrueFalse((Boolean)right));
+		return new game.automaton.Conjonction(new TrueFalse((Boolean) left), new TrueFalse((Boolean) right));
 
 	}
 
@@ -227,11 +225,12 @@ public class Visitor implements IVisitor {
 	public Object build(UnaryOp unop, Object expression) { // mouais a modifier
 		// Expression e = (Expression) expression;
 		if (expression instanceof game.automaton.Condition) {
-			return (game.automaton.Condition) expression;
+			if (unop.operator.equals("!")) {
+				return (new Negation((game.automaton.Condition) expression));
+		}
 		}
 		Boolean e = (Boolean) expression;
 
-		// return new UnaryOp(unop.operator, e);
 		return new TrueFalse(e);
 	}
 
@@ -357,14 +356,15 @@ public class Visitor implements IVisitor {
 		List<Action> al = new ArrayList<Action>();
 		LinkedList<FunCall> a = (LinkedList<FunCall>) action;
 		for (int i = 0; i < a.size(); i++) {
-			al.add(((Action)((Object) a.get(i))));
+			al.add(((Action) ((Object) a.get(i))));
 		}
 		String s = target_state.toString();
 		if (condition instanceof game.automaton.Condition) {
-			return new game.automaton.Transition(s, (game.automaton.Condition) condition, al);// State cible, Condition cond; List< action> actions
-		}
-		else if (condition instanceof Boolean){
-			return new game.automaton.Transition(s, new TrueFalse((Boolean)condition), al);
+			return new game.automaton.Transition(s, (game.automaton.Condition) condition, al);// State cible, Condition
+																								// cond; List< action>
+																								// actions
+		} else if (condition instanceof Boolean) {
+			return new game.automaton.Transition(s, new TrueFalse((Boolean) condition), al);
 		}
 		return condition;
 
