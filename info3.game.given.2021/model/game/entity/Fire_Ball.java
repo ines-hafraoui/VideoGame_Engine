@@ -24,11 +24,6 @@ public class Fire_Ball extends Entity{
 	}
 
 	@Override
-	public boolean do_hit(Absolute_Orientation o,  String t, int porte) {
-		return false;
-	}
-
-	@Override
 	public boolean do_pick(int distance) {
 		return false;
 	}

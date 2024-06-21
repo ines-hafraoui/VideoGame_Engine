@@ -68,8 +68,11 @@ public class Parser {
                         JSONArray hitBoxArray = (JSONArray) entityKeyValue;
                         HitBox hb = new HitBox(((Number) hitBoxArray.get(0)).floatValue(), ((Number) hitBoxArray.get(1)).floatValue());
                         entityProperties.put(entityKeyStr, hb);
-                    } else if ("sprite".equals(entityKeyStr) && entityKeyValue instanceof JSONArray){
-                    	sprites.put(convertString(name), entityKeyValue);
+//                    } else if ("direction".equals(entityKeyStr)) {
+//                        Absolute_Orientation ab_o = convertOrientation((String)entityKeyValue);
+//                        entityProperties.put(entityKeyStr, ab_o);
+                    } else if ("sprite".equals(entityKeyStr)){
+                    	sprites.put(convertString(keyStr), entityKeyValue);
                     }else {
                     	entityProperties.put(entityKeyStr, entityKeyValue);
                     }
@@ -82,12 +85,40 @@ public class Parser {
 
 	}
 
+	private Absolute_Orientation convertOrientation(String entityKeyValue) {
+		switch (entityKeyValue) {
+		case "E":
+			return new Absolute_Orientation(Absolute_Orientation.EAST); 
+		case "SE":
+			return new Absolute_Orientation(Absolute_Orientation.SOUTH_E); 
+		case "S":
+			return new Absolute_Orientation(Absolute_Orientation.SOUTH); 
+		case "SW":
+			return new Absolute_Orientation(Absolute_Orientation.SOUTH_W); 
+		case "W":
+			return new Absolute_Orientation(Absolute_Orientation.WEST); 
+		case "NW":
+			return new Absolute_Orientation(Absolute_Orientation.NORTH_W); 
+		case "N":
+			return new Absolute_Orientation(Absolute_Orientation.NORTH); 
+		case "NE":
+			return new Absolute_Orientation(Absolute_Orientation.NORTH_E); 
+		default:
+			return null;
+		}
+		
+	}
+
 	private String convertString(String name) {
 		
 		switch (name) {
 		case "Player1":
         case "Player2":
             return EntityType.PLAYER;
+        case "Arrow": 
+        	return EntityType.ARROW;
+        case "FireBall":
+        	return EntityType.FIREBALL;
         case "Bot1":
         case "Bot2":
         case "Parasite":

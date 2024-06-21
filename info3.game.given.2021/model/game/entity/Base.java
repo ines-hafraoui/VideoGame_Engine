@@ -22,23 +22,6 @@ public class Base extends Entity {
 	}
 
 	@Override
-	public void do_egg(int cat) {
-		state_action = ActionType.EGG;
-		
-		switch(cat) {
-		case BOT : 
-			Entity e = model.newEntity(model,position,abs_or, "BO",team,0,view,false, new HitBox(10,10));
-			Automate a = model.automates.get(EntityType.TEAMMATE);
-			e.set_automate(a);
-			model.get_entities().add(e);
-			state_action = ActionType.EGG;
-			break;
-		default : 
-			break;
-		}
-	}
-
-	@Override
 	public boolean do_rest(int p) {return false;}
 	
 	@Override
@@ -50,12 +33,7 @@ public class Base extends Entity {
 	public boolean do_wizz(int factor) {
 		return false;
 	}
-
-	@Override
-	public boolean do_hit(Absolute_Orientation o, String t, int porte) {
-		return false;
-	}
-
+	
 	@Override
 	public boolean do_pick(int distance) {
 		return false;
