@@ -374,7 +374,7 @@ public abstract class Entity {
 	public abstract boolean do_get();
 
 	public void do_turn(Absolute_Orientation o) {
-		abs_or = o;
+		abs_or.set_abs_Orientation(o.get_abs_Orientation());;
 		state_action = ActionType.TURN;
 	}
 

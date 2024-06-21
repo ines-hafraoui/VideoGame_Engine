@@ -23,20 +23,30 @@ public class Bot extends Entity{
 		type = EntityType.TEAMMATE;
 	}
 
-	@Override
-
-	public boolean do_move() {
-		Position p = newPosition();
-		if (p == null) return false;
-		position = p;
-		state_action = ActionType.MOVE;
-		return true;
+	public void do_egg(int cat) {
+		
+		Entity e;
+		
+		switch(cat) {
+		case FLECHE : 
+			e = model.newEntity(model,position,abs_or, EntityType.ARROW,team,0,0,false,new HitBox(10,10));
+			model.get_entities().add(e);
+			state_action = ActionType.EGG;
+			break;
+		case BOULE_FEU :
+			e = model.newEntity(model,position,abs_or, EntityType.FIREBALL,team,0,0,false,new HitBox(10,10));
+			model.get_entities().add(e);
+			state_action = ActionType.EGG;
+			break;
+		default : 
+			break;
+		}
 	}
 
 	@Override
-	public void do_turn(Absolute_Orientation o) {
-		state_action = ActionType.TURN;
-		abs_or = o;
+	public boolean do_hit(Absolute_Orientation o,  String t, int porte) {
+		state_action = ActionType.HIT;
+		return model.inflict_hit(o, porte, t, this.get_x(), this.get_y());
 	}
 
 

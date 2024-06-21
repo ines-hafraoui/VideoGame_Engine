@@ -28,11 +28,10 @@ public class Player extends Entity {
 		bots = new ArrayList<Entity>();
 	}
 
-	public boolean do_move() {
-		Position p = newPosition();
-		if (p == null) return false;
-		position = p;
-		return true;
+	@Override
+	public boolean do_hit(Absolute_Orientation o, String t, int porte) {
+		state_action = ActionType.HIT;
+		return model.inflict_hit(o, porte, t, this.get_x(), this.get_y());
 	}
 
 	@Override

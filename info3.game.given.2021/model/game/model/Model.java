@@ -28,9 +28,17 @@ import java.util.List;
 import game.entity.Entity;
 import game.entity.EntityType;
 import game.entity.Fire_Ball;
+import game.automaton.Action;
 import game.automaton.Automate;
 import game.automaton.Category;
+import game.automaton.Hit;
+import game.automaton.Key;
+import game.automaton.Move;
 import game.automaton.Relative_Orientation;
+import game.automaton.State;
+import game.automaton.Transition;
+import game.automaton.TrueFalse;
+import game.automaton.Turn;
 import game.entity.Absolute_Orientation;
 import game.entity.ActionType;
 import game.entity.Arrow;
@@ -140,9 +148,49 @@ public class Model {
 	           
 	            if (entity != null) {
 	            	if (behaviour != null) {
-	            		String galPath = new File("gal/gal/"+behaviour).getAbsolutePath();
-		        		Automate automate = TestMain.loadAutomata(galPath);
+	            		String galPath = new File("gal/gal/Arrow.gal").getAbsolutePath();
+		        		//Automate automate = TestMain.loadAutomata(galPath);
+	            		List<State> list_state = new ArrayList(); 	//Creation automate à la main de ici
+	            		List<Transition> list_trans = new ArrayList();
+	            		List<Action> list_action1 = new ArrayList();
+	            		List<Action> list_action2 = new ArrayList();
+	            		List<Action> list_action3 = new ArrayList();
+	            		List<Action> list_action4 = new ArrayList();
+	            		List<Action> list_action5 = new ArrayList();
+	            		Move am = new Move();
+	            		Turn ae = new Turn(new Absolute_Orientation("E"));
+	            		Turn as = new Turn(new Absolute_Orientation("S"));
+	            		Turn aw = new Turn(new Absolute_Orientation("W"));
+	            		Turn an = new Turn(new Absolute_Orientation("N"));
+	            		Hit ah = new Hit(new Absolute_Orientation("S"),"A",2);
+	            		list_action1.add(ae);
+	            		list_action1.add(am);
+	            		list_action2.add(as);
+	            		list_action2.add(am);
+	            		list_action3.add(aw);
+	            		list_action3.add(am);
+	            		list_action4.add(an);
+	            		list_action4.add(am);
+	            		list_action5.add(ah);
+	            		Key cu = new Key("FU");
+	            		Key cd = new Key("FD");
+	            		Key cr = new Key("FR");
+	            		Key cl = new Key("FL");
+	            		Key ce = new Key("ENTER");
+	            		Transition t1 = new Transition("Init",cr,list_action1);
+	            		Transition t2 = new Transition("Init",cd,list_action2);
+	            		Transition t3 = new Transition("Init",cl,list_action3);
+	            		Transition t4 = new Transition("Init",cu,list_action4);
+	            		Transition t5 = new Transition("Init",ce,list_action5);
+	            		list_trans.add(t1);
+	            		list_trans.add(t2);
+	            		list_trans.add(t3);
+	            		list_trans.add(t4);
+	            		list_trans.add(t5);
 
+	            		State s1= new State(list_trans,"Init");
+	            		list_state.add(s1);
+	            		Automate automate = new Automate("Init",list_state);	// A là
 		        		if (automate != null) {
 		        			entity.set_automate(automate);
 			        		if (entity instanceof Player) {
