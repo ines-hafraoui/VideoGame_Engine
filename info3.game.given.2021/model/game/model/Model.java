@@ -30,6 +30,7 @@ import game.entity.EntityType;
 import game.automaton.Action;
 import game.automaton.Automate;
 import game.automaton.Category;
+import game.automaton.Hit;
 import game.automaton.Key;
 import game.automaton.Move;
 import game.automaton.Relative_Orientation;
@@ -146,11 +147,13 @@ public class Model {
 	            		List<Action> list_action2 = new ArrayList();
 	            		List<Action> list_action3 = new ArrayList();
 	            		List<Action> list_action4 = new ArrayList();
+	            		List<Action> list_action5 = new ArrayList();
 	            		Move am = new Move();
 	            		Turn ae = new Turn(new Absolute_Orientation("E"));
 	            		Turn as = new Turn(new Absolute_Orientation("S"));
 	            		Turn aw = new Turn(new Absolute_Orientation("W"));
 	            		Turn an = new Turn(new Absolute_Orientation("N"));
+	            		Hit ah = new Hit(new Absolute_Orientation("S"),"A",2);
 	            		list_action1.add(ae);
 	            		list_action1.add(am);
 	            		list_action2.add(as);
@@ -159,19 +162,23 @@ public class Model {
 	            		list_action3.add(am);
 	            		list_action4.add(an);
 	            		list_action4.add(am);
-	            		
+	            		list_action5.add(ah);
 	            		Key cu = new Key("FU");
 	            		Key cd = new Key("FD");
 	            		Key cr = new Key("FR");
 	            		Key cl = new Key("FL");
+	            		Key ce = new Key("ENTER");
 	            		Transition t1 = new Transition("Init",cr,list_action1);
 	            		Transition t2 = new Transition("Init",cd,list_action2);
 	            		Transition t3 = new Transition("Init",cl,list_action3);
 	            		Transition t4 = new Transition("Init",cu,list_action4);
+	            		Transition t5 = new Transition("Init",ce,list_action5);
 	            		list_trans.add(t1);
 	            		list_trans.add(t2);
 	            		list_trans.add(t3);
 	            		list_trans.add(t4);
+	            		list_trans.add(t5);
+
 	            		State s1= new State(list_trans,"Init");
 	            		list_state.add(s1);
 	            		Automate automate = new Automate("Init",list_state);	// A là
