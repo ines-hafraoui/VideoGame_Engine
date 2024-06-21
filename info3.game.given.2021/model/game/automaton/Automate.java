@@ -57,8 +57,6 @@ public class Automate {
 	public boolean blocked; // the entity will unblock the automaton once it's transition is over
 
 	public void step(Entity e) {
-		// to delete when view will be able to handle animations
-		blocked = false;
 
 		if (!blocked) {
 

@@ -497,6 +497,7 @@ public class Model {
 	}
 
 	public boolean do_hit(Absolute_Orientation o, String type, int porte, Entity e) {
+		System.out.println("\nDo_HIt\n\n");
 		double p_x = e.get_x();
 		double p_y = e.get_y();
 		double angle1=0,angle2=0;

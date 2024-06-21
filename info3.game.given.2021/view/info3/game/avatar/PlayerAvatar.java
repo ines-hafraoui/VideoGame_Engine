@@ -49,6 +49,7 @@ public class PlayerAvatar extends Avatar {
 		String abs_or = m_entity.get_abs_or().get_abs_Orientation();
 		switch (a_state) {
 		case IDLE:
+			System.out.print("In IDLE\n");
 			if (m_imageIndex < 4) {
 				m_imageIndex = 4;
 			}
@@ -87,18 +88,24 @@ public class PlayerAvatar extends Avatar {
 			}
 			break;
 		case HIT:
+            System.out.println("HITTTTTTTTTTTTTTTT");
 			if (!isRunning) {
 	            isRunning = true; // Marquer le timer comme en cours d'exécution
+	            System.out.println("WAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 	            m_entity.get_automate().blocked=true;
 	            timer.schedule(new TimerTask() {
 	                @Override
 	                public void run() {
 	                    isRunning = false; // Réinitialiser le statut une fois la tâche terminée
+	                    System.out.print("\n\n\n>Reinit !!!!!\n\n\n");
 	                    m_entity.get_automate().blocked=false;
+	                    m_entity.set_state_action("IDLE");
+	                    System.out.print(m_entity.get_state_action());
+	                    a_state=3;
 	                }
 	            }, 3000);
 	        } else {
-	            System.out.println("Timer is already running and will not be started again.");
+	            System.out.println("Timer is already running and won't be started again.");
 	        }
 			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
 					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
