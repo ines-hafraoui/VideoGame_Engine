@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -37,8 +38,9 @@ public class View extends Container {
 	private List<Avatar> m_players;
 	MapView m_map;
 	MiniMap m_minimap;
+	Map<String, Object> m_sprites;
 
-	public View(Model model, IFactory f, Dimension d) {
+	public View(Model model, IFactory f, Dimension d,Map<String, Object> sprites) {
 		m_model = model;
 		m_mwidth = model.get_width() * DISPLAYSCALE;
 		m_mheight = model.get_height() * DISPLAYSCALE;
@@ -47,6 +49,11 @@ public class View extends Container {
 		m_avatars = new LinkedList<Avatar>();
 		m_players = new LinkedList<Avatar>();
 		m_minimap = new MiniMap(this, m_model);
+		m_sprites=sprites;
+		
+		for (Map.Entry<String, Object> entry : m_sprites.entrySet()) {
+            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue()+"\n");
+        }
 
 		List<Entity> entities = m_model.get_entities();
 		Iterator<Entity> iter = entities.iterator();

@@ -3,6 +3,8 @@ package info3.game.avatar;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import game.entity.Absolute_Orientation;
 import game.entity.Entity;
@@ -12,6 +14,8 @@ public class PlayerAvatar extends Avatar {
 
 	private long lastUpdateTime; // Temps depuis la dernière mise à jour de l'animation
 	private static final long ANIMATION_INTERVAL = 500; // 500 ms entre les mises à jour
+	private static Timer timer = new Timer();
+    private static boolean isRunning = false;
 
 	public PlayerAvatar(Entity e, View v) throws IOException {
 		super(e, v);
@@ -83,6 +87,19 @@ public class PlayerAvatar extends Avatar {
 			}
 			break;
 		case HIT:
+			if (!isRunning) {
+	            isRunning = true; // Marquer le timer comme en cours d'exécution
+	            m_entity.get_automate().blocked=true;
+	            timer.schedule(new TimerTask() {
+	                @Override
+	                public void run() {
+	                    isRunning = false; // Réinitialiser le statut une fois la tâche terminée
+	                    m_entity.get_automate().blocked=false;
+	                }
+	            }, 3000);
+	        } else {
+	            System.out.println("Timer is already running and will not be started again.");
+	        }
 			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
 					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
 				if (m_imageIndex < 8) {
@@ -118,5 +135,7 @@ public class PlayerAvatar extends Avatar {
 			lastUpdateTime = currentTime; // Réinitialiser le dernier temps de mise à jour
 		}
 	}
+	
+	
 
 }
