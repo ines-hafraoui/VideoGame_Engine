@@ -2,7 +2,7 @@ package game.automaton;
 
 import game.entity.Entity;
 
-public class Key implements Condition {
+public class Key extends Condition {
 	
 	String touche; //changed Touche touche to String touche for better use in parser
 		

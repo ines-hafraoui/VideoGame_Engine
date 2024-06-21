@@ -3,7 +3,7 @@ package game.automaton;
 import game.entity.Entity;
 import game.entity.Absolute_Orientation;
 
-public class Turn implements Action{
+public class Turn extends Action{
 
 	Absolute_Orientation o; 
 	

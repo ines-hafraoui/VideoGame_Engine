@@ -3,7 +3,7 @@ package game.automaton;
 import game.entity.Absolute_Orientation;
 import game.entity.Entity;
 
-public class Wait implements Action {
+public class Wait extends Action {
 	
 	int inc; 
 	int select;

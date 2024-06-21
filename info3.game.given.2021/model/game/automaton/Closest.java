@@ -3,7 +3,7 @@ package game.automaton;
 import game.entity.Absolute_Orientation;
 import game.entity.Entity;
 
-public class Closest implements Condition {
+public class Closest extends Condition {
 	
 	Absolute_Orientation d;
 	Category cat;

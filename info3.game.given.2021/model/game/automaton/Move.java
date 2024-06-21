@@ -2,7 +2,7 @@ package game.automaton;
 
 import game.entity.Entity;
 
-public class Move implements Action{
+public class Move extends Action{
 	
 	public Move() {
 		

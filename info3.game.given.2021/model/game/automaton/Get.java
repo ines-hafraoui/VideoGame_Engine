@@ -2,7 +2,7 @@ package game.automaton;
 
 import game.entity.Entity;
 
-public class Get implements Action{
+public class Get extends Action{
 	
 	public Get() {
 		

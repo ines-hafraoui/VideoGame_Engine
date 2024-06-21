@@ -2,7 +2,7 @@ package game.automaton;
 
 import game.entity.Entity;
 
-public class TrueFalse implements Condition {
+public class TrueFalse extends Condition {
 
 	public boolean value;
 	

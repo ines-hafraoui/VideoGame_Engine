@@ -5,6 +5,7 @@ import game.entity.Entity;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 public class Automate {
@@ -59,6 +60,7 @@ public class Automate {
 	public void step(Entity e) {
 		// to delete when view will be able to handle animations
 		blocked = false;
+		Random r = new Random();
 
 		if (!blocked) {
 
@@ -67,11 +69,20 @@ public class Automate {
 
 			for ( State state : currentStateList) {
 				for ( Transition transition : state.get_transitionList()) {
+					
+					if (!(r.nextInt(Integer.MAX_VALUE) <= transition.c.percent)) {
+						continue;
+					}
+					
 					if (transition.c.eval(entity)) {
 						blocked = true;
 
 						for (Action a : transition.actionList) {
-							a.exec(e);
+							
+							if (r.nextInt(Integer.MAX_VALUE) <= a.percent) {
+								a.exec(e);
+							}
+
 						}
 						State s = this.getState(transition.cible);
 						toadd.add(s);
