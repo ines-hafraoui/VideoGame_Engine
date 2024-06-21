@@ -145,9 +145,9 @@ public class Polygon {
     }
 
 	
-	public List<Position> generatePointsInsidePolygon(int seed) {
+	public List<Position> generatePointsInsidePolygon(int seed, int min_nb_points, int max_nb_points) {
 		Random random = new Random(seed);
-		int numberOfPoints = random.nextInt(1000)%100 + 1;
+		int numberOfPoints = random.nextInt(max_nb_points-min_nb_points) + min_nb_points;
 
 		int count = 0;
 		List<Position> positionsInsideBorders = new ArrayList<>();

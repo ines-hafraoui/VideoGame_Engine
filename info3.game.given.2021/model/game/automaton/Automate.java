@@ -3,25 +3,26 @@ package game.automaton;
 import game.entity.Entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Automate {
 
-	private List<State> states;
-	private List<State> currentStateList;
+	private Set<State> states = new HashSet<State>();
+	private Set<State> currentStateList = new HashSet<State>();
+
 	private String initial_state;
 	private Entity entity;
 
 	public Automate(Entity entity) {
-		states = new ArrayList<>();
-		currentStateList = new ArrayList<>();
+
 		this.entity = entity;
 	}
 
 
 	public Automate(String initial_state, List<State> states) {
-		this.states = states;
-		currentStateList = new ArrayList<>();
+		this.states = new HashSet(states);
 		this.initial_state = initial_state;
 		currentStateList.add(getState(this.initial_state));
 
@@ -45,7 +46,7 @@ public class Automate {
 	}
 
 	public List<State> getcurrentstate() {
-		return currentStateList;
+		return new ArrayList<State>(currentStateList);
 	}
 
 	public boolean add_transition(State s1, String s2, Condition cond, List<Action> a) {
@@ -64,8 +65,8 @@ public class Automate {
 			List<State> todelete = new ArrayList<>();
 			List<State> toadd = new ArrayList<>();
 
-			for (State state : currentStateList) {
-				for (Transition transition : state.get_transitionList()) {
+			for ( State state : currentStateList) {
+				for ( Transition transition : state.get_transitionList()) {
 					if (transition.c.eval(entity)) {
 						blocked = true;
 

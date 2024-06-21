@@ -23,8 +23,10 @@ package game.model;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import game.entity.Entity;
+import game.entity.EntityType;
 import game.automaton.Automate;
 import game.automaton.Category;
 import game.automaton.Relative_Orientation;
@@ -41,7 +43,6 @@ import game.map.Polygon;
 import info3.game.IFactory;
 import gal.demo.test.TestMain;
 
-
 /**
  * A simple class that holds the images of a sprite for an animated cowbow.
  *
@@ -56,17 +57,19 @@ public class Model {
 	private List<String> list_touche;
 	Entity[] players;
 	public java.util.Map<String, java.util.Map<String, Object>> entityConfigurations;
+	public java.util.Map<String, Automate> automates;
 	public List<Entity> entities;
 	IFactory factory;
 	public static int nb_bot_init;
-	public int timer; 
+	public int timer;
 	public boolean cooperative;
 	public int viscosity;
 	public Parser configParse;
+	private static long TIMER=0;
 
 	
-	public Model(int w, int h, Parser parse)throws IOException {
-		
+	public Model(int w, int h, Parser parse, IFactory f)throws IOException {
+
 		m_width = w;
 		height = h;
 		configParse = parse;
@@ -75,16 +78,18 @@ public class Model {
 		cooperative = parse.coop;
 		timer = parse.timer;
 		list_touche = new ArrayList();
+		factory = f;
 		entities = new ArrayList<Entity>();
+		automates = new HashMap<>();
 		entityConfigurations = parse.entities;
 		players = new Entity[parse.nb_player];
-		 int i = 0;
-		
+		int i = 0;
+
 		// create all entities from the info that gave us the Parser
-		
-		 for (java.util.Map.Entry<String, java.util.Map<String, Object>> entry : entityConfigurations.entrySet()) {
-	            String entityName = entry.getKey();
-	            java.util.Map<String, Object> properties = entry.getValue();
+
+		for (java.util.Map.Entry<String, java.util.Map<String, Object>> entry : entityConfigurations.entrySet()) {
+			String entityName = entry.getKey();
+			java.util.Map<String, Object> properties = entry.getValue();
 
 	            // Extract common properties
 	            String direction = (String) properties.get("direction");
@@ -106,7 +111,7 @@ public class Model {
 	            case "Bot2":
 	            case "Parasite":
 	            case "Dasher":
-	            case "Arsher":
+	            case "Archer":
 	            	entity = new Bot(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
                     break;
 	            case "Base1":
@@ -126,7 +131,7 @@ public class Model {
 	           
 	            if (entity != null) {
 	            	if (behaviour != null) {
-	            		String galPath = new File("gal/gal/Arrow.gal").getAbsolutePath();
+	            		String galPath = new File("gal/gal/"+behaviour).getAbsolutePath();
 		        		Automate automate = TestMain.loadAutomata(galPath);
 
 		        		if (automate != null) {
@@ -136,6 +141,7 @@ public class Model {
 			        			i++;
 			        		}
 			        		entities.add(entity);
+			        		automates.put(entity.get_type(), automate);
 		        		}	
 	            	}	
 	            }
@@ -147,14 +153,14 @@ public class Model {
 		Position pos2 = new Position(0, h);
 		Position pos3 = new Position(w, 0);
 		Position pos4 = new Position(w, h);
-		
+
 		poss.add(pos1);
 		poss.add(pos2);
 		poss.add(pos3);
 		poss.add(pos4);
 
 		Polygon p = new Polygon(poss);
-		m_map = new Map(p,this);
+		m_map = new Map(p, this);
 		m_map.generateMap(m_map.getSeed());
 	}
 
@@ -163,6 +169,7 @@ public class Model {
 	}
 
 	public void tick(long elapsed) {
+		TIMER+=elapsed;
 		m_imageElapsed += elapsed;
 		if (m_imageElapsed > 200) {
 			m_imageElapsed = 0;
@@ -171,18 +178,71 @@ public class Model {
 		m_map.tick(elapsed);
 	}
 
-
 	public Entity get_entity(int distance, String t, float f, float g) {
 		Entity e = m_map.get_entity(distance, t, f, g);
 		return e;
 	}
-	
-	public List<String> get_list_touche () {
+
+	public List<String> get_list_touche() {
 		return this.list_touche;
 	}
 
 	public void add_entity(Entity e) {
 		entities.add(e);
+	}
+
+	public boolean inflict_hit(Absolute_Orientation o, int porte, String t, float currentx, float currenty) {
+		float newX = currentx;
+		float newY = currenty;
+
+		switch (o.get_abs_Orientation()) {
+		case "N":
+			newY += porte;
+			break;
+		case "S":
+			newY -= porte;
+			break;
+		case "W":
+			newX -= porte;
+			break;
+		case "E":
+			newX += porte;
+			break;
+		case "NE":
+			newY += porte;
+			newX += porte;
+			break;
+		case "NW":
+			newY += porte;
+			newX -= porte;
+			break;
+		case "SE":
+			newY -= porte;
+			newX += porte;
+			break;
+		case "SW":
+			newY -= porte;
+			newX -= porte;
+			break;
+		default:
+			break;
+		}
+
+		for (Entity entity : entities) {
+			if (isWithinHitbox(newX, newY, entity)) {
+				entity.get_injured();
+			}
+		}
+		return true;
+	}
+
+	private boolean isWithinHitbox(float x, float y, Entity entity) {
+		float entityX = entity.get_x();
+		float entityY = entity.get_y();
+		float hitboxWidth = entity.getHitBox().getHbWidth(); // Largeur de la hitbox
+		float hitboxHeight = entity.getHitBox().getHbHeight(); // Hauteur de la hitbox
+
+		return (x >= entityX && x <= entityX + hitboxWidth) && (y >= entityY && y <= entityY + hitboxHeight);
 	}
 
 	/*
@@ -199,9 +259,9 @@ public class Model {
 		return players;
 	}
 
-	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String arrow, int team) {
+	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String type, int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
 
-		return factory.newEntity(model, position, abs_or, arrow, team);
+		return factory.newEntity(model, position, abs_or, type ,team, nb_bot,view, pickable,hb);
 	}
 
 	public interface ModelListener {
@@ -227,39 +287,39 @@ public class Model {
 	public List<Entity> list_cat(Category cat, int team) {
 		List<Entity> list = new ArrayList();
 		switch (cat.toString()) {
-		
-		
+
 		case "A":
 			for (Entity e : entities) {
-				if ( (e.get_team()!=team) && (e.get_team()!=0) && ( (e.get_type()!="FB") || (e.get_type()!="A") ) ) {
+				if ((e.get_team() != team) && (e.get_team() != 0)
+						&& ((e.get_type() != "FB") || (e.get_type() != "A"))) {
 					list.add(e);
 				}
 			}
 			break;
 		case "M":
 			for (Entity e : entities) {
-				if ( (e.get_team()!=team) && ( (e.get_type()!="FB") || (e.get_type()!="A") ) ) {
+				if ((e.get_team() != team) && ((e.get_type() != "FB") || (e.get_type() != "A"))) {
 					list.add(e);
 				}
 			}
 			break;
 		case "T":
 			for (Entity e : entities) {
-				if ( (e.get_team()==team) && (e.get_type()!="FB") && (e.get_type()!="A") ) {
+				if ((e.get_team() == team) && (e.get_type() != "FB") && (e.get_type() != "A")) {
 					list.add(e);
 				}
 			}
 			break;
 		case "@":
 			for (Entity e : entities) {
-				if ( (e.get_team()==team) && (e.get_type()=="J") ){
+				if ((e.get_team() == team) && (e.get_type() == "J")) {
 					list.add(e);
 				}
 			}
 			break;
 		case "#":
 			for (Entity e : entities) {
-				if ( (e.get_team()!=team) && (e.get_type()=="J") ){
+				if ((e.get_team() != team) && (e.get_type() == "J")) {
 					list.add(e);
 				}
 			}
@@ -271,14 +331,14 @@ public class Model {
 			break;
 		default:
 			for (Entity e : entities) {
-				if (e.get_category().toString()==cat.toString()){
+				if (e.get_category().toString() == cat.toString()) {
 					list.add(e);
 				}
 			}
-			break;			
+			break;
 		}
 		return list;
-		
+
 	}
 
 	public boolean eval_closest(List<Entity> list_cat, Absolute_Orientation d, Entity entity, float portee) {
@@ -292,39 +352,40 @@ public class Model {
 		Polygon polygon = create_polygon_direction(p_x,p_y,portee,angle1,angle2);
 		Position closest = new Position((float)closest_x,(float)closest_y);
 		System.out.print(polygon.containsPosition(closest));
+
 		return polygon.containsPosition(closest);
 	}
-	
+
 	private void select_closest(List<Entity> list_cat, double p_x, double p_y, double closest_x, double closest_y) {
 		for (Entity e : list_cat) {
 			float tmp_x = e.get_x();
 			float tmp_y = e.get_y();
 			float min = Integer.MAX_VALUE;
-			float dist = distance(tmp_x,tmp_y,(float)p_x,(float)p_y);
-			if (dist < min) {		
+			float dist = distance(tmp_x, tmp_y, (float) p_x, (float) p_y);
+			if (dist < min) {
 				closest_x = tmp_x;
 				closest_y = tmp_y;
 				min = dist;
 			}
-		}		
+		}
 	}
 
 	private float distance(float tmp_x, float tmp_y, float p_x, float p_y) {
-		Position p1 = new Position(p_x,p_y);
-		Position p2 = new Position(tmp_x,tmp_y);
+		Position p1 = new Position(p_x, p_y);
+		Position p2 = new Position(tmp_x, tmp_y);
 		return p1.distance(p2);
 	}
 
 	private Polygon create_polygon_direction(double p_x, double p_y, float portee, double angle1, double angle2) {
 		double pb_x = p_x + portee;
 		double pb_y = p_y;
-		double p1_x = (pb_x*Math.cos(angle1)) - (pb_y*Math.sin(angle1));
-		double p1_y = (pb_x*Math.sin(angle1)) + (pb_y*Math.cos(angle1));
-		double p2_x = (pb_x*Math.cos(angle2)) - (pb_y*Math.sin(angle2));
-		double p2_y = (pb_x*Math.sin(angle2)) + (pb_y*Math.cos(angle2));
-		Position p1 = new Position((float)p1_x,(float)p1_y);
-		Position p2 = new Position((float)p2_x,(float)p2_y);
-		Position p3 = new Position((float)p_x,(float)p_y);
+		double p1_x = (pb_x * Math.cos(angle1)) - (pb_y * Math.sin(angle1));
+		double p1_y = (pb_x * Math.sin(angle1)) + (pb_y * Math.cos(angle1));
+		double p2_x = (pb_x * Math.cos(angle2)) - (pb_y * Math.sin(angle2));
+		double p2_y = (pb_x * Math.sin(angle2)) + (pb_y * Math.cos(angle2));
+		Position p1 = new Position((float) p1_x, (float) p1_y);
+		Position p2 = new Position((float) p2_x, (float) p2_y);
+		Position p3 = new Position((float) p_x, (float) p_y);
 		List<Position> list_points = new ArrayList();
 		list_points.add(p1);
 		list_points.add(p2);
@@ -334,42 +395,42 @@ public class Model {
 	}
 
 	public void eval_angle(Absolute_Orientation d, double angle1, double angle2) {
-		switch(d.toString()) {
-		case "E":
+		switch (d.get_abs_Orientation()) {
+		case Absolute_Orientation.EAST:
 			angle1 = 337.5;
 			angle2 = 22.5;
 			break;
-		case "SE":
+		case Absolute_Orientation.SOUTH_E:
 			angle1 = 22.5;
 			angle2 = 67.5;
 			break;
-		case "S":
+		case Absolute_Orientation.SOUTH:
 			angle1 = 67.5;
 			angle2 = 112.5;
 			break;
-		case "SW":
+		case Absolute_Orientation.SOUTH_W:
 			angle1 = 112.5;
 			angle2 = 157.5;
 			break;
-		case "W":
+		case Absolute_Orientation.WEST:
 			angle1 = 157.5;
 			angle2 = 202.5;
 			break;
-		case "NW":
+		case Absolute_Orientation.NORTH_W:
 			angle1 = 202.5;
 			angle2 = 247.5;
 			break;
-		case "N":
+		case Absolute_Orientation.NORTH:
 			angle1 = 247.5;
 			angle2 = 292.5;
 			break;
-		case "NE":
+		case Absolute_Orientation.NORTH_E:
 			angle1 = 292.5;
 			angle2 = 337.5;
 			break;
-		default :
+		default:
 			System.out.print("Aucune Orientation !\n");
-			//throw new Exception();
+			// throw new Exception();
 		}
 	}
 
@@ -381,6 +442,10 @@ public class Model {
 
 	public void suppr_key(String string) {
 		list_touche.remove(string);
+	}
+	
+	public long get_timer() {
+		return TIMER;
 	}
 
 	public boolean do_hit(Absolute_Orientation o, String type, int porte, Entity e) {

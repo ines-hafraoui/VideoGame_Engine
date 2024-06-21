@@ -25,7 +25,7 @@
       "sprite" : "fighter2.png",
       "pickable": false ,
       "direction": "W",
-      "position":[200,500],
+      "position":[500,500],
       "hitbox":[5,10],
       "team": 2
     },
@@ -62,6 +62,7 @@
       "pickable" : true,
       "direction":"W",
       "position":[1,1],
+      "hitbox":[2,2],
       "team":0
     },
     "Base1":{ 

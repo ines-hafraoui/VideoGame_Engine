@@ -12,10 +12,9 @@ public class HitBox {
     private float height;
     private Polygon polygon;
 
-    public HitBox(Entity e, float x, float y) {
-        this.width = width; 
-        this.height = height;
-        polygon = create_polygon();
+    public HitBox(float x, float y) {
+        width = x; 
+        height = y;
     }
     
 
@@ -38,6 +37,17 @@ public class HitBox {
     public void setHbHeight(float y) {
         this.height = y; 
     }
+    
+    public void setEntity(Entity e) {
+        this.e =e; 
+        polygon = create_polygon();
+    }
+    
+
+	public void setPolygone() {
+		this.polygon = create_polygon();
+	}
+    
     
     @Override
     public boolean equals(Object obj) {
@@ -62,6 +72,8 @@ public class HitBox {
         points.add(d);
         return new Polygon(points);
     }
+
+
 
 
 }

@@ -10,6 +10,7 @@ import game.entity.Bot;
 import game.entity.Entity;
 import game.entity.EntityType;
 import game.entity.Fire_Ball;
+import game.entity.HitBox;
 import game.entity.Item;
 import game.entity.Player;
 import game.entity.Position;
@@ -39,7 +40,7 @@ public class Game1Factory implements IFactory {
 		case EntityType.FIREBALL:
 			return new Fire_Ball(a,m, p, o, team,0);
 		case EntityType.ARROW:
-			return new Arrow(a,m, p, o, type, team,0);
+			return new Arrow(a,m, p, o, team,0);
 
 		default:
 			return null;
@@ -47,20 +48,20 @@ public class Game1Factory implements IFactory {
 	}
 
 	@Override
-	public Entity newEntity(Model m, Position p, Absolute_Orientation o, String type, int team) {
+	public Entity newEntity(Model m, Position p, Absolute_Orientation o, String type, int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
 		switch (type) {
 		case EntityType.BASE:
-			return new Base(m, p, o, type, team,0);
+			return new Base(m, p, o, team,nb_bot, view, pickable, hb);
 		case EntityType.ITEM:
-			return new Item(m, p, o, type, team,0);
+			return new Item(m, p, o, team,nb_bot, view, pickable, hb);
 		case EntityType.TEAMMATE:
-			return new Bot(m, p, o, type, team,0);
+			return new Bot(m, p, o,team,nb_bot, view, pickable, hb);
 		case EntityType.PLAYER:
-			return new Player(m, p, o, type, team,Model.NB_BOT);
+			return new Player(m, p, o,team, nb_bot, view, pickable, hb);
 		case EntityType.FIREBALL:
-			return new Fire_Ball(m, p, o, type, team,0);
+			return new Fire_Ball(m, p, o,team, nb_bot);
 		case EntityType.ARROW:
-			return new Arrow(m, p, o, type, team,0);
+			return new Arrow(m, p, o, team,nb_bot);
 		default:
 			return null;
 		}

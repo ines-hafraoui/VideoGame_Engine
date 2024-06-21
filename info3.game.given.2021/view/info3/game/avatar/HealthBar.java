@@ -11,9 +11,9 @@ public class HealthBar {
 		m_avatar = avatar;
 	}
 
-	protected void drawHealthBar(Graphics g, int x, int y, int width, int height) {
+	protected void drawHealthBar(Graphics g, int x, int y, int width, int height,int r_health) {
 		// int health= m_entity.health;
-		int health = 50;
+		int health = r_health;
 		int healthWidth = (int) ((width * health) / 100.0);
 
 		// Fond de la barre de santé
@@ -21,7 +21,7 @@ public class HealthBar {
 		g.fillRect(x, y, width, height);
 
 		// Barre de santé actuelle
-		g.setColor(Color.BLUE);
+		g.setColor(Color.GREEN);
 		g.fillRect(x, y, healthWidth, height);
 
 		// Bordure de la barre de santé
