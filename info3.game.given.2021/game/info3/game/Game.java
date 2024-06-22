@@ -64,7 +64,7 @@ public class Game {
 	public Model m_model;
 	Sound m_music;
 	public Map<String, Object> sprites = new HashMap<>();
-
+	Dimension c;
 
 	Game() throws Exception {
 		// creating a model, that would be a model
@@ -94,6 +94,7 @@ public class Game {
 		System.out.println("  - creating frame...");
 		m_frame = m_canvas.createFrame(viewd);
 		System.out.println("  - setting up the frame...");
+		c = new Dimension(m_canvas.getWidth(), m_canvas.getHeight());
 
 		setupFrame();
 	}
@@ -170,17 +171,21 @@ public class Game {
 	 * called from the GameCanvasListener, called from the GameCanvas.
 	 */
 	public void paint(Graphics g) {
-
+		
+		
 		// getickt the size of the canvas
 		int width = m_canvas.getWidth();
 		int height = m_canvas.getHeight();
-
+		if(c.width != width && c.height !=height) {
+			m_view.setDimension(width,height);  
+			c.width = width;
+			c.height = height;
+		}
 		// erase background
 		g.setColor(Color.gray);
 		g.fillRect(0, 0, width, height);
 
 		// paint
-		m_view.setDimension(width,height);    
 		m_view.paint(g);
 	}
 

@@ -25,7 +25,7 @@ public class View extends Container {
 	private static final long serialVersionUID = 5772029785230806250L;
 
 	// How much of the world we will be showing in each Viewport
-	public static final int DISPLAYSCALE = 1;
+	public static final int DISPLAYSCALE = 2;
 
 	private Model m_model;
 	private int m_x = 0, m_y = 0;
@@ -70,7 +70,7 @@ public class View extends Container {
 
 	public void paint(Graphics g) {
 		Graphics mg = g.create(m_x, m_y, m_d.width, m_d.height);
-		if (m_dviewport.withinSameVP()) {
+		if (!m_dviewport.withinSameVP()) {
 			switch (m_viewports.length) {
 			case 1:
 				m_viewports[0].paint(mg);

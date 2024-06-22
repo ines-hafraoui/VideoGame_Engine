@@ -55,13 +55,23 @@ public class DynamicViewport extends AViewport {
 
 		Caculatetranslation(m_midwaypointx, m_midwaypointy);
 		// Scaling the bounds' leeway to the zoom given to the map
-		m_inWorldBounds = new Rectangle(-20 * View.DISPLAYSCALE, -20 * View.DISPLAYSCALE,
+		m_inWorldBounds = new Rectangle(4, 4,
 				d.width + (20 * View.DISPLAYSCALE), d.height + (20 * View.DISPLAYSCALE));
 	}
 
+	@Override
+	public void setDimension(Dimension d) {
+		m_d = d;
+
+		// Scaling the bounds' leeway to the zoom given to the map
+		m_inWorldBounds = new Rectangle(4,4,
+				m_d.width + (20 * View.DISPLAYSCALE), m_d.height + (20 * View.DISPLAYSCALE));
+	}
+	
+	
 	public boolean withinSameVP() {
 		for (Avatar p : m_players) {
-			if (!p.within(m_inWorldBounds, m_trx, -m_try)) {
+			if (!p.within(m_inWorldBounds, -m_trx, -m_try)) {
 				return false;
 			}
 		}
