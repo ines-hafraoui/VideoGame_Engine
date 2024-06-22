@@ -2,7 +2,8 @@ package game.automaton;
 
 import game.entity.Entity;
 
-public class Conjonction implements Condition {
+public class Conjonction extends Condition {
+	
 	Condition m_c1, m_c2;
 	
 

@@ -2,7 +2,7 @@ package game.automaton;
 
 import game.entity.Entity;
 
-public class Pick implements Action {
+public class Pick extends Action {
 	int distance;
 	
 	public Pick(int d) {

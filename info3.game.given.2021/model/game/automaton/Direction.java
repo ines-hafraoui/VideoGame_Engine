@@ -1,7 +1,8 @@
 package game.automaton;
 
 public class Direction {
-	
+	public int percent = Integer.MAX_VALUE;
+
 	public char dir;  
 	public static final char FRONT = 'F';
 	public static final char RIGHT = 'R';

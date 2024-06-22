@@ -2,7 +2,7 @@ package game.automaton;
 
 import game.entity.Entity;
 
-public class Rest implements Action{
+public class Rest extends Action{
 	int value;
 	
 	public Rest(int v) {

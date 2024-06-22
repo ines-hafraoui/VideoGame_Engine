@@ -5,6 +5,7 @@ import game.entity.Entity;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 public class Automate {
@@ -14,6 +15,8 @@ public class Automate {
 
 	private String initial_state;
 	private Entity entity;
+	
+	private List<Action> action_buffer = new ArrayList<Action>();
 
 	public Automate(Entity entity) {
 
@@ -56,12 +59,9 @@ public class Automate {
 
 	public boolean blocked; // the entity will unblock the automaton once it's transition is over
 
-	public void step(Entity e) {
-		// to delete when view will be able to handle animations
-		blocked = false;
-
+public void step(Entity e) {
+		
 		if (!blocked) {
-
 			List<State> todelete = new ArrayList<>();
 			List<State> toadd = new ArrayList<>();
 
@@ -71,7 +71,7 @@ public class Automate {
 						blocked = true;
 
 						for (Action a : transition.actionList) {
-							a.exec(e);
+							action_buffer.add(a);
 						}
 						State s = this.getState(transition.cible);
 						toadd.add(s);
@@ -86,9 +86,9 @@ public class Automate {
 			for (State state : toadd) {
 				currentStateList.add(state);
 			}
-
-		}
+			}
 	}
+
 
 	public State getState(String name) {
 		for (State s : this.states) {
@@ -105,7 +105,6 @@ public class Automate {
 	public Entity get_entity() {
 		return this.entity;
 	}
-	
 	
 
 }

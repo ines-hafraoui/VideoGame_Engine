@@ -2,7 +2,7 @@ package game.automaton;
 
 import game.entity.Entity;
 
-public class Explode implements Action {
+public class Explode extends Action {
 	
 	public Explode() {
 		

@@ -2,7 +2,7 @@ package game.automaton;
 
 import game.entity.Entity;
 
-public class Die implements Action {
+public class Die extends Action {
 
 	@Override
 	public boolean exec(Entity e) {

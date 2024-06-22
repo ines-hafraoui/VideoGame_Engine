@@ -27,4 +27,5 @@ public class FireBallAvatar extends Avatar {
 		// TODO Auto-generated method stub
 		
 	}
+	
 }

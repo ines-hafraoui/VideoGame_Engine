@@ -1,7 +1,8 @@
 Dasher(Beg){
 
  * (Beg): 
- | !(Got(Power)) ? Explode :(Mort)
+ | True ? 53687091 % Turn(W) ; Move / 53687091 % Turn(E) ; Move / 53687091 % Turn(E) ; Move / 53687091 % Turn(S) ; Move :(Beg)																										
+  | !(Got(Power)) ? Explode :(Mort)
  | Cell(E,A,10) ? Turn(E) ; Wizz(10) :(Beg)
  | Cell(SE,A,10) ? Turn(SE) ; Wizz(10) :(Beg)
  | Cell(S,A,10) ? Turn(S) ; Wizz(10) :(Beg)
