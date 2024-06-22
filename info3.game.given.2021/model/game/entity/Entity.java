@@ -197,7 +197,7 @@ public abstract class Entity {
 	}
 	
 	public boolean eval_got() {
-		System.out.print(HP);
+		System.out.print(HP+"\n");
 		return HP>0;
 	}
 	
