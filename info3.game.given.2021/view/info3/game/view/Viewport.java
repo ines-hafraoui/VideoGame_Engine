@@ -32,9 +32,9 @@ public class Viewport extends AViewport {
 	Viewport(Model model, List<Avatar> avatars, View parent, Dimension d, int x, int y, Avatar player, MapView m) {
 		m_parent = parent;
 		m_model = model;
-		m_d = d;
 		m_avatars = avatars;
 		m_map = m;
+		setDimension(d);
 
 		try {
 			if (player.m_entity instanceof Player) {
@@ -51,10 +51,6 @@ public class Viewport extends AViewport {
 		m_oldpositiony = (int) m_player.m_entity.get_y();
 		Caculatetranslation(m_oldpositionx, m_oldpositiony);
 		m_map = new MapView(0, 0, m_model, parent, this);
-
-		// Scaling the bounds' leeway to the zoom given to the map
-		m_inWorldBounds = new Rectangle(-20 * View.DISPLAYSCALE, -20 * View.DISPLAYSCALE,
-				d.width + (20 * View.DISPLAYSCALE), d.height + (20 * View.DISPLAYSCALE));
 	}
 
 	public void paint(Graphics g) {
@@ -71,7 +67,7 @@ public class Viewport extends AViewport {
 		Iterator<Avatar> iter = m_avatars.iterator();
 		while (iter.hasNext()) {
 			Avatar a = iter.next();
-			if (!a.equals(m_player) && a.within(m_inWorldBounds, -m_trx, -m_try)) {
+			if (!a.m_entity.equals(m_player.m_entity) && a.within(m_inWorldBounds, -m_trx, -m_try)) {
 				a.paint(mg, -m_trx, -m_try);
 			}
 		}

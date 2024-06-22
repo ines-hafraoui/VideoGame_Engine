@@ -154,6 +154,7 @@ public class View extends Container {
 		default:
 			throw new IllegalArgumentException("You have more than 2 players");
 		}
+		m_dviewport.setDimension(m_d);
 	}
 
 	public static BufferedImage[] loadSprite(String filename, int nrows, int ncols) throws IOException {

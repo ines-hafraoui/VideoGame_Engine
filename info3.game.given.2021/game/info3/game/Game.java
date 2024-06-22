@@ -180,7 +180,7 @@ public class Game {
 		g.fillRect(0, 0, width, height);
 
 		// paint
-//		m_view.setDimension(width,height);    
+		m_view.setDimension(width,height);    
 		m_view.paint(g);
 	}
 
