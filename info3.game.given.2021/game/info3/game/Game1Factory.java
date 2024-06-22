@@ -52,7 +52,7 @@ public class Game1Factory implements IFactory {
 	}
 
 	@Override
-	public Entity newEntity(Model m, Position p, Absolute_Orientation o, String type, int team, int nb_bot,int view, Boolean pickable, HitBox hb, String sprite) {
+	public Entity newEntity(Model m, Position p, Absolute_Orientation o, String type, int team, int nb_bot, Boolean pickable, HitBox hb) {
 		switch (type) {
 		case EntityType.BASE:
 			return new Base(m, p, o, team,nb_bot,pickable, hb);

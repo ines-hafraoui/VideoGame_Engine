@@ -47,6 +47,7 @@ import game.entity.Item;
 import game.entity.Player;
 
 import game.entity.Position;
+import game.entity.Projectile;
 import game.map.Map;
 import game.map.Polygon;
 import info3.game.IFactory;
@@ -132,6 +133,11 @@ public class Model {
 	            case "Capacity":
 	            case "Plant" : 
 	            	entity = new Item(this,pos,new Absolute_Orientation(direction), team, 0, pickable,hb);
+                    break;
+	            case "Arrow":
+	            case "FireBall" : 
+	            	entity = new Projectile(this,pos,new Absolute_Orientation(direction), team, 0, pickable,hb);
+	            	((Projectile)entity).set_type(entityName);
                     break;
                 default : 
                 	entity = null;
@@ -253,9 +259,9 @@ public class Model {
 		return players;
 	}
 
-	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String type, int team, int nb_bot,int view, Boolean pickable, HitBox hb,String sprite) {
+	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String type, int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
 
-		return factory.newEntity(model, position, abs_or, type ,team, nb_bot,view, pickable,hb,sprite);
+		return factory.newEntity(model, position, abs_or, type ,team, nb_bot,pickable,hb);
 	}
 
 	public interface ModelListener {

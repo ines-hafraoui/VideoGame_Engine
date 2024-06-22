@@ -19,13 +19,16 @@ public class Projectile extends Entity {
 
 	public void set_type (String s) {
 		switch (s) {
-		case "A": 
+		case "Arrow": 
 			this.type = EntityType.ARROW;
-		case "FB" :
+			break;
+		case "FireBall" :
 			this.type = EntityType.FIREBALL;
+			break;
 		default : 
 			System.out.print("mauvais type attribué au projectile");
 			this.type = null; 
+			break;
 		}
 	}
 

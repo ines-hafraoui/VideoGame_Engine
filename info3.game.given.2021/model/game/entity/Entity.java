@@ -281,21 +281,21 @@ public abstract class Entity {
 		Automate a;
 		switch(cat) { // TROUVER UN MOYEN DE RECUPERER LES SPRITES
 		case FLECHE:
-			e = model.newEntity(model,position,abs_or, EntityType.ARROW,team,0,0,false,new HitBox(2,2), null);
+			e = model.newEntity(model,position,abs_or, EntityType.ARROW,team,0,0,false,new HitBox(2,2));
 			model.get_entities().add(e);
 			a = model.automates.get(EntityType.ARROW);
 			e.set_automate(a);
 			state_action = ActionType.EGG;
 			break;
 		case BOULE_FEU :
-			e = model.newEntity(model,position,abs_or, EntityType.FIREBALL,team,0,0,false,new HitBox(2,2),null);
+			e = model.newEntity(model,position,abs_or, EntityType.FIREBALL,team,0,0,false,new HitBox(2,2));
 			model.get_entities().add(e);
 			a = model.automates.get(EntityType.FIREBALL);
 			e.set_automate(a);
 			state_action = ActionType.EGG;
 			break;
 		case BOT :  
-			e = model.newEntity(model,position,abs_or, EntityType.TEAMMATE,team, 0,0,false,new HitBox(2,2),null);
+			e = model.newEntity(model,position,abs_or, EntityType.TEAMMATE,team, 0,0,false,new HitBox(2,2));
 			model.get_entities().add(e);
 			a = model.automates.get(EntityType.TEAMMATE);
 			e.set_automate(a);

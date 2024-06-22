@@ -20,6 +20,11 @@ public class Base extends Entity {
 		picked = false;
 		type = EntityType.BASE;
 	}
+	
+	@Override
+	public boolean do_move() {
+		return false;
+	}
 
 	@Override
 	public boolean do_rest(int p) {return false;}
