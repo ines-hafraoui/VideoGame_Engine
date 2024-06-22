@@ -192,13 +192,13 @@ public class Model {
 //	            		list_state.add(s1);
 //	            		Automate automate = new Automate("Init",list_state);	// A là
 		        		if (automate != null) {
-		        			entity.set_automate(automate);
+//		        			entity.set_automate(automate);
 			        		if (entity instanceof Player) {
 			        			players[i] = entity;
 			        			i++;
 			        		}
 			        		entities.add(entity);
-			        		automates.put(entity.get_type(), automate);
+//			        		automates.put(entity.get_type(), automate);
 		        		}	
 	            	}	
 	            }

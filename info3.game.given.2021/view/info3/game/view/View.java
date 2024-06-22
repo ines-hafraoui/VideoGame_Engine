@@ -39,6 +39,8 @@ public class View extends Container {
 	MapView m_map;
 	MiniMap m_minimap;
 
+	public boolean Changed;
+
 	public View(Model model, IFactory f, Dimension d) {
 		m_model = model;
 		m_mwidth = model.get_width() * DISPLAYSCALE;
@@ -60,7 +62,9 @@ public class View extends Container {
 				e1.printStackTrace();
 			}
 		}
-
+		
+		Changed = false;
+		
 		setViewports();
 	}
 
@@ -136,6 +140,22 @@ public class View extends Container {
 
 	public void setDimension(Dimension d) {
 		m_d = d;
+		switch (m_viewports.length) {
+		case 1:
+			m_viewports[0].setDimension(m_d);
+			break;
+		case 2:
+			Dimension dv = new Dimension(d.width/2, d.height);
+			m_viewports[0].setX(0);
+			m_viewports[0].setDimension(dv);
+			m_viewports[1].setX(d.width / 2);
+			m_viewports[1].setDimension(dv);
+			break;
+		default:
+			throw new IllegalArgumentException("You have more than 2 players");
+		}
+		m_dviewport.setDimension(m_d);
+		Changed = true;
 	}
 
 	public void setDimension(int w, int h) {
@@ -155,6 +175,7 @@ public class View extends Container {
 			throw new IllegalArgumentException("You have more than 2 players");
 		}
 		m_dviewport.setDimension(m_d);
+		Changed = true;
 	}
 
 	public static BufferedImage[] loadSprite(String filename, int nrows, int ncols) throws IOException {

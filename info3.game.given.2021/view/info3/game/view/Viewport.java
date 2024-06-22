@@ -57,7 +57,7 @@ public class Viewport extends AViewport {
 		int x = (int) m_player.m_entity.get_x();
 		int y = (int) m_player.m_entity.get_y();
 
-		if (x != m_oldpositionx || y != m_oldpositiony) {
+		if ((x != m_oldpositionx || y != m_oldpositiony) || m_parent.Changed) {
 			Caculatetranslation(x, y);
 		}
 

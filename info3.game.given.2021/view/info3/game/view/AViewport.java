@@ -27,13 +27,20 @@ public abstract class AViewport extends Component {
 		}
 		return false;
 	}
+	
+	public boolean withinbounds(int point) {
+		if (m_inWorldBounds.contains(point)) {
+			return true;
+		}
+		return false;
+	}
 
 	public void setDimension(Dimension d) {
 		m_d = d;
 
 		// Scaling the bounds' leeway to the zoom given to the map
 		m_inWorldBounds = new Rectangle(-20 * View.DISPLAYSCALE, -20 * View.DISPLAYSCALE,
-				d.width + (20 * View.DISPLAYSCALE), d.height + (20 * View.DISPLAYSCALE));
+				m_d.width + (20 * View.DISPLAYSCALE), m_d.height + (20 * View.DISPLAYSCALE));
 	}
 
 	void Caculatetranslation(int x, int y) {
