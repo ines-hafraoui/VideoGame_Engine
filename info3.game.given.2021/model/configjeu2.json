@@ -5,8 +5,7 @@
   "nb_bot_init":5,
   "nb_player": 2,
   "Player1":{ 
-      "name" : "PLAYER 1",
-      "view" : 1,   
+      "name" : "PLAYER 1", 
       "behaviour": "player1.gal",
       "features" : "Player.class",
       "sprite" : "teammate1.png",
@@ -18,7 +17,6 @@
     },
     "Player2":{
       "name" : "PLAYER 2",
-      "view" : 2,   
       "behaviour": "player2.gal",
       "features" : "Player.class",
       "sprite" : "teammate2.png",
@@ -30,7 +28,6 @@
     },
     "Parasite":{
       "name" : "PARASITE", 
-      "view" : 0, 
       "behaviour" : "bot2.gal",
       "features" : "Bot.class",
       "sprite" : "parasite.png",
@@ -42,7 +39,6 @@
     },
      "Dasher":{
       "name" : "DASHER", 
-      "view" : 0, 
       "behaviour" : "dasher.gal",
       "features" : "Bot.class",
       "sprite" : "dasher.png",
@@ -54,7 +50,6 @@
     },
      "Archer":{
       "name" : "ARCHER", 
-      "view" : 0, 
       "behaviour" : "arsher.gal",
       "features" : "Bot.class",
       "sprite" : "arsher.png",
@@ -66,7 +61,6 @@
     },
     "Capacity":{
       "name" : "CAPACITY", 
-      "view" : 0, 
       "behaviour" : "item.gal",
       "features" : "Capacity.class",
       "sprite" : "capacity.png",
@@ -78,7 +72,6 @@
     "Plant":{
       "name" : "PLANT", 
       "behaviour" : "item.gal",
-      "view" : 0, 
       "features" : "Plant.class",
       "sprite" : "plant.png",
       "pickable" : true,
@@ -89,7 +82,6 @@
     },
     "Base":{
       "name" : "BASE", 
-      "view" : 0,  
       "behaviour" : "base2.gal",
       "features" : "Base.class",
       "sprite" : "base.png",

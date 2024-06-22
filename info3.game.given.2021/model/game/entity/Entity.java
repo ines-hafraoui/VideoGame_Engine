@@ -86,7 +86,7 @@ public abstract class Entity {
 		selected = false;
 	}
 	
-	public Entity(Model m,Position p, Absolute_Orientation o, int team,int nb_bot, int view,boolean pickable,HitBox hb, String sprite) {
+	public Entity(Model m,Position p, Absolute_Orientation o, int team,int nb_bot, boolean pickable,HitBox hb) {
 		hitBox = hb;
 		model = m;
 		position = p;
@@ -99,11 +99,9 @@ public abstract class Entity {
 		injured = false;
 		current_nbot = nb_bot;
 		nb_bot_init = nb_bot;
-		this.view = view;
 		this.pickable = pickable;
 		selected = false;
 		hitBox.setEntity(this);	
-		this.sprite = sprite;
 	}
 	
 
@@ -261,7 +259,7 @@ public abstract class Entity {
 	public void get_injured() {
 		injured = true;
 		int h = HP-10;
-		if (h<0) {
+		if (h<=0) {
 			this.do_explode();
 		}else {
 			HP -= 10;
@@ -282,8 +280,7 @@ public abstract class Entity {
 		Entity e;
 		Automate a;
 		switch(cat) { // TROUVER UN MOYEN DE RECUPERER LES SPRITES
-		case FLECHE : 
-			createEntity(EntityType.ARROW);
+		case FLECHE:
 			e = model.newEntity(model,position,abs_or, EntityType.ARROW,team,0,0,false,new HitBox(2,2), null);
 			model.get_entities().add(e);
 			a = model.automates.get(EntityType.ARROW);
@@ -307,10 +304,6 @@ public abstract class Entity {
 		default : 
 			break;
 		}
-	}
-	
-	protected void createEntity(String arrow) {
-		
 	}
 
 	public void do_got(String s) {

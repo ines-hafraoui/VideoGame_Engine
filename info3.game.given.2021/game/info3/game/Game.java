@@ -64,17 +64,15 @@ public class Game {
 	View m_view;
 	public Model m_model;
 	Sound m_music;
-	public Map<String, List<String>> sprites = new HashMap<>();
-
 
 	Game() throws Exception {
 		// creating a model, that would be a model
 		// in an Model-View-Controller pattern (MVC)
 		Dimension d = new Dimension(1800, 1000);
-		IFactory factory = new Game1Factory();
 		// Parse the config file
 		String parsePath = new File("model/configjeu1.json").getAbsolutePath();
 		Parser configParse = new Parser(parsePath);
+		IFactory factory = new Game1Factory(configParse);
 
 		m_model = new Model(d.width, d.height, configParse, factory);
 
@@ -88,7 +86,6 @@ public class Game {
 		// that would be a part of the view in the MVC pattern
 		m_canvas = new GameCanvas(m_listener);
 
-		sprites = configParse.sprites;
 		Dimension viewd = new Dimension(1000, 700);
 		m_view = new View(m_model, factory, viewd);
 

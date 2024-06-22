@@ -7,10 +7,16 @@ public class Projectile extends Entity {
 	
 
 
-	public Projectile(Model m, Position p, Absolute_Orientation o, int team, int nb_bot,int view, Boolean pickable, HitBox hb, String sprite) {
-		super(m, p, o, team, nb_bot,view, pickable, hb,sprite);
+	public Projectile(Model m, Position p, Absolute_Orientation o, int team, int nb_bot, Boolean pickable, HitBox hb) {
+		super(m, p, o, team, nb_bot,pickable, hb);
+		this.HP = 0;
 	}
 	
+	public Projectile(Automate a, Model m, Position p, Absolute_Orientation o, int team, int i) {
+		super(a,m, p, o, team, i);
+		this.HP = 0;
+	}
+
 	public void set_type (String s) {
 		switch (s) {
 		case "A": 

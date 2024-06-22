@@ -27,7 +27,6 @@ public class Parser {
 	
 	//public ArrayList<Entity> entities = new ArrayList<Entity>();
 	public Map<String, Map<String, Object>> entities = new HashMap<>();
-	public Map<String, List<String>> sprites = new HashMap<>();
 	public String aut_projectile[];
 	public String aut_bot[];
 	
@@ -49,15 +48,8 @@ public class Parser {
 		nb_player =((Number) jo.get("nb_player")).intValue();
 		
 		
-		JSONArray array = (JSONArray)jo.get("projectile");
-		int aut_size = (array).size();
-		aut_projectile = new String[aut_size];
-		for (int i = 0; i<aut_size; i++) {
-			aut_projectile[i] = (String)array.get(i);
-		}
-		
-		array = (JSONArray)jo.get("automates");
-		aut_size = (array).size();
+		JSONArray array = (JSONArray)jo.get("automates");
+		 int aut_size = (array).size();
 		aut_bot = new String[aut_size];
 		
 		for (int i = 0; i<aut_size; i++) {
@@ -86,8 +78,6 @@ public class Parser {
                         JSONArray hitBoxArray = (JSONArray) entityKeyValue;
                         HitBox hb = new HitBox(((Number) hitBoxArray.get(0)).floatValue(), ((Number) hitBoxArray.get(1)).floatValue());
                         entityProperties.put(entityKeyStr, hb);
-//                    } else if ("sprite".equals(entityKeyStr)){
-//                    	sprites.put(convertString(keyStr), entityKeyValue);
                     }else {
                     	entityProperties.put(entityKeyStr, entityKeyValue);
                     }
@@ -98,6 +88,15 @@ public class Parser {
         }
 		
 
+	}
+	
+	// find the sprite corresponding to the name of the entity
+	public String getSprite(String name) {
+	 Map<String, Object> properties = entities.get(name);
+	    if (properties != null) {
+	        return (String) properties.get("sprite");
+	    }
+	    return null;
 	}
 
 	private String convertString(String name) {

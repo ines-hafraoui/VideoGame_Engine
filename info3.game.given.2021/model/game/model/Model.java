@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 import game.entity.Entity;
 import game.entity.EntityType;
-import game.entity.Fire_Ball;
 import game.automaton.Action;
 import game.automaton.Automate;
 import game.automaton.Category;
@@ -41,7 +40,6 @@ import game.automaton.TrueFalse;
 import game.automaton.Turn;
 import game.entity.Absolute_Orientation;
 import game.entity.ActionType;
-import game.entity.Arrow;
 import game.entity.Base;
 import game.entity.Bot;
 import game.entity.HitBox;
@@ -110,32 +108,30 @@ public class Model {
 	           String direction = (String) properties.get("direction");
 	            Position pos = (Position) properties.get("position");
 	            int team = ((Number) properties.get("team")).intValue();
-	            int view = ((Number) properties.get("view")).intValue();
 	            boolean pickable = (Boolean) properties.get("pickable");
 	            String behaviour = (String) properties.get("behaviour");
-	            String sprite = (String) properties.get("sprite");
 	            HitBox hb = (HitBox) properties.get("hitbox");
 	            
 	            Entity entity;
 	            switch (entityName) {
 	            case "Player1":
 	            case "Player2":
-	            	entity = new Player(this,pos, new Absolute_Orientation(direction), team, nb_bot_init, view, pickable,hb, sprite);
+	            	entity = new Player(this,pos, new Absolute_Orientation(direction), team, nb_bot_init, pickable,hb);
                     break;
 	            case "Bot1":
 	            case "Bot2":
 	            case "Parasite":
-	            	entity = new Bot(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb, sprite);
+	            	entity = new Bot(this,pos, new Absolute_Orientation(direction), team, 0,pickable,hb);
                     break;
 	            case "Base1":
 	            case "Base2":
 	            case "Base":
-	            	entity = new Base(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb,sprite);
+	            	entity = new Base(this,pos, new Absolute_Orientation(direction), team, 0,pickable,hb);
                     break;
 	            case "Power":
 	            case "Capacity":
 	            case "Plant" : 
-	            	entity = new Item(this,pos,new Absolute_Orientation(direction), team, 0, view, pickable,hb,sprite);
+	            	entity = new Item(this,pos,new Absolute_Orientation(direction), team, 0, pickable,hb);
                     break;
                 default : 
                 	entity = null;

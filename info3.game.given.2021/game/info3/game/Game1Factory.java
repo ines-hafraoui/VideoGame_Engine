@@ -4,18 +4,17 @@ import java.io.IOException;
 
 import game.automaton.Automate;
 import game.entity.Absolute_Orientation;
-import game.entity.Arrow;
 import game.entity.Base;
 import game.entity.Bot;
 import game.entity.Entity;
 import game.entity.EntityType;
-import game.entity.Fire_Ball;
 import game.entity.HitBox;
 import game.entity.Item;
 import game.entity.Player;
 import game.entity.Position;
 import game.entity.Projectile;
 import game.model.Model;
+import game.model.Parser;
 import info3.game.avatar.ArrowAvatar;
 import info3.game.avatar.Avatar;
 import info3.game.avatar.BaseAvatar;
@@ -26,7 +25,13 @@ import info3.game.avatar.PlayerAvatar;
 import info3.game.view.View;
 
 public class Game1Factory implements IFactory {
-
+	
+	Parser parse;
+	
+	public Game1Factory(Parser p) {
+		parse = p;
+	}
+	
 	@Override
 	public Entity newEntity(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team) {
 		switch (type) {
@@ -39,10 +44,8 @@ public class Game1Factory implements IFactory {
 		case EntityType.PLAYER:
 			return new Player(a, m, p, o,team,Model.nb_bot_init);
 		case EntityType.FIREBALL:
-			return new Fire_Ball(a,m, p, o, team,0);
 		case EntityType.ARROW:
-			return new Arrow(a,m, p, o, team,0);
-
+			return new Projectile(a,m, p, o, team,0);
 		default:
 			return null;
 		}
@@ -52,16 +55,16 @@ public class Game1Factory implements IFactory {
 	public Entity newEntity(Model m, Position p, Absolute_Orientation o, String type, int team, int nb_bot,int view, Boolean pickable, HitBox hb, String sprite) {
 		switch (type) {
 		case EntityType.BASE:
-			return new Base(m, p, o, team,nb_bot, view, pickable, hb, sprite);
+			return new Base(m, p, o, team,nb_bot,pickable, hb);
 		case EntityType.ITEM:
-			return new Item(m, p, o, team,nb_bot, view, pickable, hb, sprite);
+			return new Item(m, p, o, team,nb_bot, pickable, hb);
 		case EntityType.TEAMMATE:
-			return new Bot(m, p, o,team,nb_bot, view, pickable, hb,sprite);
+			return new Bot(m, p, o,team,nb_bot, pickable, hb);
 		case EntityType.PLAYER:
-			return new Player(m, p, o,team, nb_bot, view, pickable, hb, sprite);
+			return new Player(m, p, o,team, nb_bot, pickable, hb);
 		case EntityType.FIREBALL:
 		case EntityType.ARROW :
-			return new Projectile(m, p, o,team, nb_bot, view, pickable, hb, sprite);
+			return new Projectile(m, p, o,team, nb_bot,pickable, hb);
 		default:
 			return null;
 		}
