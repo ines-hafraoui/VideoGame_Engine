@@ -70,6 +70,8 @@ public class Model {
 	public java.util.Map<String, java.util.Map<String, Object>> entityConfigurations;
 	public java.util.Map<String, Automate> automates;
 	public List<Entity> entities;
+	public String aut_projectile[];
+	public String aut_bot[];
 	IFactory factory;
 	public static int nb_bot_init;
 	public int timer;
@@ -94,6 +96,8 @@ public class Model {
 		automates = new HashMap<>();
 		entityConfigurations = parse.entities;
 		players = new Entity[parse.nb_player];
+		aut_projectile = parse.aut_projectile;
+		aut_bot = parse.aut_bot;
 		int i = 0;
 
 		// create all entities from the info that gave us the Parser
@@ -253,9 +257,9 @@ public class Model {
 		return players;
 	}
 
-	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String type, int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
+	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String type, int team, int nb_bot,int view, Boolean pickable, HitBox hb,String sprite) {
 
-		return factory.newEntity(model, position, abs_or, type ,team, nb_bot,view, pickable,hb);
+		return factory.newEntity(model, position, abs_or, type ,team, nb_bot,view, pickable,hb,sprite);
 	}
 
 	public interface ModelListener {

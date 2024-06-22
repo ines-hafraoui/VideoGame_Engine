@@ -20,6 +20,6 @@ public interface IFactory {
 	Entity newEntity(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team);
 
 	Entity newEntity(Model m, Position p, Absolute_Orientation o, String type, int team, int nb_bot, int view,
-			Boolean pickable, HitBox hb);
+			Boolean pickable, HitBox hb, String sprite);
 
 }
