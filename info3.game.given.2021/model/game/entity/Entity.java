@@ -36,6 +36,7 @@ public abstract class Entity {
 	protected String type;
 	protected int index_inventory;
 	protected int index_bot;
+	protected String sprite;
 
 	protected Position position;
 	protected Float base_speed = 1F;
@@ -85,7 +86,7 @@ public abstract class Entity {
 		selected = false;
 	}
 	
-	public Entity(Model m,Position p, Absolute_Orientation o, int team,int nb_bot, int view,boolean pickable,HitBox hb) {
+	public Entity(Model m,Position p, Absolute_Orientation o, int team,int nb_bot, int view,boolean pickable,HitBox hb, String sprite) {
 		hitBox = hb;
 		model = m;
 		position = p;
@@ -102,6 +103,7 @@ public abstract class Entity {
 		this.pickable = pickable;
 		selected = false;
 		hitBox.setEntity(this);	
+		this.sprite = sprite;
 	}
 	
 

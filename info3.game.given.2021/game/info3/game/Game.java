@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JFrame;
@@ -63,7 +64,7 @@ public class Game {
 	View m_view;
 	public Model m_model;
 	Sound m_music;
-	public Map<String, Object> sprites = new HashMap<>();
+	public Map<String, List<String>> sprites = new HashMap<>();
 
 
 	Game() throws Exception {

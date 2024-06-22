@@ -116,30 +116,22 @@ public class Model {
 	            switch (entityName) {
 	            case "Player1":
 	            case "Player2":
-	            	entity = new Player(this,pos, new Absolute_Orientation(direction), team, nb_bot_init, view, pickable,hb);
+	            	entity = new Player(this,pos, new Absolute_Orientation(direction), team, nb_bot_init, view, pickable,hb, sprite);
                     break;
 	            case "Bot1":
 	            case "Bot2":
 	            case "Parasite":
-	            case "Dasher":
-	            case "Archer":
-	            	entity = new Bot(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
-                    break;
-	            case "Arrow":
-	            	entity = new Arrow(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
-                    break;
-	            case "FireBall":
-	            	entity = new Fire_Ball(this,pos,new Absolute_Orientation(direction), team, 0, view, pickable,hb);
+	            	entity = new Bot(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb, sprite);
                     break;
 	            case "Base1":
 	            case "Base2":
 	            case "Base":
-	            	entity = new Base(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
+	            	entity = new Base(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb,sprite);
                     break;
 	            case "Power":
 	            case "Capacity":
 	            case "Plant" : 
-	            	entity = new Item(this,pos,new Absolute_Orientation(direction), team, 0, view, pickable,hb);
+	            	entity = new Item(this,pos,new Absolute_Orientation(direction), team, 0, view, pickable,hb,sprite);
                     break;
                 default : 
                 	entity = null;

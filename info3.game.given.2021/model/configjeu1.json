@@ -65,30 +65,6 @@
       "hitbox":[2,2],
       "team":0
     },
-    "Arrow":{
-      "name" : "ARROW",
-      "view" : 0,  
-      "behaviour" : "Arrow.gal",
-      "features" : "Arrow.class",
-      "sprite" : "arrow.png",
-      "pickable" : false,
-      "direction":"W",
-      "position":[1,1],
-      "hitbox":[2,2],
-      "team":0
-    },
-    "FireBall":{
-      "name" : "FIREBALL",
-      "view" : 0,  
-      "behaviour" : "bdf.gal",
-      "features" : "Fire_Ball.class",
-      "sprite" : "bdf.png",
-      "pickable" : false,
-      "direction":"W",
-      "position":[1,1],
-      "hitbox":[2,2],
-      "team":0
-    },
     "Base1":{ 
       "name" : "BASE1",
       "view" : 1,  
@@ -112,6 +88,8 @@
       "position":[100,400],
       "hitbox":[10,10],
       "team":2
-    }
+    },
+    "projectile": ["Arrow.gal", "bdf.gal"],
+    "automates" : ["Dasher.gal", "Archer.gal", "Dragon.gal"]
 }
 

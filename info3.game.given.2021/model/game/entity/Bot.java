@@ -17,8 +17,8 @@ public class Bot extends Entity{
 		type = EntityType.TEAMMATE;
 	}
 
-	public Bot(Model m,Position pos, Absolute_Orientation o, int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
-		super(m,pos,o,team, nb_bot, view, pickable,hb);
+	public Bot(Model m,Position pos, Absolute_Orientation o, int team, int nb_bot,int view, Boolean pickable, HitBox hb, String sprite) {
+		super(m,pos,o,team, nb_bot, view, pickable,hb,sprite);
 		acc_factor = 3;
 		type = EntityType.TEAMMATE;
 	}

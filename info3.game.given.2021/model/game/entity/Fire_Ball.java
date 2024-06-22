@@ -18,8 +18,8 @@ public class Fire_Ball extends Entity{
 		type = EntityType.FIREBALL;
 	}
 	
-	public Fire_Ball(Model m,Position p, Absolute_Orientation o, int team,int nb_bot, int view,boolean pickable,HitBox hb) {
-		super(m,p,o,team,nb_bot,view,pickable,hb);
+	public Fire_Ball(Model m,Position p, Absolute_Orientation o, int team,int nb_bot, int view,boolean pickable,HitBox hb, String sprite) {
+		super(m,p,o,team,nb_bot,view,pickable,hb,sprite);
 		type = EntityType.FIREBALL;
 	}
 
