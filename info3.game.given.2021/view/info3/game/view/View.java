@@ -62,9 +62,9 @@ public class View extends Container {
 				e1.printStackTrace();
 			}
 		}
-		
+
 		Changed = false;
-		
+
 		setViewports();
 	}
 
@@ -84,8 +84,7 @@ public class View extends Container {
 			default:
 				throw new IllegalArgumentException("You have more than 2 players");
 			}
-		}
-		else {
+		} else {
 			m_dviewport.paint(mg);
 		}
 
@@ -145,7 +144,7 @@ public class View extends Container {
 			m_viewports[0].setDimension(m_d);
 			break;
 		case 2:
-			Dimension dv = new Dimension(d.width/2, d.height);
+			Dimension dv = new Dimension(d.width / 2, d.height);
 			m_viewports[0].setX(0);
 			m_viewports[0].setDimension(dv);
 			m_viewports[1].setX(d.width / 2);
@@ -208,19 +207,17 @@ public class View extends Container {
 	}
 
 	public void setViewports() {
-		Entity[] players = m_model.get_players();
-		int plen = players.length;
-		m_viewports = new Viewport[plen];
-		int w = m_d.width / plen;
+		int nb_p = m_players.size();
+		m_viewports = new Viewport[nb_p];
+		int w = m_d.width / nb_p;
 		int h = m_d.height;
 		Dimension vp_d = new Dimension(w, h);
-		for (int i = 0; i < players.length; i++) {
-			try {
-				Avatar a = m_f.newAvatar(players[i], this);
-				m_viewports[i] = new Viewport(m_model, m_avatars, this, vp_d, i * (m_d.width / plen), 0, a, m_map);
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+		int i = 0;
+		Iterator<Avatar> iter = m_players.iterator();
+		while (iter.hasNext()) {
+			Avatar a = iter.next();
+			m_viewports[i] = new Viewport(m_model, m_avatars, this, vp_d, i * (m_d.width / nb_p), 0, a, m_map);
+			i++;
 		}
 
 		m_dviewport = new DynamicViewport(m_model, m_avatars, this, m_d, 0, 0, m_players, m_map);
@@ -229,7 +226,7 @@ public class View extends Container {
 		BorderLayout bl = new BorderLayout();
 		bl.setVgap(10);
 		setLayout(bl);
-		switch (plen) {
+		switch (nb_p) {
 		case 1:
 			add(m_viewports[0], BorderLayout.CENTER);
 			break;

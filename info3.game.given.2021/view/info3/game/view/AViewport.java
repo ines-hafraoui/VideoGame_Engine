@@ -28,12 +28,6 @@ public abstract class AViewport extends Component {
 		return false;
 	}
 	
-	public boolean withinbounds(int point) {
-		if (m_inWorldBounds.contains(point)) {
-			return true;
-		}
-		return false;
-	}
 
 	public void setDimension(Dimension d) {
 		m_d = d;

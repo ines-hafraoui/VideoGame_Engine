@@ -63,7 +63,7 @@ public abstract class Avatar {
 	}
 
 	public boolean within(Rectangle m_Bounds, int tx, int ty) {
-		return m_Bounds.contains(tx + m_entity.get_x(), ty + m_entity.get_y());
+		return m_Bounds.contains(m_entity.get_x() + tx, m_entity.get_y() + ty);
 	}
 
 	protected abstract void configureAnimation();
