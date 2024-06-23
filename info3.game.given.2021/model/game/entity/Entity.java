@@ -432,4 +432,8 @@ public abstract class Entity {
 		return HP;
 	}
 
+	public Item[] get_inventory() {
+		return null;
+	}
+
 }

@@ -26,7 +26,7 @@ public class View extends Container {
 	private static final long serialVersionUID = 5772029785230806250L;
 
 	// How much of the world we will be showing in each Viewport
-	public static final int DISPLAYSCALE = 2;
+	public static final int DISPLAYSCALE = 1;
 
 	private Model m_model;
 	private int m_x = 0, m_y = 0;
@@ -72,6 +72,7 @@ public class View extends Container {
 	public void paint(Graphics g) {
 		Graphics mg = g.create(m_x, m_y, m_d.width, m_d.height);
 		if (!m_dviewport.withinSameVP()) {
+//		if (false) {
 			switch (m_viewports.length) {
 			case 1:
 				m_viewports[0].paint(mg);
@@ -178,22 +179,28 @@ public class View extends Container {
 		Changed = true;
 	}
 
-	public static BufferedImage[] loadSprite(String filename, int nrows, int ncols) throws IOException {
+	public static BufferedImage[] loadSprite(String filename, int nrows, int ncols) {
 		File imageFile = new File(filename);
 		if (imageFile.exists()) {
-			BufferedImage image = ImageIO.read(imageFile);
-			int width = image.getWidth(null) / ncols;
-			int height = image.getHeight(null) / nrows;
+			BufferedImage image;
+			try {
+				image = ImageIO.read(imageFile);
+				int width = image.getWidth(null) / ncols;
+				int height = image.getHeight(null) / nrows;
 
-			BufferedImage[] images = new BufferedImage[nrows * ncols];
-			for (int i = 0; i < nrows; i++) {
-				for (int j = 0; j < ncols; j++) {
-					int x = j * width;
-					int y = i * height;
-					images[(i * ncols) + j] = image.getSubimage(x, y, width, height);
+				BufferedImage[] images = new BufferedImage[nrows * ncols];
+				for (int i = 0; i < nrows; i++) {
+					for (int j = 0; j < ncols; j++) {
+						int x = j * width;
+						int y = i * height;
+						images[(i * ncols) + j] = image.getSubimage(x, y, width, height);
+					}
 				}
+				return images;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			return images;
 		}
 		return null;
 	}

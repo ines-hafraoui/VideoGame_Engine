@@ -2,6 +2,7 @@ package info3.game.avatar;
 
 import java.awt.Container;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -46,6 +47,12 @@ public class ArrowAvatar extends Avatar {
 		default:
 			m_imageIndex = 3;
 		}
+	}
+
+	@Override
+	protected Image[] get_images() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

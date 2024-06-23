@@ -36,17 +36,8 @@ public class MapView {
 		m_view = v;
 		m_parent = parent;
 
-		try {
-			m_bgimages = View.loadSprite("resources/MiniWorldSprites/Ground/TexturedGrass.png", 2, 3);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		try {
-			m_textureimages = View.loadSprite("resources/MiniWorldSprites/Ground/Grass.png", 1, 5);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		m_bgimages = View.loadSprite("resources/MiniWorldSprites/Ground/TexturedGrass.png", 2, 3);
+		m_textureimages = View.loadSprite("resources/MiniWorldSprites/Ground/Grass.png", 1, 5);
 
 		/* Generates the default ground tiles */
 		genDefaultGround();
@@ -74,15 +65,15 @@ public class MapView {
 //		g.translate(0, 0);
 		// printing all the basic tiles to be optimized
 		for (int i = 0; i < m_ncols; i++) {
-				for (int j = 0; j < m_nrows; j++) {
-					BufferedImage img = m_bgimages[m_groundsetup[i * j + j]];
-					int tilex = i * (m_bgimages[0].getWidth() * View.DISPLAYSCALE) + x;
-					int tiley = j * (m_bgimages[0].getHeight() * View.DISPLAYSCALE) + y;
-					if (m_parent.withinbounds(tilex, tiley)) {
-						g.drawImage(img, tilex, tiley, img.getWidth() * View.DISPLAYSCALE,
-								img.getHeight() * View.DISPLAYSCALE, null);
-					}
+			for (int j = 0; j < m_nrows; j++) {
+				BufferedImage img = m_bgimages[m_groundsetup[i * j + j]];
+				int tilex = i * (m_bgimages[0].getWidth() * View.DISPLAYSCALE) + x;
+				int tiley = j * (m_bgimages[0].getHeight() * View.DISPLAYSCALE) + y;
+				if (m_parent.withinbounds(tilex, tiley)) {
+					g.drawImage(img, tilex, tiley, img.getWidth() * View.DISPLAYSCALE,
+							img.getHeight() * View.DISPLAYSCALE, null);
 				}
+			}
 		}
 
 		for (Squares square : squares) {
