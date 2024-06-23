@@ -168,24 +168,6 @@ public abstract class Entity {
 
         return acc_speed;
     }
-
-//	protected Position newPosition() {
-//		
-//		float speed = newSpeed(1);
-//		int angle = speed_vct_abs_or.get_abs_Angle();
-//	    double angleRad = Math.toRadians(angle); 
-//		
-//		
-//		float X = (float) (Math.cos(angleRad) * speed);
-//		float Y = (float) (Math.sin(angleRad) * speed);
-//		
-//		position.setPositionX(this.position.getPositionX() + X);
-//		position.setPositionY(this.position.getPositionY() + Y);
-//		
-//		
-//		return position;
-//
-//	}
 	
 	protected Position newPosition() {
 	    Position newPosition = null;
@@ -201,34 +183,30 @@ public abstract class Entity {
         float newY = this.position.getPositionY() + Y;
 
         newPosition = new Position(newX, newY);
-	    
-	    float mapWidth = model.m_map.getBorders().getMaxX(); 
-	    float mapHeight = model.m_map.getBorders().getMaxY();
+        if (!model.isValidPosition(newPosition)) {
+        	 while (!Absolute_Orientation.orientations.isEmpty()) {
+     	        speed = newSpeed(1);
+     	        this.abs_or = Absolute_Orientation.randomOrientation();
+     	        angle = speed_vct_abs_or.get_abs_Angle();
+     	        angleRad = Math.toRadians(angle); 
 
-	    while (!isValidPosition(newPosition, mapWidth ,mapHeight )) {
-	        speed = newSpeed(1);
-	        this.abs_or = Absolute_Orientation.randomOrientation();
-	        angle = speed_vct_abs_or.get_abs_Angle();
-	        angleRad = Math.toRadians(angle); 
+     	        X = (float) (Math.cos(angleRad) * speed);
+     	        Y = (float) (Math.sin(angleRad) * speed);
 
-	        X = (float) (Math.cos(angleRad) * speed);
-	        Y = (float) (Math.sin(angleRad) * speed);
+     	        newX = this.position.getPositionX() + X;
+     	        newY = this.position.getPositionY() + Y;
 
-	        newX = this.position.getPositionX() + X;
-	        newY = this.position.getPositionY() + Y;
+     	        newPosition = new Position(newX, newY);
+     	        
+     	        if (model.isValidPosition(newPosition)) {
+     	        	this.position = newPosition;
 
-	        newPosition = new Position(newX, newY);
-	    }
-
-	    // Mise à jour de la position de l'entité après avoir trouvé une position valide
-	    this.position = newPosition;
-
+     	    	    return newPosition;
+     	        }
+     	    }
+        }
+        Absolute_Orientation.setListOrientation();
 	    return newPosition;
-	}
-
-	private boolean isValidPosition(Position position, float mapWidth, float mapHeight) {
-	    return position.getPositionX() >= 0 && position.getPositionX() <= mapWidth &&
-	           position.getPositionY() >= 0 && position.getPositionY() <= mapHeight;
 	}
 
 

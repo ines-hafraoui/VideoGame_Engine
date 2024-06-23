@@ -49,12 +49,15 @@ public class Parser {
 		
 		
 		JSONArray array = (JSONArray)jo.get("automates");
-		 int aut_size = (array).size();
-		aut_bot = new String[aut_size];
-		
-		for (int i = 0; i<aut_size; i++) {
-			aut_bot[i] = (String)array.get(i);
+		if (array != null) {
+			 int aut_size = (array).size();
+				aut_bot = new String[aut_size];
+				
+				for (int i = 0; i<aut_size; i++) {
+					aut_bot[i] = (String)array.get(i);
+				}
 		}
+		
 		
 		
 		for (Object key : jo.keySet()) {

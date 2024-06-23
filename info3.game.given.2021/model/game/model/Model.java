@@ -574,4 +574,9 @@ public class Model {
 		}
 		return false;
 	}
+
+	public boolean isValidPosition(Position newPosition) {
+		 return newPosition.getPositionX() >= 0 && newPosition.getPositionX() <= m_map.getBorders().getMaxX() &&
+		           newPosition.getPositionY() >= 0 && newPosition.getPositionY() <= m_map.getBorders().getMaxY();
+	}
 }
