@@ -7,22 +7,26 @@ public class Projectile extends Entity {
 	
 
 
-	public Projectile(Model m, Position p, Absolute_Orientation o, int team, int nb_bot, Boolean pickable, HitBox hb) {
+	public Projectile(Model m, Position p, Absolute_Orientation o,String type, int team, int nb_bot, Boolean pickable, HitBox hb) {
 		super(m, p, o, team, nb_bot,pickable, hb);
+		this.set_type(type);
 		this.HP = 0;
 	}
 	
-	public Projectile(Automate a, Model m, Position p, Absolute_Orientation o, int team, int i) {
+	public Projectile(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team, int i) {
 		super(a,m, p, o, team, i);
 		this.HP = 0;
+		this.set_type(type);
 	}
 
 	public void set_type (String s) {
 		switch (s) {
 		case "Arrow": 
+		case "A" :
 			this.type = EntityType.ARROW;
 			break;
 		case "FireBall" :
+		case "FB":
 			this.type = EntityType.FIREBALL;
 			break;
 		default : 

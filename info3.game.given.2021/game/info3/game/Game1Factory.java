@@ -45,7 +45,7 @@ public class Game1Factory implements IFactory {
 			return new Player(a, m, p, o,team,Model.nb_bot_init);
 		case EntityType.FIREBALL:
 		case EntityType.ARROW:
-			return new Projectile(a,m, p, o, team,0);
+			return new Projectile(a,m, p, o,type, team,0);
 		default:
 			return null;
 		}
@@ -64,7 +64,7 @@ public class Game1Factory implements IFactory {
 			return new Player(m, p, o,team, nb_bot, pickable, hb);
 		case EntityType.FIREBALL:
 		case EntityType.ARROW :
-			return new Projectile(m, p, o,team, nb_bot,pickable, hb);
+			return new Projectile(m, p, o,type,team, nb_bot,pickable, hb);
 		default:
 			return null;
 		}

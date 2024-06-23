@@ -136,8 +136,7 @@ public class Model {
                     break;
 	            case "Arrow":
 	            case "FireBall" : 
-	            	entity = new Projectile(this,pos,new Absolute_Orientation(direction), team, 0, pickable,hb);
-	            	((Projectile)entity).set_type(entityName);
+	            	entity = new Projectile(this,pos,new Absolute_Orientation(direction),entityName, team, 0, pickable,hb);
                     break;
                 default : 
                 	entity = null;
@@ -193,7 +192,7 @@ public class Model {
 //	            		list_state.add(s1);
 //	            		Automate automate = new Automate("Init",list_state);	// A là
 		        		if (automate != null) {
-//		        			entity.set_automate(automate);
+		        			entity.set_automate(automate);
 			        		if (entity instanceof Player) {
 			        			players[i] = entity;
 			        			i++;

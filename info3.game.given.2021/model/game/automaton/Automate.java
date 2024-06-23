@@ -74,8 +74,12 @@ public void step(Entity e) {
 							action_buffer.add(a);
 						}
 						State s = this.getState(transition.cible);
+						for (Action a : action_buffer) {
+							a.exec(e);
+						}
 						toadd.add(s);
 						todelete.add(state);
+						
 					}
 				}
 			}
