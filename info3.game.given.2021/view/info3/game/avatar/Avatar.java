@@ -3,6 +3,7 @@ package info3.game.avatar;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -67,4 +68,6 @@ public abstract class Avatar {
 	}
 
 	protected abstract void configureAnimation();
+
+	public abstract Image[] get_images();
 }

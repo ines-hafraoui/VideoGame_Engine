@@ -1,6 +1,7 @@
 package info3.game.avatar;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -26,6 +27,12 @@ public class FireBallAvatar extends Avatar {
 	protected void configureAnimation() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	protected Image[] get_images() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

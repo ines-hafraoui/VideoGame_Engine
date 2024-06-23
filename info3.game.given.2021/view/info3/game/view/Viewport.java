@@ -1,17 +1,12 @@
 package info3.game.view;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Polygon;
-import java.awt.Rectangle;
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
-import game.entity.Player;
+import game.entity.Entity;
 import game.model.Model;
-import info3.game.IFactory;
 import info3.game.avatar.Avatar;
 
 /*
@@ -22,7 +17,6 @@ public class Viewport extends AViewport {
 
 	private static final long serialVersionUID = 4264890697854297025L;
 
-	
 	InventoryMenu m_inventory;
 	List<Avatar> m_avatars;
 	private MapView m_map;
@@ -35,14 +29,9 @@ public class Viewport extends AViewport {
 		m_avatars = avatars;
 		m_map = m;
 		setDimension(d);
-
-		try {
-			if (player.m_entity instanceof Player) {
-				m_inventory = new InventoryMenu(this, (Player) player.m_entity);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		Entity[] inventory = player.m_entity.get_inventory();
+		if (inventory != null)
+			m_inventory = new InventoryMenu(this, inventory);
 
 		m_x = x;
 		m_y = y;
@@ -73,11 +62,7 @@ public class Viewport extends AViewport {
 		}
 
 		m_player.paintmainplayer(mg, m_d.width / 2, m_d.height / 2);
-		try {
-			m_inventory.paint(mg);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		m_inventory.paint(mg);
 
 	}
 

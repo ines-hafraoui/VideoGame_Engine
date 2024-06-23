@@ -175,7 +175,7 @@ public class Game {
 		// getickt the size of the canvas
 		int width = m_canvas.getWidth();
 		int height = m_canvas.getHeight();
-		if(c.width != width && c.height !=height) {
+		if(c.width != width || c.height !=height) {
 			m_view.setDimension(width,height);  
 			c.width = width;
 			c.height = height;

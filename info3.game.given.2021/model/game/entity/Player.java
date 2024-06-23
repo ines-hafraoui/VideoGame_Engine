@@ -87,6 +87,7 @@ public class Player extends Entity {
 		return true;
 	}
 	
+	@Override
 	public Item[] get_inventory(){
 		return inventory;
 	}
