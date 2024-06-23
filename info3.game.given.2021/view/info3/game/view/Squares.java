@@ -14,9 +14,9 @@ public class Squares {
 	private List<Rectangle> m_squares = new ArrayList<>(); // List to store squares
 	private Polygon m_poly;
 	int m_squaresize;
-	Viewport m_vp;
+	AViewport m_vp;
 
-	Squares(Polygon p, BufferedImage textureImage, Viewport vp) {
+	Squares(Polygon p, BufferedImage textureImage, AViewport vp) {
 		m_poly = p.scale(View.DISPLAYSCALE);
 		m_textureImage = textureImage;
 		// Gives the images its new height and width determined by the scaling

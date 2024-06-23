@@ -178,20 +178,20 @@ public class Game {
 		g.fillRect(0, 0, width, height);
 
 		// paint
-//		m_view.setDimension(width,height);    
+		m_view.setDimension(width,height);    
 		m_view.paint(g);
 	}
 
 	class SyncViewModel implements ModelListener {
 
 		@Override
-		public void addedEntity(Entity e) throws IOException {
+		public void addedEntity(Entity e) {
 			m_view.newEntity(e);
 		}
 
 		@Override
 		public void removedEntity(Entity e) {
-			m_view.newEntity(e);
+			m_view.removedEntity(e);
 		}
 	}
 

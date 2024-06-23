@@ -3,6 +3,7 @@ package info3.game.avatar;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +34,7 @@ public abstract class Avatar {
 		m_hb = new HealthBar(this);
 		m_view.addAvatar(this);
 		m_valid = true;
-		a_state = HIT;
+		a_state = IDLE;
 	}
 	
 	public Avatar() {
@@ -61,6 +62,9 @@ public abstract class Avatar {
 		configureAnimation();
 	}
 
+	public boolean within(Rectangle m_Bounds, int tx, int ty) {
+		return m_Bounds.contains(tx + m_entity.get_x() , ty + m_entity.get_y());
+	}
+	
 	protected abstract void configureAnimation();
-
 }

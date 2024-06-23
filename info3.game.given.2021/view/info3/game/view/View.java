@@ -34,6 +34,7 @@ public class View extends Container {
 	private IFactory m_f;
 	public Dimension m_d;
 	private Viewport[] m_viewports;
+	private DynamicViewport m_dviewport;
 	private List<Avatar> m_avatars;
 	private List<Avatar> m_players;
 	MapView m_map;
@@ -49,6 +50,7 @@ public class View extends Container {
 		m_players = new LinkedList<Avatar>();
 		m_minimap = new MiniMap(this, m_model);
 
+		// Creates every avatar made at initialization
 		List<Entity> entities = m_model.get_entities();
 		Iterator<Entity> iter = entities.iterator();
 		while (iter.hasNext()) {
@@ -61,44 +63,48 @@ public class View extends Container {
 		}
 
 		setViewports();
-
 	}
 
 	public void paint(Graphics g) {
 		Graphics mg = g.create(m_x, m_y, m_d.width, m_d.height);
-
-		switch (m_viewports.length) {
-		case 1:
-			m_viewports[0].paint(mg);
-			break;
-		case 2:
-			m_viewports[0].paint(mg);
-			m_viewports[1].paint(mg);
-			mg.setColor(Color.black);
-			mg.drawLine(m_d.width / 2, m_y, m_d.width / 2, m_d.height);
-			break;
-		default:
-			throw new IllegalArgumentException("You have more than 2 players");
+		if (m_dviewport.withinSameVP()) {
+			switch (m_viewports.length) {
+			case 1:
+				m_viewports[0].paint(mg);
+				break;
+			case 2:
+				m_viewports[0].paint(mg);
+				m_viewports[1].paint(mg);
+				mg.setColor(Color.black);
+				mg.drawLine(m_d.width / 2, m_y, m_d.width / 2, m_d.height);
+				break;
+			default:
+				throw new IllegalArgumentException("You have more than 2 players");
+			}
 		}
-		
-		//Asks the minimap to display itself within the overall view so that it is shared by both players
+		else {
+			m_dviewport.paint(mg);
+		}
+
+		// Asks the minimap to display itself within the overall view so that it is
+		// shared by both players
 		m_minimap.paint(mg);
-		long timer=m_model.get_timer();
+		long timer = m_model.get_timer();
 		Affichage_timer(mg, timer);
 	}
-	
-	public void Affichage_timer(Graphics mg,long timer) {
+
+	public void Affichage_timer(Graphics mg, long timer) {
 		mg.setColor(Color.WHITE); // Set the color for the timer text
-	    mg.setFont(new Font("Arial", Font.BOLD, 20%m_d.width));
-	    String timeString = formatTime(timer); // Format timer into a readable format
-	    mg.drawString(timeString, 10%m_d.width, 20%m_d.height);
+		mg.setFont(new Font("Arial", Font.BOLD, 20 % m_d.width));
+		String timeString = formatTime(timer); // Format timer into a readable format
+		mg.drawString(timeString, 10 % m_d.width, 20 % m_d.height);
 	}
-	
+
 	private String formatTime(long millis) {
-	    long seconds = millis / 1000;
-	    long minutes = seconds / 60;
-	    seconds = seconds % 60;
-	    return String.format("%02d:%02d", minutes, seconds);
+		long seconds = millis / 1000;
+		long minutes = seconds / 60;
+		seconds = seconds % 60;
+		return String.format("%02d:%02d", minutes, seconds);
 	}
 
 	public int get_x() {
@@ -108,7 +114,7 @@ public class View extends Container {
 	public int get_y() {
 		return m_y;
 	}
-	
+
 	/*
 	 * THE FOLLOWING 4 METHODS ARE MEANT TO BE CALLED BY THE MODEL LISTENER ONCE
 	 * SOMETHING HAPPENS IN THE WORLD
@@ -141,12 +147,15 @@ public class View extends Container {
 			break;
 		case 2:
 			Dimension d = new Dimension(w / 2, h);
+			m_viewports[0].setX(0);
 			m_viewports[0].setDimension(d);
+			m_viewports[1].setX(w / 2);
 			m_viewports[1].setDimension(d);
 			break;
 		default:
 			throw new IllegalArgumentException("You have more than 2 players");
 		}
+		m_dviewport.setDimension(m_d);
 	}
 
 	public static BufferedImage[] loadSprite(String filename, int nrows, int ncols) throws IOException {
@@ -194,6 +203,8 @@ public class View extends Container {
 			}
 		}
 
+		m_dviewport = new DynamicViewport(m_model, m_avatars, this, m_d, 0, 0, m_players, m_map);
+
 		// How many viewports should be displayed based on how many players there are
 		BorderLayout bl = new BorderLayout();
 		bl.setVgap(10);
@@ -211,16 +222,12 @@ public class View extends Container {
 		}
 	}
 
-	public int getRandomNumber(int min, int max) {
-		return (int) ((Math.random() * (max - min)) + min);
-	}
-
 	public int WorldToViewX(float x) {
-		return (int) ((x*View.DISPLAYSCALE) * m_d.width / m_mwidth);
+		return (int) ((x * View.DISPLAYSCALE) * m_d.width / m_mwidth);
 	}
 
 	public int WorldToViewY(float y) {
-		return (int) ((y*View.DISPLAYSCALE) * m_d.height / m_mheight);
+		return (int) ((y * View.DISPLAYSCALE) * m_d.height / m_mheight);
 	}
 
 	public List<Avatar> getAvatars() {
@@ -232,7 +239,20 @@ public class View extends Container {
 	}
 
 	public void newEntity(Entity e) {
-		// TODO Auto-generated method stub
-		
+		try {
+			m_f.newAvatar(e, this);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+	}
+
+	public void removedEntity(Entity e) {
+		Iterator<Avatar> iter = m_avatars.iterator();
+		while (iter.hasNext()) {
+			Avatar a = iter.next();
+			if (a.m_entity.equals(a)) {
+				m_avatars.remove(a);
+			}
+		}
 	}
 }

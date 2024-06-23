@@ -18,10 +18,10 @@ public class InventoryMenu {
 	private BufferedImage m_image;
 	private int InventoryX;
 	private int InventoryY;
-	private Viewport m_viewport;
+	private AViewport m_viewport;
 	private Player m_player;
 
-	public InventoryMenu(Viewport v, Player player) throws IOException {
+	public InventoryMenu(AViewport v, Player player) throws IOException {
 		m_viewport = v;
 
 		BufferedImage[] images = View.loadSprite("resources/MiniWorldSprites/User_Interface/Highlighted-Boxes.png", 1,

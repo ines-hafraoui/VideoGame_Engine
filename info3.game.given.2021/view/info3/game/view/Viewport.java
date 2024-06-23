@@ -18,37 +18,32 @@ import info3.game.avatar.Avatar;
  * A Viewport is centered around one or two entities of type Player
  * So the view shows what is happening around those players
  */
-public class Viewport extends Component {
+public class Viewport extends AViewport {
 
 	private static final long serialVersionUID = 4264890697854297025L;
 
-	Model m_model;
-	View m_parent;
-	IFactory m_f;
+	
 	InventoryMenu m_inventory;
 	List<Avatar> m_avatars;
-	Dimension m_d;
 	private MapView m_map;
-	int m_x, m_y;
-	Rectangle m_inWorldBounds;
 	Avatar m_player;
-
-	int m_trx, m_try;
 	int m_oldpositionx, m_oldpositiony;
 
 	Viewport(Model model, List<Avatar> avatars, View parent, Dimension d, int x, int y, Avatar player, MapView m) {
 		m_parent = parent;
 		m_model = model;
-		m_d = d;
 		m_avatars = avatars;
 		m_map = m;
+		setDimension(d);
+
 		try {
 			if (player.m_entity instanceof Player) {
 				m_inventory = new InventoryMenu(this, (Player) player.m_entity);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		} // SOUTH
+		}
+
 		m_x = x;
 		m_y = y;
 		m_player = player;
@@ -56,20 +51,6 @@ public class Viewport extends Component {
 		m_oldpositiony = (int) m_player.m_entity.get_y();
 		Caculatetranslation(m_oldpositionx, m_oldpositiony);
 		m_map = new MapView(0, 0, m_model, parent, this);
-
-		// Scaling the bounds' leeway to the zoom given to the map
-		m_inWorldBounds = new Rectangle(-20 * View.DISPLAYSCALE, -20 * View.DISPLAYSCALE,
-				d.width + (20 * View.DISPLAYSCALE), d.height + (20 * View.DISPLAYSCALE));
-	}
-
-	void setDimension(Dimension d) {
-		m_d = d;
-	}
-
-	void Caculatetranslation(int x, int y) {
-		// Creates bounds of how much of the world can be desplayed
-		m_trx = x * View.DISPLAYSCALE - (m_d.width / 2);
-		m_try = y * View.DISPLAYSCALE - (m_d.height / 2);
 	}
 
 	public void paint(Graphics g) {
@@ -86,7 +67,9 @@ public class Viewport extends Component {
 		Iterator<Avatar> iter = m_avatars.iterator();
 		while (iter.hasNext()) {
 			Avatar a = iter.next();
-			a.paint(mg, -m_trx, -m_try);
+			if (!a.m_entity.equals(m_player.m_entity) && a.within(m_inWorldBounds, -m_trx, -m_try)) {
+				a.paint(mg, -m_trx, -m_try);
+			}
 		}
 
 		m_player.paintmainplayer(mg, m_d.width / 2, m_d.height / 2);
@@ -98,10 +81,7 @@ public class Viewport extends Component {
 
 	}
 
-	public boolean withinbounds(int tilex, int tiley) {
-		if (m_inWorldBounds.contains(tilex, tiley)) {
-			return true;
-		}
-		return false;
+	public void setX(int x) {
+		m_x = x;
 	}
 }
