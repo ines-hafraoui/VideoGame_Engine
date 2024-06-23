@@ -27,19 +27,20 @@ import info3.game.view.View;
 public class Game1Factory implements IFactory {
 
 	@Override
-	public Entity newEntity(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team) {
+	public Entity newEntity(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team,
+			String name) {
 		switch (type) {
 		case EntityType.BASE:
-			return new Base(a, m, p, o, team, 0);
+			return new Base(a, m, p, o, team, 0, name);
 		case EntityType.ITEM:
-			return new Item(a, m, p, o, team, 0);
+			return new Item(a, m, p, o, team, 0, name);
 		case EntityType.TEAMMATE:
-			return new Bot(a, m, p, o, team, 0);
+			return new Bot(a, m, p, o, team, 0, name);
 		case EntityType.PLAYER:
-			return new Player(a, m, p, o, team, Model.nb_bot_init);
+			return new Player(a, m, p, o, team, Model.nb_bot_init, name);
 		case EntityType.FIREBALL:
 		case EntityType.ARROW:
-			return new Projectile(a, m, p, o, type, team, 0);
+			return new Projectile(a, m, p, o, type, team, 0, name);
 		default:
 			return null;
 		}
@@ -47,19 +48,19 @@ public class Game1Factory implements IFactory {
 
 	@Override
 	public Entity newEntity(Model m, Position p, Absolute_Orientation o, String type, int team, int nb_bot,
-			Boolean pickable, HitBox hb) {
+			Boolean pickable, HitBox hb, String name) {
 		switch (type) {
 		case EntityType.BASE:
-			return new Base(m, p, o, team, nb_bot, pickable, hb);
+			return new Base(m, p, o, team, nb_bot, pickable, hb, name);
 		case EntityType.ITEM:
-			return new Item(m, p, o, team, nb_bot, pickable, hb);
+			return new Item(m, p, o, team, nb_bot, pickable, hb,name);
 		case EntityType.TEAMMATE:
-			return new Bot(m, p, o, team, nb_bot, pickable, hb);
+			return new Bot(m, p, o, team, nb_bot, pickable, hb,name);
 		case EntityType.PLAYER:
-			return new Player(m, p, o, team, nb_bot, pickable, hb);
+			return new Player(m, p, o, team, nb_bot, pickable, hb,name);
 		case EntityType.FIREBALL:
 		case EntityType.ARROW:
-			return new Projectile(m, p, o, type, team, nb_bot, pickable, hb);
+			return new Projectile(m, p, o, type, team, nb_bot, pickable, hb,name);
 		default:
 			return null;
 		}
@@ -67,22 +68,7 @@ public class Game1Factory implements IFactory {
 
 	@Override
 	public Avatar newAvatar(Entity e, View v) throws IOException {
-		switch (e.get_type()) {
-		case EntityType.BASE:
-			return new TestAvatar(e, v, Game.configParse.getSprite(e.name));
-		case EntityType.ITEM:
-			return new ItemAvatar(e, v);
-		case EntityType.TEAMMATE:
-			return new BotAvatar(e, v);
-		case EntityType.PLAYER:
-			return new PlayerAvatar(e, v);
-		case EntityType.FIREBALL:
-			return new FireBallAvatar(e, v);
-		case EntityType.ARROW:
-			return new ArrowAvatar(e, v);
-		default:
-			return null;
-		}
+		return new TestAvatar(e, v, Game.configParse.getSprite(e.name), e instanceof Player);
 	}
 
 }

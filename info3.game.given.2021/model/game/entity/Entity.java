@@ -53,7 +53,7 @@ public abstract class Entity {
 	public final static int NOTEAM = 0;
 	
 
-	public Entity(Automate a, Model m, Position p, Absolute_Orientation o, int team, int nb_bot) {
+	public Entity(Automate a, Model m, Position p, Absolute_Orientation o, int team, int nb_bot, String name) {
 		aut = a;
 		model = m;
 		position = p;
@@ -68,9 +68,10 @@ public abstract class Entity {
 		current_nbot = nb_bot;
 		nb_bot_init = nb_bot;
 		selected = false;
+		this.name = name;
 	}
 	
-	public Entity(Model m, Position p, Absolute_Orientation o,int team, int nb_bot){
+	public Entity(Model m, Position p, Absolute_Orientation o,int team, int nb_bot, String name){
 		model = m;
 		position = p;
 		abs_or = o;
@@ -84,9 +85,10 @@ public abstract class Entity {
 		current_nbot = nb_bot;
 		nb_bot_init = nb_bot;
 		selected = false;
+		this.name = name;
 	}
 	
-	public Entity(Model m,Position p, Absolute_Orientation o, int team,int nb_bot, boolean pickable,HitBox hb) {
+	public Entity(Model m,Position p, Absolute_Orientation o, int team,int nb_bot, boolean pickable,HitBox hb, String name) {
 		hitBox = hb;
 		model = m;
 		position = p;
@@ -102,6 +104,7 @@ public abstract class Entity {
 		this.pickable = pickable;
 		selected = false;
 		hitBox.setEntity(this);	
+		this.name = name;
 	}
 	
 

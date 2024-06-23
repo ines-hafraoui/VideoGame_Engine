@@ -60,7 +60,7 @@
       "name" : "BOT2",  
       "behaviour" : "bot1.gal",
       "sprite" :  {
-      	"filepath" : "resources/MiniWorldSprites/Characters/Monsters/Demons/CyanDemon.png",
+      	"filepath" : "resources/MiniWorldSprites/Characters/Monsters/Demons/PurpleDemon.png",
       	"nb_rows" : 8,
       	"nb_cols" : 6,
       	"index" : 0,

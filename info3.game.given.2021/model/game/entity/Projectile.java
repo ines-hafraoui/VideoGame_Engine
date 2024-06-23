@@ -7,14 +7,14 @@ public class Projectile extends Entity {
 	
 
 
-	public Projectile(Model m, Position p, Absolute_Orientation o,String type, int team, int nb_bot, Boolean pickable, HitBox hb) {
-		super(m, p, o, team, nb_bot,pickable, hb);
+	public Projectile(Model m, Position p, Absolute_Orientation o,String type, int team, int nb_bot, Boolean pickable, HitBox hb, String name) {
+		super(m, p, o, team, nb_bot,pickable, hb,name);
 		this.set_type(type);
 		this.HP = 0;
 	}
 	
-	public Projectile(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team, int i) {
-		super(a,m, p, o, team, i);
+	public Projectile(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team, int i, String name) {
+		super(a,m, p, o, team, i,name);
 		this.HP = 0;
 		this.set_type(type);
 	}
