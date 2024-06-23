@@ -37,7 +37,7 @@ public class BaseAvatar extends Avatar {
 	}
 
 	@Override
-	protected Image[] get_images() {
+	public Image[] get_images() {
 		// TODO Auto-generated method stub
 		return null;
 	}
