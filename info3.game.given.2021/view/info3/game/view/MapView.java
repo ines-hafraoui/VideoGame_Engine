@@ -35,7 +35,7 @@ public class MapView {
 		m_model = model;
 		m_view = v;
 		m_parent = parent;
-		
+
 		try {
 			m_bgimages = View.loadSprite("resources/MiniWorldSprites/Ground/TexturedGrass.png", 2, 3);
 		} catch (IOException e) {
@@ -60,11 +60,11 @@ public class MapView {
 			Polygon p = bio.getBorders();
 
 			if (bio instanceof Volcano) {
-				squares.add(new Squares(p, m_textureimages[4],m_parent));
+				squares.add(new Squares(p, m_textureimages[4], m_parent));
 			} else if (bio instanceof Ocean) {
-				squares.add(new Squares(p, m_textureimages[0],m_parent));
+				squares.add(new Squares(p, m_textureimages[0], m_parent));
 			} else {
-				squares.add(new Squares(p, m_textureimages[1],m_parent));
+				squares.add(new Squares(p, m_textureimages[1], m_parent));
 
 			}
 		}
@@ -74,16 +74,15 @@ public class MapView {
 //		g.translate(0, 0);
 		// printing all the basic tiles to be optimized
 		for (int i = 0; i < m_ncols; i++) {
-			for (int j = 0; j < m_nrows; j++) {
-				BufferedImage img = m_bgimages[m_groundsetup[i * j + j]];
-				int tilex = i * (m_bgimages[0].getWidth() * View.DISPLAYSCALE) + x;
-				int tiley = j * (m_bgimages[0].getHeight() * View.DISPLAYSCALE) + y;
-				if(m_parent.withinbounds(tilex, tiley)) {
-					g.drawImage(img,tilex,
-							tiley, img.getWidth() * View.DISPLAYSCALE,
-							img.getHeight() * View.DISPLAYSCALE, null);
+				for (int j = 0; j < m_nrows; j++) {
+					BufferedImage img = m_bgimages[m_groundsetup[i * j + j]];
+					int tilex = i * (m_bgimages[0].getWidth() * View.DISPLAYSCALE) + x;
+					int tiley = j * (m_bgimages[0].getHeight() * View.DISPLAYSCALE) + y;
+					if (m_parent.withinbounds(tilex, tiley)) {
+						g.drawImage(img, tilex, tiley, img.getWidth() * View.DISPLAYSCALE,
+								img.getHeight() * View.DISPLAYSCALE, null);
+					}
 				}
-			}
 		}
 
 		for (Squares square : squares) {
@@ -91,10 +90,7 @@ public class MapView {
 		}
 	}
 
-	
-	
-	
-	//TO BE MOVED... UNTIL WE GET THE FINAL VERSION OF PLOTS
+	// TO BE MOVED... UNTIL WE GET THE FINAL VERSION OF PLOTS
 	private void AffichagePlots(Graphics g, List<Plot> L_plot) {
 		Iterator<Plot> iterator = L_plot.iterator();
 		while (iterator.hasNext()) {
@@ -126,7 +122,7 @@ public class MapView {
 		return tab_y;
 	}
 	// END OF TO BE MOVED...
-	
+
 	/*
 	 * Here we generate the default tiling of the ground for the entire world
 	 */
@@ -141,7 +137,6 @@ public class MapView {
 			}
 		}
 	}
-	
 
 	public static int getRandomNumber(int min, int max) {
 		return (int) ((Math.random() * (max - min)) + min);

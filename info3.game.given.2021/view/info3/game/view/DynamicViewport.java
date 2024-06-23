@@ -47,21 +47,31 @@ public class DynamicViewport extends AViewport {
 //				e.printStackTrace();
 //			}
 		}
-		m_midwaypointx = xpts / m_players.size();
-		m_midwaypointy = ypts / m_players.size();
+		m_midwaypointx = xpts / 2;
+		m_midwaypointy = ypts / 2;
 		m_x = x;
 		m_y = y;
 		m_map = new MapView(0, 0, m_model, parent, this);
 
 		Caculatetranslation(m_midwaypointx, m_midwaypointy);
 		// Scaling the bounds' leeway to the zoom given to the map
-		m_inWorldBounds = new Rectangle(-20 * View.DISPLAYSCALE, -20 * View.DISPLAYSCALE,
+		m_inWorldBounds = new Rectangle(4, 4,
 				d.width + (20 * View.DISPLAYSCALE), d.height + (20 * View.DISPLAYSCALE));
 	}
 
+	@Override
+	public void setDimension(Dimension d) {
+		m_d = d;
+
+		// Scaling the bounds' leeway to the zoom given to the map
+		m_inWorldBounds = new Rectangle(4,4,
+				m_d.width + (20 * View.DISPLAYSCALE), m_d.height + (20 * View.DISPLAYSCALE));
+	}
+	
+	
 	public boolean withinSameVP() {
 		for (Avatar p : m_players) {
-			if (!withinbounds((int) p.m_entity.get_x(), (int) p.m_entity.get_y())) {
+			if (!p.within(m_inWorldBounds, -m_trx, -m_try)) {
 				return false;
 			}
 		}
@@ -80,7 +90,7 @@ public class DynamicViewport extends AViewport {
 			xpts += a.m_entity.get_x();
 			ypts += a.m_entity.get_y();
 		}
-		if (xpts / m_players.size() != m_midwaypointx ||  ypts / m_players.size() != m_midwaypointy) {
+		if (xpts / m_players.size() != m_midwaypointx || ypts / m_players.size() != m_midwaypointy) {
 			m_midwaypointx = xpts / m_players.size();
 			m_midwaypointy = ypts / m_players.size();
 			Caculatetranslation(m_midwaypointx, m_midwaypointy);
@@ -96,7 +106,7 @@ public class DynamicViewport extends AViewport {
 				a.paint(mg, -m_trx, -m_try);
 			}
 		}
-		
+
 //		try {
 //			m_inventory.paint(mg);
 //		} catch (IOException e) {

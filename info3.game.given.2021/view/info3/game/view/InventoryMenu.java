@@ -33,6 +33,9 @@ public class InventoryMenu {
 	}
 
 	public void paint(Graphics g) throws IOException {
+		if (m_viewport.m_parent.Changed) {
+			setpositions();
+		}
 		int w = m_image.getWidth() * INVENTORYSIZE;
 		Item[] L_item = m_player.get_inventory();
 		for (int i = 0; i < NBCASE; i++) {
@@ -47,6 +50,11 @@ public class InventoryMenu {
 			}
 
 		}
+	}
+
+	private void setpositions() {
+		InventoryX = m_viewport.m_d.width / 2 - NBCASE / 2 * (m_image.getWidth() * INVENTORYSIZE);
+		InventoryY = m_viewport.m_d.height - m_image.getHeight() - 100;
 	}
 
 }
