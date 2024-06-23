@@ -1,10 +1,8 @@
 package info3.game.view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,8 +11,10 @@ import game.entity.Position;
 import game.map.Biome;
 import game.map.Plot;
 import game.map.Polygon;
-import game.map.Biomes.*;
+import game.map.Biomes.Ocean;
+import game.map.Biomes.Volcano;
 import game.model.Model;
+import info3.game.Game;
 
 public class MapView {
 
@@ -36,11 +36,13 @@ public class MapView {
 		m_view = v;
 		m_parent = parent;
 
-		m_bgimages = View.loadSprite("resources/MiniWorldSprites/Ground/TexturedGrass.png", 2, 3);
+		m_bgimages = Game.configParse.bg_sprite;
 		m_textureimages = View.loadSprite("resources/MiniWorldSprites/Ground/Grass.png", 1, 5);
-
-		/* Generates the default ground tiles */
-		genDefaultGround();
+		if(Game.configParse.bg_rand) {
+			/* Generates the default ground tiles */
+			genDefaultGround();
+		}
+		
 
 		/* Generates the different views of the biomes */
 		List<Biome> b = m_model.m_map.getBiome();

@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 
 import game.entity.Entity;
 import game.model.Model;
+import info3.game.Game;
 import info3.game.IFactory;
 import info3.game.avatar.Avatar;
 
@@ -26,7 +27,7 @@ public class View extends Container {
 	private static final long serialVersionUID = 5772029785230806250L;
 
 	// How much of the world we will be showing in each Viewport
-	public static final int DISPLAYSCALE = 1;
+	public static int DISPLAYSCALE = 1;
 
 	private Model m_model;
 	private int m_x = 0, m_y = 0;
@@ -43,6 +44,7 @@ public class View extends Container {
 	public boolean Changed;
 
 	public View(Model model, IFactory f, Dimension d) {
+		DISPLAYSCALE = Game.configParse.zoom;
 		m_model = model;
 		m_mwidth = model.get_width() * DISPLAYSCALE;
 		m_mheight = model.get_height() * DISPLAYSCALE;

@@ -19,6 +19,7 @@ public class Base extends Entity {
 		super(m,pos,o,team,nb_bot,pickable,hb);
 		picked = false;
 		type = EntityType.BASE;
+		name = "Base1";
 	}
 	
 	@Override

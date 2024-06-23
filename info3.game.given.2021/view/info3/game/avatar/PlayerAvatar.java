@@ -48,7 +48,7 @@ public class PlayerAvatar extends Avatar {
 		String abs_or = m_entity.get_abs_or().get_abs_Orientation();
 		switch (a_state) {
 		case IDLE:
-			m_entity.get_automate().blocked=false;
+//			m_entity.get_automate().blocked=false;
 			System.out.print("In IDLE\n");
 			if (m_imageIndex < 4) {
 				m_imageIndex = 4;
@@ -57,7 +57,7 @@ public class PlayerAvatar extends Avatar {
 				m_imageIndex = 4;
 			break;
 		case WALK:
-			m_entity.get_automate().blocked=false;
+//			m_entity.get_automate().blocked=false;
 			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
 					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
 				if (m_imageIndex < 0) {
@@ -126,7 +126,7 @@ public class PlayerAvatar extends Avatar {
 	}
 
 	@Override
-	protected Image[] get_images() {
+	public Image[] get_images() {
 		// TODO Auto-generated method stub
 		return null;
 	}

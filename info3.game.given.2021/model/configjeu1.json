@@ -64,7 +64,7 @@
       "name" : "BASE1",  
       "behaviour" : "base1.gal",
       "features" : "Base.class",
-      "sprite" : "base.png",
+      "sprite" : "resources/MiniWorldSprites/Buildings/Red/RedKeep.png",
       "pickable" : false,
       "direction":"W",
       "position":[600,200],
@@ -75,7 +75,7 @@
       "name" : "BASE2", 
       "behaviour" : "base1.gal",
       "features" : "Base.class",
-      "sprite" : "base.png",
+      "sprite" : "resources/MiniWorldSprites/Buildings/Red/RedKeep.png",
       "pickable" : false,
       "direction":"W",
       "position":[100,400],
@@ -104,6 +104,11 @@
       "hitbox":[0,0],
       "team":0
     },
-    "automates" : ["Dasher.gal", "Archer.gal", "Dragon.gal"]
+    "automates" : ["Dasher.gal", "Archer.gal", "Dragon.gal"],
+    "bgfilepath" : "resources/MiniWorldSprites/Ground/TexturedGrass.png",
+    "bgnbrows" : 2,
+    "bgnbcols" : 3,
+    "bgrandom" : true,
+    "zoom" : 1
 }
 

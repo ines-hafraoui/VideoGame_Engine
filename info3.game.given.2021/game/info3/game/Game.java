@@ -46,10 +46,16 @@ import info3.game.view.View;
 public class Game {
 
 	static Game game;
+	//This fields leaves access to every part of the game to the given configuration Hashmap
+	public static Parser configParse;
 
 	public static void main(String args[]) throws Exception {
 		try {
 			System.out.println("Game starting...");
+			// Parse the config file
+			String parsePath = new File("model/configjeu1.json").getAbsolutePath();
+			configParse = new Parser(parsePath);
+
 			game = new Game();
 			System.out.println("Game started.");
 		} catch (Throwable th) {
@@ -70,13 +76,9 @@ public class Game {
 		// creating a model, that would be a model
 		// in an Model-View-Controller pattern (MVC)
 		Dimension d = new Dimension(1800, 1000);
-		// Parse the config file
-		String parsePath = new File("model/configjeu1.json").getAbsolutePath();
-		Parser configParse = new Parser(parsePath);
-		IFactory factory = new Game1Factory(configParse);
+		IFactory factory = new Game1Factory();
 
 		m_model = new Model(d.width, d.height, configParse, factory);
-
 		m_model.setListener(new SyncViewModel());
 
 		// creating a listener for all the events
@@ -86,7 +88,6 @@ public class Game {
 		// creating the game canvas to render the game,
 		// that would be a part of the view in the MVC pattern
 		m_canvas = new GameCanvas(m_listener);
-
 		Dimension viewd = new Dimension(1000, 700);
 		m_view = new View(m_model, factory, viewd);
 
@@ -103,16 +104,12 @@ public class Game {
 	 * and the game canvas to the center.
 	 */
 	private void setupFrame() {
-
 		m_frame.setTitle("Game");
 		m_frame.setLayout(new BorderLayout());
-
 		m_frame.add(m_canvas, BorderLayout.CENTER);
-
 		// center the window on the screen
 		m_frame.setLocationRelativeTo(null);
-
-		// make the vindow visible
+		// make the window visible
 		m_frame.setVisible(true);
 	}
 
@@ -170,16 +167,17 @@ public class Game {
 	 * called from the GameCanvasListener, called from the GameCanvas.
 	 */
 	public void paint(Graphics g) {
-		
-		
-		// getickt the size of the canvas
+
+		// get the size of the canvas
 		int width = m_canvas.getWidth();
 		int height = m_canvas.getHeight();
-		if(c.width != width || c.height !=height) {
-			m_view.setDimension(width,height);  
+		// sees whether or not the view should redemension itself
+		if (c.width != width || c.height != height) {
+			m_view.setDimension(width, height);
 			c.width = width;
 			c.height = height;
 		}
+
 		// erase background
 		g.setColor(Color.gray);
 		g.fillRect(0, 0, width, height);
@@ -188,6 +186,12 @@ public class Game {
 		m_view.paint(g);
 	}
 
+	/*
+	 * ================================================================ All the This
+	 * Listener enables the View keep the necessary avatars on display as the Model
+	 * creates or deletes entities
+	 * ==============================================================
+	 */
 	class SyncViewModel implements ModelListener {
 
 		@Override
