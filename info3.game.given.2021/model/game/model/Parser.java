@@ -43,17 +43,19 @@ public class Parser {
 		coop = (Boolean) jo.get("cooperative");
 		timer = ((Number) jo.get("timer")).intValue();
 		viscosity = ((Number) jo.get("viscosity")).intValue();
-		nb_bot_init = ((Number) jo.get("nb_bot_init")).intValue();
-		nb_player = ((Number) jo.get("nb_player")).intValue();
-
-		JSONArray array = (JSONArray) jo.get("automates");
-		int aut_size = (array).size();
-		aut_bot = new String[aut_size];
-
-		for (int i = 0; i < aut_size; i++) {
-			aut_bot[i] = (String) array.get(i);
+		nb_bot_init =((Number) jo.get("nb_bot_init")).intValue();
+		nb_player =((Number) jo.get("nb_player")).intValue();
+		
+		
+		JSONArray array = (JSONArray)jo.get("automates");
+		if (array != null) {
+			 int aut_size = (array).size();
+				aut_bot = new String[aut_size];
+				
+				for (int i = 0; i<aut_size; i++) {
+					aut_bot[i] = (String)array.get(i);
+				}
 		}
-
 		for (Object key : jo.keySet()) {
 			String keyStr = (String) key;
 			Object keyValue = jo.get(keyStr);

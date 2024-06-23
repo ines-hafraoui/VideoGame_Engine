@@ -20,6 +20,9 @@ public class TestAvatar extends Avatar {
 
 	public TestAvatar(Entity e, View v, JSONObject sprite_spec, boolean player) throws IOException {
 		super(e, v);
+		if (sprite_spec == null) {
+			throw new IOException("Huuum there are no sprites");
+		}
 		m_imageIndex = ((Number) sprite_spec.get("index")).intValue();
 		int nr = ((Number) sprite_spec.get("nb_rows")).intValue();
 		int nc = ((Number) sprite_spec.get("nb_cols")).intValue();
@@ -46,9 +49,9 @@ public class TestAvatar extends Avatar {
 		m_hb.drawHealthBar(g, x + (int) m_entity.get_x() - (img.getWidth() * View.DISPLAYSCALE),
 				y + (int) m_entity.get_y() - (img.getHeight() * View.DISPLAYSCALE) - 5 % img.getHeight(),
 				(img.getWidth() * View.DISPLAYSCALE), 5 % img.getHeight(), this.m_entity.get_HP());
-		if (m_animate) {
-			configureAnimation();
-		}
+//		if (m_animate) {
+//			configureAnimation();
+//		}
 	}
 
 	@Override

@@ -67,6 +67,7 @@
       "pickable" : true,
       "direction":"W",
       "position":[1,1],
+      "hitbox":[2,5],
       "team":0
     },
     "Plant":{

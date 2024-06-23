@@ -47,11 +47,10 @@ public abstract class Entity {
 	public final static int BOULE_FEU = 2;
 	public final static int BOT = 3;
 	public final static int dt = 1;
-	
+
 	public final static int TEAM1 = 1;
 	public final static int TEAM2 = 2;
 	public final static int NOTEAM = 0;
-	
 
 	public Entity(Automate a, Model m, Position p, Absolute_Orientation o, int team, int nb_bot, String name) {
 		aut = a;
@@ -61,8 +60,8 @@ public abstract class Entity {
 		state_action = ActionType.IDLE;
 		HP = 100;
 		explode = false;
-		index_inventory =0 ;
-		index_bot =0;
+		index_inventory = 0;
+		index_bot = 0;
 		this.team = team;
 		injured = false;
 		current_nbot = nb_bot;
@@ -70,16 +69,16 @@ public abstract class Entity {
 		selected = false;
 		this.name = name;
 	}
-	
-	public Entity(Model m, Position p, Absolute_Orientation o,int team, int nb_bot, String name){
+
+	public Entity(Model m, Position p, Absolute_Orientation o, int team, int nb_bot, String name) {
 		model = m;
 		position = p;
 		abs_or = o;
 		state_action = ActionType.IDLE;
 		HP = 100;
 		explode = false;
-		index_inventory =0 ;
-		index_bot =0;
+		index_inventory = 0;
+		index_bot = 0;
 		this.team = team;
 		injured = false;
 		current_nbot = nb_bot;
@@ -87,8 +86,9 @@ public abstract class Entity {
 		selected = false;
 		this.name = name;
 	}
-	
-	public Entity(Model m,Position p, Absolute_Orientation o, int team,int nb_bot, boolean pickable,HitBox hb, String name) {
+
+	public Entity(Model m, Position p, Absolute_Orientation o, int team, int nb_bot, boolean pickable, HitBox hb,
+			String name) {
 		hitBox = hb;
 		model = m;
 		position = p;
@@ -103,10 +103,9 @@ public abstract class Entity {
 		nb_bot_init = nb_bot;
 		this.pickable = pickable;
 		selected = false;
-		hitBox.setEntity(this);	
+		hitBox.setEntity(this);
 		this.name = name;
 	}
-	
 
 	public static boolean haveCommonChar(String str1, String str2) {
 
@@ -124,108 +123,128 @@ public abstract class Entity {
 
 		return !set1.isEmpty();
 	}
-	
+
 	public int get_team() {
 		return team;
 	}
-	
+
 	public Entity get_player_mate() {
 		return this.Player_mate;
 	}
-	
-	public List<Entity> get_list_adversary(){
+
+	public List<Entity> get_list_adversary() {
 		return this.list_adversary;
 	}
 
-    private float[] polarToCartesian(float norm, float angle) {
-        float x = norm * (float)Math.cos(Math.toRadians(angle));
-        float y = norm * (float)Math.sin(Math.toRadians(angle));
-        return new float[] { x, y };
-    }
+	private float[] polarToCartesian(float norm, float angle) {
+		float x = norm * (float) Math.cos(Math.toRadians(angle));
+		float y = norm * (float) Math.sin(Math.toRadians(angle));
+		return new float[] { x, y };
+	}
 
-    private float[] cartesianToPolar(float x, float y) {
-        float norm = (float)Math.sqrt(x * x + y * y);
-        float angle = (float)Math.toDegrees(Math.atan2(y, x));
-        return new float[] { norm, angle };
-    }
-    protected float newSpeed(int factor) {
-        if (acc_speed == 0) {
-            acc_speed = base_speed;
-            speed_vct_abs_or.set_abs_Orientation(abs_or.get_abs_Orientation());
-        }
+	private float[] cartesianToPolar(float x, float y) {
+		float norm = (float) Math.sqrt(x * x + y * y);
+		float angle = (float) Math.toDegrees(Math.atan2(y, x));
+		return new float[] { norm, angle };
+	}
 
-        float viscosity = model.getMap().getViscosity(position);
-        float base_speed_adjusted = Math.max(0, base_speed - viscosity);
+	protected float newSpeed(int factor) {
+		if (acc_speed == 0) {
+			acc_speed = base_speed;
+			speed_vct_abs_or.set_abs_Orientation(abs_or.get_abs_Orientation());
+		}
 
-        float[] acc_cartesian = polarToCartesian(acc_speed, speed_vct_abs_or.get_abs_Angle());
-        float[] base_cartesian = polarToCartesian(base_speed_adjusted, abs_or.get_abs_Angle());
+		float viscosity = model.getMap().getViscosity(position);
+		float base_speed_adjusted = Math.max(0, base_speed - viscosity);
 
-        float x_total = base_cartesian[0];
-        float y_total = base_cartesian[1];
+		float[] acc_cartesian = polarToCartesian(acc_speed, speed_vct_abs_or.get_abs_Angle());
+		float[] base_cartesian = polarToCartesian(base_speed_adjusted, abs_or.get_abs_Angle());
 
-        float[] new_speed_polar = cartesianToPolar(x_total, y_total);
+		float x_total = base_cartesian[0];
+		float y_total = base_cartesian[1];
 
-        acc_speed = factor * new_speed_polar[0];
-        speed_vct_abs_or.set_abs_Angle(new_speed_polar[1]);
+		float[] new_speed_polar = cartesianToPolar(x_total, y_total);
 
+		acc_speed = factor * new_speed_polar[0];
+		speed_vct_abs_or.set_abs_Angle(new_speed_polar[1]);
 
-        return acc_speed;
-    }
+		return acc_speed;
+	}
 
 	protected Position newPosition() {
-		
+		Position newPosition = null;
+
 		float speed = newSpeed(1);
 		int angle = speed_vct_abs_or.get_abs_Angle();
-	    double angleRad = Math.toRadians(angle); 
-		
-		
+		double angleRad = Math.toRadians(angle);
+
 		float X = (float) (Math.cos(angleRad) * speed);
 		float Y = (float) (Math.sin(angleRad) * speed);
-		
-		position.setPositionX(this.position.getPositionX() + X);
-		position.setPositionY(this.position.getPositionY() + Y);
-		
-		
-		return position;
 
+		float newX = this.position.getPositionX() + X;
+		float newY = this.position.getPositionY() + Y;
+
+		newPosition = new Position(newX, newY);
+		if (!model.isValidPosition(newPosition)) {
+			while (!Absolute_Orientation.orientations.isEmpty()) {
+				speed = newSpeed(1);
+				this.abs_or = Absolute_Orientation.randomOrientation();
+				angle = speed_vct_abs_or.get_abs_Angle();
+				angleRad = Math.toRadians(angle);
+
+				X = (float) (Math.cos(angleRad) * speed);
+				Y = (float) (Math.sin(angleRad) * speed);
+
+				newX = this.position.getPositionX() + X;
+				newY = this.position.getPositionY() + Y;
+
+				newPosition = new Position(newX, newY);
+
+				if (model.isValidPosition(newPosition)) {
+					this.position = newPosition;
+
+					return newPosition;
+				}
+			}
+		}
+		Absolute_Orientation.setListOrientation();
+		return newPosition;
 	}
 
 	public boolean eval_cell_abs(Absolute_Orientation dir, Category cat, int porte) {
-		return model.eval_cell(dir,cat,porte,this);
+		return model.eval_cell(dir, cat, porte, this);
 	}
-	
+
 	public boolean eval_cell_rel(Relative_Orientation dir, Category cat, int porte) {
-		abs_or.set_abs_Orientation(model.from_rel_to_abs_orientation(abs_or,dir));
-		return eval_cell_abs(abs_or,cat,porte);
+		abs_or.set_abs_Orientation(model.from_rel_to_abs_orientation(abs_or, dir));
+		return eval_cell_abs(abs_or, cat, porte);
 	}
-	
+
 	public boolean eval_got() {
-		System.out.print(HP+"\n");
-		return HP>0;
+		System.out.print(HP + "\n");
+		return HP > 0;
 	}
-	
+
 	public boolean eval_closest(Absolute_Orientation d, Category cat, float portee) {
 		if (cat.toString() == "V") {
 			return true;
 		}
 		List<Entity> list_cat = new ArrayList();
 		if (cat.toString() != "A" && cat.toString() != "@") {
-			list_cat = model.list_cat(cat, team); 		//retourne tous les elements d'une categorie (meme cette entity si elle est dedans)
+			list_cat = model.list_cat(cat, team); // retourne tous les elements d'une categorie (meme cette entity si
+													// elle est dedans)
 			return model.eval_closest(list_cat, d, this, portee);
-		}
-		else if (cat.toString() == "@") {
+		} else if (cat.toString() == "@") {
 			list_cat.add(Player_mate);
 			return model.eval_closest(list_cat, d, this, portee);
 		}
 		return model.eval_closest(list_adversary, d, this, portee);
 	}
-	
 
-	
 	public String get_type() {
 		return type;
 	}
-	
+
 	public Absolute_Orientation get_abs_or() {
 		return abs_or;
 	}
@@ -237,22 +256,22 @@ public abstract class Entity {
 	public float get_y() {
 		return position.getPositionY();
 	}
-	
+
 	public int getView() {
 		return view;
 	}
-	
+
 	public HitBox getHitBox() {
 		return hitBox;
 	}
-	
-	 public void addHitBox(HitBox h) {
-    	 this.getHitBox().setHbWidth(h.getHbWidth()); 
-    	 this.getHitBox().setHbHeight(h.getHbHeight());
-         this.getHitBox().setPolygone();
-    	
-    }
-	
+
+	public void addHitBox(HitBox h) {
+		this.getHitBox().setHbWidth(h.getHbWidth());
+		this.getHitBox().setHbHeight(h.getHbHeight());
+		this.getHitBox().setPolygone();
+
+	}
+
 	public int getCurrentNbot() {
 		return current_nbot;
 	}
@@ -260,53 +279,61 @@ public abstract class Entity {
 	public void reduce_HP(int r) {
 		HP = HP - r;
 	}
-	
+
 	public void get_injured() {
 		injured = true;
-		int h = HP-10;
-		if (h<=0) {
+		int h = HP - 10;
+		if (h <= 0) {
 			this.do_explode();
-		}else {
+		} else {
 			HP -= 10;
 		}
-		
+
 	}
 
 	public boolean do_move() {
 		Position p = newPosition();
-		if (p == null) return false;
+		if (p == null)
+			return false;
 		position = p;
 		state_action = ActionType.MOVE;
 		return true;
 	}
 
 	public void do_egg(int cat) {
-		
+
 		Entity e;
 		Automate a;
-		switch(cat) { // TROUVER UN MOYEN DE RECUPERER LES SPRITES
+		Position eggPos = new Position(position.getPositionX(), position.getPositionY());
+		Absolute_Orientation eggOr = new Absolute_Orientation(abs_or.get_abs_Orientation());
+		switch (cat) {
 		case FLECHE:
-			e = model.newEntity(model,position,abs_or, EntityType.ARROW,team,0,0,false,new HitBox(2,2));
+			// Temporary just to test
+			e = model.newEntity(model, eggPos, eggOr, EntityType.ARROW, team, 0, 0, false, new HitBox(2, 2), "Arrow");
 			model.get_entities().add(e);
 			a = model.automates.get(EntityType.ARROW);
 			e.set_automate(a);
 			state_action = ActionType.EGG;
 			break;
-		case BOULE_FEU :
-			e = model.newEntity(model,position,abs_or, EntityType.FIREBALL,team,0,0,false,new HitBox(2,2));
+		case BOULE_FEU:
+			// Temporary just to test
+			e = model.newEntity(model, eggPos, eggOr, EntityType.FIREBALL, team, 0, 0, false, new HitBox(2, 2),
+					"Fireball");
 			model.get_entities().add(e);
 			a = model.automates.get(EntityType.FIREBALL);
 			e.set_automate(a);
 			state_action = ActionType.EGG;
 			break;
-		case BOT :  
-			e = model.newEntity(model,position,abs_or, EntityType.TEAMMATE,team, 0,0,false,new HitBox(2,2));
+		case BOT:
+			// Temporary just to test
+			e = model.newEntity(model, eggPos, eggOr, EntityType.TEAMMATE, team, 0, 0, false, new HitBox(2, 2),
+					"Bot" + team);
 			model.get_entities().add(e);
 			a = model.automates.get(EntityType.TEAMMATE);
 			e.set_automate(a);
 			state_action = ActionType.EGG;
 			break;
-		default : 
+		default:
 			break;
 		}
 	}
@@ -315,40 +342,38 @@ public abstract class Entity {
 		if (s.equals("Power"))
 			this.do_rest(5);
 	}
-	
-	
+
 	/*
 	 * an entity always
 	 */
 	public boolean do_hit(Absolute_Orientation o, String type, int porte) {
 		System.out.println("\n\nDO_HITTTT\n\n");
 		state_action = ActionType.HIT;
-		aut.blocked=true;
-		return model.do_hit(o,type,porte,this);
+		aut.blocked = true;
+		return model.do_hit(o, type, porte, this);
 	}
 
-	
 	/*
-	 * select is a  parameter that indicate if it is the first of the second selection 
+	 * select is a parameter that indicate if it is the first of the second
+	 * selection
 	 */
-	public boolean do_wait(int inc, int select ) {
-		switch(select) {
-		case 1 :
-			index_bot +=inc;
+	public boolean do_wait(int inc, int select) {
+		switch (select) {
+		case 1:
+			index_bot += inc;
 			break;
-		case 2 : 
+		case 2:
 			index_inventory += inc;
 			break;
-		default : 
+		default:
 			break;
 		}
 		return true;
 	}
-		
 
 	/*
-	 * take smth from the floor at a certain distance from itself
-	 * param : t for the type of Entity
+	 * take smth from the floor at a certain distance from itself param : t for the
+	 * type of Entity
 	 */
 	public abstract boolean do_pick(int distance);
 
@@ -363,9 +388,9 @@ public abstract class Entity {
 
 	public boolean do_rest(int p) {
 		state_action = ActionType.REST;
-		int h = HP+p;
-		if (HP > 0 && h<100) {
-			HP+=p;
+		int h = HP + p;
+		if (HP > 0 && h < 100) {
+			HP += p;
 			return true;
 		}
 		return false;
@@ -383,7 +408,8 @@ public abstract class Entity {
 	public abstract boolean do_get();
 
 	public void do_turn(Absolute_Orientation o) {
-		abs_or.set_abs_Orientation(o.get_abs_Orientation());;
+		abs_or.set_abs_Orientation(o.get_abs_Orientation());
+		;
 		state_action = ActionType.TURN;
 	}
 
@@ -394,17 +420,17 @@ public abstract class Entity {
 	public void set_automate(Automate a) {
 		aut = a;
 		a.set_entity(this);
-		
+
 	}
-	
-	public void set_model(Model m ) {
-		model = m ;
+
+	public void set_model(Model m) {
+		model = m;
 	}
 
 	public void set_state_action(String action) {
 		state_action = action;
 	}
-	
+
 	public String get_state_action() {
 		return state_action;
 	}
@@ -416,7 +442,7 @@ public abstract class Entity {
 	public Automate get_automate() {
 		return aut;
 	}
-	
+
 	public void tick(long elpased) {
 
 		if (aut != null) {
@@ -431,6 +457,7 @@ public abstract class Entity {
 	public boolean eval_key(String touche) {
 		return model.get_list_touche().contains(touche);
 	}
+
 	public int get_HP() {
 		return HP;
 	}

@@ -277,7 +277,7 @@ public class View extends Container {
 		Iterator<Avatar> iter = m_avatars.iterator();
 		while (iter.hasNext()) {
 			Avatar a = iter.next();
-			if (a.m_entity.equals(a)) {
+			if (a.m_entity.equals(e)) {
 				m_avatars.remove(a);
 			}
 		}

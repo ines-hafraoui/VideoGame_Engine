@@ -192,7 +192,7 @@ public class Model {
 //	            		list_state.add(s1);
 //	            		Automate automate = new Automate("Init",list_state);	// A là
 		        		if (automate != null) {
-//		        			entity.set_automate(automate);
+		        			entity.set_automate(automate);
 			        		if (entity instanceof Player) {
 			        			players[i] = entity;
 			        			i++;
@@ -201,7 +201,7 @@ public class Model {
 			        		}
 
 			        		
-//			        		automates.put(entity.get_type(), automate);
+			        		automates.put(entity.get_type(), automate);
 			        		entities.add(entity);
 
 		        		}	
@@ -266,8 +266,9 @@ public class Model {
 		return players;
 	}
 
-	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String type, int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
-		Entity e =factory.newEntity(model, position, abs_or, type ,team, nb_bot,pickable,hb);
+	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String type, int team, int nb_bot,int view, Boolean pickable, HitBox hb, String name) {
+		Entity e =factory.newEntity(model, position, abs_or, type ,team, nb_bot,pickable,hb, name);
+		System.out.println("new Entity : " + name);
 		if(m_ml != null) 
 			m_ml.addedEntity(e);
 		return e;
@@ -573,5 +574,10 @@ public class Model {
 			}
 		}
 		return false;
+	}
+
+	public boolean isValidPosition(Position newPosition) {
+		 return newPosition.getPositionX() >= 0 && newPosition.getPositionX() <= m_map.getBorders().getMaxX() &&
+		           newPosition.getPositionY() >= 0 && newPosition.getPositionY() <= m_map.getBorders().getMaxY();
 	}
 }

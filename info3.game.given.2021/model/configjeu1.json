@@ -17,7 +17,7 @@
       },
       "pickable": false, 
       "direction": "W",
-      "position": [500,200],
+      "position": [1700,890],
       "hitbox":[5,10],
       "team":1
 
@@ -35,7 +35,7 @@
       },
       "pickable": false ,
       "direction": "W",
-      "position":[500,500],
+      "position":[100,110],
       "hitbox":[5,10],
       "team": 2
     },
@@ -52,7 +52,7 @@
       },
       "pickable" : true,
       "direction":"W",
-      "position":[400,200],
+      "position":[1700,850],
       "hitbox":[2,5],
       "team":1
     },
@@ -69,7 +69,7 @@
       "features" : "Bot.class",
       "pickable" : true,
       "direction":"W",
-      "position":[300,400],
+      "position":[120,120],
       "hitbox":[2,5],
       "team":2
     },
@@ -86,7 +86,7 @@
       },
       "pickable" : true,
       "direction":"W",
-      "position":[1,1],
+      "position":[200,200],
       "hitbox":[2,2],
       "team":0
     },
@@ -103,7 +103,7 @@
       },
       "pickable" : false,
       "direction":"W",
-      "position":[600,200],
+      "position":[1700,900],
       "hitbox":[10,10],
       "team":1
     },
@@ -120,7 +120,7 @@
       },
       "pickable" : false,
       "direction":"W",
-      "position":[100,400],
+      "position":[100,100],
       "hitbox":[10,10],
       "team":2
     },
