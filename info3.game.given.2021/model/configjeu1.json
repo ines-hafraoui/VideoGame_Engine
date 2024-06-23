@@ -8,7 +8,13 @@
       "name" : "PLAYER1", 
       "behaviour": "player1.gal",
       "features" : "Player.class",
-      "sprite" : "fighter1.png",
+      "sprite" :  {
+      	"filepath" :"resources/MiniWorldSprites/Characters/Soldiers/Mounted/RedKnight.png",
+      	"nb_rows" : 12,
+      	"nb_cols" : 4,
+      	"index" : 0,
+      	"animation" : true
+      },
       "pickable": false, 
       "direction": "W",
       "position": [500,200],
@@ -20,7 +26,13 @@
       "name" : "PLAYER2", 
       "behaviour": "player2.gal",
       "features" : "Player.class",
-      "sprite" : "fighter2.png",
+      "sprite" :  {
+      	"filepath" :"resources/MiniWorldSprites/Characters/Soldiers/Mounted/CyanKnight.png",
+      	"nb_rows" : 12,
+      	"nb_cols" : 4,
+      	"index" : 0,
+      	"animation" : true
+      },
       "pickable": false ,
       "direction": "W",
       "position":[500,500],
@@ -31,7 +43,13 @@
     { "name" : "BOT1", 
       "behaviour" : "archer.gal",
       "features" : "Bot.class",
-      "sprite" : "bot.png",
+      "sprite" :  {
+      	"filepath" : "resources/MiniWorldSprites/Characters/Monsters/Demons/RedDemon.png",
+      	"nb_rows" : 8,
+      	"nb_cols" : 6,
+      	"index" : 0,
+      	"animation" : true
+      },
       "pickable" : true,
       "direction":"W",
       "position":[400,200],
@@ -41,8 +59,14 @@
     "Bot2":{
       "name" : "BOT2",  
       "behaviour" : "bot1.gal",
+      "sprite" :  {
+      	"filepath" : "resources/MiniWorldSprites/Characters/Monsters/Demons/CyanDemon.png",
+      	"nb_rows" : 8,
+      	"nb_cols" : 6,
+      	"index" : 0,
+      	"animation" : true
+      },
       "features" : "Bot.class",
-      "sprite" : "bot.png",
       "pickable" : true,
       "direction":"W",
       "position":[300,400],
@@ -53,7 +77,13 @@
       "name" : "POWER",  
       "behaviour" : "item.gal",
       "features" : "Power.class",
-      "sprite" : "power.png",
+      "sprite" :  {
+      	"filepath" : "resources/MiniWorldSprites/Miscellaneous/Chests.png",
+      	"nb_rows" : 8,
+      	"nb_cols" : 6,
+      	"index" : 0,
+      	"animation" : false
+      },
       "pickable" : true,
       "direction":"W",
       "position":[1,1],
@@ -64,7 +94,13 @@
       "name" : "BASE1",  
       "behaviour" : "base1.gal",
       "features" : "Base.class",
-      "sprite" : "resources/MiniWorldSprites/Buildings/Red/RedKeep.png",
+      "sprite" :  {
+      	"filepath" : "resources/MiniWorldSprites/Buildings/Red/RedKeep.png",
+      	"nb_rows" : 2,
+      	"nb_cols" : 3,
+      	"index" : 0,
+      	"animation" : false
+      },
       "pickable" : false,
       "direction":"W",
       "position":[600,200],
@@ -75,7 +111,13 @@
       "name" : "BASE2", 
       "behaviour" : "base1.gal",
       "features" : "Base.class",
-      "sprite" : "resources/MiniWorldSprites/Buildings/Red/RedKeep.png",
+      "sprite" :  {
+      	"filepath" : "resources/MiniWorldSprites/Buildings/Cyan/CyanKeep.png",
+      	"nb_rows" : 2,
+      	"nb_cols" : 3,
+      	"index" : 0,
+      	"animation" : false
+      },
       "pickable" : false,
       "direction":"W",
       "position":[100,400],
@@ -86,7 +128,13 @@
       "name" : "ARROW",  
       "behaviour" : "Arrow.gal",
       "features" : "Projectile.class",
-      "sprite" : "Arrow.png",
+      "sprite" :  {
+      	"filepath" : "resources/MiniWorldSprites/Objects/ArrowLong.png",
+      	"nb_rows" : 2,
+      	"nb_cols" : 3,
+      	"index" : 0,
+      	"animation" : true
+      },
       "pickable" : false,
       "direction":"W",
       "position":[0,0],
@@ -97,7 +145,13 @@
       "name" : "FIREBALL", 
       "behaviour" : "bdf.gal",
       "features" : "Projectile.class",
-      "sprite" : "bdf.png",
+       "sprite" :  {
+      	"filepath" : "resources/MiniWorldSprites/Objects/ArrowLong.png",
+      	"nb_rows" : 1,
+      	"nb_cols" : 4,
+      	"index" : 0,
+      	"animation" : true
+      },
       "pickable" : false,
       "direction":"W",
       "position":[0,0],
@@ -105,10 +159,7 @@
       "team":0
     },
     "automates" : ["Dasher.gal", "Archer.gal", "Dragon.gal"],
-    "bgfilepath" : "resources/MiniWorldSprites/Ground/TexturedGrass.png",
-    "bgnbrows" : 2,
-    "bgnbcols" : 3,
-    "bgrandom" : true,
+    "background" : ["resources/MiniWorldSprites/Ground/TexturedGrass.png",2,3,true],
     "zoom" : 1
 }
 

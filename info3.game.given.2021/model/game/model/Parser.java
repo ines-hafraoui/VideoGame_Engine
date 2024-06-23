@@ -86,18 +86,22 @@ public class Parser {
 		}
 
 //		The Configuration options for the view
-		int nr = ((Number) jo.get("bgnbrows")).intValue();
-		int nc = ((Number) jo.get("bgnbcols")).intValue();
-		bg_sprite = View.loadSprite((String) jo.get("bgfilepath"), nr, nc);
-		bg_rand = (Boolean) jo.get("bgrandom");
 		zoom =((Number) jo.get("zoom")).intValue();
+		JSONArray bg_array = (JSONArray) jo.get("background");
+		if( bg_array.size()>4) {
+			throw new IllegalArgumentException("Too many argument to set the background");
+		}
+		int nr = ((Number) bg_array.get(1)).intValue();
+		int nc = ((Number) bg_array.get(2)).intValue();
+		bg_sprite = View.loadSprite((String) bg_array.get(0), nr, nc);
+		bg_rand = (Boolean) bg_array.get(3);
 	}
 
 	// find the sprite corresponding to the name of the entity
-	public String getSprite(String name) {
+	public JSONObject getSprite(String name) {
 		Map<String, Object> properties = entities.get(name);
 		if (properties != null) {
-			return (String) properties.get("sprite");
+			return (JSONObject) properties.get("sprite");
 		}
 		return null;
 	}

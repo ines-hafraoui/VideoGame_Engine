@@ -15,12 +15,14 @@ public class Bot extends Entity{
 		super(a,m,p,o,team, nb_bot);
 		acc_factor = 3;
 		type = EntityType.TEAMMATE;
+		name = "BOT" + team;
 	}
 
 	public Bot(Model m,Position pos, Absolute_Orientation o, int team, int nb_bot,Boolean pickable, HitBox hb) {
 		super(m,pos,o,team, nb_bot,pickable,hb);
 		acc_factor = 3;
 		type = EntityType.TEAMMATE;
+		name = "BOT" + team;
 	}
 
 	@Override
