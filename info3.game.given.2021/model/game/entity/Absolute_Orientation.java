@@ -1,5 +1,7 @@
 package game.entity;
 
+import java.util.Random;
+
 public class Absolute_Orientation {
 
 	public String abs_or;
@@ -105,4 +107,23 @@ public class Absolute_Orientation {
 		}
 		return false;
 	}
+	
+	private static Random random = new Random();
+	
+	public static Absolute_Orientation randomOrientation() {
+        String[] orientations = {
+            Absolute_Orientation.NORTH,
+            Absolute_Orientation.SOUTH,
+            Absolute_Orientation.EAST,
+            Absolute_Orientation.WEST,
+            Absolute_Orientation.NORTH_E,
+            Absolute_Orientation.NORTH_W,
+            Absolute_Orientation.SOUTH_E,
+            Absolute_Orientation.SOUTH_W
+        };
+
+        int index = random.nextInt(orientations.length);
+        return new Absolute_Orientation(orientations[index]);
+    }
+
 }

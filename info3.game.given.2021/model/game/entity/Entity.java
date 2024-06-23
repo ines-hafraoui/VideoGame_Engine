@@ -169,24 +169,70 @@ public abstract class Entity {
         return acc_speed;
     }
 
+//	protected Position newPosition() {
+//		
+//		float speed = newSpeed(1);
+//		int angle = speed_vct_abs_or.get_abs_Angle();
+//	    double angleRad = Math.toRadians(angle); 
+//		
+//		
+//		float X = (float) (Math.cos(angleRad) * speed);
+//		float Y = (float) (Math.sin(angleRad) * speed);
+//		
+//		position.setPositionX(this.position.getPositionX() + X);
+//		position.setPositionY(this.position.getPositionY() + Y);
+//		
+//		
+//		return position;
+//
+//	}
+	
 	protected Position newPosition() {
-		
-		float speed = newSpeed(1);
-		int angle = speed_vct_abs_or.get_abs_Angle();
-	    double angleRad = Math.toRadians(angle); 
-		
-		
-		float X = (float) (Math.cos(angleRad) * speed);
-		float Y = (float) (Math.sin(angleRad) * speed);
-		
-		position.setPositionX(this.position.getPositionX() + X);
-		position.setPositionY(this.position.getPositionY() + Y);
-		
-		
-		return position;
+	    Position newPosition = null;
+	    
+	    float speed = newSpeed(1);
+        int angle = speed_vct_abs_or.get_abs_Angle();
+        double angleRad = Math.toRadians(angle); 
 
+        float X = (float) (Math.cos(angleRad) * speed);
+        float Y = (float) (Math.sin(angleRad) * speed);
+
+        float newX = this.position.getPositionX() + X;
+        float newY = this.position.getPositionY() + Y;
+
+        newPosition = new Position(newX, newY);
+	    
+	    float mapWidth = model.m_map.getBorders().getMaxX(); 
+	    float mapHeight = model.m_map.getBorders().getMaxY();
+
+	    while (!isValidPosition(newPosition, mapWidth ,mapHeight )) {
+	        speed = newSpeed(1);
+	        this.abs_or = Absolute_Orientation.randomOrientation();
+	        angle = speed_vct_abs_or.get_abs_Angle();
+	        angleRad = Math.toRadians(angle); 
+
+	        X = (float) (Math.cos(angleRad) * speed);
+	        Y = (float) (Math.sin(angleRad) * speed);
+
+	        newX = this.position.getPositionX() + X;
+	        newY = this.position.getPositionY() + Y;
+
+	        newPosition = new Position(newX, newY);
+	    }
+
+	    // Mise à jour de la position de l'entité après avoir trouvé une position valide
+	    this.position = newPosition;
+
+	    return newPosition;
 	}
 
+	private boolean isValidPosition(Position position, float mapWidth, float mapHeight) {
+	    return position.getPositionX() >= 0 && position.getPositionX() <= mapWidth &&
+	           position.getPositionY() >= 0 && position.getPositionY() <= mapHeight;
+	}
+
+
+	
 	public boolean eval_cell_abs(Absolute_Orientation dir, Category cat, int porte) {
 		return model.eval_cell(dir,cat,porte,this);
 	}
