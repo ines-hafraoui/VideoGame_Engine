@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -109,8 +110,10 @@ public class View extends Container {
 	
 	private void GameOver(Graphics g) {
 		g.setColor(Color.WHITE); // Set the color for the timer text
-		g.setFont(new Font("Arial", Font.BOLD, 70% m_d.width));
-		g.drawString("GAME OVER", 50 % m_d.width, 50 % m_d.height);
+		g.setFont(new Font("Arial", Font.BOLD, 90% m_d.width));
+		FontMetrics fm = g.getFontMetrics();
+		String message="GAME OVER";
+		g.drawString(message,  (m_d.width - fm.stringWidth(message)) / 2,m_d.height/2);
 	}
 	
 

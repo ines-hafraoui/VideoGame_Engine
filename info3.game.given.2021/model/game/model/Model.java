@@ -209,8 +209,7 @@ public class Model {
 	}
 
 	private void GameOverboucle() {
-		while (true) {
-		}
+		System.exit(1);
 	}
 
 	public Entity get_entity(int distance, String t, float f, float g) {

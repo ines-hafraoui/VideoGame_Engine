@@ -162,9 +162,9 @@ public class Game {
 			System.out.println("Elapsed=" + period + " FPS=" + fps);
 		}
 		long timer = m_model.get_timer();
-		if (timer >= 10000) {
+		if (timer >= 300000) {
 			m_view.GameOver();
-			if (timer >= 11000) {
+			if (timer >= 305000) {
 				m_model.GameOver();
 			}
 		}
