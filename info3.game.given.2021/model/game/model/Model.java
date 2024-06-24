@@ -130,7 +130,7 @@ public class Model {
 				if (behaviour != null) {
 					Automate automate = TestMain.loadAutomata(new File("gal/gal/" + behaviour).getAbsolutePath());
 					if (automate != null) {
-						for (int j = 1; j < nb_bot_init / 2; j++) {
+						for (int j = 1; j < nb_bot_init; j++) {
 							entity.set_automate(automate);
 							entities.add(entity);
 							automates.put(entity.get_type(), automate);

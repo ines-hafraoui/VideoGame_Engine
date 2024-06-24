@@ -26,7 +26,7 @@
       "behaviour": "player2.gal",
       "features" : "Player.class",
       "sprite" :  {
-      	"filepath" :"resources/MiniWorldSprites/Characters/Monsters/Dragons/CyanDragon.png",
+      	"filepath" :"resources/MiniWorldSprites/Characters/Monsters/Dragons/BlueDragon.png",
       	"nb_rows" : 8,
       	"nb_cols" : 4,
       	"index" : 0,
@@ -141,7 +141,7 @@
       "team":0
     },
     "automates" : ["Dasher.gal", "Archer.gal", "Dragon.gal"],
-    "background" : ["resources/MiniWorldSprites/Ground/DeadGrass.png",2,3,true],
+    "background" : ["resources/MiniWorldSprites/Ground/TexturedGrass.png",2,3,true],
     "zoom" : 1
 }
 
