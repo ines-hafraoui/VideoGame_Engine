@@ -46,23 +46,52 @@ public class MainAvatar extends Avatar {
 	public void paint(Graphics g, int x, int y) {
 		if (m_entity.get_state_action() != null) {
 			a_state = m_entity.get_state_action();
-			//a_state = StateToString(m_entity.get_state_action());
 		}
 		BufferedImage img = m_images[m_imageIndex];
-		g.drawImage(img, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - (img.getWidth() * View.DISPLAYSCALE),
-				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - (img.getHeight() * View.DISPLAYSCALE),
-				img.getWidth() * View.DISPLAYSCALE * BASESIZE, img.getHeight() * View.DISPLAYSCALE * BASESIZE, null);
+		int h = (int) m_entity.getHitBox().getHbHeight() * View.DISPLAYSCALE;
+		int w = (int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE;
+		g.drawImage(img, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - w,
+				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - h, h, w, null);
 		int hp = this.m_entity.get_HP();
-		if( hp > 0) {
-			m_hb.drawHealthBar(g, x + (int) m_entity.get_x() - (img.getWidth() * View.DISPLAYSCALE),
-					y + (int) m_entity.get_y() - (img.getHeight() * View.DISPLAYSCALE) - 5 % img.getHeight(),
-					(img.getWidth() * View.DISPLAYSCALE), 5 % img.getHeight(), hp);
+		if (hp > 0) {
+			m_hb.drawHealthBar(g, x + (int) m_entity.get_x() - w, y + (int) m_entity.get_y() - h - 5 % img.getHeight(),
+					w, 5 % img.getHeight(), hp);
 		}
-		
-		
+		g.setColor(Color.red);
+		g.drawRect((x + (int) m_entity.get_x() * View.DISPLAYSCALE) - h,
+				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - h,
+				(int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE,
+				(int) m_entity.getHitBox().getHbHeight() * View.DISPLAYSCALE);
+
 		if (m_animate) {
 			configureAnimation();
 		}
+	}
+
+	@Override
+	public void paintmainplayer(Graphics g, int x, int y) {
+		if (m_entity.get_state_action() != null) {
+			a_state = m_entity.get_state_action();
+		}
+		BufferedImage img = m_images[m_imageIndex];
+		g.drawImage(img, x - (img.getWidth() * View.DISPLAYSCALE), y - (img.getHeight() * View.DISPLAYSCALE),
+				(int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE,
+				(int) m_entity.getHitBox().getHbHeight() * View.DISPLAYSCALE, null);
+		int hp = this.m_entity.get_HP();
+		if (hp > 0) {
+			m_hb.drawHealthBar(g, x - (img.getWidth() * View.DISPLAYSCALE),
+					y - (img.getHeight() * View.DISPLAYSCALE) - 5 % img.getHeight(),
+					(int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE, 5 % img.getHeight(), hp);
+		}
+		g.setColor(Color.red);
+		g.drawRect(x - (img.getWidth() * View.DISPLAYSCALE), y - (img.getWidth() * View.DISPLAYSCALE),
+				(int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE,
+				(int) m_entity.getHitBox().getHbHeight() * View.DISPLAYSCALE);
+
+		if (m_animate) {
+			configureAnimation();
+		}
+
 	}
 
 	@Override
@@ -133,11 +162,11 @@ public class MainAvatar extends Avatar {
 			} else {// WEST
 				if (m_imageIndex < 44) {
 					m_imageIndex = 44;
-			}
+				}
 				if (m_imageIndex >= 47)
 					m_imageIndex = 44;
 			}
-		break;
+			break;
 		default:
 			if (m_imageIndex >= 47)
 				m_imageIndex = 4;
