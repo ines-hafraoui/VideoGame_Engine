@@ -15,12 +15,8 @@ import game.entity.Position;
 import game.entity.Projectile;
 import game.model.Model;
 import game.model.Parser;
-import info3.game.avatar.ArrowAvatar;
 import info3.game.avatar.Avatar;
-import info3.game.avatar.BotAvatar;
-import info3.game.avatar.FireBallAvatar;
 import info3.game.avatar.ItemAvatar;
-import info3.game.avatar.PlayerAvatar;
 import info3.game.avatar.MainAvatar;
 import info3.game.view.View;
 
