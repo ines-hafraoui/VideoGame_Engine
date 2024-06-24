@@ -2,10 +2,6 @@ Joueur_1(Beg){
 
  * (Beg): 
  | !(Got(Power)) ? Explode :(Mort)
- | Key(z) & Key(q) ? Turn(NW) ; Move(NW) :(Beg)
- | Key(z) & Key(d) ? Turn(NE) ; Move(NE) :(Beg)
- | Key(s) & Key(q) ? Turn(SW) ; Move(SW) :(Beg)
- | Key(s) & Key(d) ? Turn(SE) ; Move(SE) :(Beg)
  | Key(z) ? Turn(N) ; Move(F) :(Beg)
  | Key(q) ? Turn(W) ; Move(F) :(Beg)
  | Key(d) ? Turn(E) ; Move(F) :(Beg)
