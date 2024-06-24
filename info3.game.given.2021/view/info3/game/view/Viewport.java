@@ -62,8 +62,7 @@ public class Viewport extends AViewport {
 		}
 
 		m_player.paintmainplayer(mg, m_d.width / 2, m_d.height / 2);
-		m_inventory.paint(mg);
-
+		m_inventory.paint(mg,m_d.width / 2 - InventoryMenu.NBCASE / 2 * (m_inventory.get_image().getWidth() * InventoryMenu.INVENTORYSIZE), m_d.height - m_inventory.get_image().getHeight() - 100);
 	}
 
 	public void setX(int x) {
