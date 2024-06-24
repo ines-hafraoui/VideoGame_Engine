@@ -169,6 +169,14 @@ public class Model {
 	            }
 		 }
 		
+		for (Entity e : entities) {
+			if (e instanceof Bot) {
+				int team = e.get_team();
+				((Bot) e).set_player(players[team-1]);
+				
+			}
+		}
+		
 		List<Position> poss = new ArrayList<Position>();
 
 		Position pos1 = new Position(0, 0);
