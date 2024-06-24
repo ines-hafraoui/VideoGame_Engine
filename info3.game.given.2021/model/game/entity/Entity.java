@@ -19,7 +19,7 @@ public abstract class Entity {
 	protected Automate aut;
 	protected Model model;
 	protected Absolute_Orientation abs_or;
-	protected String state_action;
+	protected String state_action = ActionType.IDLE;
 	protected int HP;
 	protected List<Entity> bots;
 	protected boolean explode;
@@ -354,7 +354,7 @@ public abstract class Entity {
 	 * an entity always
 	 */
 	public boolean do_hit(Absolute_Orientation o, String type, int porte) {
-
+		state_action = ActionType.HIT;
 		return model.do_hit(o,type,porte,this);
 	}
 

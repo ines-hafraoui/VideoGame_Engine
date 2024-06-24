@@ -45,10 +45,11 @@ public class PlayerAvatar extends Avatar {
 
 	@Override
 	protected void configureAnimation() {
+
+
 		String abs_or = m_entity.get_abs_or().get_abs_Orientation();
 		switch (a_state) {
 		case IDLE:
-			System.out.print("In IDLE\n");
 			if (m_imageIndex < 4) {
 				m_imageIndex = 4;
 			}
@@ -87,6 +88,8 @@ public class PlayerAvatar extends Avatar {
 			}
 			break;
 		case HIT:
+			
+			System.out.println("PLAYERAVATAR HIT");
 			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
 					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
 				if (m_imageIndex < 8) {
