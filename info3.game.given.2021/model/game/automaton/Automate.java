@@ -92,45 +92,12 @@ public class Automate {
 					for (State st : toadd) {
 						currentStateList.add(st);
 					}
+					break;
 				}
 			}
 		}
 	}
 }
-
-//public void step(Entity e) {
-//		
-//		if (!blocked) {
-//			List<State> todelete = new ArrayList<>();
-//			List<State> toadd = new ArrayList<>();
-//
-//			for ( State state : currentStateList) {
-//				for ( Transition transition : state.get_transitionList()) {
-//					if (transition.c.eval(entity)) {
-//						blocked = true;
-//
-//						for (Action a : transition.actionList) {
-//							action_buffer.add(a);
-//						}
-//						State s = this.getState(transition.cible);
-//						for (Action a : action_buffer) {
-//							a.exec(e);
-//						}
-//						toadd.add(s);
-//						todelete.add(state);
-//						
-//					}
-//				}
-//			}
-//
-//			for (State state : todelete) {
-//				currentStateList.remove(state);
-//			}
-//			for (State state : toadd) {
-//				currentStateList.add(state);
-//			}
-//			}
-//	}
 
 
 	public State getState(String name) {

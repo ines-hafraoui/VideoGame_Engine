@@ -69,6 +69,7 @@ public class Model {
 	public java.util.Map<String, java.util.Map<String, Object>> entityConfigurations;
 	public java.util.Map<String, Automate> automates;
 	public List<Entity> entities;
+	public List<Entity> entityToRemove;
 	public String aut_projectile[];
 	public String aut_bot[];
 	IFactory factory;
@@ -89,9 +90,10 @@ public class Model {
 		viscosity = parse.viscosity;
 		cooperative = parse.coop;
 		timer = parse.timer;
-		list_touche = new ArrayList();
+		list_touche = new ArrayList<String>();
 		factory = f;
 		entities = new ArrayList<Entity>();
+		entityToRemove = new ArrayList<Entity>();
 		automates = new HashMap<>();
 		entityConfigurations = parse.entities;
 		players = new Entity[parse.nb_player];
@@ -279,7 +281,7 @@ public class Model {
 		void removedEntity(Entity e);
 	}
 
-	ModelListener m_ml;
+	public ModelListener m_ml;
 
 	public void setListener(ModelListener l) {
 		m_ml = l;
@@ -294,7 +296,7 @@ public class Model {
 	}
 
 	public List<Entity> list_cat(Category cat, int team) {
-		List<Entity> list = new ArrayList();
+		List<Entity> list = new ArrayList<Entity>();
 		switch (cat.toString()) {
 
 		case "A":
@@ -464,34 +466,19 @@ public class Model {
 		double angle1=0,angle2=0;
 		eval_angle(o,angle1,angle2);
 		Polygon polygon = create_polygon_direction(p_x,p_y,porte,angle1,angle2);
-		List<Entity> todelete = new ArrayList<Entity>();
 		for (Entity entity : entities) {
 			if (entity.getHitBox().get_polygon().intersectsWith(polygon)) {
 				entity.get_injured();
 				if (entity.get_state_action() == ActionType.EXPLODE) {
-					todelete = removeEntity(entity);
+					addToRemove(entity);
 				}
 			}
-		}
-		for (Entity en : todelete) {
-			entities.remove(en);
-			if(m_ml != null)
-				m_ml.removedEntity(e);
 		}
 		return true;
 	}
 
-	private List<Entity> removeEntity(Entity entity) {
-		int size = entities.size();
-		List<Entity> todelete = new ArrayList<Entity>();
-		for (int i = 0; i<size; i++) {
-			Entity e = entities.get(i);
-			if (e == entity)
-				todelete.add(e);
-		}
-		return todelete;
-		
-		
+	private void addToRemove(Entity entity) {
+		entityToRemove.add(entity);
 	}
 
 	public String from_rel_to_abs_orientation(Absolute_Orientation abs,Relative_Orientation rel) {
