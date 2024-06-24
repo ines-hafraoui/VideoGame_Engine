@@ -451,5 +451,11 @@ public abstract class Entity {
 	public void set_player(Entity entity) {
 		// TODO Auto-generated method stub
 	}
+	
+	// Optional method - can be overridden by subclasses if needed
+    public void addbots(Entity e) {
+        // Default implementation (can be empty or have some logic)
+        System.out.println("Default optional method implementation.");
+    }
 
 }

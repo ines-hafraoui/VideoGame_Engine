@@ -134,4 +134,9 @@ public class Player extends Entity {
 	public Item[] get_inventory() {
 		return inventory;
 	}
+	
+	@Override
+	public void addbots(Entity e) {
+		bots.add(e);
+	}
 }
