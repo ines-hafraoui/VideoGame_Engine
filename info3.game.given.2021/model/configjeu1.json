@@ -9,8 +9,8 @@
       "behaviour": "player2.gal",
       "features" : "Player.class",
       "sprite" :  {
-      	"filepath" :"resources/MiniWorldSprites/Characters/Monsters/Dragons/RedDragon.png",
-      	"nb_rows" : 8,
+      	"filepath" :"resources/MiniWorldSprites/Characters/Soldiers/Mounted/RedKnight.png",
+      	"nb_rows" : 12,
       	"nb_cols" : 4,
       	"index" : 0,
       	"animation" : true

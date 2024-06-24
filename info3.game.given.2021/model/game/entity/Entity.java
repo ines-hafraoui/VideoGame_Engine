@@ -101,6 +101,7 @@ public abstract class Entity {
 		HP = 100;
 		explode = false;
 		index_inventory = 0;
+		state_action = ActionType.IDLE;
 		index_bot = 0;
 		this.team = team;
 		injured = false;
@@ -301,20 +302,13 @@ public abstract class Entity {
 		if (p == null)
 			return false;
 		position = p;
-		state_action = ActionType.MOVE;
+		set_state_action(ActionType.MOVE);
 		return true;
 	}
 
 	public void do_egg(int cat) {
-		aut.blocked = true;
-		state_action = ActionType.EGG;
-		timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				aut.blocked = false;
-				set_state_action("IDLE");
-			}
-		}, 3000);
+		
+		set_state_action(ActionType.EGG);
 		Entity e;
 		Automate a;
 		Position eggPos = new Position(position.getPositionX(), position.getPositionY());
@@ -358,25 +352,7 @@ public abstract class Entity {
 	 */
 	public boolean do_hit(Absolute_Orientation o, String type, int porte) {
 
-		set_state_action("HIT");
-		state_action = ActionType.HIT;
-		System.out.println("ENtered here 1\n");
-		if (!TimerisRunning) {
-			System.out.println("ENtered here 2\n");
-			TimerisRunning = true;
-			aut.blocked = true;
-			timer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					System.out.println("Deblocage\n");
-					TimerisRunning = false;
-					aut.blocked = false;
-					set_state_action("IDLE");
-				}
-			}, 300000);
-		} else {
-			System.out.println("Timer is already running and won't be started again.");
-		}
+		set_state_action(ActionType.HIT);
 		return model.do_hit(o, type, porte, this);
 	}
 
@@ -385,7 +361,7 @@ public abstract class Entity {
 	 * selection
 	 */
 	public boolean do_wait(int inc, int select) {
-		state_action = ActionType.WAIT;
+		set_state_action(ActionType.IDLE);
 		switch (select) {
 		case 1:
 			index_bot += inc;
@@ -411,11 +387,11 @@ public abstract class Entity {
 	
 	public void do_explode() {
 		explode = true;
-		state_action = ActionType.EXPLODE;
+		set_state_action(ActionType.EXPLODE);
 	}
 
 	public boolean do_rest(int p) {
-		state_action = ActionType.REST;
+		set_state_action(ActionType.REST);
 		int h = HP + p;
 		if (HP > 0 && h < 100) {
 			HP += p;
@@ -437,7 +413,6 @@ public abstract class Entity {
 
 	public void do_turn(Absolute_Orientation o) {
 		abs_or.set_abs_Orientation(o.get_abs_Orientation());
-		;
 		state_action = ActionType.TURN;
 	}
 

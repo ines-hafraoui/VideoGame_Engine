@@ -8,6 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import game.entity.Absolute_Orientation;
+import game.entity.ActionType;
 import game.entity.Entity;
 import info3.game.view.View;
 
@@ -30,7 +31,8 @@ public class PlayerAvatar extends Avatar {
 	@Override
 	public void paint(Graphics g, int x, int y) {
 		if (m_entity.get_state_action() != null) {
-			a_state = StateToString(m_entity.get_state_action());
+			a_state = m_entity.get_state_action();
+			//a_state = StateToString(m_entity.get_state_action());
 		}
 		BufferedImage img = m_images[m_imageIndex];
 		g.drawImage(img, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - (img.getWidth() * View.DISPLAYSCALE),
@@ -46,8 +48,9 @@ public class PlayerAvatar extends Avatar {
 	@Override
 	protected void configureAnimation() {
 		String abs_or = m_entity.get_abs_or().get_abs_Orientation();
+		a_state = m_entity.get_state_action();
 		switch (a_state) {
-		case IDLE:
+		case ActionType.IDLE:
 //			m_entity.get_automate().blocked=false;
 			System.out.print("In IDLE\n");
 			if (m_imageIndex < 4) {
@@ -56,7 +59,7 @@ public class PlayerAvatar extends Avatar {
 			if (m_imageIndex >= 5)
 				m_imageIndex = 4;
 			break;
-		case WALK:
+		case ActionType.MOVE:
 //			m_entity.get_automate().blocked=false;
 			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
 					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
@@ -88,7 +91,7 @@ public class PlayerAvatar extends Avatar {
 					m_imageIndex = 24;
 			}
 			break;
-		case HIT:
+		case ActionType.HIT:
 			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
 					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
 				if (m_imageIndex < 8) {
