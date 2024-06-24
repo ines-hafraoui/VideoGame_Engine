@@ -119,8 +119,14 @@ public class Map {
 			return p.getLandType();
 
 		}
+		else {
+			Biome b = getBiome(position);
+			if (b != null) {
+				return b.getLandType();
+			}
+			
+		}
 		return null;
-
 	}
 
 	public float getViscosity(Position position) {
