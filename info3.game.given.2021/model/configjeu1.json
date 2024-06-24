@@ -4,8 +4,8 @@
   "viscosity" : 1,
   "nb_bot_init":5,
   "nb_player":2,
-    "Player1":{
-      "name" : "PLAYER1", 
+    "Player2":{
+      "name" : "PLAYER2", 
       "behaviour": "player1.gal",
       "features" : "Player.class",
       "sprite" :  {
@@ -17,13 +17,13 @@
       },
       "pickable": false, 
       "direction": "W",
-      "position": [1700,890],
+      "position": [100,110],
       "hitbox":[5,10],
       "team":1
 
     },
-    "Player2":{ 
-      "name" : "PLAYER2", 
+    "Player1":{ 
+      "name" : "PLAYER1", 
       "behaviour": "player2.gal",
       "features" : "Player.class",
       "sprite" :  {
@@ -35,12 +35,12 @@
       },
       "pickable": false ,
       "direction": "W",
-      "position":[100,110],
+      "position":[1700,890],
       "hitbox":[5,10],
       "team": 2
     },
-    "Bot1":
-    { "name" : "BOT1", 
+    "Bot2":
+    { "name" : "BOT2", 
       "behaviour" : "archer.gal",
       "features" : "Bot.class",
       "sprite" :  {
@@ -52,12 +52,12 @@
       },
       "pickable" : true,
       "direction":"W",
-      "position":[1700,850],
+      "position":[120,120],
       "hitbox":[2,5],
       "team":1
     },
-    "Bot2":{
-      "name" : "BOT2",  
+    "Bot1":{
+      "name" : "BOT1",  
       "behaviour" : "bot1.gal",
       "sprite" :  {
       	"filepath" : "resources/MiniWorldSprites/Characters/Monsters/Demons/PurpleDemon.png",
@@ -69,7 +69,7 @@
       "features" : "Bot.class",
       "pickable" : true,
       "direction":"W",
-      "position":[120,120],
+      "position":[1700,850],
       "hitbox":[2,5],
       "team":2
     },
@@ -90,8 +90,8 @@
       "hitbox":[2,2],
       "team":0
     },
-    "Base1":{ 
-      "name" : "BASE1",  
+    "Base2":{ 
+      "name" : "BASE2",  
       "behaviour" : "base1.gal",
       "features" : "Base.class",
       "sprite" :  {
@@ -103,12 +103,12 @@
       },
       "pickable" : false,
       "direction":"W",
-      "position":[1700,900],
+      "position":[100,100],
       "hitbox":[10,10],
       "team":1
     },
-    "Base2":{
-      "name" : "BASE2", 
+    "Base1":{
+      "name" : "BASE1", 
       "behaviour" : "base1.gal",
       "features" : "Base.class",
       "sprite" :  {
@@ -120,7 +120,7 @@
       },
       "pickable" : false,
       "direction":"W",
-      "position":[100,100],
+      "position":[1700,900],
       "hitbox":[10,10],
       "team":2
     },
@@ -160,6 +160,6 @@
     },
     "automates" : ["Dasher.gal", "Archer.gal", "Dragon.gal"],
     "background" : ["resources/MiniWorldSprites/Ground/DeadGrass.png",2,3,true],
-    "zoom" : 2
+    "zoom" : 5
 }
 
