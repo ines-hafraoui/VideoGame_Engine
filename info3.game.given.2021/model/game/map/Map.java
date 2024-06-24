@@ -296,7 +296,6 @@ public class Map {
 	/*
 	 * get_entity return an entity who's around this entity at a distance distance
 	 */
-
 	public Entity get_entity(int distance, String type, float currentx, float currenty) {
 		for (Entity entity : m_model.get_entities()) {
 			if (entity.get_type().equals(type)) {

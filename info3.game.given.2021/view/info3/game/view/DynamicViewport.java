@@ -54,7 +54,7 @@ public class DynamicViewport extends AViewport {
 
 		Caculatetranslation(m_midwaypointx, m_midwaypointy);
 		// Scaling the bounds' leeway to the zoom given to the map
-		m_inWorldBounds = new Rectangle(4, 4, d.width + (20 * View.DISPLAYSCALE), d.height + (20 * View.DISPLAYSCALE));
+		m_inWorldBounds = new Rectangle(10, 10, d.width + (20 * View.DISPLAYSCALE), d.height + (20 * View.DISPLAYSCALE));
 	}
 
 	@Override
@@ -74,14 +74,6 @@ public class DynamicViewport extends AViewport {
 			}
 		}
 		return true;
-//		int x = (int) m_players.get(0).m_entity.get_x();
-//		int y = (int) m_players.get(0).m_entity.get_y();
-//		x -= (int) m_players.get(1).m_entity.get_x();
-//		y -= (int) m_players.get(1).m_entity.get_y();
-//		if ((x >= 0 && x < m_d.width && y < m_d.height && y >= 0) ) {
-//			return true;
-//		}
-//		return false;
 	}
 
 	@Override

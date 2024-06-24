@@ -29,6 +29,35 @@ public class Bot extends Entity{
 	public void set_player(Entity e) {
 		m_player = e;
 	}
+	
+	public void do_egg(int c) {
+		set_state_action(ActionType.EGG);
+		Entity e;
+		Automate a;
+		Position eggPos = new Position(position.getPositionX(), position.getPositionY());
+		Absolute_Orientation eggOr = new Absolute_Orientation(abs_or.get_abs_Orientation());
+		switch (c) {
+		case FLECHE:
+			// Temporary just to test
+			e = model.newEntity(model, eggPos, eggOr, EntityType.ARROW, team, 0, 0, false, new HitBox(2, 2), "Arrow");
+			model.get_entities().add(e);
+			a = model.automates.get(EntityType.ARROW);
+			e.set_player(this.m_player);
+			e.set_automate(a);
+			break;
+		case BOULE_FEU:
+			// Temporary just to test
+			e = model.newEntity(model, eggPos, eggOr, EntityType.FIREBALL, team, 0, 0, false, new HitBox(2, 2),
+					"Fireball");
+			model.get_entities().add(e);
+			e.set_player(this.m_player);
+			a = model.automates.get(EntityType.FIREBALL);
+			e.set_automate(a);
+			break;
+		default:
+			break;
+	}
+}
 
 	@Override
 	public boolean do_pick(int distance) {

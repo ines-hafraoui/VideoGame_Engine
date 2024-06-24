@@ -52,9 +52,13 @@ public class MainAvatar extends Avatar {
 		g.drawImage(img, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - (img.getWidth() * View.DISPLAYSCALE),
 				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - (img.getHeight() * View.DISPLAYSCALE),
 				img.getWidth() * View.DISPLAYSCALE * BASESIZE, img.getHeight() * View.DISPLAYSCALE * BASESIZE, null);
-		m_hb.drawHealthBar(g, x + (int) m_entity.get_x() - (img.getWidth() * View.DISPLAYSCALE),
-				y + (int) m_entity.get_y() - (img.getHeight() * View.DISPLAYSCALE) - 5 % img.getHeight(),
-				(img.getWidth() * View.DISPLAYSCALE), 5 % img.getHeight(), this.m_entity.get_HP());
+
+		int hp = this.m_entity.get_HP();
+		if( hp > 0) {
+			m_hb.drawHealthBar(g, x + (int) m_entity.get_x() - (img.getWidth() * View.DISPLAYSCALE),
+					y + (int) m_entity.get_y() - (img.getHeight() * View.DISPLAYSCALE) - 5 % img.getHeight(),
+					(img.getWidth() * View.DISPLAYSCALE), 5 % img.getHeight(), hp);
+		}
 
 		
 		
@@ -62,13 +66,10 @@ public class MainAvatar extends Avatar {
 			configureAnimation();
 		}
 
-
 	}
 
 	@Override
 	protected void configureAnimation() {
-//		//A repenser
-		
 		a_state = m_entity.get_state_action();
 		String abs_or = m_entity.get_abs_or().get_abs_Orientation();
 		switch (a_state) {
@@ -80,7 +81,6 @@ public class MainAvatar extends Avatar {
 			if (m_imageIndex >= 5)
 				m_imageIndex = 4;
 			break;
-
 		case ActionType.MOVE:
 			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
 					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
@@ -112,7 +112,6 @@ public class MainAvatar extends Avatar {
 					m_imageIndex = 24;
 			}
 			break;
-
 		case ActionType.HIT:
 			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
 					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
@@ -142,12 +141,16 @@ public class MainAvatar extends Avatar {
 					m_imageIndex = 44;
 			}
 		break;
+		default:
+			if (m_imageIndex >= 47)
+				m_imageIndex = 4;
 		}
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastUpdateTime > ANIMATION_INTERVAL) {
 			m_imageIndex++;
 			lastUpdateTime = currentTime; // Réinitialiser le dernier temps de mise à jour
 		}
+
 	}
 
 	@Override
