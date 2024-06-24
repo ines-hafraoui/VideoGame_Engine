@@ -6,7 +6,6 @@ Joueur_2(Beg){
  | Key(FD)  ? Turn(S) ; Move :(Beg)
  | Key(FL)  ? Turn(W) ; Move :(Beg)
  | Key(FR)  ? Turn(E) ; Move :(Beg)
- 
  | Key(m) ? :(Fight)
  | Key(l) ? :(Select1)
  | Cell(H,P,1) ? Pick(1) :(Beg)

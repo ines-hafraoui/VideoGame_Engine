@@ -141,7 +141,7 @@
       "team":0
     },
     "automates" : ["Dasher.gal", "Archer.gal", "Dragon.gal"],
-    "background" : ["resources/MiniWorldSprites/Ground/TexturedGrass.png",2,3,true],
+    "background" : ["resources/SproutLands/Tilesets/Grass.png",2,3,false],
     "zoom" : 1
 }
 

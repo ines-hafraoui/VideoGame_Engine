@@ -13,7 +13,30 @@
       	"nb_rows" : 12,
       	"nb_cols" : 4,
       	"index" : 0,
-      	"animation" : true
+      	"animation" : true,
+      	"details" : {
+      		"action": {
+      			"idle": {
+      				"index" : [4,5]
+      			},
+      			"move": {
+      				"orientation" : {
+			      		"north": [0,3],
+			      		"south": [36,39],
+			      		"east" : [12,15],
+			      		"west" : [24,25],
+      				}
+      			},
+      			"hit": {
+      				"orientation" : {
+			      		"north": [8,11],
+			      		"south": [30,35],
+			      		"east" : [20,23],
+			      		"west" : [44,47],
+      				}
+      			}
+      		}
+      	}
       },
       "pickable": false, 
       "direction": "W",
@@ -30,7 +53,30 @@
       	"nb_rows" : 12,
       	"nb_cols" : 4,
       	"index" : 0,
-      	"animation" : true
+      	"animation" : true,
+      	"details" : {
+      		"action": {
+      			"idle": {
+      				"index" : [4,5]
+      			},
+      			"move": {
+      				"orientation" : {
+			      		"north": [0,3],
+			      		"south": [36,39],
+			      		"east" : [12,15],
+			      		"west" : [24,25],
+      				}
+      			},
+      			"hit": {
+      				"orientation" : {
+			      		"north": [8,11],
+			      		"south": [30,35],
+			      		"east" : [20,23],
+			      		"west" : [44,47],
+      				}
+      			}
+      		}
+      	}
       },
       "pickable": false ,
       "direction": "W",
@@ -47,7 +93,30 @@
       	"nb_rows" : 8,
       	"nb_cols" : 6,
       	"index" : 0,
-      	"animation" : true
+      	"animation" : true,
+      	"details" : {
+      		"action": {
+      			"idle": {
+      				"index" : [0,1]
+      			},
+      			"move": {
+      				"orientation" : {
+			      		"north": [0,4],
+			      		"south": [6,10],
+			      		"east" : [12,16],
+			      		"east" : [18,22],
+      				}
+      			},
+      			"hit": {
+      				"orientation" : {
+			      		"north": [24,29],
+			      		"south": [30,35],
+			      		"east" : [36,41],
+			      		"east" : [42,47],
+      				}
+      			}
+      		}
+      	}
       },
       "pickable" : true,
       "direction":"W",
@@ -63,7 +132,30 @@
       	"nb_rows" : 8,
       	"nb_cols" : 6,
       	"index" : 0,
-      	"animation" : true
+      	"animation" : true,
+      	"details" : {
+      		"action": {
+      			"idle": {
+      				"index" : [0,1]
+      			},
+      			"move": {
+      				"orientation" : {
+			      		"north": [0,4],
+			      		"south": [6,10],
+			      		"east" : [12,16],
+			      		"west" : [18,22],
+      				}
+      			},
+      			"hit": {
+      				"orientation" : {
+			      		"north": [24,29],
+			      		"south": [30,35],
+			      		"east" : [36,41],
+			      		"west" : [42,47],
+      				}
+      			}
+      		}
+      	}
       },
       "features" : "Bot.class",
       "pickable" : true,
@@ -130,9 +222,17 @@
       "sprite" :  {
       	"filepath" : "resources/MiniWorldSprites/Objects/ArrowLong.png",
       	"nb_rows" : 2,
-      	"nb_cols" : 3,
+      	"nb_cols" : 2,
       	"index" : 0,
-      	"animation" : true
+      	"animation" : true,
+      	"details" : {
+      		"orientation" : {
+	      		"north": [1],
+	      		"south": [0],
+	      		"east" : [2],
+	      		"west" : [3]
+      		}
+      	}
       },
       "pickable" : false,
       "direction":"W",
@@ -149,7 +249,8 @@
       	"nb_rows" : 1,
       	"nb_cols" : 4,
       	"index" : 0,
-      	"animation" : true
+      	"animation" : true,
+      	"details" : null
       },
       "pickable" : false,
       "direction":"W",
