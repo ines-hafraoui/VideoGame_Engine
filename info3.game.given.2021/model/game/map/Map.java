@@ -277,6 +277,14 @@ public class Map {
 			Entity e = l_entity.get(i);
 			e.tick(elapsed);
 		}
+		
+		for (Entity e : m_model.entityToRemove) {
+			m_model.get_entities().remove(e);
+			if (m_model.m_ml != null) {
+				m_model.m_ml.removedEntity(e);
+			}
+			m_model.entityToRemove.remove(e);
+		}
 
 	}
 
