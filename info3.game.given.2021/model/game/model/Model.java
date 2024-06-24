@@ -564,4 +564,12 @@ public class Model {
 		 return newPosition.getPositionX() >= 0 && newPosition.getPositionX() <= m_map.getBorders().getMaxX() &&
 		           newPosition.getPositionY() >= 0 && newPosition.getPositionY() <= m_map.getBorders().getMaxY();
 	}
+
+	public Entity get_entity_at(float checkX, float checkY) {
+		for (Entity e : entities) {
+			if (e.get_x() == checkX && e.get_y() == checkY)
+				return e;
+		}
+		return null;
+	}
 }

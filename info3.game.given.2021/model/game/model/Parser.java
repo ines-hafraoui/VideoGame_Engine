@@ -127,7 +127,7 @@ public class Parser {
         case "Plant" : 
             return EntityType.ITEM;
         default : 
-        	return "";
+        	return null;
 		}
 	}
 }

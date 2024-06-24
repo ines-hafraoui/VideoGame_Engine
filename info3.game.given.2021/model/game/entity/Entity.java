@@ -461,4 +461,8 @@ public abstract class Entity {
 		return null;
 	}
 
+	protected  boolean is_pickable() {
+		return pickable;
+	}
+
 }

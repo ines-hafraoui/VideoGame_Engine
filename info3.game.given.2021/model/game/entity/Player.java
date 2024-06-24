@@ -29,14 +29,46 @@ public class Player extends Entity {
 	}
 	
 	@Override
-	public boolean do_pick(int distance) {	// a refaire
+	public boolean do_pick(int distance) {
+		
+		if (nb_item_inventory < this.nb_bot_init) {
+	        state_action = ActionType.PICK;
+	        
+	        // Parcourir toutes les positions dans un rayon de 'distance' autour du joueur
+	        for (int dx = -distance; dx <= distance; dx++) {
+	            for (int dy = -distance; dy <= distance; dy++) {
+	                // Ignorer la position du joueur lui-même
+	                if (dx == 0 && dy == 0) continue;
+	                
+	                // Calculer les coordonnées de la position à vérifier
+	                float checkX = this.get_x() + dx;
+	                float checkY = this.get_y() + dy;
+	                
+	                // Récupérer l'entité à cette position
+	                Entity entity = model.get_entity_at(checkX, checkY);
+	                model.entityToRemove.add(entity);
+	                // Vérifier si l'entité est un item et est pickable
+	                if (entity instanceof Item && entity.is_pickable()) {
+	                    // Ajouter l'item à l'inventaire
+	                    inventory[nb_item_inventory] = (Item) entity;
+	                    nb_item_inventory++;
+	                    return true;
+	                }
+	            }
+	        }
+	    }
+	    return false;
+		
+		
+		
+		
 //		if (nb_item_inventory < this.nb_bot_init) {
 //			state_action = ActionType.PICK;
 //			Item item = (Item) model.get_entity(distance,"I",this.get_x(), this.get_y());	// ask the model to give it the entity (whiwh is an item) at the distance d
 //			inventory[nb_item_inventory] = item;
 //			return true;
 //		}
-		return false;
+//		return false;
 	}
 
 	@Override
