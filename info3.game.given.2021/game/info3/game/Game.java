@@ -30,10 +30,13 @@ import java.io.RandomAccessFile;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import game.entity.Base;
 import game.entity.Entity;
 import game.model.Model;
 import game.model.Model.ModelListener;
@@ -46,7 +49,8 @@ import info3.game.view.View;
 public class Game {
 
 	static Game game;
-	//This fields leaves access to every part of the game to the given configuration Hashmap
+	// This fields leaves access to every part of the game to the given
+	// configuration Hashmap
 	public static Parser configParse;
 
 	public static void main(String args[]) throws Exception {
@@ -160,6 +164,15 @@ public class Game {
 			int fps = m_canvas.getFPS();
 			System.out.println("Elapsed=" + period + " FPS=" + fps);
 		}
+		long timer = m_model.get_timer();
+		if (configParse.timer != -1) {
+			if (timer >= configParse.timer * 1000) {
+				m_view.GameOver(Entity.NOTEAM);
+				if (timer >= configParse.timer * 1000 + 500) {
+					m_model.GameOver();
+				}
+			}
+		}
 	}
 
 	/*
@@ -201,6 +214,20 @@ public class Game {
 
 		@Override
 		public void removedEntity(Entity e) {
+			if(e instanceof Base) {
+				if(e.get_team()==Entity.TEAM1) {
+					m_view.GameOver(Entity.TEAM1);
+				}else {
+					m_view.GameOver(Entity.TEAM2);
+				}
+				 Timer timer = new Timer();
+			        timer.schedule(new TimerTask() {
+			            @Override
+			            public void run() {
+			                m_model.GameOver();
+			            }
+			        }, 10000);
+			}
 			m_view.removedEntity(e);
 		}
 	}

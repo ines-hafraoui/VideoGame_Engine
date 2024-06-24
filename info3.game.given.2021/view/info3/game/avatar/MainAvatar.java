@@ -52,17 +52,20 @@ public class MainAvatar extends Avatar {
 		g.drawImage(img, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - (img.getWidth() * View.DISPLAYSCALE),
 				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - (img.getHeight() * View.DISPLAYSCALE),
 				img.getWidth() * View.DISPLAYSCALE * BASESIZE, img.getHeight() * View.DISPLAYSCALE * BASESIZE, null);
+
 		int hp = this.m_entity.get_HP();
 		if( hp > 0) {
 			m_hb.drawHealthBar(g, x + (int) m_entity.get_x() - (img.getWidth() * View.DISPLAYSCALE),
 					y + (int) m_entity.get_y() - (img.getHeight() * View.DISPLAYSCALE) - 5 % img.getHeight(),
 					(img.getWidth() * View.DISPLAYSCALE), 5 % img.getHeight(), hp);
 		}
+
 		
 		
 		if (m_animate) {
 			configureAnimation();
 		}
+
 	}
 
 	@Override

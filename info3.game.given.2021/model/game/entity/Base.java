@@ -12,6 +12,7 @@ public class Base extends Entity {
 
 	public Base(Automate a, Model m, Position p, Absolute_Orientation o, int team, int nb_bot, String name) {
 		super(a, m, p, o, team, nb_bot, name);
+		HP=1000000;
 		picked = false;
 		type = EntityType.BASE;
 	}
