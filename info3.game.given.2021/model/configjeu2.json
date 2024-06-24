@@ -17,7 +17,7 @@
       },
       "pickable": false,
       "direction":"W",
-      "position":[500,200],
+      "position":[150,150],
       "hitbox":[5,10],
       "team":1
     },
@@ -34,7 +34,7 @@
       },
       "pickable": false ,
       "direction":"W",
-      "position":[550,200],
+      "position":[160,160],
       "hitbox":[5,10],
       "team":1
     },
@@ -136,7 +136,7 @@
       },
       "pickable" : false,
       "direction":"W",
-      "position":[300,300],
+      "position":[100,100],
       "hitbox":[10,10],
       "team":0
     },

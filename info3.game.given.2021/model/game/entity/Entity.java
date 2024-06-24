@@ -359,6 +359,7 @@ public abstract class Entity {
 	public boolean do_hit(Absolute_Orientation o, String type, int porte) {
 
 		set_state_action("HIT");
+		state_action = ActionType.HIT;
 		System.out.println("ENtered here 1\n");
 		if (!TimerisRunning) {
 			System.out.println("ENtered here 2\n");
@@ -384,6 +385,7 @@ public abstract class Entity {
 	 * selection
 	 */
 	public boolean do_wait(int inc, int select) {
+		state_action = ActionType.WAIT;
 		switch (select) {
 		case 1:
 			index_bot += inc;
@@ -406,7 +408,7 @@ public abstract class Entity {
 	// throw what is in its bag at the index. It will create an entity that will be
 	// paint by the view
 	public abstract Entity do_throw();
-
+	
 	public void do_explode() {
 		explode = true;
 		state_action = ActionType.EXPLODE;

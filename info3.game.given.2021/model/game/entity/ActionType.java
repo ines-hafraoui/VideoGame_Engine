@@ -13,5 +13,6 @@ public class ActionType {
 	public static final String POWER = "POWER";
 	public static final String PICK = "PICK";
 	public static final String REST = "REST";
+	public static final String WAIT = "WAIT";
 
 }

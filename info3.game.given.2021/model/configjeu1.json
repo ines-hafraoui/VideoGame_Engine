@@ -4,13 +4,13 @@
   "viscosity" : 1,
   "nb_bot_init":5,
   "nb_player":2,
-    "Player2":{
-      "name" : "PLAYER2", 
-      "behaviour": "player1.gal",
+    "Player1":{
+      "name" : "PLAYER1", 
+      "behaviour": "player2.gal",
       "features" : "Player.class",
       "sprite" :  {
-      	"filepath" :"resources/MiniWorldSprites/Characters/Monsters/Dragons/RedDragon.png",
-      	"nb_rows" : 8,
+      	"filepath" :"resources/MiniWorldSprites/Characters/Soldiers/Mounted/RedKnight.png",
+      	"nb_rows" : 12,
       	"nb_cols" : 4,
       	"index" : 0,
       	"animation" : true
@@ -22,9 +22,9 @@
       "team":1
 
     },
-    "Player1":{ 
-      "name" : "PLAYER1", 
-      "behaviour": "player2.gal",
+    "Player2":{ 
+      "name" : "PLAYER2", 
+      "behaviour": "player1.gal",
       "features" : "Player.class",
       "sprite" :  {
       	"filepath" :"resources/MiniWorldSprites/Characters/Soldiers/Mounted/CyanKnight.png",
@@ -160,6 +160,6 @@
     },
     "automates" : ["Dasher.gal", "Archer.gal", "Dragon.gal"],
     "background" : ["resources/MiniWorldSprites/Ground/DeadGrass.png",2,3,true],
-    "zoom" : 5
+    "zoom" : 1
 }
 
