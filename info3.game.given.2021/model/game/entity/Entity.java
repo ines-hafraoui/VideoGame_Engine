@@ -451,5 +451,9 @@ public abstract class Entity {
 	public void set_player(Entity entity) {
 		// TODO Auto-generated method stub
 	}
+	
+	public boolean get_selected() {
+		return selected;
+	}
 
 }
