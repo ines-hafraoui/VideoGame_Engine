@@ -17,10 +17,13 @@ public class Automate {
 	private Entity entity;
 	
 	private List<Action> action_buffer = new ArrayList<Action>();
+	
+	public boolean blocked; // the entity will unblock the automaton once it's transition is over
 
 	public Automate(Entity entity) {
 
 		this.entity = entity;
+		blocked=false;
 	}
 
 
@@ -28,6 +31,7 @@ public class Automate {
 		this.states = new HashSet(states);
 		this.initial_state = initial_state;
 		currentStateList.add(getState(this.initial_state));
+		blocked=false;
 
 	}
 
@@ -57,36 +61,26 @@ public class Automate {
 		return s1.add_transition(t);
 	}
 
-	public boolean blocked; // the entity will unblock the automaton once it's transition is over
-
-public void step(Entity e) {
+	public void step(Entity e) {
 		
 		if (!blocked) {
-			List<State> todelete = new ArrayList<>();
-			List<State> toadd = new ArrayList<>();
-
+			while (!action_buffer.isEmpty()) {
+				Action tmp = action_buffer.get(0);
+				action_buffer.remove(0);
+				tmp.exec(e);
+			}
 			for ( State state : currentStateList) {
 				for ( Transition transition : state.get_transitionList()) {
 					if (transition.c.eval(entity)) {
-						blocked = true;
 
 						for (Action a : transition.actionList) {
 							action_buffer.add(a);
 						}
 						State s = this.getState(transition.cible);
-						toadd.add(s);
-						todelete.add(state);
 					}
 				}
 			}
-
-			for (State state : todelete) {
-				currentStateList.remove(state);
-			}
-			for (State state : toadd) {
-				currentStateList.add(state);
-			}
-			}
+		}
 	}
 
 

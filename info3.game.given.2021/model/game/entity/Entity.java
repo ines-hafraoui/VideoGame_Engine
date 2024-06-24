@@ -1,5 +1,7 @@
 package game.entity;
 
+import java.util.Timer;
+import java.util.TimerTask;
 
 import game.model.Model;
 
@@ -50,6 +52,9 @@ public abstract class Entity {
 	public final static int TEAM1 = 1;
 	public final static int TEAM2 = 2;
 	public final static int NOTEAM = 0;
+	
+	private static Timer timer = new Timer();
+	private static boolean TimerisRunning = false;
 	
 
 	public Entity(Automate a, Model m, Position p, Absolute_Orientation o, int team, int nb_bot) {
@@ -197,7 +202,6 @@ public abstract class Entity {
 	}
 	
 	public boolean eval_got() {
-		System.out.print(HP);
 		return HP>0;
 	}
 	
@@ -278,7 +282,15 @@ public abstract class Entity {
 	}
 
 	public void do_egg(int cat) {
-		
+		aut.blocked=true;
+		state_action = ActionType.EGG;
+		timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                aut.blocked=false;
+                set_state_action("IDLE");
+            }
+        }, 3000);
 		Entity e;
 		Automate a;
 		switch(cat) {
@@ -287,21 +299,18 @@ public abstract class Entity {
 			model.get_entities().add(e);
 			a = model.automates.get(EntityType.ARROW);
 			e.set_automate(a);
-			state_action = ActionType.EGG;
 			break;
 		case BOULE_FEU :
 			e = model.newEntity(model,position,abs_or, EntityType.FIREBALL,team,0,0,false,new HitBox(2,2));
 			model.get_entities().add(e);
 			a = model.automates.get(EntityType.FIREBALL);
 			e.set_automate(a);
-			state_action = ActionType.EGG;
 			break;
 		case BOT :  
 			e = model.newEntity(model,position,abs_or, EntityType.TEAMMATE,team, 0,0,false,new HitBox(2,2));
 			model.get_entities().add(e);
 			a = model.automates.get(EntityType.TEAMMATE);
 			e.set_automate(a);
-			state_action = ActionType.EGG;
 			break;
 		default : 
 			break;
@@ -318,9 +327,25 @@ public abstract class Entity {
 	 * an entity always
 	 */
 	public boolean do_hit(Absolute_Orientation o, String type, int porte) {
-		System.out.println("\n\nDO_HITTTT\n\n");
-		state_action = ActionType.HIT;
-		aut.blocked=true;
+		set_state_action("HIT");
+		System.out.println("ENtered here 1\n");
+		if (!TimerisRunning) {
+			System.out.println("ENtered here 2\n");
+            TimerisRunning = true;
+    		aut.blocked=true;
+			timer.schedule(new TimerTask() {
+	            @Override
+	            public void run() {
+	    			System.out.println("Deblocage\n");
+	            	TimerisRunning = false;
+	                aut.blocked=false;
+	                set_state_action("IDLE");
+	            }
+	        }, 300000);
+		}
+		else {
+            System.out.println("Timer is already running and won't be started again.");
+		}
 		return model.do_hit(o,type,porte,this);
 	}
 

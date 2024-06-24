@@ -33,7 +33,7 @@ public abstract class Avatar {
 		m_hb = new HealthBar(this);
 		m_view.addAvatar(this);
 		m_valid = true;
-		a_state = HIT;
+		a_state = IDLE;
 	}
 	
 	public Avatar() {

@@ -31,6 +31,7 @@ import game.entity.Fire_Ball;
 import game.automaton.Action;
 import game.automaton.Automate;
 import game.automaton.Category;
+import game.automaton.Cell;
 import game.automaton.Hit;
 import game.automaton.Key;
 import game.automaton.Move;
@@ -172,19 +173,20 @@ public class Model {
 	            		list_action3.add(am);
 	            		list_action4.add(an);
 	            		list_action4.add(am);
-	            		list_action5.add(aw);
+	            		//list_action5.add(aw);
 	            		list_action5.add(ah);
-	            		list_action5.add(am);
+	            		//list_action5.add(am);
 	            		Key cu = new Key("FU");
 	            		Key cd = new Key("FD");
 	            		Key cr = new Key("FR");
 	            		Key cl = new Key("FL");
 	            		Key ce = new Key("ENTER");
+	            		TrueFalse c = new TrueFalse(true);
 	            		Transition t1 = new Transition("Init",cr,list_action1);
 	            		Transition t2 = new Transition("Init",cd,list_action2);
 	            		Transition t3 = new Transition("Init",cl,list_action3);
 	            		Transition t4 = new Transition("Init",cu,list_action4);
-	            		Transition t5 = new Transition("Init",ce,list_action5);
+	            		Transition t5 = new Transition("Init",c,list_action5);
 	            		list_trans.add(t1);
 	            		list_trans.add(t2);
 	            		list_trans.add(t3);
@@ -454,7 +456,7 @@ public class Model {
 	}
 
 	public boolean do_hit(Absolute_Orientation o, String type, int porte, Entity e) {
-		System.out.println("\nDo_HIt\n\n");
+		System.out.println("\nDo_Hit\n\n");
 		double p_x = e.get_x();
 		double p_y = e.get_y();
 		double angle1=0,angle2=0;
