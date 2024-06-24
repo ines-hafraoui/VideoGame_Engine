@@ -49,6 +49,7 @@ public abstract class Entity {
 	public final static int FLECHE = 1;
 	public final static int BOULE_FEU = 2;
 	public final static int BOT = 3;
+	
 	public final static int dt = 1;
 
 	public final static int TEAM1 = 1;
@@ -317,39 +318,7 @@ public abstract class Entity {
 	}
 
 	public void do_egg(int cat) {
-		
-		set_state_action(ActionType.EGG);
-		Entity e;
-		Automate a;
-		Position eggPos = new Position(position.getPositionX(), position.getPositionY());
-		Absolute_Orientation eggOr = new Absolute_Orientation(abs_or.get_abs_Orientation());
-		switch (cat) {
-		case FLECHE:
-			// Temporary just to test
-			e = model.newEntity(model, eggPos, eggOr, EntityType.ARROW, team, 0, 0, false, new HitBox(2, 2), "Arrow");
-			model.get_entities().add(e);
-			a = model.automates.get(EntityType.ARROW);
-			e.set_automate(a);
-			break;
-		case BOULE_FEU:
-			// Temporary just to test
-			e = model.newEntity(model, eggPos, eggOr, EntityType.FIREBALL, team, 0, 0, false, new HitBox(2, 2),
-					"Fireball");
-			model.get_entities().add(e);
-			a = model.automates.get(EntityType.FIREBALL);
-			e.set_automate(a);
-			break;
-		case BOT:
-			// Temporary just to test
-			e = model.newEntity(model, eggPos, eggOr, EntityType.TEAMMATE, team, 0, 0, false, new HitBox(2, 2),
-					"Bot" + team);
-			model.get_entities().add(e);
-			a = model.automates.get(EntityType.TEAMMATE);
-			e.set_automate(a);
-			break;
-		default:
-			break;
-		}
+			
 	}
 
 	public void do_got(String s) {
@@ -481,6 +450,10 @@ public abstract class Entity {
 
 	protected boolean is_pickable() {
 		return pickable;
+	}
+
+	public void set_player(Entity entity) {
+		// TODO Auto-generated method stub
 	}
 
 }

@@ -100,6 +100,20 @@ public class Player extends Entity {
 		}
 		return false;
 	}
+	
+	public void do_egg(int c) {
+		set_state_action(ActionType.EGG);
+		Entity e;
+		Automate a;
+		Position eggPos = new Position(position.getPositionX(), position.getPositionY());
+		Absolute_Orientation eggOr = new Absolute_Orientation(abs_or.get_abs_Orientation());
+		// Temporary just to test
+		e = model.newEntity(model, eggPos, eggOr, EntityType.ARROW, team, 0, 0, false, new HitBox(2, 2), "Arrow");
+		model.get_entities().add(e);
+		e.set_player(this);
+		a = model.automates.get(EntityType.ARROW);
+		e.set_automate(a);
+	}
 
 	@Override
 	public boolean do_wizz(int factor) {
