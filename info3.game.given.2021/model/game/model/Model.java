@@ -264,16 +264,16 @@ public class Model {
 	public List<String> get_list_touche() {
 		return this.list_touche;
 	}
-	
-	public List<Item> getItems(){
+
+	public List<Item> getItems() {
 		List<Item> l_items = new ArrayList<Item>();
-		
+
 		for (Entity e : entities) {
 			if (e instanceof Item) {
 				l_items.add((Item) e);
 			}
 		}
-		
+
 		return l_items;
 	}
 
@@ -304,6 +304,10 @@ public class Model {
 		return e;
 	}
 
+	/*
+	 * The Interface of the ModelListener that enables other parts of the
+	 * architecture whether there has been updates to the entities in the world
+	 */
 	public interface ModelListener {
 		void addedEntity(Entity e);
 
@@ -602,7 +606,8 @@ public class Model {
 				continue;
 			}
 
-			if (e.getHitBox().get_polygon().containsPosition(newPosition)) {
+			if (e.getHitBox().get_polygon().containsPosition(newPosition)
+					|| (e.get_x() == newPosition.getPositionX() && e.get_x() == newPosition.getPositionX())) {
 				return false;
 			}
 		}
