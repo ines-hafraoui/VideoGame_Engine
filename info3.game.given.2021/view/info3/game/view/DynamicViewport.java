@@ -54,7 +54,8 @@ public class DynamicViewport extends AViewport {
 
 		Caculatetranslation(m_midwaypointx, m_midwaypointy);
 		// Scaling the bounds' leeway to the zoom given to the map
-		m_inWorldBounds = new Rectangle(10, 10, d.width + (20 * View.DISPLAYSCALE), d.height + (20 * View.DISPLAYSCALE));
+		m_inWorldBounds = new Rectangle(10, 10, d.width + (20 * View.DISPLAYSCALE),
+				d.height + (20 * View.DISPLAYSCALE));
 	}
 
 	@Override
@@ -89,9 +90,15 @@ public class DynamicViewport extends AViewport {
 			}
 		}
 
-		for (InventoryMenu inventory : m_inventory) {
-			inventory.paint(mg);
-		}
+		m_inventory[0].paint(mg,
+				m_d.width / 4 - InventoryMenu.NBCASE / 2
+						* (m_inventory[0].get_image().getWidth() * InventoryMenu.INVENTORYSIZE),
+				m_d.height - m_inventory[0].get_image().getHeight() - 100);
+		m_inventory[1].paint(mg,
+				m_d.width
+						- (InventoryMenu.NBCASE * (m_inventory[1].get_image().getWidth() * InventoryMenu.INVENTORYSIZE))
+						- m_d.width / 9,
+				m_d.height - m_inventory[1].get_image().getHeight() - 100);
 	}
 
 	private void setmidwaypoint() {
