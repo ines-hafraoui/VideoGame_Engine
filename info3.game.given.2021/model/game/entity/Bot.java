@@ -6,30 +6,34 @@ import game.automaton.Category;
 import game.automaton.Direction;
 import game.model.Model;
 
-public class Bot extends Entity{
+public class Bot extends Entity {
 
-	
 	private int acc_factor;
 	private Entity m_player;
-	
-	public Bot(Automate a, Model m,Position p, Absolute_Orientation o,int team, int nb_bot,String name) {
-		super(a,m,p,o,team, nb_bot,name);
+	private float offsetx, offsety;
+
+	public Bot(Automate a, Model m, Position p, Absolute_Orientation o, int team, int nb_bot, String name) {
+		super(a, m, p, o, team, nb_bot, name);
 		acc_factor = 3;
 		type = EntityType.TEAMMATE;
 		name = "BOT" + team;
 	}
 
-	public Bot(Model m,Position pos, Absolute_Orientation o, int team, int nb_bot,Boolean pickable, HitBox hb, String name) {
-		super(m,pos,o,team, nb_bot,pickable,hb,name);
+	public Bot(Model m, Position pos, Absolute_Orientation o, int team, int nb_bot, Boolean pickable, HitBox hb,
+			String name) {
+		super(m, pos, o, team, nb_bot, pickable, hb, name);
 		acc_factor = 3;
 		type = EntityType.TEAMMATE;
 		name = "BOT" + team;
 	}
-	
+
 	public void set_player(Entity e) {
 		m_player = e;
+		this.offsetx = 10*m_player.bots.size();
+		this.offsety = 2*m_player.bots.size();
+		m_player.addbots(this);
 	}
-	
+
 	public void do_egg(int c) {
 		set_state_action(ActionType.EGG);
 		Entity e;
@@ -56,8 +60,8 @@ public class Bot extends Entity{
 			break;
 		default:
 			break;
+		}
 	}
-}
 
 	@Override
 	public boolean do_pick(int distance) {
@@ -68,13 +72,12 @@ public class Bot extends Entity{
 	public Entity do_throw() {
 		return null;
 	}
-	
+
 	public boolean do_move() {
-		this.position.setPositionX(m_player.get_x()+10);
-		this.position.setPositionY(m_player.get_y()+10);
+		this.position.setPositionX(m_player.get_x() + 10 + offsetx);
+		this.position.setPositionY(m_player.get_y() + 10 + offsety);
 		return true;
 	}
-	
 
 	@Override
 	public boolean do_wizz(int factor) {
@@ -87,6 +90,5 @@ public class Bot extends Entity{
 	public boolean do_get() {
 		return false;
 	}
-	
 
 }

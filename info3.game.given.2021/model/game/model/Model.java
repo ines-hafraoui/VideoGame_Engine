@@ -75,12 +75,13 @@ public class Model {
 	public String aut_bot[];
 	IFactory factory;
 	public static int nb_bot_init;
+	public static int nb_item;
 	public int timer;
 	public boolean cooperative;
 	public int viscosity;
 	public Parser configParse;
 	private static long TIMER = 0;
-	private boolean gameover=false;
+	private boolean gameover = false;
 
 	public Model(int w, int h, Parser parse, IFactory f) throws IOException {
 
@@ -100,6 +101,7 @@ public class Model {
 		players = new Entity[parse.nb_player];
 		aut_projectile = parse.aut_projectile;
 		aut_bot = parse.aut_bot;
+		nb_item = parse.nb_item;
 		int i = 0;
 
 		// create all entities from the info that gave us the Parser
@@ -127,6 +129,21 @@ public class Model {
 			case "Bot2":
 			case "Parasite":
 				entity = new Bot(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
+				if (behaviour != null) {
+					Automate automate = TestMain.loadAutomata(new File("gal/gal/" + behaviour).getAbsolutePath());
+					if (automate != null) {
+						for (int j = 1; j < nb_bot_init; j++) {
+							entity.set_automate(automate);
+							entities.add(entity);
+							automates.put(entity.get_type(), automate);
+							float x = pos.getPositionX();
+							float y = pos.getPositionY();
+							pos = new Position(x + 2, y + 2);
+							entity = new Bot(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb,
+									entityName);
+						}
+					}
+				}
 				break;
 			case "Base1":
 			case "Base2":
@@ -137,6 +154,21 @@ public class Model {
 			case "Capacity":
 			case "Plant":
 				entity = new Item(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
+				if (behaviour != null) {
+					Automate automate = TestMain.loadAutomata(new File("gal/gal/" + behaviour).getAbsolutePath());
+					if (automate != null) {
+						for (int j = 1; j < nb_item; j++) {
+							entity.set_automate(automate);
+							entities.add(entity);
+							automates.put(entity.get_type(), automate);
+							float x = pos.getPositionX();
+							float y = pos.getPositionY();
+							pos = new Position(x + 2, y + 2);
+							entity = new Item(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb,
+									entityName);
+						}
+					}
+				}
 				break;
 			case "Arrow":
 			case "FireBall":
@@ -152,7 +184,6 @@ public class Model {
 				if (behaviour != null) {
 
 					String galPath = new File("gal/gal/" + behaviour).getAbsolutePath();
-
 
 					Automate automate = TestMain.loadAutomata(galPath);
 
@@ -171,17 +202,16 @@ public class Model {
 				}
 			}
 		}
-		
+
 		for (Entity e : entities) {
-			if (e instanceof Bot || e instanceof Base ) {
+			if (e instanceof Bot || e instanceof Base) {
 				int team = e.get_team();
-				for (int j = 0; j<players.length; j++) {
-					if (players[j].get_team()== team ) {
-						 e.set_player(players[j]);
+				for (int j = 0; j < players.length; j++) {
+					if (players[j].get_team() == team) {
+						e.set_player(players[j]);
 					}
 				}
-				
-				
+
 			}
 		}
 
@@ -217,9 +247,9 @@ public class Model {
 			GameOverboucle();
 		}
 	}
-	
+
 	public void GameOver() {
-		gameover=true;
+		gameover = true;
 	}
 
 	private void GameOverboucle() {
@@ -233,6 +263,18 @@ public class Model {
 
 	public List<String> get_list_touche() {
 		return this.list_touche;
+	}
+	
+	public List<Item> getItems(){
+		List<Item> l_items = new ArrayList<Item>();
+		
+		for (Entity e : entities) {
+			if (e instanceof Item) {
+				l_items.add((Item) e);
+			}
+		}
+		
+		return l_items;
 	}
 
 	public void add_entity(Entity e) {
@@ -537,6 +579,7 @@ public class Model {
 	}
 
 	public boolean eval_cell(Absolute_Orientation dir, Category cat, int porte, Entity e) {
+
 		double p_x = e.get_x();
 		double p_y = e.get_y();
 		double angle1 = 0, angle2 = 0;
@@ -544,6 +587,8 @@ public class Model {
 		Polygon polygon = create_polygon_direction(p_x, p_y, porte, angle1, angle2);
 		for (Entity entity : entities) {
 			if (entity.getHitBox().get_polygon().intersectsWith(polygon)) {
+				if (e instanceof Projectile)
+					System.out.print("projectile c'est good");
 				return true;
 			}
 		}
@@ -551,17 +596,17 @@ public class Model {
 	}
 
 	public boolean isValidPosition(Entity entity, Position newPosition) {
-		
+
 		for (Entity e : entities) {
 			if (e.equals(entity)) {
 				continue;
 			}
-			
+
 			if (e.getHitBox().get_polygon().containsPosition(newPosition)) {
 				return false;
 			}
 		}
-		
+
 		return newPosition.getPositionX() >= 0 && newPosition.getPositionX() <= m_map.getBorders().getMaxX()
 				&& newPosition.getPositionY() >= 0 && newPosition.getPositionY() <= m_map.getBorders().getMaxY();
 	}

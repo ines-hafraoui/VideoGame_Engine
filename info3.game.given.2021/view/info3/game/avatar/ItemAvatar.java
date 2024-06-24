@@ -39,4 +39,10 @@ public class ItemAvatar extends Avatar {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public void paintmainplayer(Graphics g, int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
 }

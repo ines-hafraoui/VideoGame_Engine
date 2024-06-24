@@ -10,12 +10,12 @@ public class Projectile extends Entity {
 	public Projectile(Model m, Position p, Absolute_Orientation o,String type, int team, int nb_bot, Boolean pickable, HitBox hb, String name) {
 		super(m, p, o, team, nb_bot,pickable, hb,name);
 		this.set_type(type);
-		this.HP = 0;
+		this.HP = 10;
 	}
 	
 	public Projectile(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team, int i, String name) {
 		super(a,m, p, o, team, i,name);
-		this.HP = 0;
+		this.HP = 10;
 		this.set_type(type);
 	}
 
@@ -78,6 +78,12 @@ public class Projectile extends Entity {
 	}
 	
 	public boolean do_move() {
+//		while (model.isValidPosition(this, this.position)) {
+//			this.position.setPositionX(position.getPositionX()+1);
+//			this.position.setPositionY(position.getPositionY()+1);
+//			System.out.print("mooving");
+//		}
+//		return true;
 		Position p = newPosition();
 		if (p== null) return false;
 		this.position = p; 

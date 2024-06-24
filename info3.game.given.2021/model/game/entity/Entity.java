@@ -182,6 +182,12 @@ public abstract class Entity {
 	public Position getPosition() {
 		return position;
 	}
+	
+	public void setPosition(Position p) {
+		position = p;
+	}
+
+	
 	protected Position newPosition() {
 		
 		
@@ -452,8 +458,16 @@ public abstract class Entity {
 		// TODO Auto-generated method stub
 	}
 	
+
 	public boolean get_selected() {
 		return selected;
 	}
+
+	// Optional method - can be overridden by subclasses if needed
+    public void addbots(Entity e) {
+        // Default implementation (can be empty or have some logic)
+        System.out.println("Default optional method implementation.");
+    }
+
 
 }

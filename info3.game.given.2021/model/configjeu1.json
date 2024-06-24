@@ -2,8 +2,9 @@
   "cooperative" : false,
   "timer" : -1, 
   "viscosity" : 1,
-  "nb_bot_init":5,
+  "nb_bot_init":6,
   "nb_player":2,
+  "nb_item" : 20,
     "Player1":{
       "name" : "PLAYER1", 
       "behaviour": "player2.gal",
@@ -159,6 +160,6 @@
     },
     "automates" : ["Dasher.gal", "Archer.gal", "Dragon.gal"],
     "background" : ["resources/MiniWorldSprites/Ground/DeadGrass.png",2,3,true],
-    "zoom" : 2
+    "zoom" : 3
 }
 

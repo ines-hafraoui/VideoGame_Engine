@@ -19,7 +19,6 @@ import info3.game.view.View;
 public class MainAvatar extends Avatar {
 	private long lastUpdateTime; // Temps depuis la dernière mise à jour de l'animation
 	private static final long ANIMATION_INTERVAL = 500; // 500 ms entre les mises à jour
-	private static final int BASESIZE = 1;
 
 	boolean m_animate;
 
