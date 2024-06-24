@@ -268,7 +268,7 @@ public class Model {
 
 	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String type, int team, int nb_bot,int view, Boolean pickable, HitBox hb, String name) {
 		Entity e =factory.newEntity(model, position, abs_or, type ,team, nb_bot,pickable,hb, name);
-		System.out.println("new Entity : " + name);
+//		System.out.println("new Entity : " + name);
 		if(m_ml != null) 
 			m_ml.addedEntity(e);
 		return e;

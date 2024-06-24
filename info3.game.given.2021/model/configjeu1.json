@@ -9,8 +9,8 @@
       "behaviour": "player1.gal",
       "features" : "Player.class",
       "sprite" :  {
-      	"filepath" :"resources/MiniWorldSprites/Characters/Soldiers/Mounted/RedKnight.png",
-      	"nb_rows" : 12,
+      	"filepath" :"resources/MiniWorldSprites/Characters/Monsters/Dragons/RedDragon.png",
+      	"nb_rows" : 8,
       	"nb_cols" : 4,
       	"index" : 0,
       	"animation" : true
@@ -160,6 +160,6 @@
     },
     "automates" : ["Dasher.gal", "Archer.gal", "Dragon.gal"],
     "background" : ["resources/MiniWorldSprites/Ground/TexturedGrass.png",2,3,true],
-    "zoom" : 1
+    "zoom" : 4
 }
 

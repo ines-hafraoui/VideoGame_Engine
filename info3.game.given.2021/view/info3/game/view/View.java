@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -274,12 +275,20 @@ public class View extends Container {
 	}
 
 	public void removedEntity(Entity e) {
+		List<Avatar> torm = ToremoveAvatar(e);
+		for (Avatar a : torm) {
+			m_avatars.remove(a);
+		}
+	}
+
+	public List<Avatar> ToremoveAvatar(Entity e) {
+		List<Avatar> todelete = new ArrayList<Avatar>();
 		Iterator<Avatar> iter = m_avatars.iterator();
 		while (iter.hasNext()) {
 			Avatar a = iter.next();
-			if (a.m_entity.equals(e)) {
-				m_avatars.remove(a);
-			}
+			if (a.m_entity == e)
+				todelete.add(a);
 		}
+		return todelete;
 	}
 }
