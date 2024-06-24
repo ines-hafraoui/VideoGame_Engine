@@ -138,7 +138,7 @@
       "pickable" : false,
       "direction":"W",
       "position":[0,0],
-      "hitbox":[2,2],
+      "hitbox":[0,0],
       "team":0
     },
      "FireBall":{

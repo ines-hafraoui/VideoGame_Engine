@@ -12,9 +12,9 @@ public class HitBox {
 	private float height;
 	private Polygon polygon;
 
-	public HitBox(float x, float y) {
-		width = x;
-		height = y;
+	public HitBox(float wid, float hei) {
+		width = wid;
+		height = hei;
 	}
 
 	public float getHbWidth() {
@@ -32,14 +32,14 @@ public class HitBox {
 		
 	}
 
-	public void setHbWidth(float x) {
-		this.width = x;
+	public void setHbWidth(float w) {
+		this.width = w;
 		updatePolygon();
 
 	}
 
-	public void setHbHeight(float y) {
-		this.height = y;
+	public void setHbHeight(float h) {
+		this.height = h;
 		updatePolygon();
 	}
 

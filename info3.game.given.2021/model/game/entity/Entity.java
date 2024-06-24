@@ -260,6 +260,10 @@ public abstract class Entity {
 	public Absolute_Orientation get_abs_or() {
 		return abs_or;
 	}
+	
+	public void set_abs_or(Absolute_Orientation o ) {
+		this.abs_or = o ; 
+	}
 
 	public float get_x() {
 		return position.getPositionX();
