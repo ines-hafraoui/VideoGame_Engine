@@ -47,20 +47,29 @@ public class PlayerAvatar extends Avatar {
 
 	@Override
 	protected void configureAnimation() {
+		System.out.println("ICI " + a_state);
+
+		//a_state = StateToString(m_entity.get_state_action());
+		
+		
 		String abs_or = m_entity.get_abs_or().get_abs_Orientation();
 		a_state = m_entity.get_state_action();
 		switch (a_state) {
+
 		case ActionType.IDLE:
 //			m_entity.get_automate().blocked=false;
 			System.out.print("In IDLE\n");
+
 			if (m_imageIndex < 4) {
 				m_imageIndex = 4;
 			}
 			if (m_imageIndex >= 5)
 				m_imageIndex = 4;
 			break;
+
 		case ActionType.MOVE:
 //			m_entity.get_automate().blocked=false;
+
 			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
 					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
 				if (m_imageIndex < 0) {
@@ -91,6 +100,7 @@ public class PlayerAvatar extends Avatar {
 					m_imageIndex = 24;
 			}
 			break;
+
 		case ActionType.HIT:
 			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
 					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {

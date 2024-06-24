@@ -19,7 +19,7 @@ public abstract class Entity {
 	protected Automate aut;
 	protected Model model;
 	protected Absolute_Orientation abs_or;
-	protected String state_action;
+	protected String state_action = ActionType.IDLE;
 	protected int HP;
 	protected List<Entity> bots;
 	protected boolean explode;
@@ -174,10 +174,13 @@ public abstract class Entity {
 		acc_speed = factor * new_speed_polar[0];
 		speed_vct_abs_or.set_abs_Angle(new_speed_polar[1]);
 
+	
 		return acc_speed;
 	}
 
 	protected Position newPosition() {
+		
+		
 		Position newPosition = null;
 
 		float speed = newSpeed(1);

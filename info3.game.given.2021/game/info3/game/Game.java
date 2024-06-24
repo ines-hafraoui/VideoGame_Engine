@@ -132,7 +132,7 @@ public class Game {
 		try {
 			RandomAccessFile file = new RandomAccessFile(filename, "r");
 			RandomFileInputStream fis = new RandomFileInputStream(file);
-			m_canvas.playMusic(fis, 0, 1.0F);
+			//m_canvas.playMusic(fis, 0, 1.0F);
 		} catch (Throwable th) {
 			th.printStackTrace(System.err);
 			System.exit(-1);
