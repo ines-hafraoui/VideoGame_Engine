@@ -56,85 +56,85 @@ public class MainAvatar extends Avatar {
 
 	@Override
 	protected void configureAnimation() {
-		//A repenser
-		String abs_or = m_entity.get_abs_or().get_abs_Orientation();
-		switch (a_state) {
-		case IDLE:
-//			m_entity.get_automate().blocked=false;
-			System.out.print("In IDLE\n");
-			if (m_imageIndex < 4) {
-				m_imageIndex = 4;
-			}
-			if (m_imageIndex >= 5)
-				m_imageIndex = 4;
-			break;
-		case WALK:
-//			m_entity.get_automate().blocked=false;
-			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
-					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
-				if (m_imageIndex < 0) {
-					m_imageIndex = 0;
-				}
-				if (m_imageIndex >= 3)
-					m_imageIndex = 0;
-				else
-					m_imageIndex++;
-			} else if (abs_or.equals(Absolute_Orientation.NORTH) || abs_or.equals(Absolute_Orientation.NORTH_E)
-					|| abs_or.equals(Absolute_Orientation.NORTH_W)) {
-				if (m_imageIndex < 36) {
-					m_imageIndex = 36;
-				}
-				if (m_imageIndex >= 39)
-					m_imageIndex = 36;
-			} else if (abs_or.equals(Absolute_Orientation.EAST)) {
-				if (m_imageIndex < 12) {
-					m_imageIndex = 12;
-				}
-				if (m_imageIndex >= 15)
-					m_imageIndex = 12;
-			} else {// WEST
-				if (m_imageIndex < 24) {
-					m_imageIndex = 24;
-				}
-				if (m_imageIndex >= 25)
-					m_imageIndex = 24;
-			}
-			break;
-		case HIT:
-			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
-					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
-				if (m_imageIndex < 8) {
-					m_imageIndex = 8;
-				}
-				if (m_imageIndex >= 11)
-					m_imageIndex = 8;
-			} else if (abs_or.equals(Absolute_Orientation.NORTH) || abs_or.equals(Absolute_Orientation.NORTH_E)
-					|| abs_or.equals(Absolute_Orientation.NORTH_W)) {
-				if (m_imageIndex < 20) {
-					m_imageIndex = 20;
-				}
-				if (m_imageIndex >= 35)
-					m_imageIndex = 30;
-			} else if (abs_or.equals(Absolute_Orientation.EAST)) {
-				if (m_imageIndex < 20) {
-					m_imageIndex = 20;
-				}
-				if (m_imageIndex >= 23)
-					m_imageIndex = 20;
-			} else {// WEST
-				if (m_imageIndex < 44) {
-					m_imageIndex = 44;
-				}
-				if (m_imageIndex >= 47)
-					m_imageIndex = 44;
-			}
-			break;
-		}
-		long currentTime = System.currentTimeMillis();
-		if (currentTime - lastUpdateTime > ANIMATION_INTERVAL) {
-			m_imageIndex++;
-			lastUpdateTime = currentTime; // Réinitialiser le dernier temps de mise à jour
-		}
+//		//A repenser
+//		String abs_or = m_entity.get_abs_or().get_abs_Orientation();
+//		switch (a_state) {
+//		case IDLE:
+////			m_entity.get_automate().blocked=false;
+//			System.out.print("In IDLE\n");
+//			if (m_imageIndex < 4) {
+//				m_imageIndex = 4;
+//			}
+//			if (m_imageIndex >= 5)
+//				m_imageIndex = 4;
+//			break;
+//		case WALK:
+////			m_entity.get_automate().blocked=false;
+//			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
+//					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
+//				if (m_imageIndex < 0) {
+//					m_imageIndex = 0;
+//				}
+//				if (m_imageIndex >= 3)
+//					m_imageIndex = 0;
+//				else
+//					m_imageIndex++;
+//			} else if (abs_or.equals(Absolute_Orientation.NORTH) || abs_or.equals(Absolute_Orientation.NORTH_E)
+//					|| abs_or.equals(Absolute_Orientation.NORTH_W)) {
+//				if (m_imageIndex < 36) {
+//					m_imageIndex = 36;
+//				}
+//				if (m_imageIndex >= 39)
+//					m_imageIndex = 36;
+//			} else if (abs_or.equals(Absolute_Orientation.EAST)) {
+//				if (m_imageIndex < 12) {
+//					m_imageIndex = 12;
+//				}
+//				if (m_imageIndex >= 15)
+//					m_imageIndex = 12;
+//			} else {// WEST
+//				if (m_imageIndex < 24) {
+//					m_imageIndex = 24;
+//				}
+//				if (m_imageIndex >= 25)
+//					m_imageIndex = 24;
+//			}
+//			break;
+//		case HIT:
+//			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
+//					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
+//				if (m_imageIndex < 8) {
+//					m_imageIndex = 8;
+//				}
+//				if (m_imageIndex >= 11)
+//					m_imageIndex = 8;
+//			} else if (abs_or.equals(Absolute_Orientation.NORTH) || abs_or.equals(Absolute_Orientation.NORTH_E)
+//					|| abs_or.equals(Absolute_Orientation.NORTH_W)) {
+//				if (m_imageIndex < 20) {
+//					m_imageIndex = 20;
+//				}
+//				if (m_imageIndex >= 35)
+//					m_imageIndex = 30;
+//			} else if (abs_or.equals(Absolute_Orientation.EAST)) {
+//				if (m_imageIndex < 20) {
+//					m_imageIndex = 20;
+//				}
+//				if (m_imageIndex >= 23)
+//					m_imageIndex = 20;
+//			} else {// WEST
+//				if (m_imageIndex < 44) {
+//					m_imageIndex = 44;
+//				}
+//				if (m_imageIndex >= 47)
+//					m_imageIndex = 44;
+//			}
+//			break;
+//		}
+//		long currentTime = System.currentTimeMillis();
+//		if (currentTime - lastUpdateTime > ANIMATION_INTERVAL) {
+//			m_imageIndex++;
+//			lastUpdateTime = currentTime; // Réinitialiser le dernier temps de mise à jour
+//		}
 	}
 
 	@Override

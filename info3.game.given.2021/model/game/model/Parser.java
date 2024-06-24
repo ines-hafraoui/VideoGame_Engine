@@ -112,28 +112,28 @@ public class Parser {
 
 		switch (name) {
 		case "Player1":
-		case "Player2":
-			return EntityType.PLAYER;
-		case "Arrow":
-			return EntityType.ARROW;
-		case "FireBall":
-			return EntityType.FIREBALL;
-		case "Bot1":
-		case "Bot2":
-		case "Parasite":
-		case "Dasher":
-		case "Arsher":
-			return EntityType.TEAMMATE;
-		case "Base1":
-		case "Base2":
-		case "Base":
-			return EntityType.BASE;
-		case "Power":
-		case "Capacity":
-		case "Plant":
-			return EntityType.ITEM;
-		default:
-			return "";
+        case "Player2":
+            return EntityType.PLAYER;
+        case "Arrow": 
+        	return EntityType.ARROW;
+        case "FireBall":
+        	return EntityType.FIREBALL;
+        case "Bot1":
+        case "Bot2":
+        case "Parasite":
+        case "Dasher":
+        case "Arsher":
+            return EntityType.TEAMMATE;
+        case "Base1":
+        case "Base2":
+        case "Base":
+            return  EntityType.BASE;
+        case "Power":
+        case "Capacity":
+        case "Plant" : 
+            return EntityType.ITEM;
+        default : 
+        	return null;
 		}
 	}
 }

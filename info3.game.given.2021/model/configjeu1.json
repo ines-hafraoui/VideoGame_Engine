@@ -160,6 +160,6 @@
     },
     "automates" : ["Dasher.gal", "Archer.gal", "Dragon.gal"],
     "background" : ["resources/MiniWorldSprites/Ground/DeadGrass.png",2,3,true],
-    "zoom" : 1
+    "zoom" : 2
 }
 
