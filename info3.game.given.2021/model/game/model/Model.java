@@ -80,6 +80,7 @@ public class Model {
 	public int viscosity;
 	public Parser configParse;
 	private static long TIMER = 0;
+	private boolean gameover=false;
 
 	public Model(int w, int h, Parser parse, IFactory f) throws IOException {
 
@@ -152,6 +153,7 @@ public class Model {
 
 					String galPath = new File("gal/gal/" + behaviour).getAbsolutePath();
 
+
 					Automate automate = TestMain.loadAutomata(galPath);
 
 					if (automate != null) {
@@ -171,11 +173,11 @@ public class Model {
 		}
 		
 		for (Entity e : entities) {
-			if (e instanceof Bot) {
+			if (e instanceof Bot || e instanceof Base ) {
 				int team = e.get_team();
 				for (int j = 0; j<players.length; j++) {
 					if (players[j].get_team()== team ) {
-						((Bot) e).set_player(players[j]);
+						 e.set_player(players[j]);
 					}
 				}
 				
@@ -210,8 +212,18 @@ public class Model {
 		if (m_imageElapsed > 200) {
 			m_imageElapsed = 0;
 		}
-
 		m_map.tick(elapsed);
+		if (gameover) {
+			GameOverboucle();
+		}
+	}
+	
+	public void GameOver() {
+		gameover=true;
+	}
+
+	private void GameOverboucle() {
+		System.exit(1);
 	}
 
 	public Entity get_entity(int distance, String t, float f, float g) {
