@@ -164,6 +164,7 @@ public class Model {
 							float x = pos.getPositionX();
 							float y = pos.getPositionY();
 							pos = new Position(x + 2, y + 2);
+							hb = new HitBox(15,15);
 							entity = new Item(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb,
 									entityName);
 						}

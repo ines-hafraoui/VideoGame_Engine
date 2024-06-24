@@ -75,6 +75,7 @@ public class Player extends Entity {
 
 	@Override
 	public boolean do_get() {
+		System.out.print("is getting");
 		if (bots.size() != 0) {
 			Entity e = bots.get(index_bot);
 			Item item = inventory[index_inventory];
