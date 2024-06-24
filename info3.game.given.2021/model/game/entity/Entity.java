@@ -173,9 +173,7 @@ public abstract class Entity {
 		acc_speed = factor * new_speed_polar[0];
 		speed_vct_abs_or.set_abs_Angle(new_speed_polar[1]);
 
-		
-		System.out.println("SPEED " + acc_speed + "VISCOSITY " + viscosity);
-
+	
 		return acc_speed;
 	}
 
