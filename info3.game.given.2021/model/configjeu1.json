@@ -41,7 +41,7 @@
     },
     "Bot1":
     { "name" : "BOT1", 
-      "behaviour" : "archer.gal",
+      "behaviour" : "bot2.gal",
       "features" : "Bot.class",
       "sprite" :  {
       	"filepath" : "resources/MiniWorldSprites/Characters/Monsters/Demons/RedDemon.png",
@@ -52,7 +52,7 @@
       },
       "pickable" : true,
       "direction":"W",
-      "position":[1700,850],
+      "position":[1600,850],
       "hitbox":[2,5],
       "team":1
     },
