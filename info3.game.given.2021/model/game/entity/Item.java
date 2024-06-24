@@ -6,6 +6,7 @@ import game.model.Model;
 
 public class Item extends Entity{
 	
+	private Automate stock;
 	public Item(Automate a, Model m,Position p, Absolute_Orientation o,int team, int nb_bot, String name) {
 		super(a,m,p,o,team,nb_bot,name);
 		this.cat.set_category("P");
@@ -41,6 +42,14 @@ public class Item extends Entity{
 	@Override
 	public boolean do_get() {
 		return false;
+	}
+
+	public Automate getStock() {
+		return stock;
+	}
+
+	public void setStock(Automate stock) {
+		this.stock = stock;
 	}
 	
 }
