@@ -58,6 +58,14 @@ public class Player extends Entity {
 	        }
 	    }
 	    return false;
+		
+//		if (nb_item_inventory < this.nb_bot_init) {
+//			state_action = ActionType.PICK;
+//			Item item = (Item) model.get_entity(distance,"I",this.get_x(), this.get_y());	// ask the model to give it the entity (whiwh is an item) at the distance d
+//			inventory[nb_item_inventory] = item;
+//			return true;
+//		}
+//		return false;
 	}
 
 	@Override
