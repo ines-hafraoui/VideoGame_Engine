@@ -134,4 +134,10 @@ public class Player extends Entity {
 	public Item[] get_inventory() {
 		return inventory;
 	}
+	
+	public boolean do_hit(Absolute_Orientation o, String type, int porte) {
+		set_state_action(ActionType.HIT);
+		do_egg(0);
+		return model.do_hit(o, type, porte, this);
+	}
 }
