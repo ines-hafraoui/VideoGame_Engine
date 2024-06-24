@@ -283,8 +283,8 @@ public class Map {
 			if (m_model.m_ml != null) {
 				m_model.m_ml.removedEntity(e);
 			}
-			m_model.entityToRemove.remove(e);
 		}
+		m_model.entityToRemove = new ArrayList<Entity>();
 
 	}
 

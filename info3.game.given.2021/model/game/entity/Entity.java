@@ -354,25 +354,7 @@ public abstract class Entity {
 	 * an entity always
 	 */
 	public boolean do_hit(Absolute_Orientation o, String type, int porte) {
-		set_state_action("HIT");
-		System.out.println("ENtered here 1\n");
-		if (!TimerisRunning) {
-			System.out.println("ENtered here 2\n");
-            TimerisRunning = true;
-    		aut.blocked=true;
-			timer.schedule(new TimerTask() {
-	            @Override
-	            public void run() {
-	    			System.out.println("Deblocage\n");
-	            	TimerisRunning = false;
-	                aut.blocked=false;
-	                set_state_action("IDLE");
-	            }
-	        }, 300000);
-		}
-		else {
-            System.out.println("Timer is already running and won't be started again.");
-		}
+
 		return model.do_hit(o,type,porte,this);
 	}
 
