@@ -1,6 +1,7 @@
 package info3.game.avatar;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -41,17 +42,6 @@ public abstract class Avatar {
 
 	public abstract void paint(Graphics g, int x, int y);
 
-
-	public void paintmainplayer(Graphics g, int x, int y) {
-		BufferedImage img = m_images[m_imageIndex];
-		g.drawImage(img, x - (img.getWidth() * View.DISPLAYSCALE), y - (img.getHeight() * View.DISPLAYSCALE),
-				img.getWidth() * View.DISPLAYSCALE, img.getHeight() * View.DISPLAYSCALE, null);
-		m_hb.drawHealthBar(g, x - (img.getWidth() * View.DISPLAYSCALE),
-				y - (img.getHeight() * View.DISPLAYSCALE) - 5 % img.getHeight(), (img.getWidth() * View.DISPLAYSCALE),
-				5 % img.getHeight(), this.m_entity.get_HP());
-		configureAnimation();
-	}
-
 	public boolean within(Rectangle m_Bounds, int tx, int ty) {
 		return m_Bounds.contains(m_entity.get_x()*View.DISPLAYSCALE + tx, m_entity.get_y()*View.DISPLAYSCALE + ty);
 	}
@@ -59,4 +49,6 @@ public abstract class Avatar {
 	protected abstract void configureAnimation();
 
 	public abstract Image[] get_images();
+
+	public abstract void paintmainplayer(Graphics g, int x, int y);
 }

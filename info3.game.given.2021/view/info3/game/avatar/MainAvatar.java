@@ -19,7 +19,6 @@ import info3.game.view.View;
 public class MainAvatar extends Avatar {
 	private long lastUpdateTime; // Temps depuis la dernière mise à jour de l'animation
 	private static final long ANIMATION_INTERVAL = 500; // 500 ms entre les mises à jour
-	private static final int BASESIZE = 1;
 
 	boolean m_animate;
 
@@ -46,22 +45,43 @@ public class MainAvatar extends Avatar {
 	public void paint(Graphics g, int x, int y) {
 		if (m_entity.get_state_action() != null) {
 			a_state = m_entity.get_state_action();
-			//a_state = StateToString(m_entity.get_state_action());
 		}
 		BufferedImage img = m_images[m_imageIndex];
-		g.drawImage(img, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - (img.getWidth() * View.DISPLAYSCALE),
-				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - (img.getHeight() * View.DISPLAYSCALE),
-				img.getWidth() * View.DISPLAYSCALE * BASESIZE, img.getHeight() * View.DISPLAYSCALE * BASESIZE, null);
-
+//		int h = (int) m_entity.getHitBox().getHbHeight() * View.DISPLAYSCALE;
+//		int w = (int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE;
+		int h = img.getHeight() * View.DISPLAYSCALE;
+		int w = img.getWidth() * View.DISPLAYSCALE;
+		g.drawImage(img, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - w,
+				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - h, h, w, null);
 		int hp = this.m_entity.get_HP();
-		if( hp > 0) {
-			m_hb.drawHealthBar(g, x + (int) m_entity.get_x() - (img.getWidth() * View.DISPLAYSCALE),
-					y + (int) m_entity.get_y() - (img.getHeight() * View.DISPLAYSCALE) - 5 % img.getHeight(),
-					(img.getWidth() * View.DISPLAYSCALE), 5 % img.getHeight(), hp);
+		if (hp > 0) {
+			m_hb.drawHealthBar(g, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - w,
+					(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - h - 5 % img.getHeight(), w, 5 % img.getHeight(),
+					hp);
+		}
+		if (m_animate) {
+			configureAnimation();
 		}
 
-		
-		
+	}
+
+	@Override
+	public void paintmainplayer(Graphics g, int x, int y) {
+		if (m_entity.get_state_action() != null) {
+			a_state = m_entity.get_state_action();
+		}
+		BufferedImage img = m_images[m_imageIndex];
+		int h = img.getHeight() * View.DISPLAYSCALE;
+		int w = img.getWidth() * View.DISPLAYSCALE;
+		g.drawImage(img, x - w, y - h, w, h, null);
+		int hp = this.m_entity.get_HP();
+		if (hp > 0) {
+			m_hb.drawHealthBar(g, x - w, y - h - 5 % img.getHeight(), w, 5 % img.getHeight(), hp);
+		}
+//		g.setColor(Color.red);
+//		g.drawRect(x - w/2 - 20, y - h, (int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE,
+//				(int) m_entity.getHitBox().getHbHeight() * View.DISPLAYSCALE);
+
 		if (m_animate) {
 			configureAnimation();
 		}
@@ -136,11 +156,11 @@ public class MainAvatar extends Avatar {
 			} else {// WEST
 				if (m_imageIndex < 44) {
 					m_imageIndex = 44;
-			}
+				}
 				if (m_imageIndex >= 47)
 					m_imageIndex = 44;
 			}
-		break;
+			break;
 		default:
 			if (m_imageIndex >= 47)
 				m_imageIndex = 4;

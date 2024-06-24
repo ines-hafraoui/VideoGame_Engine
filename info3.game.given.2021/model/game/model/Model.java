@@ -80,7 +80,7 @@ public class Model {
 	public int viscosity;
 	public Parser configParse;
 	private static long TIMER = 0;
-	private boolean gameover=false;
+	private boolean gameover = false;
 
 	public Model(int w, int h, Parser parse, IFactory f) throws IOException {
 
@@ -127,11 +127,20 @@ public class Model {
 			case "Bot2":
 			case "Parasite":
 				entity = new Bot(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
-				for (int j = 1; j< nb_bot_init/2; j++) {
-					entity = new Bot(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
-					float x = pos.getPositionX();
-					float y = pos.getPositionY();
-					pos = new Position (x+2, y+2);
+				if (behaviour != null) {
+					Automate automate = TestMain.loadAutomata(new File("gal/gal/" + behaviour).getAbsolutePath());
+					if (automate != null) {
+						for (int j = 1; j < nb_bot_init; j++) {
+							entity.set_automate(automate);
+							entities.add(entity);
+							automates.put(entity.get_type(), automate);
+							float x = pos.getPositionX();
+							float y = pos.getPositionY();
+							pos = new Position(x + 2, y + 2);
+							entity = new Bot(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb,
+									entityName);
+						}
+					}
 				}
 				break;
 			case "Base1":
@@ -159,7 +168,6 @@ public class Model {
 
 					String galPath = new File("gal/gal/" + behaviour).getAbsolutePath();
 
-
 					Automate automate = TestMain.loadAutomata(galPath);
 
 					if (automate != null) {
@@ -177,17 +185,16 @@ public class Model {
 				}
 			}
 		}
-		
+
 		for (Entity e : entities) {
-			if (e instanceof Bot || e instanceof Base ) {
+			if (e instanceof Bot || e instanceof Base) {
 				int team = e.get_team();
-				for (int j = 0; j<players.length; j++) {
-					if (players[j].get_team()== team ) {
-						 e.set_player(players[j]);
+				for (int j = 0; j < players.length; j++) {
+					if (players[j].get_team() == team) {
+						e.set_player(players[j]);
 					}
 				}
-				
-				
+
 			}
 		}
 
@@ -223,9 +230,9 @@ public class Model {
 			GameOverboucle();
 		}
 	}
-	
+
 	public void GameOver() {
-		gameover=true;
+		gameover = true;
 	}
 
 	private void GameOverboucle() {
@@ -543,7 +550,7 @@ public class Model {
 	}
 
 	public boolean eval_cell(Absolute_Orientation dir, Category cat, int porte, Entity e) {
-		
+
 		double p_x = e.get_x();
 		double p_y = e.get_y();
 		double angle1 = 0, angle2 = 0;
@@ -560,17 +567,17 @@ public class Model {
 	}
 
 	public boolean isValidPosition(Entity entity, Position newPosition) {
-		
+
 		for (Entity e : entities) {
 			if (e.equals(entity)) {
 				continue;
 			}
-			
+
 			if (e.getHitBox().get_polygon().containsPosition(newPosition)) {
 				return false;
 			}
 		}
-		
+
 		return newPosition.getPositionX() >= 0 && newPosition.getPositionX() <= m_map.getBorders().getMaxX()
 				&& newPosition.getPositionY() >= 0 && newPosition.getPositionY() <= m_map.getBorders().getMaxY();
 	}

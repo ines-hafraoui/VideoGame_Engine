@@ -140,4 +140,10 @@ public class Player extends Entity {
 		do_egg(0);
 		return model.do_hit(o, type, porte, this);
 	}
+
+	@Override
+	public void addbots(Entity e) {
+		bots.add(e);
+
+	}
 }
