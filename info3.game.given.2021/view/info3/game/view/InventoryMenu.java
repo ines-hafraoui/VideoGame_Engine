@@ -36,7 +36,7 @@ public class InventoryMenu {
 				if (m_inventory[i] != null) {
 					Entity item = m_inventory[i];
 					Avatar item_avatar = new ItemAvatar();
-					g.drawImage(item_avatar.get_images()[0], InventoryX + i * w, InventoryY, w,
+					g.drawImage(item_avatar.get_images()[0], x + i * w, y, w,
 							get_image().getHeight() * INVENTORYSIZE, null);
 				}
 			}
