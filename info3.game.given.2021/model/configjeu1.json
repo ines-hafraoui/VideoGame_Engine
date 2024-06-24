@@ -6,7 +6,7 @@
   "nb_player":2,
     "Player1":{
       "name" : "PLAYER1", 
-      "behaviour": "player1.gal",
+      "behaviour": "player2.gal",
       "features" : "Player.class",
       "sprite" :  {
       	"filepath" :"resources/MiniWorldSprites/Characters/Monsters/Dragons/RedDragon.png",
@@ -24,7 +24,7 @@
     },
     "Player2":{ 
       "name" : "PLAYER2", 
-      "behaviour": "player2.gal",
+      "behaviour": "player1.gal",
       "features" : "Player.class",
       "sprite" :  {
       	"filepath" :"resources/MiniWorldSprites/Characters/Soldiers/Mounted/CyanKnight.png",
