@@ -79,10 +79,9 @@ public class Model {
 	public boolean cooperative;
 	public int viscosity;
 	public Parser configParse;
-	private static long TIMER=0;
+	private static long TIMER = 0;
 
-	
-	public Model(int w, int h, Parser parse, IFactory f)throws IOException {
+	public Model(int w, int h, Parser parse, IFactory f) throws IOException {
 
 		m_width = w;
 		height = h;
@@ -108,67 +107,69 @@ public class Model {
 			String entityName = entry.getKey();
 			java.util.Map<String, Object> properties = entry.getValue();
 
-	            // Extract common properties
-	           String direction = (String) properties.get("direction");
-	            Position pos = (Position) properties.get("position");
-	            int team = ((Number) properties.get("team")).intValue();
-	            boolean pickable = (Boolean) properties.get("pickable");
-	            String behaviour = (String) properties.get("behaviour");
-	            HitBox hb = (HitBox) properties.get("hitbox");
-	            
-	            Entity entity;
-	            switch (entityName) {
-	            case "Player1":
-	            case "Player2":
-	            	entity = new Player(this,pos, new Absolute_Orientation(direction), team, nb_bot_init, pickable,hb,entityName);
-                    break;
-	            case "Bot1":
-	            case "Bot2":
-	            case "Parasite":
-	            	entity = new Bot(this,pos, new Absolute_Orientation(direction), team, 0,pickable,hb,entityName);
-                    break;
-	            case "Base1":
-	            case "Base2":
-	            case "Base":
-	            	entity = new Base(this,pos, new Absolute_Orientation(direction), team, 0,pickable,hb,entityName);
-                    break;
-	            case "Power":
-	            case "Capacity":
-	            case "Plant" : 
-	            	entity = new Item(this,pos,new Absolute_Orientation(direction), team, 0, pickable,hb,entityName);
-                    break;
-	            case "Arrow":
-	            case "FireBall" : 
-	            	entity = new Projectile(this,pos,new Absolute_Orientation(direction),entityName, team, 0, pickable,hb,entityName);
-                    break;
-                default : 
-                	entity = null;
-                	break;
-	            }
-	           
-	            if (entity != null) {
-	            	if (behaviour != null) {
+			// Extract common properties
+			String direction = (String) properties.get("direction");
+			Position pos = (Position) properties.get("position");
+			int team = ((Number) properties.get("team")).intValue();
+			boolean pickable = (Boolean) properties.get("pickable");
+			String behaviour = (String) properties.get("behaviour");
+			HitBox hb = (HitBox) properties.get("hitbox");
 
-	            		String galPath = new File("gal/gal/"+behaviour).getAbsolutePath();
+			Entity entity;
+			switch (entityName) {
+			case "Player1":
+			case "Player2":
+				entity = new Player(this, pos, new Absolute_Orientation(direction), team, nb_bot_init, pickable, hb,
+						entityName);
+				break;
+			case "Bot1":
+			case "Bot2":
+			case "Parasite":
+				entity = new Bot(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
+				break;
+			case "Base1":
+			case "Base2":
+			case "Base":
+				entity = new Base(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
+				break;
+			case "Power":
+			case "Capacity":
+			case "Plant":
+				entity = new Item(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
+				break;
+			case "Arrow":
+			case "FireBall":
+				entity = new Projectile(this, pos, new Absolute_Orientation(direction), entityName, team, 0, pickable,
+						hb, entityName);
+				break;
+			default:
+				entity = null;
+				break;
+			}
 
-		        		Automate automate = TestMain.loadAutomata(galPath);
+			if (entity != null) {
+				if (behaviour != null) {
 
-		        		if (automate != null) {
-		        			entity.set_automate(automate);
-			        		if (entity instanceof Player) {
-			        			players[i] = entity;
-			        			i++;
-			        		}
-			        		if (!(entity instanceof Projectile)) {
-			        			entities.add(entity);
-			        		}
-			        		automates.put(entity.get_type(), automate);
+					String galPath = new File("gal/gal/" + behaviour).getAbsolutePath();
 
-		        		}	
-	            	}	
-	            }
-		 }
-		
+					Automate automate = TestMain.loadAutomata(galPath);
+
+					if (automate != null) {
+						entity.set_automate(automate);
+						if (entity instanceof Player) {
+							players[i] = entity;
+							i++;
+						}
+						if (!(entity instanceof Projectile)) {
+							entities.add(entity);
+						}
+						automates.put(entity.get_type(), automate);
+
+					}
+				}
+			}
+		}
+
 		List<Position> poss = new ArrayList<Position>();
 
 		Position pos1 = new Position(0, 0);
@@ -191,7 +192,7 @@ public class Model {
 	}
 
 	public void tick(long elapsed) {
-		TIMER+=elapsed;
+		TIMER += elapsed;
 		m_imageElapsed += elapsed;
 		if (m_imageElapsed > 200) {
 			m_imageElapsed = 0;
@@ -212,6 +213,7 @@ public class Model {
 	public void add_entity(Entity e) {
 		entities.add(e);
 	}
+
 	/*
 	 * method give the list of entity that are on the map
 	 */
@@ -226,10 +228,11 @@ public class Model {
 		return players;
 	}
 
-	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String type, int team, int nb_bot,int view, Boolean pickable, HitBox hb, String name) {
-		Entity e =factory.newEntity(model, position, abs_or, type ,team, nb_bot,pickable,hb, name);
+	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String type, int team,
+			int nb_bot, int view, Boolean pickable, HitBox hb, String name) {
+		Entity e = factory.newEntity(model, position, abs_or, type, team, nb_bot, pickable, hb, name);
 //		System.out.println("new Entity : " + name);
-		if(m_ml != null) 
+		if (m_ml != null)
 			m_ml.addedEntity(e);
 		return e;
 	}
@@ -314,13 +317,13 @@ public class Model {
 	public boolean eval_closest(List<Entity> list_cat, Absolute_Orientation d, Entity entity, float portee) {
 		double p_x = entity.get_x();
 		double p_y = entity.get_y();
-		double closest_x=0;
-		double closest_y=0;
-		select_closest(list_cat,p_x,p_y,closest_x,closest_y);
-		double angle1=0,angle2=0;
-		eval_angle(d,angle1,angle2);
-		Polygon polygon = create_polygon_direction(p_x,p_y,portee,angle1,angle2);
-		Position closest = new Position((float)closest_x,(float)closest_y);
+		double closest_x = 0;
+		double closest_y = 0;
+		select_closest(list_cat, p_x, p_y, closest_x, closest_y);
+		double angle1 = 0, angle2 = 0;
+		eval_angle(d, angle1, angle2);
+		Polygon polygon = create_polygon_direction(p_x, p_y, portee, angle1, angle2);
+		Position closest = new Position((float) closest_x, (float) closest_y);
 		System.out.print(polygon.containsPosition(closest));
 
 		return polygon.containsPosition(closest);
@@ -413,7 +416,7 @@ public class Model {
 	public void suppr_key(String string) {
 		list_touche.remove(string);
 	}
-	
+
 	public long get_timer() {
 		return TIMER;
 	}
@@ -422,9 +425,9 @@ public class Model {
 		System.out.println("\nDo_Hit\n\n");
 		double p_x = e.get_x();
 		double p_y = e.get_y();
-		double angle1=0,angle2=0;
-		eval_angle(o,angle1,angle2);
-		Polygon polygon = create_polygon_direction(p_x,p_y,porte,angle1,angle2);
+		double angle1 = 0, angle2 = 0;
+		eval_angle(o, angle1, angle2);
+		Polygon polygon = create_polygon_direction(p_x, p_y, porte, angle1, angle2);
 		for (Entity entity : entities) {
 			if (entity.getHitBox().get_polygon().intersectsWith(polygon)) {
 				entity.get_injured();
@@ -433,7 +436,7 @@ public class Model {
 				}
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -441,8 +444,8 @@ public class Model {
 		entityToRemove.add(entity);
 	}
 
-	public String from_rel_to_abs_orientation(Absolute_Orientation abs,Relative_Orientation rel) {
-		switch(rel.rel_or) {
+	public String from_rel_to_abs_orientation(Absolute_Orientation abs, Relative_Orientation rel) {
+		switch (rel.rel_or) {
 		case "H":
 			return abs.get_abs_Orientation();
 		case "F":
@@ -511,9 +514,9 @@ public class Model {
 	public boolean eval_cell(Absolute_Orientation dir, Category cat, int porte, Entity e) {
 		double p_x = e.get_x();
 		double p_y = e.get_y();
-		double angle1=0,angle2=0;
-		eval_angle(dir,angle1,angle2);
-		Polygon polygon = create_polygon_direction(p_x,p_y,porte,angle1,angle2);
+		double angle1 = 0, angle2 = 0;
+		eval_angle(dir, angle1, angle2);
+		Polygon polygon = create_polygon_direction(p_x, p_y, porte, angle1, angle2);
 		for (Entity entity : entities) {
 			if (entity.getHitBox().get_polygon().intersectsWith(polygon)) {
 				return true;
@@ -522,9 +525,20 @@ public class Model {
 		return false;
 	}
 
-	public boolean isValidPosition(Position newPosition) {
-		 return newPosition.getPositionX() >= 0 && newPosition.getPositionX() <= m_map.getBorders().getMaxX() &&
-		           newPosition.getPositionY() >= 0 && newPosition.getPositionY() <= m_map.getBorders().getMaxY();
+	public boolean isValidPosition(Entity entity, Position newPosition) {
+		
+		for (Entity e : entities) {
+			if (e.equals(entity)) {
+				continue;
+			}
+			
+			if (e.getHitBox().get_polygon().containsPosition(newPosition)) {
+				return false;
+			}
+		}
+		
+		return newPosition.getPositionX() >= 0 && newPosition.getPositionX() <= m_map.getBorders().getMaxX()
+				&& newPosition.getPositionY() >= 0 && newPosition.getPositionY() <= m_map.getBorders().getMaxY();
 	}
 
 	public Entity get_entity_at(float checkX, float checkY) {

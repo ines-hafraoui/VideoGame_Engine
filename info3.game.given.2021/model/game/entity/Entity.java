@@ -177,6 +177,9 @@ public abstract class Entity {
 		return acc_speed;
 	}
 
+	public Position getPosition() {
+		return position;
+	}
 	protected Position newPosition() {
 		
 		
@@ -193,7 +196,7 @@ public abstract class Entity {
 		float newY = this.position.getPositionY() + Y;
 
 		newPosition = new Position(newX, newY);
-		if (!model.isValidPosition(newPosition)) {
+		if (!model.isValidPosition(this, newPosition)) {
 			while (!Absolute_Orientation.orientations.isEmpty()) {
 				speed = newSpeed(1);
 				this.abs_or = Absolute_Orientation.randomOrientation();
@@ -208,7 +211,7 @@ public abstract class Entity {
 
 				newPosition = new Position(newX, newY);
 
-				if (model.isValidPosition(newPosition)) {
+				if (model.isValidPosition(this, newPosition)) {
 					this.position = newPosition;
 
 					return newPosition;
@@ -421,7 +424,7 @@ public abstract class Entity {
 
 	public void do_turn(Absolute_Orientation o) {
 		abs_or.set_abs_Orientation(o.get_abs_Orientation());
-		;
+		
 		state_action = ActionType.TURN;
 	}
 
