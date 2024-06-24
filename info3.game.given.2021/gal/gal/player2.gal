@@ -19,22 +19,7 @@ Joueur_2(Beg){
  
  * (Fight):
  | !(Got(Power)) ? Explode :(Mort)
- | Cell(E,A,2) ? Turn(E) ; Hit(E,A,2) :(Beg)
- | Cell(SE,A,2) ? Turn(SE) ; Hit(SE,A,2) :(Beg)
- | Cell(S,A,2) ? Turn(S) ; Hit(S,A,2) :(Beg)
- | Cell(SW,A,2) ? Turn(SW) ; Hit(SW,A,2) :(Beg)
- | Cell(W,A,2) ? Turn(W) ; Hit(W,A,2) :(Beg)
- | Cell(NW,A,2) ? Turn(NW) ; Hit(NW,A,2) :(Beg)
- | Cell(N,A,2) ? Turn(N) ; Hit(N,A,2) :(Beg)
- | Cell(NE,A,2) ? Turn(NE) ; Hit(NE,A,2) :(Beg)
- | !(Cell(E,A,2)) ? Egg(1) :(Beg)
- | !(Cell(SE,A,2)) ? Egg(1) :(Beg)
- | !(Cell(S,A,2)) ? Egg(1) :(Beg)
- | !(Cell(SW,A,2)) ? Egg(1) :(Beg)
- | !(Cell(W,A,2)) ? Egg(1) :(Beg)
- | !(Cell(NW,A,2)) ? Egg(1) :(Beg)
- | !(Cell(N,A,2)) ? Egg(1) :(Beg)
- | !(Cell(NE,A,2)) ? Egg(1) :(Beg)
+ | Key(m) ? Egg(1) : (Beg) 
  
  * (Select1):
  | !(Got(Power)) ? Explode :(Mort)

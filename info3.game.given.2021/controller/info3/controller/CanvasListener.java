@@ -129,6 +129,12 @@ public class CanvasListener implements GameCanvasListener {
 		case 40 :// bas joueur2 'Flèche basse'
 			m_game.m_model.set_key("FD");
 			break;
+		case 77 :// hit joueur2 
+			m_game.m_model.set_key("m");
+			break;
+		case 76 :// 
+			m_game.m_model.set_key("l");
+			break;
 		case 517 :// Hit joueur2 '!'
 			m_game.m_model.set_key("IM");
 			break;
@@ -178,6 +184,12 @@ public class CanvasListener implements GameCanvasListener {
 			break;
 		case 40 :// bas joueur2 'Flèche basse'
 			m_game.m_model.suppr_key("FD");
+			break;
+		case 77 :// hit joueur2 
+			m_game.m_model.suppr_key("m");
+			break;
+		case 76 :// 
+			m_game.m_model.suppr_key("l");
 			break;
 		case 517 :// Hit joueur2 '!'
 			m_game.m_model.suppr_key("IM");
