@@ -198,10 +198,11 @@ public class Map {
 				int y = random.nextInt((int) borders.getMaxY());
 
 				p = new Position(x, y);
+				i.setStock(m_model.automates.get(random.nextInt(m_model.automates.size())));
+				
 			} while (!borders.containsPosition(p));
 			
 			i.setPosition(p);
-			System.out.println(p.getPositionX() + " " + p.getPositionY());
 		}
 	}
 
