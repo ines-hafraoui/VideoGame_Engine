@@ -126,13 +126,13 @@ public class Model {
 			case "Bot1":
 			case "Bot2":
 			case "Parasite":
-				for (int j = 0; j< nb_bot_init/2; j++) {
+				entity = new Bot(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
+				for (int j = 1; j< nb_bot_init/2; j++) {
 					entity = new Bot(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
 					float x = pos.getPositionX();
 					float y = pos.getPositionY();
 					pos = new Position (x+2, y+2);
 				}
-				entity = new Bot(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
 				break;
 			case "Base1":
 			case "Base2":
