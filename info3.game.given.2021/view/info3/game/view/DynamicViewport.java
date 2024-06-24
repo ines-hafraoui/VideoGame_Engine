@@ -58,15 +58,6 @@ public class DynamicViewport extends AViewport {
 				d.height + (20 * View.DISPLAYSCALE));
 	}
 
-	@Override
-	public void setDimension(Dimension d) {
-		m_d = d;
-
-		// Scaling the bounds' leeway to the zoom given to the map
-		m_inWorldBounds = new Rectangle(-20, -20, m_d.width + (20 * View.DISPLAYSCALE),
-				m_d.height + (20 * View.DISPLAYSCALE));
-	}
-
 	public boolean withinSameVP() {
 		setmidwaypoint();
 		for (Avatar p : m_players) {
@@ -81,7 +72,6 @@ public class DynamicViewport extends AViewport {
 	public void paint(Graphics g) {
 		Graphics mg = g.create(m_x, m_y, m_d.width, m_d.height);
 		m_map.paint(mg, -m_trx, -m_try);
-
 		Iterator<Avatar> iter = m_avatars.iterator();
 		while (iter.hasNext()) {
 			Avatar a = iter.next();
@@ -89,7 +79,6 @@ public class DynamicViewport extends AViewport {
 				a.paint(mg, -m_trx, -m_try);
 			}
 		}
-
 		m_inventory[0].paint(mg,
 				m_d.width / 4 - InventoryMenu.NBCASE / 2
 						* (m_inventory[0].get_image().getWidth() * InventoryMenu.INVENTORYSIZE),

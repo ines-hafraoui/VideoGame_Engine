@@ -74,6 +74,8 @@ public class Bot extends Entity {
 	}
 
 	public boolean do_move() {
+		state_action = ActionType.MOVE;
+		this.abs_or = m_player.abs_or;
 		this.position.setPositionX(m_player.get_x() + 10 + offsetx);
 		this.position.setPositionY(m_player.get_y() + 10 + offsety);
 		return true;
