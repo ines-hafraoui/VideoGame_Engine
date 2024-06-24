@@ -8,7 +8,13 @@
       "name" : "PLAYER 1", 
       "behaviour": "player1.gal",
       "features" : "Player.class",
-      "sprite" : "teammate1.png",
+      "sprite" :  {
+      	"filepath" :"resources/MiniWorldSprites/Characters/Monsters/Dragons/RedDragon.png",
+      	"nb_rows" : 8,
+      	"nb_cols" : 4,
+      	"index" : 0,
+      	"animation" : true
+      },
       "pickable": false,
       "direction":"W",
       "position":[500,200],
@@ -19,18 +25,30 @@
       "name" : "PLAYER 2",
       "behaviour": "player2.gal",
       "features" : "Player.class",
-      "sprite" : "teammate2.png",
+      "sprite" :  {
+      	"filepath" :"resources/MiniWorldSprites/Characters/Monsters/Dragons/CyanDragon.png",
+      	"nb_rows" : 8,
+      	"nb_cols" : 4,
+      	"index" : 0,
+      	"animation" : true
+      },
       "pickable": false ,
       "direction":"W",
       "position":[550,200],
       "hitbox":[5,10],
-      "team":2
+      "team":1
     },
     "Parasite":{
       "name" : "PARASITE", 
       "behaviour" : "bot2.gal",
       "features" : "Bot.class",
-      "sprite" : "parasite.png",
+      "sprite" :  {
+      	"filepath" :"resources/MiniWorldSprites/Characters/Monsters/Undead/Skeleton-Soldier.png",
+      	"nb_rows" : 5,
+      	"nb_cols" : 12,
+      	"index" : 0,
+      	"animation" : true
+      },
       "pickable" : false,
       "direction":"W",
       "position":[100,50],
@@ -41,7 +59,13 @@
       "name" : "DASHER", 
       "behaviour" : "dasher.gal",
       "features" : "Bot.class",
-      "sprite" : "dasher.png",
+      "sprite" :  {
+      	"filepath" :"resources/MiniWorldSprites/Characters/Champions/Grum.png",
+      	"nb_rows" : 5,
+      	"nb_cols" : 9,
+      	"index" : 0,
+      	"animation" : true
+      },
       "pickable" : false,
       "direction":"W",
       "position":[100,50],
@@ -52,7 +76,13 @@
       "name" : "ARCHER", 
       "behaviour" : "arsher.gal",
       "features" : "Bot.class",
-      "sprite" : "arsher.png",
+      "sprite" :  {
+      	"filepath" :"resources/MiniWorldSprites/Characters/Soldiers/Ranged/RedRanged/BowmanRed.png",
+      	"nb_rows" : 5,
+      	"nb_cols" : 8,
+      	"index" : 0,
+      	"animation" : true
+      },
       "pickable" : false,
       "direction":"W",
       "position":[100,50],
@@ -63,7 +93,13 @@
       "name" : "CAPACITY", 
       "behaviour" : "item.gal",
       "features" : "Capacity.class",
-      "sprite" : "capacity.png",
+      "sprite" :  {
+      	"filepath" : "resources/MiniWorldSprites/Miscellaneous/Chests.png",
+      	"nb_rows" : 8,
+      	"nb_cols" : 6,
+      	"index" : 0,
+      	"animation" : false
+      },
       "pickable" : true,
       "direction":"W",
       "position":[1,1],
@@ -74,7 +110,13 @@
       "name" : "PLANT", 
       "behaviour" : "item.gal",
       "features" : "Plant.class",
-      "sprite" : "plant.png",
+      "sprite" :  {
+      	"filepath" : "resources/MiniWorldSprites/Nature/Trees.png",
+      	"nb_rows" : 1,
+      	"nb_cols" : 4,
+      	"index" : 0,
+      	"animation" : false
+      },
       "pickable" : true,
       "direction":"W",
       "position":[50,100],
@@ -85,13 +127,21 @@
       "name" : "BASE", 
       "behaviour" : "base2.gal",
       "features" : "Base.class",
-      "sprite" : "base.png",
+      "sprite" :  {
+      	"filepath" : "resources/MiniWorldSprites/Buildings/Wood/Keep.png",
+      	"nb_rows" : 2,
+      	"nb_cols" : 3,
+      	"index" : 0,
+      	"animation" : false
+      },
       "pickable" : false,
       "direction":"W",
       "position":[300,300],
       "hitbox":[10,10],
       "team":0
-    }
-  
+    },
+    "automates" : ["Dasher.gal", "Archer.gal", "Dragon.gal"],
+    "background" : ["resources/MiniWorldSprites/Ground/DeadGrass.png",2,3,true],
+    "zoom" : 1
 }
 

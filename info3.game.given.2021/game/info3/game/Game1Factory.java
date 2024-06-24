@@ -21,7 +21,7 @@ import info3.game.avatar.BotAvatar;
 import info3.game.avatar.FireBallAvatar;
 import info3.game.avatar.ItemAvatar;
 import info3.game.avatar.PlayerAvatar;
-import info3.game.avatar.TestAvatar;
+import info3.game.avatar.MainAvatar;
 import info3.game.view.View;
 
 public class Game1Factory implements IFactory {
@@ -68,7 +68,7 @@ public class Game1Factory implements IFactory {
 
 	@Override
 	public Avatar newAvatar(Entity e, View v) throws IOException {
-		return new TestAvatar(e, v, Game.configParse.getSprite(e.name), e instanceof Player);
+		return new MainAvatar(e, v, Game.configParse.getSprite(e.name), e instanceof Player);
 	}
 
 }

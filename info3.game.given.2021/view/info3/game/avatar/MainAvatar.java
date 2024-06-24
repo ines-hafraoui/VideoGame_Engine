@@ -11,14 +11,14 @@ import game.entity.Absolute_Orientation;
 import game.entity.Entity;
 import info3.game.view.View;
 
-public class TestAvatar extends Avatar {
+public class MainAvatar extends Avatar {
 	private long lastUpdateTime; // Temps depuis la dernière mise à jour de l'animation
 	private static final long ANIMATION_INTERVAL = 500; // 500 ms entre les mises à jour
 	private static final int BASESIZE = 1;
 
 	boolean m_animate;
 
-	public TestAvatar(Entity e, View v, JSONObject sprite_spec, boolean player) throws IOException {
+	public MainAvatar(Entity e, View v, JSONObject sprite_spec, boolean player) throws IOException {
 		super(e, v);
 		if (sprite_spec == null) {
 			throw new IOException("Huuum there are no sprites");
