@@ -18,7 +18,7 @@
       "pickable": false, 
       "direction": "W",
       "position": [1600,890],
-      "hitbox":[15,30],
+      "hitbox":[20,35],
       "team":1
     },
     "Player2":{ 
@@ -35,7 +35,7 @@
       "pickable": false ,
       "direction": "W",
       "position":[110,150],
-      "hitbox":[15,30],
+      "hitbox":[20,35],
       "team": 2
     },
     "Bot1":
@@ -103,7 +103,7 @@
       "pickable" : false,
       "direction":"W",
       "position":[1700,900],
-      "hitbox":[50,50],
+      "hitbox":[40,40],
       "team":1
     },
     "Base2":{
@@ -120,7 +120,7 @@
       "pickable" : false,
       "direction":"W",
       "position":[100,100],
-      "hitbox":[50,50],
+      "hitbox":[40,40],
       "team":2
     },
      "Arrow":{
