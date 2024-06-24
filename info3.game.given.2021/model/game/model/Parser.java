@@ -30,6 +30,7 @@ public class Parser {
 	public int viscosity;
 	public int nb_bot_init;
 	public int nb_player;
+	public int nb_item;
 	public boolean coop;
 	public BufferedImage[] bg_sprite;
 	public boolean bg_rand;
@@ -45,6 +46,7 @@ public class Parser {
 		viscosity = ((Number) jo.get("viscosity")).intValue();
 		nb_bot_init =((Number) jo.get("nb_bot_init")).intValue();
 		nb_player =((Number) jo.get("nb_player")).intValue();
+		nb_item =((Number) jo.get("nb_item")).intValue();
 		
 		
 		JSONArray array = (JSONArray)jo.get("automates");

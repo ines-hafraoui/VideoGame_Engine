@@ -75,6 +75,7 @@ public class Model {
 	public String aut_bot[];
 	IFactory factory;
 	public static int nb_bot_init;
+	public static int nb_item;
 	public int timer;
 	public boolean cooperative;
 	public int viscosity;
@@ -100,6 +101,7 @@ public class Model {
 		players = new Entity[parse.nb_player];
 		aut_projectile = parse.aut_projectile;
 		aut_bot = parse.aut_bot;
+		nb_item = parse.nb_item;
 		int i = 0;
 
 		// create all entities from the info that gave us the Parser
@@ -152,6 +154,21 @@ public class Model {
 			case "Capacity":
 			case "Plant":
 				entity = new Item(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
+				if (behaviour != null) {
+					Automate automate = TestMain.loadAutomata(new File("gal/gal/" + behaviour).getAbsolutePath());
+					if (automate != null) {
+						for (int j = 1; j < nb_item; j++) {
+							entity.set_automate(automate);
+							entities.add(entity);
+							automates.put(entity.get_type(), automate);
+							float x = pos.getPositionX();
+							float y = pos.getPositionY();
+							pos = new Position(x + 2, y + 2);
+							entity = new Item(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb,
+									entityName);
+						}
+					}
+				}
 				break;
 			case "Arrow":
 			case "FireBall":
