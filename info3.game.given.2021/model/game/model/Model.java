@@ -120,26 +120,26 @@ public class Model {
 	            switch (entityName) {
 	            case "Player1":
 	            case "Player2":
-	            	entity = new Player(this,pos, new Absolute_Orientation(direction), team, nb_bot_init, pickable,hb);
+	            	entity = new Player(this,pos, new Absolute_Orientation(direction), team, nb_bot_init, pickable,hb,entityName);
                     break;
 	            case "Bot1":
 	            case "Bot2":
 	            case "Parasite":
-	            	entity = new Bot(this,pos, new Absolute_Orientation(direction), team, 0,pickable,hb);
+	            	entity = new Bot(this,pos, new Absolute_Orientation(direction), team, 0,pickable,hb,entityName);
                     break;
 	            case "Base1":
 	            case "Base2":
 	            case "Base":
-	            	entity = new Base(this,pos, new Absolute_Orientation(direction), team, 0,pickable,hb);
+	            	entity = new Base(this,pos, new Absolute_Orientation(direction), team, 0,pickable,hb,entityName);
                     break;
 	            case "Power":
 	            case "Capacity":
 	            case "Plant" : 
-	            	entity = new Item(this,pos,new Absolute_Orientation(direction), team, 0, pickable,hb);
+	            	entity = new Item(this,pos,new Absolute_Orientation(direction), team, 0, pickable,hb,entityName);
                     break;
 	            case "Arrow":
 	            case "FireBall" : 
-	            	entity = new Projectile(this,pos,new Absolute_Orientation(direction),entityName, team, 0, pickable,hb);
+	            	entity = new Projectile(this,pos,new Absolute_Orientation(direction),entityName, team, 0, pickable,hb,entityName);
                     break;
                 default : 
                 	entity = null;
@@ -226,8 +226,9 @@ public class Model {
 		return players;
 	}
 
-	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String type, int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
-		Entity e =factory.newEntity(model, position, abs_or, type ,team, nb_bot,pickable,hb);
+	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String type, int team, int nb_bot,int view, Boolean pickable, HitBox hb, String name) {
+		Entity e =factory.newEntity(model, position, abs_or, type ,team, nb_bot,pickable,hb, name);
+//		System.out.println("new Entity : " + name);
 		if(m_ml != null) 
 			m_ml.addedEntity(e);
 		return e;
@@ -524,5 +525,13 @@ public class Model {
 	public boolean isValidPosition(Position newPosition) {
 		 return newPosition.getPositionX() >= 0 && newPosition.getPositionX() <= m_map.getBorders().getMaxX() &&
 		           newPosition.getPositionY() >= 0 && newPosition.getPositionY() <= m_map.getBorders().getMaxY();
+	}
+
+	public Entity get_entity_at(float checkX, float checkY) {
+		for (Entity e : entities) {
+			if (e.get_x() == checkX && e.get_y() == checkY)
+				return e;
+		}
+		return null;
 	}
 }

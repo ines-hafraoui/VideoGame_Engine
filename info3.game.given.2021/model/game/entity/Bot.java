@@ -11,16 +11,18 @@ public class Bot extends Entity{
 	
 	private int acc_factor;
 	
-	public Bot(Automate a, Model m,Position p, Absolute_Orientation o,int team, int nb_bot) {
-		super(a,m,p,o,team, nb_bot);
+	public Bot(Automate a, Model m,Position p, Absolute_Orientation o,int team, int nb_bot,String name) {
+		super(a,m,p,o,team, nb_bot,name);
 		acc_factor = 3;
 		type = EntityType.TEAMMATE;
+		name = "BOT" + team;
 	}
 
-	public Bot(Model m,Position pos, Absolute_Orientation o, int team, int nb_bot,Boolean pickable, HitBox hb) {
-		super(m,pos,o,team, nb_bot,pickable,hb);
+	public Bot(Model m,Position pos, Absolute_Orientation o, int team, int nb_bot,Boolean pickable, HitBox hb, String name) {
+		super(m,pos,o,team, nb_bot,pickable,hb,name);
 		acc_factor = 3;
 		type = EntityType.TEAMMATE;
+		name = "BOT" + team;
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.imageio.ImageIO;
 
 import game.entity.Entity;
 import game.model.Model;
+import info3.game.Game;
 import info3.game.IFactory;
 import info3.game.avatar.Avatar;
 
@@ -26,7 +28,7 @@ public class View extends Container {
 	private static final long serialVersionUID = 5772029785230806250L;
 
 	// How much of the world we will be showing in each Viewport
-	public static final int DISPLAYSCALE = 1;
+	public static int DISPLAYSCALE = 1;
 
 	private Model m_model;
 	private int m_x = 0, m_y = 0;
@@ -43,6 +45,7 @@ public class View extends Container {
 	public boolean Changed;
 
 	public View(Model model, IFactory f, Dimension d) {
+		DISPLAYSCALE = Game.configParse.zoom;
 		m_model = model;
 		m_mwidth = model.get_width() * DISPLAYSCALE;
 		m_mheight = model.get_height() * DISPLAYSCALE;
@@ -272,12 +275,20 @@ public class View extends Container {
 	}
 
 	public void removedEntity(Entity e) {
+		List<Avatar> torm = ToremoveAvatar(e);
+		for (Avatar a : torm) {
+			m_avatars.remove(a);
+		}
+	}
+
+	public List<Avatar> ToremoveAvatar(Entity e) {
+		List<Avatar> todelete = new ArrayList<Avatar>();
 		Iterator<Avatar> iter = m_avatars.iterator();
 		while (iter.hasNext()) {
 			Avatar a = iter.next();
-			if (a.m_entity.equals(a)) {
-				m_avatars.remove(a);
-			}
+			if (a.m_entity == e)
+				todelete.add(a);
 		}
+		return todelete;
 	}
 }
