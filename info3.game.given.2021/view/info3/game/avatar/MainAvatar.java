@@ -1,14 +1,19 @@
 package info3.game.avatar;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import org.json.simple.JSONObject;
 
 import game.entity.Absolute_Orientation;
+import game.entity.ActionType;
 import game.entity.Entity;
+import game.entity.Position;
 import info3.game.view.View;
 
 public class MainAvatar extends Avatar {
@@ -40,7 +45,8 @@ public class MainAvatar extends Avatar {
 	@Override
 	public void paint(Graphics g, int x, int y) {
 		if (m_entity.get_state_action() != null) {
-			a_state = StateToString(m_entity.get_state_action());
+			a_state = m_entity.get_state_action();
+			//a_state = StateToString(m_entity.get_state_action());
 		}
 		BufferedImage img = m_images[m_imageIndex];
 		g.drawImage(img, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - (img.getWidth() * View.DISPLAYSCALE),
@@ -49,17 +55,24 @@ public class MainAvatar extends Avatar {
 		m_hb.drawHealthBar(g, x + (int) m_entity.get_x() - (img.getWidth() * View.DISPLAYSCALE),
 				y + (int) m_entity.get_y() - (img.getHeight() * View.DISPLAYSCALE) - 5 % img.getHeight(),
 				(img.getWidth() * View.DISPLAYSCALE), 5 % img.getHeight(), this.m_entity.get_HP());
+
+		
+		
 		if (m_animate) {
 			configureAnimation();
 		}
+
+
 	}
 
 	@Override
 	protected void configureAnimation() {
-		//A repenser
+//		//A repenser
+		
+		a_state = m_entity.get_state_action();
 		String abs_or = m_entity.get_abs_or().get_abs_Orientation();
 		switch (a_state) {
-		case IDLE:
+		case ActionType.IDLE:
 			System.out.print("In IDLE\n");
 			if (m_imageIndex < 4) {
 				m_imageIndex = 4;
@@ -67,7 +80,8 @@ public class MainAvatar extends Avatar {
 			if (m_imageIndex >= 5)
 				m_imageIndex = 4;
 			break;
-		case WALK:
+
+		case ActionType.MOVE:
 			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
 					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
 				if (m_imageIndex < 0) {
@@ -98,7 +112,8 @@ public class MainAvatar extends Avatar {
 					m_imageIndex = 24;
 			}
 			break;
-		case HIT:
+
+		case ActionType.HIT:
 			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
 					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
 				if (m_imageIndex < 8) {
@@ -122,11 +137,11 @@ public class MainAvatar extends Avatar {
 			} else {// WEST
 				if (m_imageIndex < 44) {
 					m_imageIndex = 44;
-				}
+			}
 				if (m_imageIndex >= 47)
 					m_imageIndex = 44;
 			}
-			break;
+		break;
 		}
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastUpdateTime > ANIMATION_INTERVAL) {

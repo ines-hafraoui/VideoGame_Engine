@@ -59,5 +59,35 @@ public class Projectile extends Entity {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	protected Position newPosition() {
+		Position newPosition = null;
+
+		float speed = newSpeed(1);
+		int angle = speed_vct_abs_or.get_abs_Angle();
+		double angleRad = Math.toRadians(angle);
+
+		float X = (float) (Math.cos(angleRad) * speed);
+		float Y = (float) (Math.sin(angleRad) * speed);
+
+		float newX = this.position.getPositionX() + X;
+		float newY = this.position.getPositionY() + Y;
+
+		newPosition = new Position(newX, newY);
+		return newPosition;
+	}
+	
+	public boolean do_move() {
+		Position p = newPosition();
+		if (p== null) return false;
+		this.position = p; 
+		return true;
+		
+	}
+	
+	
+	public boolean do_hit() {
+		return false;
+	}
 
 }

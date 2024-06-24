@@ -42,7 +42,7 @@ public class View extends Container {
 	private List<Avatar> m_players;
 	MapView m_map;
 	MiniMap m_minimap;
-	private boolean gameover=false;
+	private int gameover = -1;
 
 	public boolean Changed;
 
@@ -99,23 +99,38 @@ public class View extends Container {
 		// shared by both players
 		m_minimap.paint(mg);
 		long timer = m_model.get_timer();
-		if(gameover) {
+		if (gameover != -1) {
 			GameOver(g);
 		}
 		Affichage_timer(mg, timer);
 	}
-	public void GameOver() {
-		gameover=true;
+
+	public void GameOver(int team) {
+		gameover = team;
 	}
-	
+
 	private void GameOver(Graphics g) {
-		g.setColor(Color.WHITE); // Set the color for the timer text
-		g.setFont(new Font("Arial", Font.BOLD, 90% m_d.width));
-		FontMetrics fm = g.getFontMetrics();
-		String message="GAME OVER";
-		g.drawString(message,  (m_d.width - fm.stringWidth(message)) / 2,m_d.height/2);
+		if (gameover == Entity.TEAM2) {
+			g.setColor(Color.RED); // Set the color for the timer text
+			g.setFont(new Font("Arial", Font.BOLD, 90 % m_d.width));
+			FontMetrics fm = g.getFontMetrics();
+			String message = "PLAYER 1 WIN !";
+			g.drawString(message, (m_d.width - fm.stringWidth(message)) / 2, m_d.height / 2);
+
+		} else if (gameover == Entity.TEAM1) {
+			g.setColor(Color.CYAN); // Set the color for the timer text
+			g.setFont(new Font("Arial", Font.BOLD, 90 % m_d.width));
+			FontMetrics fm = g.getFontMetrics();
+			String message = "PLAYER 2 WIN !";
+			g.drawString(message, (m_d.width - fm.stringWidth(message)) / 2, m_d.height / 2);
+		} else {
+			g.setColor(Color.WHITE); // Set the color for the timer text
+			g.setFont(new Font("Arial", Font.BOLD, 90 % m_d.width));
+			FontMetrics fm = g.getFontMetrics();
+			String message = "GAME OVER";
+			g.drawString(message, (m_d.width - fm.stringWidth(message)) / 2, m_d.height / 2);
+		}
 	}
-	
 
 	public void Affichage_timer(Graphics mg, long timer) {
 		mg.setColor(Color.WHITE); // Set the color for the timer text

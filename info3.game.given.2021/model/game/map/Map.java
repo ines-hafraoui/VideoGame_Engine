@@ -119,8 +119,14 @@ public class Map {
 			return p.getLandType();
 
 		}
+		else {
+			Biome b = getBiome(position);
+			if (b != null) {
+				return b.getLandType();
+			}
+			
+		}
 		return null;
-
 	}
 
 	public float getViscosity(Position position) {
@@ -283,9 +289,8 @@ public class Map {
 			if (m_model.m_ml != null) {
 				m_model.m_ml.removedEntity(e);
 			}
-			m_model.entityToRemove.remove(e);
 		}
-
+		m_model.entityToRemove = new ArrayList<Entity>();
 	}
 
 	/*

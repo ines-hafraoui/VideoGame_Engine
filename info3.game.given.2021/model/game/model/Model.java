@@ -153,6 +153,7 @@ public class Model {
 
 					String galPath = new File("gal/gal/" + behaviour).getAbsolutePath();
 
+
 					Automate automate = TestMain.loadAutomata(galPath);
 
 					if (automate != null) {
@@ -168,6 +169,19 @@ public class Model {
 
 					}
 				}
+			}
+		}
+		
+		for (Entity e : entities) {
+			if (e instanceof Bot) {
+				int team = e.get_team();
+				for (int j = 0; j<players.length; j++) {
+					if (players[j].get_team()== team ) {
+						((Bot) e).set_player(players[j]);
+					}
+				}
+				
+				
 			}
 		}
 
@@ -447,6 +461,7 @@ public class Model {
 				}
 			}
 		}
+
 		return true;
 	}
 
@@ -535,7 +550,18 @@ public class Model {
 		return false;
 	}
 
-	public boolean isValidPosition(Position newPosition) {
+	public boolean isValidPosition(Entity entity, Position newPosition) {
+		
+		for (Entity e : entities) {
+			if (e.equals(entity)) {
+				continue;
+			}
+			
+			if (e.getHitBox().get_polygon().containsPosition(newPosition)) {
+				return false;
+			}
+		}
+		
 		return newPosition.getPositionX() >= 0 && newPosition.getPositionX() <= m_map.getBorders().getMaxX()
 				&& newPosition.getPositionY() >= 0 && newPosition.getPositionY() <= m_map.getBorders().getMaxY();
 	}

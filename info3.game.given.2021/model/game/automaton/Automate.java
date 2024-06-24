@@ -15,26 +15,24 @@ public class Automate {
 
 	private String initial_state;
 	private Entity entity;
-	
+
 	private List<Action> action_buffer = new ArrayList<Action>();
-	
+
 	public boolean blocked; // the entity will unblock the automaton once it's transition is over
 
 	public Automate(Entity entity) {
 
 		this.entity = entity;
-		blocked=false;
+		blocked = false;
 	}
-
 
 	public Automate(String initial_state, List<State> states) {
 		this.states = new HashSet(states);
 		this.initial_state = initial_state;
 		currentStateList.add(getState(this.initial_state));
-		blocked=false;
+		blocked = false;
 
 	}
-
 
 	public void add_state(State s) {
 		states.add(s);
@@ -61,30 +59,26 @@ public class Automate {
 		return s1.add_transition(t);
 	}
 
-
-	
 	public void step(Entity e) {
-	
-	blocked = false;
-	Random r = new Random();
 
-		
+		blocked = false;
+		Random r = new Random();
+
 		if (!blocked) {
 
 			List<State> todelete = new ArrayList<>();
 			List<State> toadd = new ArrayList<>();
 
+			for (State state : currentStateList) {
+				for (Transition transition : state.get_transitionList()) {
 
-			for ( State state : currentStateList) {
-				for ( Transition transition : state.get_transitionList()) {
-					
 					if (transition.c.percent != -1 && !(r.nextInt(Integer.MAX_VALUE) <= transition.c.percent))
 						continue;
-					
+
 					if (transition.c.eval(entity)) {
 
 						for (Action a : transition.actionList) {
-							
+
 							if (a.percent == -1 || r.nextInt(Integer.MAX_VALUE) <= a.percent) {
 								a.exec(e);
 							}
@@ -92,20 +86,19 @@ public class Automate {
 							action_buffer.add(a);
 						}
 
-					State s = this.getState(transition.cible);
-					toadd.add(s);
-					for (State st : toadd) {
-						currentStateList.add(st);
+						State s = this.getState(transition.cible);
+						toadd.add(s);
+						for (State st : toadd) {
+							currentStateList.add(st);
 
+						}
+
+						break;
 					}
-					
-					break;
 				}
 			}
 		}
 	}
-}
-
 
 	public State getState(String name) {
 		for (State s : this.states) {
@@ -115,13 +108,13 @@ public class Automate {
 		}
 		return null;
 	}
-	
+
 	public void set_entity(Entity e) {
 		this.entity = e;
 	}
+
 	public Entity get_entity() {
 		return this.entity;
 	}
-	
 
 }

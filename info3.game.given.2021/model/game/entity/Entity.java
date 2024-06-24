@@ -19,7 +19,7 @@ public abstract class Entity {
 	protected Automate aut;
 	protected Model model;
 	protected Absolute_Orientation abs_or;
-	protected String state_action;
+	protected String state_action = ActionType.IDLE;
 	protected int HP;
 	protected List<Entity> bots;
 	protected boolean explode;
@@ -101,6 +101,7 @@ public abstract class Entity {
 		HP = 100;
 		explode = false;
 		index_inventory = 0;
+		state_action = ActionType.IDLE;
 		index_bot = 0;
 		this.team = team;
 		injured = false;
@@ -173,10 +174,16 @@ public abstract class Entity {
 		acc_speed = factor * new_speed_polar[0];
 		speed_vct_abs_or.set_abs_Angle(new_speed_polar[1]);
 
+	
 		return acc_speed;
 	}
 
+	public Position getPosition() {
+		return position;
+	}
 	protected Position newPosition() {
+		
+		
 		Position newPosition = null;
 
 		float speed = newSpeed(1);
@@ -190,7 +197,7 @@ public abstract class Entity {
 		float newY = this.position.getPositionY() + Y;
 
 		newPosition = new Position(newX, newY);
-		if (!model.isValidPosition(newPosition)) {
+		if (!model.isValidPosition(this, newPosition)) {
 			while (!Absolute_Orientation.orientations.isEmpty()) {
 				speed = newSpeed(1);
 				this.abs_or = Absolute_Orientation.randomOrientation();
@@ -205,7 +212,7 @@ public abstract class Entity {
 
 				newPosition = new Position(newX, newY);
 
-				if (model.isValidPosition(newPosition)) {
+				if (model.isValidPosition(this, newPosition)) {
 					this.position = newPosition;
 
 					return newPosition;
@@ -301,20 +308,13 @@ public abstract class Entity {
 		if (p == null)
 			return false;
 		position = p;
-		state_action = ActionType.MOVE;
+		set_state_action(ActionType.MOVE);
 		return true;
 	}
 
 	public void do_egg(int cat) {
-		aut.blocked = true;
-		state_action = ActionType.EGG;
-		timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				aut.blocked = false;
-				set_state_action("IDLE");
-			}
-		}, 3000);
+		
+		set_state_action(ActionType.EGG);
 		Entity e;
 		Automate a;
 		Position eggPos = new Position(position.getPositionX(), position.getPositionY());
@@ -358,24 +358,7 @@ public abstract class Entity {
 	 */
 	public boolean do_hit(Absolute_Orientation o, String type, int porte) {
 
-		set_state_action("HIT");
-		System.out.println("ENtered here 1\n");
-		if (!TimerisRunning) {
-			System.out.println("ENtered here 2\n");
-			TimerisRunning = true;
-			aut.blocked = true;
-			timer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					System.out.println("Deblocage\n");
-					TimerisRunning = false;
-					aut.blocked = false;
-					set_state_action("IDLE");
-				}
-			}, 300000);
-		} else {
-			System.out.println("Timer is already running and won't be started again.");
-		}
+		set_state_action(ActionType.HIT);
 		return model.do_hit(o, type, porte, this);
 	}
 
@@ -384,6 +367,7 @@ public abstract class Entity {
 	 * selection
 	 */
 	public boolean do_wait(int inc, int select) {
+		set_state_action(ActionType.IDLE);
 		switch (select) {
 		case 1:
 			index_bot += inc;
@@ -406,14 +390,14 @@ public abstract class Entity {
 	// throw what is in its bag at the index. It will create an entity that will be
 	// paint by the view
 	public abstract Entity do_throw();
-
+	
 	public void do_explode() {
 		explode = true;
-		state_action = ActionType.EXPLODE;
+		set_state_action(ActionType.EXPLODE);
 	}
 
 	public boolean do_rest(int p) {
-		state_action = ActionType.REST;
+		set_state_action(ActionType.REST);
 		int h = HP + p;
 		if (HP > 0 && h < 100) {
 			HP += p;
@@ -435,7 +419,6 @@ public abstract class Entity {
 
 	public void do_turn(Absolute_Orientation o) {
 		abs_or.set_abs_Orientation(o.get_abs_Orientation());
-		;
 		state_action = ActionType.TURN;
 	}
 
