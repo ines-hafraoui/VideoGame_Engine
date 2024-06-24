@@ -416,7 +416,7 @@ public class Model {
 		return p1.distance(p2);
 	}
 
-	private Polygon create_polygon_direction(double p_x, double p_y, float portee, double angle1, double angle2) {
+	public Polygon create_polygon_direction(double p_x, double p_y, float portee, double angle1, double angle2) {
 		double pb_x = p_x + portee;
 		double pb_y = p_y;
 		double p1_x = (pb_x * Math.cos(angle1)) - (pb_y * Math.sin(angle1));

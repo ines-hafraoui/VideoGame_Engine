@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import game.automaton.Automate;
+import game.map.Polygon;
 import game.model.Model;
 
 public class Player extends Entity {
@@ -30,42 +31,28 @@ public class Player extends Entity {
 
 	@Override
 	public boolean do_pick(int distance) {
-		
+		System.out.println("PICKKKK");
 		if (nb_item_inventory < this.nb_bot_init) {
-	        state_action = ActionType.PICK;
-	        
-	        // Parcourir toutes les positions dans un rayon de 'distance' autour du joueur
-	        for (int dx = -distance; dx <= distance; dx++) {
-	            for (int dy = -distance; dy <= distance; dy++) {
-	                // Ignorer la position du joueur lui-même
-	                if (dx == 0 && dy == 0) continue;
-	                
-	                // Calculer les coordonnées de la position à vérifier
-	                float checkX = this.get_x() + dx;
-	                float checkY = this.get_y() + dy;
-	                
-	                // Récupérer l'entité à cette position
-	                Entity entity = model.get_entity_at(checkX, checkY);
-	                model.entityToRemove.add(entity);
-	                // Vérifier si l'entité est un item et est pickable
-	                if (entity instanceof Item && entity.is_pickable()) {
-	                    // Ajouter l'item à l'inventaire
-	                    inventory[nb_item_inventory] = (Item) entity;
-	                    nb_item_inventory++;
-	                    return true;
-	                }
-	            }
-	        }
-	    }
-	    return false;
-		
-//		if (nb_item_inventory < this.nb_bot_init) {
-//			state_action = ActionType.PICK;
-//			Item item = (Item) model.get_entity(distance,"I",this.get_x(), this.get_y());	// ask the model to give it the entity (whiwh is an item) at the distance d
-//			inventory[nb_item_inventory] = item;
-//			return true;
-//		}
-//		return false;
+			state_action = ActionType.PICK;
+			
+
+			double angle1 = 0, angle2 = 0;
+			model.eval_angle(abs_or, angle1, angle2);
+			Polygon polygon = model.create_polygon_direction(position.getPositionX(), position.getPositionY(), distance,
+					angle1, angle2);
+			List<Entity> entities = model.get_entities();
+			for (Entity entity : entities) {
+				if (entity.getHitBox().get_polygon().intersectsWith(polygon)) {
+					if (entity.pickable) {
+						this.get_inventory()[nb_item_inventory] = (Item) entity;
+						model.entities.remove(entity);
+						nb_item_inventory++;
+					}
+				}
+			}
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -108,7 +95,7 @@ public class Player extends Entity {
 		}
 		return false;
 	}
-	
+
 	public void do_egg(int c) {
 		set_state_action(ActionType.EGG);
 		Entity e;
@@ -134,7 +121,7 @@ public class Player extends Entity {
 	public Item[] get_inventory() {
 		return inventory;
 	}
-	
+
 	public boolean do_hit(Absolute_Orientation o, String type, int porte) {
 		set_state_action(ActionType.HIT);
 		do_egg(0);
