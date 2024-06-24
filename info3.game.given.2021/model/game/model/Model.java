@@ -127,6 +127,12 @@ public class Model {
 			case "Bot2":
 			case "Parasite":
 				entity = new Bot(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
+				for (int j = 1; j< nb_bot_init/2; j++) {
+					entity = new Bot(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
+					float x = pos.getPositionX();
+					float y = pos.getPositionY();
+					pos = new Position (x+2, y+2);
+				}
 				break;
 			case "Base1":
 			case "Base2":
@@ -537,6 +543,7 @@ public class Model {
 	}
 
 	public boolean eval_cell(Absolute_Orientation dir, Category cat, int porte, Entity e) {
+		
 		double p_x = e.get_x();
 		double p_y = e.get_y();
 		double angle1 = 0, angle2 = 0;
@@ -544,6 +551,8 @@ public class Model {
 		Polygon polygon = create_polygon_direction(p_x, p_y, porte, angle1, angle2);
 		for (Entity entity : entities) {
 			if (entity.getHitBox().get_polygon().intersectsWith(polygon)) {
+				if (e instanceof Projectile)
+					System.out.print("projectile c'est good");
 				return true;
 			}
 		}
