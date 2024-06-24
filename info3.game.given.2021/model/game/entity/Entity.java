@@ -182,6 +182,12 @@ public abstract class Entity {
 	public Position getPosition() {
 		return position;
 	}
+	
+	public void setPosition(Position p) {
+		position = p;
+	}
+
+	
 	protected Position newPosition() {
 		
 		

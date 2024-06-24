@@ -247,6 +247,18 @@ public class Model {
 	public List<String> get_list_touche() {
 		return this.list_touche;
 	}
+	
+	public List<Item> getItems(){
+		List<Item> l_items = new ArrayList<Item>();
+		
+		for (Entity e : entities) {
+			if (e instanceof Item) {
+				l_items.add((Item) e);
+			}
+		}
+		
+		return l_items;
+	}
 
 	public void add_entity(Entity e) {
 		entities.add(e);
