@@ -38,6 +38,7 @@ public abstract class Entity {
 	protected String type;
 	protected int index_inventory;
 	protected int index_bot;
+	protected String sprite;
 
 	protected Position position;
 	protected Float base_speed = 1F;
@@ -90,7 +91,7 @@ public abstract class Entity {
 		selected = false;
 	}
 	
-	public Entity(Model m,Position p, Absolute_Orientation o, int team,int nb_bot, int view,boolean pickable,HitBox hb) {
+	public Entity(Model m,Position p, Absolute_Orientation o, int team,int nb_bot, boolean pickable,HitBox hb) {
 		hitBox = hb;
 		model = m;
 		position = p;
@@ -103,7 +104,6 @@ public abstract class Entity {
 		injured = false;
 		current_nbot = nb_bot;
 		nb_bot_init = nb_bot;
-		this.view = view;
 		this.pickable = pickable;
 		selected = false;
 		hitBox.setEntity(this);	
@@ -173,25 +173,49 @@ public abstract class Entity {
 
         return acc_speed;
     }
-
+	
 	protected Position newPosition() {
-		
-		float speed = newSpeed(1);
-		int angle = speed_vct_abs_or.get_abs_Angle();
-	    double angleRad = Math.toRadians(angle); 
-		
-		
-		float X = (float) (Math.cos(angleRad) * speed);
-		float Y = (float) (Math.sin(angleRad) * speed);
-		
-		position.setPositionX(this.position.getPositionX() + X);
-		position.setPositionY(this.position.getPositionY() + Y);
-		
-		
-		return position;
+	    Position newPosition = null;
+	    
+	    float speed = newSpeed(1);
+        int angle = speed_vct_abs_or.get_abs_Angle();
+        double angleRad = Math.toRadians(angle); 
 
+        float X = (float) (Math.cos(angleRad) * speed);
+        float Y = (float) (Math.sin(angleRad) * speed);
+
+        float newX = this.position.getPositionX() + X;
+        float newY = this.position.getPositionY() + Y;
+
+        newPosition = new Position(newX, newY);
+        if (!model.isValidPosition(newPosition)) {
+        	 while (!Absolute_Orientation.orientations.isEmpty()) {
+     	        speed = newSpeed(1);
+     	        this.abs_or = Absolute_Orientation.randomOrientation();
+     	        angle = speed_vct_abs_or.get_abs_Angle();
+     	        angleRad = Math.toRadians(angle); 
+
+     	        X = (float) (Math.cos(angleRad) * speed);
+     	        Y = (float) (Math.sin(angleRad) * speed);
+
+     	        newX = this.position.getPositionX() + X;
+     	        newY = this.position.getPositionY() + Y;
+
+     	        newPosition = new Position(newX, newY);
+     	        
+     	        if (model.isValidPosition(newPosition)) {
+     	        	this.position = newPosition;
+
+     	    	    return newPosition;
+     	        }
+     	    }
+        }
+        Absolute_Orientation.setListOrientation();
+	    return newPosition;
 	}
 
+
+	
 	public boolean eval_cell_abs(Absolute_Orientation dir, Category cat, int porte) {
 		return model.eval_cell(dir,cat,porte,this);
 	}
@@ -202,6 +226,9 @@ public abstract class Entity {
 	}
 	
 	public boolean eval_got() {
+
+		System.out.print(HP+"\n");
+
 		return HP>0;
 	}
 	
@@ -265,7 +292,7 @@ public abstract class Entity {
 	public void get_injured() {
 		injured = true;
 		int h = HP-10;
-		if (h<0) {
+		if (h<=0) {
 			this.do_explode();
 		}else {
 			HP -= 10;
@@ -293,21 +320,23 @@ public abstract class Entity {
         }, 3000);
 		Entity e;
 		Automate a;
-		switch(cat) {
-		case FLECHE : 
-			e = model.newEntity(model,position,abs_or, EntityType.ARROW,team,0,0,false,new HitBox(2,2));
+		Position eggPos = new Position(position.getPositionX(), position.getPositionY());
+		Absolute_Orientation eggOr = new Absolute_Orientation(abs_or.get_abs_Orientation());
+		switch(cat) { 
+		case FLECHE:
+			e = model.newEntity(model,eggPos,eggOr, EntityType.ARROW,team,0,0,false,new HitBox(2,2));
 			model.get_entities().add(e);
 			a = model.automates.get(EntityType.ARROW);
 			e.set_automate(a);
 			break;
 		case BOULE_FEU :
-			e = model.newEntity(model,position,abs_or, EntityType.FIREBALL,team,0,0,false,new HitBox(2,2));
+			e = model.newEntity(model,eggPos,eggOr, EntityType.FIREBALL,team,0,0,false,new HitBox(2,2));
 			model.get_entities().add(e);
 			a = model.automates.get(EntityType.FIREBALL);
 			e.set_automate(a);
 			break;
 		case BOT :  
-			e = model.newEntity(model,position,abs_or, EntityType.TEAMMATE,team, 0,0,false,new HitBox(2,2));
+			e = model.newEntity(model,eggPos,eggOr, EntityType.TEAMMATE,team, 0,0,false,new HitBox(2,2));
 			model.get_entities().add(e);
 			a = model.automates.get(EntityType.TEAMMATE);
 			e.set_automate(a);
@@ -316,7 +345,7 @@ public abstract class Entity {
 			break;
 		}
 	}
-	
+
 	public void do_got(String s) {
 		if (s.equals("Power"))
 			this.do_rest(5);
@@ -455,6 +484,10 @@ public abstract class Entity {
 	}
 	public int get_HP() {
 		return HP;
+	}
+
+	public Item[] get_inventory() {
+		return null;
 	}
 
 }

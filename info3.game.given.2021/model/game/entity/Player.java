@@ -21,8 +21,8 @@ public class Player extends Entity {
 	}
 	
 
-	public Player(Model m,Position pos, Absolute_Orientation o,int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
-		super(m,pos,o,team, nb_bot, view, pickable,hb);
+	public Player(Model m,Position pos, Absolute_Orientation o,int team, int nb_bot,Boolean pickable, HitBox hb) {
+		super(m,pos,o,team, nb_bot,pickable,hb);
 		inventory = new Item[nb_bot];
 		type = EntityType.PLAYER;
 		bots = new ArrayList<Entity>();
@@ -87,6 +87,7 @@ public class Player extends Entity {
 		return true;
 	}
 	
+	@Override
 	public Item[] get_inventory(){
 		return inventory;
 	}

@@ -61,27 +61,82 @@ public class Automate {
 		return s1.add_transition(t);
 	}
 
+
+	
 	public void step(Entity e) {
+	
+	blocked = false;
+	Random r = new Random();
+
 		
 		if (!blocked) {
-			while (!action_buffer.isEmpty()) {
-				Action tmp = action_buffer.get(0);
-				action_buffer.remove(0);
-				tmp.exec(e);
-			}
+
+			List<State> todelete = new ArrayList<>();
+			List<State> toadd = new ArrayList<>();
+
+
 			for ( State state : currentStateList) {
 				for ( Transition transition : state.get_transitionList()) {
+					
+					if (transition.c.percent != -1 && !(r.nextInt(Integer.MAX_VALUE) <= transition.c.percent))
+						continue;
+					
 					if (transition.c.eval(entity)) {
 
 						for (Action a : transition.actionList) {
+							
+							if (a.percent == -1 || r.nextInt(Integer.MAX_VALUE) <= a.percent) {
+								a.exec(e);
+							}
+
 							action_buffer.add(a);
 						}
-						State s = this.getState(transition.cible);
+
+					State s = this.getState(transition.cible);
+					toadd.add(s);
+					for (State st : toadd) {
+						currentStateList.add(st);
+
 					}
 				}
 			}
 		}
 	}
+}
+
+//public void step(Entity e) {
+//		
+//		if (!blocked) {
+//			List<State> todelete = new ArrayList<>();
+//			List<State> toadd = new ArrayList<>();
+//
+//			for ( State state : currentStateList) {
+//				for ( Transition transition : state.get_transitionList()) {
+//					if (transition.c.eval(entity)) {
+//						blocked = true;
+//
+//						for (Action a : transition.actionList) {
+//							action_buffer.add(a);
+//						}
+//						State s = this.getState(transition.cible);
+//						for (Action a : action_buffer) {
+//							a.exec(e);
+//						}
+//						toadd.add(s);
+//						todelete.add(state);
+//						
+//					}
+//				}
+//			}
+//
+//			for (State state : todelete) {
+//				currentStateList.remove(state);
+//			}
+//			for (State state : toadd) {
+//				currentStateList.add(state);
+//			}
+//			}
+//	}
 
 
 	public State getState(String name) {

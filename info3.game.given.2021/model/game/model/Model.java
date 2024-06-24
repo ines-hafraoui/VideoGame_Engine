@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 import game.entity.Entity;
 import game.entity.EntityType;
-import game.entity.Fire_Ball;
 import game.automaton.Action;
 import game.automaton.Automate;
 import game.automaton.Category;
@@ -42,7 +41,6 @@ import game.automaton.TrueFalse;
 import game.automaton.Turn;
 import game.entity.Absolute_Orientation;
 import game.entity.ActionType;
-import game.entity.Arrow;
 import game.entity.Base;
 import game.entity.Bot;
 import game.entity.HitBox;
@@ -50,6 +48,7 @@ import game.entity.Item;
 import game.entity.Player;
 
 import game.entity.Position;
+import game.entity.Projectile;
 import game.map.Map;
 import game.map.Polygon;
 import info3.game.IFactory;
@@ -71,6 +70,8 @@ public class Model {
 	public java.util.Map<String, java.util.Map<String, Object>> entityConfigurations;
 	public java.util.Map<String, Automate> automates;
 	public List<Entity> entities;
+	public String aut_projectile[];
+	public String aut_bot[];
 	IFactory factory;
 	public static int nb_bot_init;
 	public int timer;
@@ -95,6 +96,8 @@ public class Model {
 		automates = new HashMap<>();
 		entityConfigurations = parse.entities;
 		players = new Entity[parse.nb_player];
+		aut_projectile = parse.aut_projectile;
+		aut_bot = parse.aut_bot;
 		int i = 0;
 
 		// create all entities from the info that gave us the Parser
@@ -107,40 +110,34 @@ public class Model {
 	           String direction = (String) properties.get("direction");
 	            Position pos = (Position) properties.get("position");
 	            int team = ((Number) properties.get("team")).intValue();
-	            int view = ((Number) properties.get("view")).intValue();
 	            boolean pickable = (Boolean) properties.get("pickable");
 	            String behaviour = (String) properties.get("behaviour");
-	            String sprite = (String) properties.get("sprite");
 	            HitBox hb = (HitBox) properties.get("hitbox");
 	            
 	            Entity entity;
 	            switch (entityName) {
 	            case "Player1":
 	            case "Player2":
-	            	entity = new Player(this,pos, new Absolute_Orientation(direction), team, nb_bot_init, view, pickable,hb);
+	            	entity = new Player(this,pos, new Absolute_Orientation(direction), team, nb_bot_init, pickable,hb);
                     break;
 	            case "Bot1":
 	            case "Bot2":
 	            case "Parasite":
-	            case "Dasher":
-	            case "Archer":
-	            	entity = new Bot(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
-                    break;
-	            case "Arrow":
-	            	entity = new Arrow(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
-                    break;
-	            case "FireBall":
-	            	entity = new Fire_Ball(this,pos,new Absolute_Orientation(direction), team, 0, view, pickable,hb);
+	            	entity = new Bot(this,pos, new Absolute_Orientation(direction), team, 0,pickable,hb);
                     break;
 	            case "Base1":
 	            case "Base2":
 	            case "Base":
-	            	entity = new Base(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
+	            	entity = new Base(this,pos, new Absolute_Orientation(direction), team, 0,pickable,hb);
                     break;
 	            case "Power":
 	            case "Capacity":
 	            case "Plant" : 
-	            	entity = new Item(this,pos,new Absolute_Orientation(direction), team, 0, view, pickable,hb);
+	            	entity = new Item(this,pos,new Absolute_Orientation(direction), team, 0, pickable,hb);
+                    break;
+	            case "Arrow":
+	            case "FireBall" : 
+	            	entity = new Projectile(this,pos,new Absolute_Orientation(direction),entityName, team, 0, pickable,hb);
                     break;
                 default : 
                 	entity = null;
@@ -151,59 +148,65 @@ public class Model {
 	            	if (behaviour != null) {
 
 	            		String galPath = new File("gal/gal/"+behaviour).getAbsolutePath();
-		        		//Automate automate = TestMain.loadAutomata(galPath);
-	            		List<State> list_state = new ArrayList(); 	//Creation automate à la main de ici
-	            		List<Transition> list_trans = new ArrayList();
-	            		List<Action> list_action1 = new ArrayList();
-	            		List<Action> list_action2 = new ArrayList();
-	            		List<Action> list_action3 = new ArrayList();
-	            		List<Action> list_action4 = new ArrayList();
-	            		List<Action> list_action5 = new ArrayList();
-	            		Move am = new Move();
-	            		Turn ae = new Turn(new Absolute_Orientation("E"));
-	            		Turn as = new Turn(new Absolute_Orientation("S"));
-	            		Turn aw = new Turn(new Absolute_Orientation("W"));
-	            		Turn an = new Turn(new Absolute_Orientation("N"));
-	            		Hit ah = new Hit(new Absolute_Orientation("S"),"A",2);
-	            		list_action1.add(ae);
-	            		list_action1.add(am);
-	            		list_action2.add(as);
-	            		list_action2.add(am);
-	            		list_action3.add(aw);
-	            		list_action3.add(am);
-	            		list_action4.add(an);
-	            		list_action4.add(am);
-	            		//list_action5.add(aw);
-	            		list_action5.add(ah);
-	            		//list_action5.add(am);
-	            		Key cu = new Key("FU");
-	            		Key cd = new Key("FD");
-	            		Key cr = new Key("FR");
-	            		Key cl = new Key("FL");
-	            		Key ce = new Key("ENTER");
-	            		TrueFalse c = new TrueFalse(true);
-	            		Transition t1 = new Transition("Init",cr,list_action1);
-	            		Transition t2 = new Transition("Init",cd,list_action2);
-	            		Transition t3 = new Transition("Init",cl,list_action3);
-	            		Transition t4 = new Transition("Init",cu,list_action4);
-	            		Transition t5 = new Transition("Init",c,list_action5);
-	            		list_trans.add(t1);
-	            		list_trans.add(t2);
-	            		list_trans.add(t3);
-	            		list_trans.add(t4);
-	            		list_trans.add(t5);
 
-	            		State s1= new State(list_trans,"Init");
-	            		list_state.add(s1);
-	            		Automate automate = new Automate("Init",list_state);	// A là
+		        		Automate automate = TestMain.loadAutomata(galPath);
+//	            		List<State> list_state = new ArrayList(); 	//Creation automate à la main de ici
+//	            		List<Transition> list_trans = new ArrayList();
+//	            		List<Action> list_action1 = new ArrayList();
+//	            		List<Action> list_action2 = new ArrayList();
+//	            		List<Action> list_action3 = new ArrayList();
+//	            		List<Action> list_action4 = new ArrayList();
+//	            		List<Action> list_action5 = new ArrayList();
+//	            		Move am = new Move();
+//	            		Turn ae = new Turn(new Absolute_Orientation("E"));
+//	            		Turn as = new Turn(new Absolute_Orientation("S"));
+//	            		Turn aw = new Turn(new Absolute_Orientation("W"));
+//	            		Turn an = new Turn(new Absolute_Orientation("N"));
+//	            		Hit ah = new Hit(new Absolute_Orientation("S"),"A",2);
+//	            		list_action1.add(ae);
+//	            		list_action1.add(am);
+//	            		list_action2.add(as);
+//	            		list_action2.add(am);
+//	            		list_action3.add(aw);
+//	            		list_action3.add(am);
+//	            		list_action4.add(an);
+//	            		list_action4.add(am);
+//	            		list_action5.add(aw);
+//	            		list_action5.add(ah);
+//	            		list_action5.add(am);
+//	            		Key cu = new Key("FU");
+//	            		Key cd = new Key("FD");
+//	            		Key cr = new Key("FR");
+//	            		Key cl = new Key("FL");
+//	            		Key ce = new Key("ENTER");
+//	            		Transition t1 = new Transition("Init",cr,list_action1);
+//	            		Transition t2 = new Transition("Init",cd,list_action2);
+//	            		Transition t3 = new Transition("Init",cl,list_action3);
+//	            		Transition t4 = new Transition("Init",cu,list_action4);
+//	            		Transition t5 = new Transition("Init",ce,list_action5);
+//	            		list_trans.add(t1);
+//	            		list_trans.add(t2);
+//	            		list_trans.add(t3);
+//	            		list_trans.add(t4);
+//	            		list_trans.add(t5);
+//
+//	            		State s1= new State(list_trans,"Init");
+//	            		list_state.add(s1);
+//	            		Automate automate = new Automate("Init",list_state);	// A là
+
 		        		if (automate != null) {
 		        			entity.set_automate(automate);
 			        		if (entity instanceof Player) {
 			        			players[i] = entity;
 			        			i++;
+			        		}else if (!(entity instanceof Projectile)) {
+			        			entities.add(entity);
 			        		}
-			        		entities.add(entity);
+
+			        		
 			        		automates.put(entity.get_type(), automate);
+			        		entities.add(entity);
+
 		        		}	
 	            	}	
 	            }
@@ -218,8 +221,8 @@ public class Model {
 
 		poss.add(pos1);
 		poss.add(pos2);
-		poss.add(pos3);
 		poss.add(pos4);
+		poss.add(pos3);
 
 		Polygon p = new Polygon(poss);
 		m_map = new Map(p, this);
@@ -267,12 +270,14 @@ public class Model {
 	}
 
 	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String type, int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
-
-		return factory.newEntity(model, position, abs_or, type ,team, nb_bot,view, pickable,hb);
+		Entity e =factory.newEntity(model, position, abs_or, type ,team, nb_bot,pickable,hb);
+		if(m_ml != null) 
+			m_ml.addedEntity(e);
+		return e;
 	}
 
 	public interface ModelListener {
-		void addedEntity(Entity e) throws IOException;
+		void addedEntity(Entity e);
 
 		void removedEntity(Entity e);
 	}
@@ -473,6 +478,8 @@ public class Model {
 		}
 		for (Entity en : todelete) {
 			entities.remove(en);
+			if(m_ml != null)
+				m_ml.removedEntity(e);
 		}
 		return true;
 	}
@@ -569,5 +576,10 @@ public class Model {
 			}
 		}
 		return false;
+	}
+
+	public boolean isValidPosition(Position newPosition) {
+		 return newPosition.getPositionX() >= 0 && newPosition.getPositionX() <= m_map.getBorders().getMaxX() &&
+		           newPosition.getPositionY() >= 0 && newPosition.getPositionY() <= m_map.getBorders().getMaxY();
 	}
 }

@@ -1,6 +1,7 @@
 package info3.game.avatar;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Timer;
@@ -122,6 +123,12 @@ public class PlayerAvatar extends Avatar {
 			m_imageIndex++;
 			lastUpdateTime = currentTime; // Réinitialiser le dernier temps de mise à jour
 		}
+	}
+
+	@Override
+	public Image[] get_images() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

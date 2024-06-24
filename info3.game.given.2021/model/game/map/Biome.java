@@ -9,7 +9,7 @@ import game.entity.Position;
 
 public class Biome {
 
-	private static final int NB_PLOTS = 10;
+	private static final int NB_PLOTS = 1;
     private Polygon borders; // List of positions defining the polygon borders of the biome
     private List<Plot> plots = new ArrayList<Plot>(); // List of plots composing the biome
     

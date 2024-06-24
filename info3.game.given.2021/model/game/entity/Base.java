@@ -15,10 +15,15 @@ public class Base extends Entity {
 		type = EntityType.BASE;
 	}
 
-	public Base(Model m,Position pos, Absolute_Orientation o, int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
-		super(m,pos,o,team,nb_bot,view,pickable,hb);
+	public Base(Model m,Position pos, Absolute_Orientation o, int team, int nb_bot,Boolean pickable, HitBox hb) {
+		super(m,pos,o,team,nb_bot,pickable,hb);
 		picked = false;
 		type = EntityType.BASE;
+	}
+	
+	@Override
+	public boolean do_move() {
+		return false;
 	}
 
 	@Override

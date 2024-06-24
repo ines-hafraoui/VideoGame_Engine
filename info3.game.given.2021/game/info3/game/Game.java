@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JFrame;
@@ -63,17 +64,16 @@ public class Game {
 	View m_view;
 	public Model m_model;
 	Sound m_music;
-	public Map<String, Object> sprites = new HashMap<>();
-
+	Dimension c;
 
 	Game() throws Exception {
 		// creating a model, that would be a model
 		// in an Model-View-Controller pattern (MVC)
 		Dimension d = new Dimension(1800, 1000);
-		IFactory factory = new Game1Factory();
 		// Parse the config file
 		String parsePath = new File("model/configjeu1.json").getAbsolutePath();
 		Parser configParse = new Parser(parsePath);
+		IFactory factory = new Game1Factory(configParse);
 
 		m_model = new Model(d.width, d.height, configParse, factory);
 
@@ -87,16 +87,13 @@ public class Game {
 		// that would be a part of the view in the MVC pattern
 		m_canvas = new GameCanvas(m_listener);
 
-		sprites = configParse.sprites;
-		for (Map.Entry<String, Object> entry : sprites.entrySet()) {
-            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue()+"\n");
-        }
 		Dimension viewd = new Dimension(1000, 700);
-		m_view = new View(m_model, factory, viewd,sprites);
+		m_view = new View(m_model, factory, viewd);
 
 		System.out.println("  - creating frame...");
 		m_frame = m_canvas.createFrame(viewd);
 		System.out.println("  - setting up the frame...");
+		c = new Dimension(m_canvas.getWidth(), m_canvas.getHeight());
 
 		setupFrame();
 	}
@@ -173,30 +170,34 @@ public class Game {
 	 * called from the GameCanvasListener, called from the GameCanvas.
 	 */
 	public void paint(Graphics g) {
-
+		
+		
 		// getickt the size of the canvas
 		int width = m_canvas.getWidth();
 		int height = m_canvas.getHeight();
-
+		if(c.width != width || c.height !=height) {
+			m_view.setDimension(width,height);  
+			c.width = width;
+			c.height = height;
+		}
 		// erase background
 		g.setColor(Color.gray);
 		g.fillRect(0, 0, width, height);
 
 		// paint
-//		m_view.setDimension(width,height);    
 		m_view.paint(g);
 	}
 
 	class SyncViewModel implements ModelListener {
 
 		@Override
-		public void addedEntity(Entity e) throws IOException {
+		public void addedEntity(Entity e) {
 			m_view.newEntity(e);
 		}
 
 		@Override
 		public void removedEntity(Entity e) {
-			m_view.newEntity(e);
+			m_view.removedEntity(e);
 		}
 	}
 
