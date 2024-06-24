@@ -62,22 +62,30 @@ public class DynamicViewport extends AViewport {
 		m_d = d;
 
 		// Scaling the bounds' leeway to the zoom given to the map
-		m_inWorldBounds = new Rectangle(4, 4, m_d.width + (20 * View.DISPLAYSCALE),
+		m_inWorldBounds = new Rectangle(-20, -20, m_d.width + (20 * View.DISPLAYSCALE),
 				m_d.height + (20 * View.DISPLAYSCALE));
 	}
 
 	public boolean withinSameVP() {
+		setmidwaypoint();
 		for (Avatar p : m_players) {
-			if (!p.within(m_inWorldBounds, -m_trx, -m_try)) {
+			if (!p.within(m_inWorldBounds, -m_trx, -m_try) && !p.within(m_inWorldBounds, m_trx, m_try)) {
 				return false;
 			}
 		}
 		return true;
+//		int x = (int) m_players.get(0).m_entity.get_x();
+//		int y = (int) m_players.get(0).m_entity.get_y();
+//		x -= (int) m_players.get(1).m_entity.get_x();
+//		y -= (int) m_players.get(1).m_entity.get_y();
+//		if ((x >= 0 && x < m_d.width && y < m_d.height && y >= 0) ) {
+//			return true;
+//		}
+//		return false;
 	}
 
 	@Override
 	public void paint(Graphics g) {
-		setmidwaypoint();
 		Graphics mg = g.create(m_x, m_y, m_d.width, m_d.height);
 		m_map.paint(mg, -m_trx, -m_try);
 

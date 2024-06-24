@@ -198,13 +198,11 @@ public class Model {
 			        		if (entity instanceof Player) {
 			        			players[i] = entity;
 			        			i++;
-			        		}else if (!(entity instanceof Projectile)) {
+			        		}
+			        		if (!(entity instanceof Projectile)) {
 			        			entities.add(entity);
 			        		}
-
-			        		
 			        		automates.put(entity.get_type(), automate);
-			        		entities.add(entity);
 
 		        		}	
 	            	}	

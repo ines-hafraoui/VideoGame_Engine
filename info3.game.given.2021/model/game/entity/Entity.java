@@ -221,8 +221,7 @@ public abstract class Entity {
 	}
 
 	public boolean eval_got() {
-		System.out.print(HP + "\n");
-		return HP > 0;
+		return HP>0;
 	}
 
 	public boolean eval_closest(Absolute_Orientation d, Category cat, float portee) {
