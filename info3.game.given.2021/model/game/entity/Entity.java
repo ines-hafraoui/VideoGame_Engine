@@ -41,7 +41,7 @@ public abstract class Entity {
 	protected String sprite;
 
 	protected Position position;
-	protected Float base_speed = 1F;
+	protected Float base_speed = 01F;
 	protected Float acc_speed = 0F; // accumulated speed
 	protected Absolute_Orientation speed_vct_abs_or = new Absolute_Orientation(Absolute_Orientation.EAST);
 	public String name;

@@ -78,15 +78,14 @@ public class Projectile extends Entity {
 	}
 	
 	public boolean do_move() {
-//		while (model.isValidPosition(this, this.position)) {
-//			this.position.setPositionX(position.getPositionX()+1);
-//			this.position.setPositionY(position.getPositionY()+1);
-//			System.out.print("mooving");
-//		}
-//		return true;
 		Position p = newPosition();
-		if (p== null) return false;
-		this.position = p; 
+		while(!model.isValidPosition(this, p)) {
+			p = newPosition();
+			System.out.print("mooving");
+			if (p== null) return false;
+			this.position = p; 
+		}
+		
 		return true;
 		
 	}
