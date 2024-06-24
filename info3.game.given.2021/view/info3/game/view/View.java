@@ -41,6 +41,7 @@ public class View extends Container {
 	private List<Avatar> m_players;
 	MapView m_map;
 	MiniMap m_minimap;
+	private boolean gameover=false;
 
 	public boolean Changed;
 
@@ -97,8 +98,21 @@ public class View extends Container {
 		// shared by both players
 		m_minimap.paint(mg);
 		long timer = m_model.get_timer();
+		if(gameover) {
+			GameOver(g);
+		}
 		Affichage_timer(mg, timer);
 	}
+	public void GameOver() {
+		gameover=true;
+	}
+	
+	private void GameOver(Graphics g) {
+		g.setColor(Color.WHITE); // Set the color for the timer text
+		g.setFont(new Font("Arial", Font.BOLD, 70% m_d.width));
+		g.drawString("GAME OVER", 50 % m_d.width, 50 % m_d.height);
+	}
+	
 
 	public void Affichage_timer(Graphics mg, long timer) {
 		mg.setColor(Color.WHITE); // Set the color for the timer text

@@ -46,7 +46,8 @@ import info3.game.view.View;
 public class Game {
 
 	static Game game;
-	//This fields leaves access to every part of the game to the given configuration Hashmap
+	// This fields leaves access to every part of the game to the given
+	// configuration Hashmap
 	public static Parser configParse;
 
 	public static void main(String args[]) throws Exception {
@@ -159,6 +160,13 @@ public class Game {
 			float period = m_canvas.getTickPeriod();
 			int fps = m_canvas.getFPS();
 			System.out.println("Elapsed=" + period + " FPS=" + fps);
+		}
+		long timer = m_model.get_timer();
+		if (timer >= 10000) {
+			m_view.GameOver();
+			if (timer >= 11000) {
+				m_model.GameOver();
+			}
 		}
 	}
 
