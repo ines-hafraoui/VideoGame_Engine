@@ -158,6 +158,9 @@ public class Visitor implements IVisitor {
 		case "Got":
 			func = new Got();
 			break;
+		case "Key" :
+			func = new game.automaton.Key(parameters.get(0).toString());
+			break;
 
 		}
 
@@ -231,7 +234,7 @@ public class Visitor implements IVisitor {
 		}
 		Boolean e = (Boolean) expression;
 
-		return new TrueFalse(e);
+		return expression;
 	}
 
 	@Override
@@ -291,27 +294,7 @@ public class Visitor implements IVisitor {
 	public Object build(Condition condition, Object expression) { // must create implementable class Condition and
 																	// expression
 
-		if (expression instanceof FunCall) {
-			FunCall e = (FunCall) expression;
-			switch (e.name) {
-			case "Key":
-				return new game.automaton.Key(e.parameters.get(0).toString());
-			case "Got":
-				// game.automaton.Category c = new game.automaton.Category(
-				// (String) e.parameters.get(0).toString());
-				return new Got(); // got only used to check HP
-
-			case "Cell":
-				Absolute_Orientation ad = new Absolute_Orientation(e.parameters.get(0).toString());
-				game.automaton.Category cat = new game.automaton.Category(e.parameters.get(1).toString());
-				int portee = Integer.parseInt(e.parameters.get(2).toString());
-				return new Cell(ad, cat, portee);
-			}
-		} else {
-			return expression;
-		}
-
-		return null;
+		return expression;
 	}
 
 	@Override
