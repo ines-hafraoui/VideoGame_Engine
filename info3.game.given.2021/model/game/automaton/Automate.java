@@ -98,6 +98,7 @@ public class Automate {
 						currentStateList.add(st);
 
 					}
+					
 					break;
 				}
 			}
