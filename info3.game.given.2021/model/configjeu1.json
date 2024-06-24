@@ -79,8 +79,8 @@
       "features" : "Power.class",
       "sprite" :  {
       	"filepath" : "resources/MiniWorldSprites/Miscellaneous/Chests.png",
-      	"nb_rows" : 8,
-      	"nb_cols" : 6,
+      	"nb_rows" : 1,
+      	"nb_cols" : 2,
       	"index" : 0,
       	"animation" : false
       },

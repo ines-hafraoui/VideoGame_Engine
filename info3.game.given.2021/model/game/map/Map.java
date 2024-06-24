@@ -199,6 +199,7 @@ public class Map {
 
 				p = new Position(x, y);
 				i.setStock(m_model.automates.get(random.nextInt(m_model.automates.size())));
+				seed++;
 				
 			} while (!borders.containsPosition(p));
 			
