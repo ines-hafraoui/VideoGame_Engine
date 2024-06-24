@@ -3,7 +3,7 @@ package game.automaton;
 import game.entity.Absolute_Orientation;
 import game.entity.Entity;
 
-public class Egg implements Action{
+public class Egg extends Action{
 
 	int cat;
 	

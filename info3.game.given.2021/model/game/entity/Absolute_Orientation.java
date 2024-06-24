@@ -1,5 +1,10 @@
 package game.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Arrays;
+
 public class Absolute_Orientation {
 
 	public String abs_or;
@@ -11,6 +16,16 @@ public class Absolute_Orientation {
 	public static final String NORTH_W = "NW";
 	public static final String SOUTH_E = "SE";
 	public static final String SOUTH_W = "SW";
+	
+	public static List<String> orientations = new ArrayList<>(Arrays.asList(
+            Absolute_Orientation.NORTH,
+            Absolute_Orientation.SOUTH,
+            Absolute_Orientation.EAST,
+            Absolute_Orientation.WEST,
+            Absolute_Orientation.NORTH_E,
+            Absolute_Orientation.NORTH_W,
+            Absolute_Orientation.SOUTH_E,
+            Absolute_Orientation.SOUTH_W));
 
 	public Absolute_Orientation(String orientation) {
 		abs_or = orientation;
@@ -105,4 +120,27 @@ public class Absolute_Orientation {
 		}
 		return false;
 	}
+	
+	private static Random random = new Random();
+	
+	public static Absolute_Orientation randomOrientation() {
+
+        int index = random.nextInt(orientations.size());
+        String newOr = orientations.remove(index);
+        return new Absolute_Orientation(newOr);
+    }
+
+	public static void setListOrientation() {
+		orientations = new ArrayList<>(Arrays.asList(
+	            Absolute_Orientation.NORTH,
+	            Absolute_Orientation.SOUTH,
+	            Absolute_Orientation.EAST,
+	            Absolute_Orientation.WEST,
+	            Absolute_Orientation.NORTH_E,
+	            Absolute_Orientation.NORTH_W,
+	            Absolute_Orientation.SOUTH_E,
+	            Absolute_Orientation.SOUTH_W));
+		
+	}
+
 }

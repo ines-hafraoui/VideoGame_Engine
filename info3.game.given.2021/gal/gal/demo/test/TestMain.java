@@ -23,12 +23,12 @@ public class TestMain {
 	      return fsm;
 
 	    } catch (Exception ex) {
-	      return null;
+	    	return null;
 	    }
 	  }
 
-	public static void main(String args[]) {
-		String path = new File("gal/gal/Arrow.gal").getAbsolutePath();
+	public static void main(String args[]) throws Exception {
+		String path = new File("gal/gal/bdf.gal").getAbsolutePath();
 		
 		loadAutomata(path);
 		

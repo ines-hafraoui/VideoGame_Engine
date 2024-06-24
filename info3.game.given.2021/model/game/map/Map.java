@@ -9,6 +9,7 @@ import java.util.Random;
 import game.automaton.Relative_Orientation;
 import game.entity.Absolute_Orientation;
 import game.entity.Entity;
+import game.entity.Item;
 import game.entity.Position;
 import game.map.Biomes.Ocean;
 import game.map.Biomes.Volcano;
@@ -119,8 +120,14 @@ public class Map {
 			return p.getLandType();
 
 		}
+		else {
+			Biome b = getBiome(position);
+			if (b != null) {
+				return b.getLandType();
+			}
+			
+		}
 		return null;
-
 	}
 
 	public float getViscosity(Position position) {
@@ -179,6 +186,23 @@ public class Map {
 		}
 
 		System.out.print(biomes);
+		
+		// Position Items on the map
+		List<Item> l_items = m_model.getItems();
+
+		for (Item i : l_items) {
+			Position p;
+			do {
+				Random random = new Random(seed);
+				int x = random.nextInt((int) borders.getMaxX());
+				int y = random.nextInt((int) borders.getMaxY());
+
+				p = new Position(x, y);
+			} while (!borders.containsPosition(p));
+			
+			i.setPosition(p);
+			System.out.println(p.getPositionX() + " " + p.getPositionY());
+		}
 	}
 
 	private List<Position> addBorderPointsToAllPoints(List<Position> pointsInsideBorders) {
@@ -277,13 +301,19 @@ public class Map {
 			Entity e = l_entity.get(i);
 			e.tick(elapsed);
 		}
-
+		
+		for (Entity e : m_model.entityToRemove) {
+			m_model.get_entities().remove(e);
+			if (m_model.m_ml != null) {
+				m_model.m_ml.removedEntity(e);
+			}
+		}
+		m_model.entityToRemove = new ArrayList<Entity>();
 	}
 
 	/*
 	 * get_entity return an entity who's around this entity at a distance distance
 	 */
-
 	public Entity get_entity(int distance, String type, float currentx, float currenty) {
 		for (Entity entity : m_model.get_entities()) {
 			if (entity.get_type().equals(type)) {

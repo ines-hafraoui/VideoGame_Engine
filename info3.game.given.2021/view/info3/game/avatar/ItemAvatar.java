@@ -16,7 +16,7 @@ public class ItemAvatar extends Avatar {
 		m_images = View.loadSprite("resources/MiniWorldSprites/Miscellaneous/Chests.png", 1, 2);
 	}
 
-	public ItemAvatar() throws IOException {
+	public ItemAvatar(){
 		super();
 		m_imageIndex = 0;
 		m_images = View.loadSprite("resources/MiniWorldSprites/Miscellaneous/Chests.png", 1, 2);

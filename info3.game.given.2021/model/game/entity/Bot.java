@@ -6,64 +6,61 @@ import game.automaton.Category;
 import game.automaton.Direction;
 import game.model.Model;
 
-public class Bot extends Entity{
+public class Bot extends Entity {
 
-	
 	private int acc_factor;
-	
-	public Bot(Automate a, Model m,Position p, Absolute_Orientation o,int team, int nb_bot) {
-		super(a,m,p,o,team, nb_bot);
+	private Entity m_player;
+	private float offsetx, offsety;
+
+	public Bot(Automate a, Model m, Position p, Absolute_Orientation o, int team, int nb_bot, String name) {
+		super(a, m, p, o, team, nb_bot, name);
 		acc_factor = 3;
 		type = EntityType.TEAMMATE;
+		name = "BOT" + team;
 	}
 
-	public Bot(Model m,Position pos, Absolute_Orientation o, int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
-		super(m,pos,o,team, nb_bot, view, pickable,hb);
+	public Bot(Model m, Position pos, Absolute_Orientation o, int team, int nb_bot, Boolean pickable, HitBox hb,
+			String name) {
+		super(m, pos, o, team, nb_bot, pickable, hb, name);
 		acc_factor = 3;
 		type = EntityType.TEAMMATE;
+		name = "BOT" + team;
 	}
 
-	@Override
-
-	public boolean do_move() {
-		Position p = newPosition();
-		if (p == null) return false;
-		position = p;
-		state_action = ActionType.MOVE;
-		return true;
+	public void set_player(Entity e) {
+		m_player = e;
+		this.offsetx = 10*m_player.bots.size();
+		this.offsety = 2*m_player.bots.size();
+		m_player.addbots(this);
 	}
 
-	@Override
-	public void do_egg(int cat) {
-		
+	public void do_egg(int c) {
+		set_state_action(ActionType.EGG);
 		Entity e;
-		
-		switch(cat) {
-		case FLECHE : 
-			e = model.newEntity(model,position,abs_or, EntityType.ARROW,team,0,0,false,new HitBox(10,10));
+		Automate a;
+		Position eggPos = new Position(position.getPositionX(), position.getPositionY());
+		Absolute_Orientation eggOr = new Absolute_Orientation(abs_or.get_abs_Orientation());
+		switch (c) {
+		case FLECHE:
+			// Temporary just to test
+			e = model.newEntity(model, eggPos, eggOr, EntityType.ARROW, team, 0, 0, false, new HitBox(2, 2), "Arrow");
 			model.get_entities().add(e);
-			state_action = ActionType.EGG;
+			a = model.automates.get(EntityType.ARROW);
+			e.set_player(this.m_player);
+			e.set_automate(a);
 			break;
-		case BOULE_FEU :
-			e = model.newEntity(model,position,abs_or, EntityType.FIREBALL,team,0,0,false,new HitBox(10,10));
+		case BOULE_FEU:
+			// Temporary just to test
+			e = model.newEntity(model, eggPos, eggOr, EntityType.FIREBALL, team, 0, 0, false, new HitBox(2, 2),
+					"Fireball");
 			model.get_entities().add(e);
-			state_action = ActionType.EGG;
+			e.set_player(this.m_player);
+			a = model.automates.get(EntityType.FIREBALL);
+			e.set_automate(a);
 			break;
-		default : 
+		default:
 			break;
 		}
-	}
-
-	@Override
-	public void do_turn(Absolute_Orientation o) {
-		state_action = ActionType.TURN;
-		abs_or = o;
-	}
-
-	@Override
-	public boolean do_hit(Absolute_Orientation o,  String t, int porte) {
-		state_action = ActionType.HIT;
-		return model.inflict_hit(o, porte, t, this.get_x(), this.get_y());
 	}
 
 	@Override
@@ -74,6 +71,12 @@ public class Bot extends Entity{
 	@Override
 	public Entity do_throw() {
 		return null;
+	}
+
+	public boolean do_move() {
+		this.position.setPositionX(m_player.get_x() + 10 + offsetx);
+		this.position.setPositionY(m_player.get_y() + 10 + offsety);
+		return true;
 	}
 
 	@Override
@@ -87,6 +90,5 @@ public class Bot extends Entity{
 	public boolean do_get() {
 		return false;
 	}
-	
 
 }

@@ -2,11 +2,11 @@ Joueur_2(Beg){
 
  * (Beg): 
  | !(Got(T)) ? Explode :(Mort)
- | Key(FU) & Key(FL) ? Turn(NW) ; Move(NW) :(Beg)
- | Key(FU) & Key(FR) ? Turn(NE) ; Move(NE) :(Beg)
- | Key(FD) & Key(FL) ? Turn(SW) ; Move(SW) :(Beg)
- | Key(FD) & Key(FR) ? Turn(SE) ; Move(SE) :(Beg)
- | Key(f) ? Turn(F) ; Move(F) :(Beg)
+ | Key(FU)  ? Turn(N) ; Move :(Beg)
+ | Key(FD)  ? Turn(S) ; Move :(Beg)
+ | Key(FL)  ? Turn(W) ; Move :(Beg)
+ | Key(FR)  ? Turn(E) ; Move :(Beg)
+ 
  | Key(m) ? :(Fight)
  | Key(l) ? :(Select1)
  | Cell(H,P,1) ? Pick(1) :(Beg)

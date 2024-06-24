@@ -3,7 +3,7 @@ package game.automaton;
 import game.entity.Absolute_Orientation;
 import game.entity.Entity;
 
-public class Throw implements Action{
+public class Throw extends Action{
 	
 	public Throw() {
 	}

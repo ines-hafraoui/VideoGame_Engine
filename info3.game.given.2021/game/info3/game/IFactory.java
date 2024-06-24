@@ -17,9 +17,9 @@ public interface IFactory {
 
 	Avatar newAvatar(Entity e, View v) throws IOException;
 
-	Entity newEntity(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team);
+	Entity newEntity(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team, String name);
 
-	Entity newEntity(Model m, Position p, Absolute_Orientation o, String type, int team, int nb_bot, int view,
-			Boolean pickable, HitBox hb);
+	Entity newEntity(Model m, Position p, Absolute_Orientation o, String type, int team, int nb_bot, Boolean pickable,
+			HitBox hb, String name);
 
 }

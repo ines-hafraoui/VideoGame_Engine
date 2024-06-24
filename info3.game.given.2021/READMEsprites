@@ -1,0 +1,37 @@
+Avatar:
+
+12 lignes, 4 colonnes
+
+Action IDLE (Inaction) :
+
+    Toutes Orientations :
+        Plage d'indices : 4 à 5
+
+Action WALK (Marche) :
+
+    Sud et orientations proches (SOUTH, SOUTH_E, SOUTH_W) :
+        Plage d'indices : 0 à 3
+
+    Nord et orientations proches (NORTH, NORTH_E, NORTH_W) :
+        Plage d'indices : 36 à 39
+
+    Est (EAST) :
+        Plage d'indices : 12 à 15
+
+    Ouest (WEST) :
+        Plage d'indices : 24 à 25
+
+Action HIT (Frappe) :
+
+    Sud et orientations proches (SOUTH, SOUTH_E, SOUTH_W) :
+        Plage d'indices : 8 à 11
+
+    Nord et orientations proches (NORTH, NORTH_E, NORTH_W) :
+        Plage d'indices : 30 à 35
+
+    Est (EAST) :
+        Plage d'indices : 20 à 23
+
+    Ouest (WEST) :
+        Plage d'indices : 44 à 47
+

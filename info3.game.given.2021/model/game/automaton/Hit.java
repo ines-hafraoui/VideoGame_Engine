@@ -3,7 +3,7 @@ package game.automaton;
 import game.entity.Absolute_Orientation;
 import game.entity.Entity;
 
-public class Hit implements Action {
+public class Hit extends Action {
 	
 	Absolute_Orientation or;
 	Relative_Orientation ror;

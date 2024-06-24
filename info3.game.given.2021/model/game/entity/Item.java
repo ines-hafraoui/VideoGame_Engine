@@ -6,21 +6,17 @@ import game.model.Model;
 
 public class Item extends Entity{
 	
-	public Item(Automate a, Model m,Position p, Absolute_Orientation o,int team, int nb_bot) {
-		super(a,m,p,o,team,nb_bot);
+	public Item(Automate a, Model m,Position p, Absolute_Orientation o,int team, int nb_bot, String name) {
+		super(a,m,p,o,team,nb_bot,name);
 		this.cat.set_category("P");
 		type = EntityType.ITEM;
 	}
 
-	public Item(Model m,Position pos, Absolute_Orientation o,int team, int nb_bot,int view, Boolean pickable,HitBox hb) {
-		super(m,pos,o,team,nb_bot, view, pickable,hb);
+	public Item(Model m,Position pos, Absolute_Orientation o,int team, int nb_bot,Boolean pickable,HitBox hb, String name) {
+		super(m,pos,o,team,nb_bot,pickable,hb,name);
 		type = EntityType.ITEM;
 	}
-	
-	@Override
-	public boolean do_hit(Absolute_Orientation o,  String t, int porte) {
-		return false;
-	}
+
 
 	@Override
 	public boolean do_pick(int distance) {

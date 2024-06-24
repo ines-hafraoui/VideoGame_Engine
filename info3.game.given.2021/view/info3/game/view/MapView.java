@@ -3,7 +3,6 @@ package info3.game.view;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,8 +11,10 @@ import game.entity.Position;
 import game.map.Biome;
 import game.map.Plot;
 import game.map.Polygon;
-import game.map.Biomes.*;
+import game.map.Biomes.Ocean;
+import game.map.Biomes.Volcano;
 import game.model.Model;
+import info3.game.Game;
 
 public class MapView {
 
@@ -21,34 +22,27 @@ public class MapView {
 	private int[] m_groundsetup;
 	private int m_ncols, m_nrows;
 	private Model m_model;
-	Viewport m_parent;
+	AViewport m_parent;
 	View m_view;
 	protected BufferedImage[] m_bgimages;
 	protected BufferedImage[] m_textureimages;
 
 	private List<Squares> squares = new ArrayList<>(); // List to store the biomes
 
-	public MapView(int x, int y, Model model, View v, Viewport parent) {
+	public MapView(int x, int y, Model model, View v, AViewport parent) {
 		x_max = x;
 		y_max = y;
 		m_model = model;
 		m_view = v;
 		m_parent = parent;
+
+		m_bgimages = Game.configParse.bg_sprite;
+		m_textureimages = View.loadSprite("resources/MiniWorldSprites/Ground/Grass.png", 1, 5);
+		if(Game.configParse.bg_rand) {
+			/* Generates the default ground tiles */
+			genDefaultGround();
+		}
 		
-		try {
-			m_bgimages = View.loadSprite("resources/MiniWorldSprites/Ground/TexturedGrass.png", 2, 3);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		try {
-			m_textureimages = View.loadSprite("resources/MiniWorldSprites/Ground/Grass.png", 1, 5);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		/* Generates the default ground tiles */
-		genDefaultGround();
 
 		/* Generates the different views of the biomes */
 		List<Biome> b = m_model.m_map.getBiome();
@@ -59,11 +53,11 @@ public class MapView {
 			Polygon p = bio.getBorders();
 
 			if (bio instanceof Volcano) {
-				squares.add(new Squares(p, m_textureimages[4],m_parent));
+				squares.add(new Squares(p, m_textureimages[4], m_parent));
 			} else if (bio instanceof Ocean) {
-				squares.add(new Squares(p, m_textureimages[0],m_parent));
+				squares.add(new Squares(p, m_textureimages[0], m_parent));
 			} else {
-				squares.add(new Squares(p, m_textureimages[1],m_parent));
+				squares.add(new Squares(p, m_textureimages[1], m_parent));
 
 			}
 		}
@@ -77,9 +71,8 @@ public class MapView {
 				BufferedImage img = m_bgimages[m_groundsetup[i * j + j]];
 				int tilex = i * (m_bgimages[0].getWidth() * View.DISPLAYSCALE) + x;
 				int tiley = j * (m_bgimages[0].getHeight() * View.DISPLAYSCALE) + y;
-				if(m_parent.withinbounds(tilex, tiley)) {
-					g.drawImage(img,tilex,
-							tiley, img.getWidth() * View.DISPLAYSCALE,
+				if (m_parent.withinbounds(tilex, tiley)) {
+					g.drawImage(img, tilex, tiley, img.getWidth() * View.DISPLAYSCALE,
 							img.getHeight() * View.DISPLAYSCALE, null);
 				}
 			}
@@ -90,10 +83,7 @@ public class MapView {
 		}
 	}
 
-	
-	
-	
-	//TO BE MOVED... UNTIL WE GET THE FINAL VERSION OF PLOTS
+	// TO BE MOVED... UNTIL WE GET THE FINAL VERSION OF PLOTS
 	private void AffichagePlots(Graphics g, List<Plot> L_plot) {
 		Iterator<Plot> iterator = L_plot.iterator();
 		while (iterator.hasNext()) {
@@ -125,7 +115,7 @@ public class MapView {
 		return tab_y;
 	}
 	// END OF TO BE MOVED...
-	
+
 	/*
 	 * Here we generate the default tiling of the ground for the entire world
 	 */
@@ -136,8 +126,12 @@ public class MapView {
 		m_groundsetup = new int[m_nrows * m_ncols];
 		for (int i = 0; i < m_ncols; i++) {
 			for (int j = 0; j < m_nrows; j++) {
-				m_groundsetup[i * j + j] = m_view.getRandomNumber(0, m_bgimages.length);
+				m_groundsetup[i * j + j] = getRandomNumber(0, m_bgimages.length);
 			}
 		}
+	}
+
+	public static int getRandomNumber(int min, int max) {
+		return (int) ((Math.random() * (max - min)) + min);
 	}
 }

@@ -28,11 +28,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import game.entity.Base;
 import game.entity.Entity;
 import game.model.Model;
 import game.model.Model.ModelListener;
@@ -45,10 +49,17 @@ import info3.game.view.View;
 public class Game {
 
 	static Game game;
+	// This fields leaves access to every part of the game to the given
+	// configuration Hashmap
+	public static Parser configParse;
 
 	public static void main(String args[]) throws Exception {
 		try {
 			System.out.println("Game starting...");
+			// Parse the config file
+			String parsePath = new File("model/configjeu1.json").getAbsolutePath();
+			configParse = new Parser(parsePath);
+
 			game = new Game();
 			System.out.println("Game started.");
 		} catch (Throwable th) {
@@ -63,20 +74,15 @@ public class Game {
 	View m_view;
 	public Model m_model;
 	Sound m_music;
-	public Map<String, Object> sprites = new HashMap<>();
-
+	Dimension c;
 
 	Game() throws Exception {
 		// creating a model, that would be a model
 		// in an Model-View-Controller pattern (MVC)
 		Dimension d = new Dimension(1800, 1000);
 		IFactory factory = new Game1Factory();
-		// Parse the config file
-		String parsePath = new File("model/configjeu1.json").getAbsolutePath();
-		Parser configParse = new Parser(parsePath);
 
 		m_model = new Model(d.width, d.height, configParse, factory);
-
 		m_model.setListener(new SyncViewModel());
 
 		// creating a listener for all the events
@@ -86,14 +92,13 @@ public class Game {
 		// creating the game canvas to render the game,
 		// that would be a part of the view in the MVC pattern
 		m_canvas = new GameCanvas(m_listener);
-
-		sprites = configParse.sprites;
 		Dimension viewd = new Dimension(1000, 700);
 		m_view = new View(m_model, factory, viewd);
 
 		System.out.println("  - creating frame...");
 		m_frame = m_canvas.createFrame(viewd);
 		System.out.println("  - setting up the frame...");
+		c = new Dimension(m_canvas.getWidth(), m_canvas.getHeight());
 
 		setupFrame();
 	}
@@ -103,16 +108,12 @@ public class Game {
 	 * and the game canvas to the center.
 	 */
 	private void setupFrame() {
-
 		m_frame.setTitle("Game");
 		m_frame.setLayout(new BorderLayout());
-
 		m_frame.add(m_canvas, BorderLayout.CENTER);
-
 		// center the window on the screen
 		m_frame.setLocationRelativeTo(null);
-
-		// make the vindow visible
+		// make the window visible
 		m_frame.setVisible(true);
 	}
 
@@ -163,6 +164,15 @@ public class Game {
 			int fps = m_canvas.getFPS();
 			System.out.println("Elapsed=" + period + " FPS=" + fps);
 		}
+		long timer = m_model.get_timer();
+		if (configParse.timer != -1) {
+			if (timer >= configParse.timer * 1000) {
+				m_view.GameOver(Entity.NOTEAM);
+				if (timer >= configParse.timer * 1000 + 500) {
+					m_model.GameOver();
+				}
+			}
+		}
 	}
 
 	/*
@@ -171,29 +181,54 @@ public class Game {
 	 */
 	public void paint(Graphics g) {
 
-		// getickt the size of the canvas
+		// get the size of the canvas
 		int width = m_canvas.getWidth();
 		int height = m_canvas.getHeight();
+		// sees whether or not the view should redemension itself
+		if (c.width != width || c.height != height) {
+			m_view.setDimension(width, height);
+			c.width = width;
+			c.height = height;
+		}
 
 		// erase background
 		g.setColor(Color.gray);
 		g.fillRect(0, 0, width, height);
 
 		// paint
-//		m_view.setDimension(width,height);    
 		m_view.paint(g);
 	}
 
+	/*
+	 * ================================================================ All the This
+	 * Listener enables the View keep the necessary avatars on display as the Model
+	 * creates or deletes entities
+	 * ==============================================================
+	 */
 	class SyncViewModel implements ModelListener {
 
 		@Override
-		public void addedEntity(Entity e) throws IOException {
+		public void addedEntity(Entity e) {
 			m_view.newEntity(e);
 		}
 
 		@Override
 		public void removedEntity(Entity e) {
-			m_view.newEntity(e);
+			if(e instanceof Base) {
+				if(e.get_team()==Entity.TEAM1) {
+					m_view.GameOver(Entity.TEAM1);
+				}else {
+					m_view.GameOver(Entity.TEAM2);
+				}
+				 Timer timer = new Timer();
+			        timer.schedule(new TimerTask() {
+			            @Override
+			            public void run() {
+			                m_model.GameOver();
+			            }
+			        }, 10000);
+			}
+			m_view.removedEntity(e);
 		}
 	}
 

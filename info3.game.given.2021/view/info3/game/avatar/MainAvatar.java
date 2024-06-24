@@ -1,57 +1,107 @@
 package info3.game.avatar;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import org.json.simple.JSONObject;
+
 import game.entity.Absolute_Orientation;
+import game.entity.ActionType;
 import game.entity.Entity;
+import game.entity.Position;
 import info3.game.view.View;
 
-public class PlayerAvatar extends Avatar {
-
+public class MainAvatar extends Avatar {
 	private long lastUpdateTime; // Temps depuis la dernière mise à jour de l'animation
 	private static final long ANIMATION_INTERVAL = 500; // 500 ms entre les mises à jour
 
-	public PlayerAvatar(Entity e, View v) throws IOException {
+	boolean m_animate;
+
+	public MainAvatar(Entity e, View v, JSONObject sprite_spec, boolean player) throws IOException {
 		super(e, v);
-		m_view.addPlayer(this);
-		m_imageIndex = 0;
-		if (e.get_team() == 1) {
-			m_images = View.loadSprite("resources/MiniWorldSprites/Characters/Soldiers/Mounted/RedKnight.png", 12, 4);
-		} else {
-			m_images = View.loadSprite("resources/MiniWorldSprites/Characters/Soldiers/Mounted/CyanKnight.png", 12, 4);
+		if (sprite_spec == null) {
+			throw new IOException("Huuum there are no sprites");
+		}
+		m_imageIndex = ((Number) sprite_spec.get("index")).intValue();
+		int nr = ((Number) sprite_spec.get("nb_rows")).intValue();
+		int nc = ((Number) sprite_spec.get("nb_cols")).intValue();
+		m_images = View.loadSprite((String) sprite_spec.get("filepath"), nr, nc);
+		if (m_images == null) {
+			System.out.println("the file path : " + (String) sprite_spec.get("filepath"));
+			throw new IOException("Huuum sprite has not been loaded");
+		}
+		m_animate = (Boolean) sprite_spec.get("animation");
+		if (player) {
+			m_view.addPlayer(this);
 		}
 	}
 
 	@Override
 	public void paint(Graphics g, int x, int y) {
 		if (m_entity.get_state_action() != null) {
-			a_state = StateToString(m_entity.get_state_action());
+			a_state = m_entity.get_state_action();
 		}
 		BufferedImage img = m_images[m_imageIndex];
-		g.drawImage(img, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - (img.getWidth() * View.DISPLAYSCALE),
-				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - (img.getHeight() * View.DISPLAYSCALE),
+//		int h = (int) m_entity.getHitBox().getHbHeight() * View.DISPLAYSCALE;
+//		int w = (int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE;
+		int h = img.getHeight() * View.DISPLAYSCALE;
+		int w = img.getWidth() * View.DISPLAYSCALE;
+		g.drawImage(img, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - w,
+				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - h, h, w, null);
+		int hp = this.m_entity.get_HP();
+		if (hp > 0) {
+			m_hb.drawHealthBar(g, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - w,
+					(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - h - 5 % img.getHeight(), w, 5 % img.getHeight(),
+					hp);
+		}
+		if (m_animate) {
+			configureAnimation();
+		}
 
-				img.getWidth() * View.DISPLAYSCALE, img.getHeight() * View.DISPLAYSCALE, null);
-		m_hb.drawHealthBar(g, x + (int) m_entity.get_x() - (img.getWidth() * View.DISPLAYSCALE),
-				y + (int) m_entity.get_y() - (img.getHeight() * View.DISPLAYSCALE) - 5 % img.getHeight(),
-				(img.getWidth() * View.DISPLAYSCALE), 5 % img.getHeight(),this.m_entity.get_HP());
-		configureAnimation();
+	}
+
+	@Override
+	public void paintmainplayer(Graphics g, int x, int y) {
+		if (m_entity.get_state_action() != null) {
+			a_state = m_entity.get_state_action();
+		}
+		BufferedImage img = m_images[m_imageIndex];
+		int h = img.getHeight() * View.DISPLAYSCALE;
+		int w = img.getWidth() * View.DISPLAYSCALE;
+		g.drawImage(img, x - w, y - h, w, h, null);
+		int hp = this.m_entity.get_HP();
+		if (hp > 0) {
+			m_hb.drawHealthBar(g, x - w, y - h - 5 % img.getHeight(), w, 5 % img.getHeight(), hp);
+		}
+//		g.setColor(Color.red);
+//		g.drawRect(x - w/2 - 20, y - h, (int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE,
+//				(int) m_entity.getHitBox().getHbHeight() * View.DISPLAYSCALE);
+
+		if (m_animate) {
+			configureAnimation();
+		}
+
 	}
 
 	@Override
 	protected void configureAnimation() {
+		a_state = m_entity.get_state_action();
 		String abs_or = m_entity.get_abs_or().get_abs_Orientation();
 		switch (a_state) {
-		case IDLE:
+		case ActionType.IDLE:
+			System.out.print("In IDLE\n");
 			if (m_imageIndex < 4) {
 				m_imageIndex = 4;
 			}
 			if (m_imageIndex >= 5)
 				m_imageIndex = 4;
 			break;
-		case WALK:
+		case ActionType.MOVE:
 			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
 					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
 				if (m_imageIndex < 0) {
@@ -82,7 +132,7 @@ public class PlayerAvatar extends Avatar {
 					m_imageIndex = 24;
 			}
 			break;
-		case HIT:
+		case ActionType.HIT:
 			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
 					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
 				if (m_imageIndex < 8) {
@@ -111,12 +161,22 @@ public class PlayerAvatar extends Avatar {
 					m_imageIndex = 44;
 			}
 			break;
+		default:
+			if (m_imageIndex >= 47)
+				m_imageIndex = 4;
 		}
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastUpdateTime > ANIMATION_INTERVAL) {
 			m_imageIndex++;
 			lastUpdateTime = currentTime; // Réinitialiser le dernier temps de mise à jour
 		}
+
+	}
+
+	@Override
+	public Image[] get_images() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

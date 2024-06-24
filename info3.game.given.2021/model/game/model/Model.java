@@ -27,10 +27,20 @@ import java.util.HashMap;
 import java.util.List;
 import game.entity.Entity;
 import game.entity.EntityType;
+import game.automaton.Action;
 import game.automaton.Automate;
 import game.automaton.Category;
+import game.automaton.Cell;
+import game.automaton.Hit;
+import game.automaton.Key;
+import game.automaton.Move;
 import game.automaton.Relative_Orientation;
+import game.automaton.State;
+import game.automaton.Transition;
+import game.automaton.TrueFalse;
+import game.automaton.Turn;
 import game.entity.Absolute_Orientation;
+import game.entity.ActionType;
 import game.entity.Base;
 import game.entity.Bot;
 import game.entity.HitBox;
@@ -38,6 +48,7 @@ import game.entity.Item;
 import game.entity.Player;
 
 import game.entity.Position;
+import game.entity.Projectile;
 import game.map.Map;
 import game.map.Polygon;
 import info3.game.IFactory;
@@ -59,16 +70,19 @@ public class Model {
 	public java.util.Map<String, java.util.Map<String, Object>> entityConfigurations;
 	public java.util.Map<String, Automate> automates;
 	public List<Entity> entities;
+	public List<Entity> entityToRemove;
+	public String aut_projectile[];
+	public String aut_bot[];
 	IFactory factory;
 	public static int nb_bot_init;
 	public int timer;
 	public boolean cooperative;
 	public int viscosity;
 	public Parser configParse;
-	private static long TIMER=0;
+	private static long TIMER = 0;
+	private boolean gameover = false;
 
-	
-	public Model(int w, int h, Parser parse, IFactory f)throws IOException {
+	public Model(int w, int h, Parser parse, IFactory f) throws IOException {
 
 		m_width = w;
 		height = h;
@@ -77,12 +91,15 @@ public class Model {
 		viscosity = parse.viscosity;
 		cooperative = parse.coop;
 		timer = parse.timer;
-		list_touche = new ArrayList();
+		list_touche = new ArrayList<String>();
 		factory = f;
 		entities = new ArrayList<Entity>();
+		entityToRemove = new ArrayList<Entity>();
 		automates = new HashMap<>();
 		entityConfigurations = parse.entities;
 		players = new Entity[parse.nb_player];
+		aut_projectile = parse.aut_projectile;
+		aut_bot = parse.aut_bot;
 		int i = 0;
 
 		// create all entities from the info that gave us the Parser
@@ -91,62 +108,96 @@ public class Model {
 			String entityName = entry.getKey();
 			java.util.Map<String, Object> properties = entry.getValue();
 
-	            // Extract common properties
-	            String direction = (String) properties.get("direction");
-	            Position pos = (Position) properties.get("position");
-	            int team = ((Number) properties.get("team")).intValue();
-	            int view = ((Number) properties.get("view")).intValue();
-	            boolean pickable = (Boolean) properties.get("pickable");
-	            String behaviour = (String) properties.get("behaviour");
-	            String sprite = (String) properties.get("sprite");
-	            HitBox hb = (HitBox) properties.get("hitbox");
-	            
-	            Entity entity;
-	            switch (entityName) {
-	            case "Player1":
-	            case "Player2":
-	            	entity = new Player(this,pos, new Absolute_Orientation(direction), team, nb_bot_init, view, pickable,hb);
-                    break;
-	            case "Bot1":
-	            case "Bot2":
-	            case "Parasite":
-	            case "Dasher":
-	            case "Archer":
-	            	entity = new Bot(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
-                    break;
-	            case "Base1":
-	            case "Base2":
-	            case "Base":
-	            	entity = new Base(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
-                    break;
-	            case "Power":
-	            case "Capacity":
-	            case "Plant" : 
-	            	entity = new Item(this,pos, new Absolute_Orientation(direction), team, 0, view, pickable,hb);
-                    break;
-                default : 
-                	entity = null;
-                	break;
-	            }
-	           
-	            if (entity != null) {
-	            	if (behaviour != null) {
-	            		String galPath = new File("gal/gal/Arrow.gal").getAbsolutePath();
-		        		Automate automate = TestMain.loadAutomata(galPath);
+			// Extract common properties
+			String direction = (String) properties.get("direction");
+			Position pos = (Position) properties.get("position");
+			int team = ((Number) properties.get("team")).intValue();
+			boolean pickable = (Boolean) properties.get("pickable");
+			String behaviour = (String) properties.get("behaviour");
+			HitBox hb = (HitBox) properties.get("hitbox");
 
-		        		if (automate != null) {
-		        			entity.set_automate(automate);
-			        		if (entity instanceof Player) {
-			        			players[i] = entity;
-			        			i++;
-			        		}
-			        		entities.add(entity);
-			        		automates.put(entity.get_type(), automate);
-		        		}	
-	            	}	
-	            }
-		 }
-		
+			Entity entity;
+			switch (entityName) {
+			case "Player1":
+			case "Player2":
+				entity = new Player(this, pos, new Absolute_Orientation(direction), team, nb_bot_init, pickable, hb,
+						entityName);
+				break;
+			case "Bot1":
+			case "Bot2":
+			case "Parasite":
+				entity = new Bot(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
+				if (behaviour != null) {
+					Automate automate = TestMain.loadAutomata(new File("gal/gal/" + behaviour).getAbsolutePath());
+					if (automate != null) {
+						for (int j = 1; j < nb_bot_init; j++) {
+							entity.set_automate(automate);
+							entities.add(entity);
+							automates.put(entity.get_type(), automate);
+							float x = pos.getPositionX();
+							float y = pos.getPositionY();
+							pos = new Position(x + 2, y + 2);
+							entity = new Bot(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb,
+									entityName);
+						}
+					}
+				}
+				break;
+			case "Base1":
+			case "Base2":
+			case "Base":
+				entity = new Base(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
+				break;
+			case "Power":
+			case "Capacity":
+			case "Plant":
+				entity = new Item(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
+				break;
+			case "Arrow":
+			case "FireBall":
+				entity = new Projectile(this, pos, new Absolute_Orientation(direction), entityName, team, 0, pickable,
+						hb, entityName);
+				break;
+			default:
+				entity = null;
+				break;
+			}
+
+			if (entity != null) {
+				if (behaviour != null) {
+
+					String galPath = new File("gal/gal/" + behaviour).getAbsolutePath();
+
+					Automate automate = TestMain.loadAutomata(galPath);
+
+					if (automate != null) {
+						entity.set_automate(automate);
+						if (entity instanceof Player) {
+							players[i] = entity;
+							i++;
+						}
+						if (!(entity instanceof Projectile)) {
+							entities.add(entity);
+						}
+						automates.put(entity.get_type(), automate);
+
+					}
+				}
+			}
+		}
+
+		for (Entity e : entities) {
+			if (e instanceof Bot || e instanceof Base) {
+				int team = e.get_team();
+				for (int j = 0; j < players.length; j++) {
+					if (players[j].get_team() == team) {
+						e.set_player(players[j]);
+					}
+				}
+
+			}
+		}
+
 		List<Position> poss = new ArrayList<Position>();
 
 		Position pos1 = new Position(0, 0);
@@ -156,8 +207,8 @@ public class Model {
 
 		poss.add(pos1);
 		poss.add(pos2);
-		poss.add(pos3);
 		poss.add(pos4);
+		poss.add(pos3);
 
 		Polygon p = new Polygon(poss);
 		m_map = new Map(p, this);
@@ -169,13 +220,23 @@ public class Model {
 	}
 
 	public void tick(long elapsed) {
-		TIMER+=elapsed;
+		TIMER += elapsed;
 		m_imageElapsed += elapsed;
 		if (m_imageElapsed > 200) {
 			m_imageElapsed = 0;
 		}
-
 		m_map.tick(elapsed);
+		if (gameover) {
+			GameOverboucle();
+		}
+	}
+
+	public void GameOver() {
+		gameover = true;
+	}
+
+	private void GameOverboucle() {
+		System.exit(1);
 	}
 
 	public Entity get_entity(int distance, String t, float f, float g) {
@@ -186,63 +247,21 @@ public class Model {
 	public List<String> get_list_touche() {
 		return this.list_touche;
 	}
+	
+	public List<Item> getItems(){
+		List<Item> l_items = new ArrayList<Item>();
+		
+		for (Entity e : entities) {
+			if (e instanceof Item) {
+				l_items.add((Item) e);
+			}
+		}
+		
+		return l_items;
+	}
 
 	public void add_entity(Entity e) {
 		entities.add(e);
-	}
-
-	public boolean inflict_hit(Absolute_Orientation o, int porte, String t, float currentx, float currenty) {
-		float newX = currentx;
-		float newY = currenty;
-
-		switch (o.get_abs_Orientation()) {
-		case "N":
-			newY += porte;
-			break;
-		case "S":
-			newY -= porte;
-			break;
-		case "W":
-			newX -= porte;
-			break;
-		case "E":
-			newX += porte;
-			break;
-		case "NE":
-			newY += porte;
-			newX += porte;
-			break;
-		case "NW":
-			newY += porte;
-			newX -= porte;
-			break;
-		case "SE":
-			newY -= porte;
-			newX += porte;
-			break;
-		case "SW":
-			newY -= porte;
-			newX -= porte;
-			break;
-		default:
-			break;
-		}
-
-		for (Entity entity : entities) {
-			if (isWithinHitbox(newX, newY, entity)) {
-				entity.get_injured();
-			}
-		}
-		return true;
-	}
-
-	private boolean isWithinHitbox(float x, float y, Entity entity) {
-		float entityX = entity.get_x();
-		float entityY = entity.get_y();
-		float hitboxWidth = entity.getHitBox().getHbWidth(); // Largeur de la hitbox
-		float hitboxHeight = entity.getHitBox().getHbHeight(); // Hauteur de la hitbox
-
-		return (x >= entityX && x <= entityX + hitboxWidth) && (y >= entityY && y <= entityY + hitboxHeight);
 	}
 
 	/*
@@ -259,18 +278,22 @@ public class Model {
 		return players;
 	}
 
-	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String type, int team, int nb_bot,int view, Boolean pickable, HitBox hb) {
-
-		return factory.newEntity(model, position, abs_or, type ,team, nb_bot,view, pickable,hb);
+	public Entity newEntity(Model model, Position position, Absolute_Orientation abs_or, String type, int team,
+			int nb_bot, int view, Boolean pickable, HitBox hb, String name) {
+		Entity e = factory.newEntity(model, position, abs_or, type, team, nb_bot, pickable, hb, name);
+//		System.out.println("new Entity : " + name);
+		if (m_ml != null)
+			m_ml.addedEntity(e);
+		return e;
 	}
 
 	public interface ModelListener {
-		void addedEntity(Entity e) throws IOException;
+		void addedEntity(Entity e);
 
 		void removedEntity(Entity e);
 	}
 
-	ModelListener m_ml;
+	public ModelListener m_ml;
 
 	public void setListener(ModelListener l) {
 		m_ml = l;
@@ -285,7 +308,7 @@ public class Model {
 	}
 
 	public List<Entity> list_cat(Category cat, int team) {
-		List<Entity> list = new ArrayList();
+		List<Entity> list = new ArrayList<Entity>();
 		switch (cat.toString()) {
 
 		case "A":
@@ -344,13 +367,13 @@ public class Model {
 	public boolean eval_closest(List<Entity> list_cat, Absolute_Orientation d, Entity entity, float portee) {
 		double p_x = entity.get_x();
 		double p_y = entity.get_y();
-		double closest_x=0;
-		double closest_y=0;
-		select_closest(list_cat,p_x,p_y,closest_x,closest_y);
-		double angle1=0,angle2=0;
-		eval_angle(d,angle1,angle2);
-		Polygon polygon = create_polygon_direction(p_x,p_y,portee,angle1,angle2);
-		Position closest = new Position((float)closest_x,(float)closest_y);
+		double closest_x = 0;
+		double closest_y = 0;
+		select_closest(list_cat, p_x, p_y, closest_x, closest_y);
+		double angle1 = 0, angle2 = 0;
+		eval_angle(d, angle1, angle2);
+		Polygon polygon = create_polygon_direction(p_x, p_y, portee, angle1, angle2);
+		Position closest = new Position((float) closest_x, (float) closest_y);
 		System.out.print(polygon.containsPosition(closest));
 
 		return polygon.containsPosition(closest);
@@ -395,36 +418,36 @@ public class Model {
 	}
 
 	public void eval_angle(Absolute_Orientation d, double angle1, double angle2) {
-		switch (d.toString()) {
-		case "E":
+		switch (d.get_abs_Orientation()) {
+		case Absolute_Orientation.EAST:
 			angle1 = 337.5;
 			angle2 = 22.5;
 			break;
-		case "SE":
+		case Absolute_Orientation.SOUTH_E:
 			angle1 = 22.5;
 			angle2 = 67.5;
 			break;
-		case "S":
+		case Absolute_Orientation.SOUTH:
 			angle1 = 67.5;
 			angle2 = 112.5;
 			break;
-		case "SW":
+		case Absolute_Orientation.SOUTH_W:
 			angle1 = 112.5;
 			angle2 = 157.5;
 			break;
-		case "W":
+		case Absolute_Orientation.WEST:
 			angle1 = 157.5;
 			angle2 = 202.5;
 			break;
-		case "NW":
+		case Absolute_Orientation.NORTH_W:
 			angle1 = 202.5;
 			angle2 = 247.5;
 			break;
-		case "N":
+		case Absolute_Orientation.NORTH:
 			angle1 = 247.5;
 			angle2 = 292.5;
 			break;
-		case "NE":
+		case Absolute_Orientation.NORTH_E:
 			angle1 = 292.5;
 			angle2 = 337.5;
 			break;
@@ -443,31 +466,40 @@ public class Model {
 	public void suppr_key(String string) {
 		list_touche.remove(string);
 	}
-	
+
 	public long get_timer() {
 		return TIMER;
 	}
 
 	public boolean do_hit(Absolute_Orientation o, String type, int porte, Entity e) {
+		System.out.println("\nDo_Hit\n\n");
 		double p_x = e.get_x();
 		double p_y = e.get_y();
-		double angle1=0,angle2=0;
-		eval_angle(o,angle1,angle2);
-		Polygon polygon = create_polygon_direction(p_x,p_y,porte,angle1,angle2);
+		double angle1 = 0, angle2 = 0;
+		eval_angle(o, angle1, angle2);
+		Polygon polygon = create_polygon_direction(p_x, p_y, porte, angle1, angle2);
 		for (Entity entity : entities) {
 			if (entity.getHitBox().get_polygon().intersectsWith(polygon)) {
 				entity.get_injured();
+				if (entity.get_state_action() == ActionType.EXPLODE) {
+					addToRemove(entity);
+				}
 			}
 		}
+
 		return true;
 	}
 
-	public String from_rel_to_abs_orientation(Absolute_Orientation abs,Relative_Orientation rel) {
-		switch(rel.rel_or) {
+	private void addToRemove(Entity entity) {
+		entityToRemove.add(entity);
+	}
+
+	public String from_rel_to_abs_orientation(Absolute_Orientation abs, Relative_Orientation rel) {
+		switch (rel.rel_or) {
 		case "H":
-			return abs.toString();
+			return abs.get_abs_Orientation();
 		case "F":
-			return abs.toString();
+			return abs.get_abs_Orientation();
 		case "B":
 			switch (abs.abs_or) {
 			case "N":
@@ -530,16 +562,43 @@ public class Model {
 	}
 
 	public boolean eval_cell(Absolute_Orientation dir, Category cat, int porte, Entity e) {
+
 		double p_x = e.get_x();
 		double p_y = e.get_y();
-		double angle1=0,angle2=0;
-		eval_angle(dir,angle1,angle2);
-		Polygon polygon = create_polygon_direction(p_x,p_y,porte,angle1,angle2);
+		double angle1 = 0, angle2 = 0;
+		eval_angle(dir, angle1, angle2);
+		Polygon polygon = create_polygon_direction(p_x, p_y, porte, angle1, angle2);
 		for (Entity entity : entities) {
 			if (entity.getHitBox().get_polygon().intersectsWith(polygon)) {
+				if (e instanceof Projectile)
+					System.out.print("projectile c'est good");
 				return true;
 			}
 		}
 		return false;
+	}
+
+	public boolean isValidPosition(Entity entity, Position newPosition) {
+
+		for (Entity e : entities) {
+			if (e.equals(entity)) {
+				continue;
+			}
+
+			if (e.getHitBox().get_polygon().containsPosition(newPosition)) {
+				return false;
+			}
+		}
+
+		return newPosition.getPositionX() >= 0 && newPosition.getPositionX() <= m_map.getBorders().getMaxX()
+				&& newPosition.getPositionY() >= 0 && newPosition.getPositionY() <= m_map.getBorders().getMaxY();
+	}
+
+	public Entity get_entity_at(float checkX, float checkY) {
+		for (Entity e : entities) {
+			if (e.get_x() == checkX && e.get_y() == checkY)
+				return e;
+		}
+		return null;
 	}
 }

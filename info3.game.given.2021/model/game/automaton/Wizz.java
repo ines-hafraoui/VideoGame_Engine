@@ -3,7 +3,7 @@ package game.automaton;
 import game.entity.Absolute_Orientation;
 import game.entity.Entity;
 
-public class Wizz implements Action{
+public class Wizz extends Action{
 
 	int factor;
 	

@@ -2,92 +2,163 @@
   "cooperative" : false,
   "timer" : -1, 
   "viscosity" : 1,
-  "nb_bot_init":5,
+  "nb_bot_init":6,
   "nb_player":2,
     "Player1":{
-      "name" : "PLAYER1",
-      "view" : 1,   
-      "behaviour": "player1.gal",
-      "features" : "Player.class",
-      "sprite" : "fighter1.png",
-      "pickable": false, 
-      "direction": "W",
-      "position": [500,200],
-      "hitbox":[5,10],
-      "team":1
-
-    },
-    "Player2":{ 
-      "name" : "PLAYER2",
-      "view" : 2,   
+      "name" : "PLAYER1", 
       "behaviour": "player2.gal",
       "features" : "Player.class",
-      "sprite" : "fighter2.png",
+      "sprite" :  {
+      	"filepath" :"resources/MiniWorldSprites/Characters/Soldiers/Mounted/RedKnight.png",
+      	"nb_rows" : 12,
+      	"nb_cols" : 4,
+      	"index" : 0,
+      	"animation" : true
+      },
+      "pickable": false, 
+      "direction": "W",
+      "position": [1600,890],
+      "hitbox":[20,35],
+      "team":1
+    },
+    "Player2":{ 
+      "name" : "PLAYER2", 
+      "behaviour": "player1.gal",
+      "features" : "Player.class",
+      "sprite" :  {
+      	"filepath" :"resources/MiniWorldSprites/Characters/Soldiers/Mounted/CyanKnight.png",
+      	"nb_rows" : 12,
+      	"nb_cols" : 4,
+      	"index" : 0,
+      	"animation" : true
+      },
       "pickable": false ,
       "direction": "W",
-      "position":[500,500],
-      "hitbox":[5,10],
+      "position":[110,150],
+      "hitbox":[20,35],
       "team": 2
     },
     "Bot1":
     { "name" : "BOT1", 
-      "view" : 1, 
-      "behaviour" : "archer.gal",
+      "behaviour" : "bot2.gal",
       "features" : "Bot.class",
-      "sprite" : "bot.png",
+      "sprite" :  {
+      	"filepath" : "resources/MiniWorldSprites/Characters/Monsters/Demons/RedDemon.png",
+      	"nb_rows" : 8,
+      	"nb_cols" : 6,
+      	"index" : 0,
+      	"animation" : true
+      },
       "pickable" : true,
       "direction":"W",
-      "position":[400,200],
-      "hitbox":[2,5],
+      "position":[1600,920],
+      "hitbox":[15,15],
       "team":1
     },
     "Bot2":{
-      "name" : "BOT2",
-      "view" : 2,  
+      "name" : "BOT2",  
       "behaviour" : "bot1.gal",
+      "sprite" :  {
+      	"filepath" : "resources/MiniWorldSprites/Characters/Monsters/Demons/PurpleDemon.png",
+      	"nb_rows" : 8,
+      	"nb_cols" : 6,
+      	"index" : 0,
+      	"animation" : true
+      },
       "features" : "Bot.class",
-      "sprite" : "bot.png",
       "pickable" : true,
       "direction":"W",
-      "position":[300,400],
-      "hitbox":[2,5],
+      "position":[120,120],
+      "hitbox":[15,15],
       "team":2
     },
     "Power":{
-      "name" : "POWER",
-      "view" : 0,  
+      "name" : "POWER",  
       "behaviour" : "item.gal",
       "features" : "Power.class",
-      "sprite" : "power.png",
+      "sprite" :  {
+      	"filepath" : "resources/MiniWorldSprites/Miscellaneous/Chests.png",
+      	"nb_rows" : 8,
+      	"nb_cols" : 6,
+      	"index" : 0,
+      	"animation" : false
+      },
       "pickable" : true,
       "direction":"W",
-      "position":[1,1],
-      "hitbox":[2,2],
+      "position":[200,200],
+      "hitbox":[15,15],
       "team":0
     },
     "Base1":{ 
-      "name" : "BASE1",
-      "view" : 1,  
+      "name" : "BASE1",  
       "behaviour" : "base1.gal",
       "features" : "Base.class",
-      "sprite" : "base.png",
+      "sprite" :  {
+      	"filepath" : "resources/MiniWorldSprites/Buildings/Red/RedKeep.png",
+      	"nb_rows" : 2,
+      	"nb_cols" : 3,
+      	"index" : 0,
+      	"animation" : false
+      },
       "pickable" : false,
       "direction":"W",
-      "position":[600,200],
-      "hitbox":[10,10],
+      "position":[1700,900],
+      "hitbox":[40,40],
       "team":1
     },
     "Base2":{
-      "name" : "BASE2",
-      "view" : 2,  
+      "name" : "BASE2", 
       "behaviour" : "base1.gal",
       "features" : "Base.class",
-      "sprite" : "base.png",
+      "sprite" :  {
+      	"filepath" : "resources/MiniWorldSprites/Buildings/Cyan/CyanKeep.png",
+      	"nb_rows" : 2,
+      	"nb_cols" : 3,
+      	"index" : 0,
+      	"animation" : false
+      },
       "pickable" : false,
       "direction":"W",
-      "position":[100,400],
-      "hitbox":[10,10],
+      "position":[100,100],
+      "hitbox":[40,40],
       "team":2
-    }
+    },
+     "Arrow":{
+      "name" : "ARROW",  
+      "behaviour" : "Arrow.gal",
+      "features" : "Projectile.class",
+      "sprite" :  {
+      	"filepath" : "resources/MiniWorldSprites/Objects/ArrowLong.png",
+      	"nb_rows" : 2,
+      	"nb_cols" : 3,
+      	"index" : 0,
+      	"animation" : true
+      },
+      "pickable" : false,
+      "direction":"W",
+      "position":[0,0],
+      "hitbox":[15,15],
+      "team":0
+    },
+     "FireBall":{
+      "name" : "FIREBALL", 
+      "behaviour" : "bdf.gal",
+      "features" : "Projectile.class",
+       "sprite" :  {
+      	"filepath" : "resources/MiniWorldSprites/Objects/ArrowLong.png",
+      	"nb_rows" : 1,
+      	"nb_cols" : 4,
+      	"index" : 0,
+      	"animation" : true
+      },
+      "pickable" : false,
+      "direction":"W",
+      "position":[0,0],
+      "hitbox":[15,15],
+      "team":0
+    },
+    "automates" : ["Dasher.gal", "Archer.gal", "Dragon.gal"],
+    "background" : ["resources/MiniWorldSprites/Ground/DeadGrass.png",2,3,true],
+    "zoom" : 3
 }
 

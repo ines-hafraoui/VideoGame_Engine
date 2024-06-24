@@ -3,8 +3,8 @@ package game.automaton;
 import game.entity.Absolute_Orientation;
 import game.entity.Entity;
 
-public class Cell implements Condition {
-	
+public class Cell extends Condition {
+
 	Absolute_Orientation a;
 	Relative_Orientation d; 
 	Category cat; 
