@@ -19,7 +19,7 @@ Joueur_1(Beg){
  
  * (Fight):
  | !(Got(Power)) ? Explode :(Mort)
- | True ? Egg(1) : (Beg) 
+ | Key(SPACE) ? Egg(1) : (Beg) 
  
  * (Select1):
  | !(Got(Power)) ? Explode :(Mort)
