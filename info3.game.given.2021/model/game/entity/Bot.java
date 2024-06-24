@@ -10,6 +10,7 @@ public class Bot extends Entity{
 
 	
 	private int acc_factor;
+	private Entity m_player;
 	
 	public Bot(Automate a, Model m,Position p, Absolute_Orientation o,int team, int nb_bot,String name) {
 		super(a,m,p,o,team, nb_bot,name);
@@ -24,6 +25,10 @@ public class Bot extends Entity{
 		type = EntityType.TEAMMATE;
 		name = "BOT" + team;
 	}
+	
+	public void set_player(Entity e) {
+		m_player = e;
+	}
 
 	@Override
 	public boolean do_pick(int distance) {
@@ -34,6 +39,13 @@ public class Bot extends Entity{
 	public Entity do_throw() {
 		return null;
 	}
+	
+	public boolean do_move() {
+		this.position.setPositionX(m_player.get_x()+10);
+		this.position.setPositionY(m_player.get_y()+10);
+		return true;
+	}
+	
 
 	@Override
 	public boolean do_wizz(int factor) {

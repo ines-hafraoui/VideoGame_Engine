@@ -11,16 +11,14 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import game.entity.ActionType;
 import game.entity.Entity;
 import info3.game.view.View;
 
 public abstract class Avatar {
 
-	public static final int HIT = 1;
-	public static final int WALK = 2;
-	public static final int IDLE = 3;
 
-	protected int a_state;
+	protected String a_state;
 
 	public Entity m_entity;
 	protected View m_view;
@@ -35,7 +33,7 @@ public abstract class Avatar {
 		m_hb = new HealthBar(this);
 		m_view.addAvatar(this);
 		m_valid = true;
-		a_state = IDLE;
+		a_state = e.get_state_action();
 	}
 
 	public Avatar() {
@@ -43,15 +41,6 @@ public abstract class Avatar {
 
 	public abstract void paint(Graphics g, int x, int y);
 
-	public int StateToString(String s) {
-		if (s.equals("HIT")) {
-			return HIT;
-		} else if (s.equals("MOVE")) {
-			return WALK;
-		} else {
-			return IDLE;
-		}
-	}
 
 	public void paintmainplayer(Graphics g, int x, int y) {
 		BufferedImage img = m_images[m_imageIndex];
