@@ -17,9 +17,6 @@ import info3.game.view.View;
 
 public abstract class Avatar {
 
-//	public static final int HIT = 1;
-//	public static final int WALK = 2;
-//	public static final int IDLE = 3;
 
 	protected String a_state;
 
@@ -44,15 +41,6 @@ public abstract class Avatar {
 
 	public abstract void paint(Graphics g, int x, int y);
 
-//	public String StateToString(String s) {
-//		if (s.equals("HIT")) {
-//			return ActionType.HIT;
-//		} else if (s.equals("MOVE")) {
-//			return ActionType.MOVE;
-//		} else {
-//			return IDLE;
-//		}
-//	}
 
 	public void paintmainplayer(Graphics g, int x, int y) {
 		BufferedImage img = m_images[m_imageIndex];

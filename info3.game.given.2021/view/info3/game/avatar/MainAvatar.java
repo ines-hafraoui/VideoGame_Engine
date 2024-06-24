@@ -56,19 +56,10 @@ public class MainAvatar extends Avatar {
 				y + (int) m_entity.get_y() - (img.getHeight() * View.DISPLAYSCALE) - 5 % img.getHeight(),
 				(img.getWidth() * View.DISPLAYSCALE), 5 % img.getHeight(), this.m_entity.get_HP());
 		
-		game.map.Polygon p = m_entity.getHitBox().get_polygon();
-		Polygon p2 = new Polygon();
-		for (Position pos : p.getVertices()) {
-			p2.addPoint((int) pos.getPositionX(), (int) pos.getPositionY());
+		
+		if (m_animate) {
+			configureAnimation();
 		}
-		g.setColor(Color.black);
-
-		g.drawPolygon(p2);
-		
-		
-//		if (m_animate) {
-//			configureAnimation();
-//		}
 
 	}
 

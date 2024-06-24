@@ -17,7 +17,7 @@
       },
       "pickable": false, 
       "direction": "W",
-      "position": [1700,890],
+      "position": [1600,890],
       "hitbox":[5,10],
       "team":1
 

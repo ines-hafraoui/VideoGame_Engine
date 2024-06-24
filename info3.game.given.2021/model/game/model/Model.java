@@ -173,7 +173,12 @@ public class Model {
 		for (Entity e : entities) {
 			if (e instanceof Bot) {
 				int team = e.get_team();
-				((Bot) e).set_player(players[team-1]);
+				for (int j = 0; j<players.length; j++) {
+					if (players[j].get_team()== team ) {
+						((Bot) e).set_player(players[j]);
+					}
+				}
+				
 				
 			}
 		}
