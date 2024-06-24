@@ -26,24 +26,30 @@ public class HitBox {
 	}
 
 	public Polygon get_polygon() {
+		updatePolygon();
+
 		return polygon;
+		
 	}
 
 	public void setHbWidth(float x) {
 		this.width = x;
+		updatePolygon();
+
 	}
 
 	public void setHbHeight(float y) {
 		this.height = y;
+		updatePolygon();
 	}
 
 	public void setEntity(Entity e) {
 		this.e = e;
-		polygon = create_polygon();
+		updatePolygon();
 	}
 
 	public void setPolygone() {
-		this.polygon = create_polygon();
+		updatePolygon();
 	}
 
 	@Override
@@ -54,6 +60,10 @@ public class HitBox {
 			return false;
 		HitBox hb = (HitBox) obj;
 		return Float.compare(hb.width, width) == 0 && Float.compare(hb.height, height) == 0;
+	}
+	
+	private void updatePolygon() {
+		polygon = create_polygon();
 	}
 
 	private Polygon create_polygon() {

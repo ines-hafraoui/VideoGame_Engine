@@ -1,7 +1,10 @@
 package info3.game.avatar;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -10,6 +13,7 @@ import org.json.simple.JSONObject;
 import game.entity.Absolute_Orientation;
 import game.entity.ActionType;
 import game.entity.Entity;
+import game.entity.Position;
 import info3.game.view.View;
 
 public class MainAvatar extends Avatar {
@@ -51,9 +55,21 @@ public class MainAvatar extends Avatar {
 		m_hb.drawHealthBar(g, x + (int) m_entity.get_x() - (img.getWidth() * View.DISPLAYSCALE),
 				y + (int) m_entity.get_y() - (img.getHeight() * View.DISPLAYSCALE) - 5 % img.getHeight(),
 				(img.getWidth() * View.DISPLAYSCALE), 5 % img.getHeight(), this.m_entity.get_HP());
-		if (m_animate) {
-			configureAnimation();
+		
+		game.map.Polygon p = m_entity.getHitBox().get_polygon();
+		Polygon p2 = new Polygon();
+		for (Position pos : p.getVertices()) {
+			p2.addPoint((int) pos.getPositionX(), (int) pos.getPositionY());
 		}
+		g.setColor(Color.black);
+
+		g.drawPolygon(p2);
+		
+		
+//		if (m_animate) {
+//			configureAnimation();
+//		}
+
 	}
 
 	@Override
