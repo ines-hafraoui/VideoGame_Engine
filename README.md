@@ -29,7 +29,7 @@ Les fichiers **configjeu1.json** et **configjeu2.json** sont placés directement
     - leur type, 
     - le comportement (le fichier gal) et la hitbox
     - le sprite
-        -  On y trouve un array **details** composé d'autre array. Ils indiquent pour chaque action où trouver les sprites dans la matrice généré avec le fichier .png. L'array details change en fonction de l'entité (exemple entre un joueur et une arrow)
+        -  On y trouve un objet **details** composé d'autre objets. Ils indiquent pour chaque action où trouver les sprites dans la matrice généré avec le fichier .png. L'array details change en fonction de l'entité (exemple entre un joueur et une arrow). Il faut délimiter les sprites par action et par orientation avec soit un entier pour chaque image à selectionner soit un array avec le début et la fin de l'animation.
     - la direction, position, team, et un boolean pickable
 - un tableau de fichier gal qui sont les comportements des bots qu'on peut leur attribuer
 - cooperative qui indique si les joueurs sont adversaire ou pas
