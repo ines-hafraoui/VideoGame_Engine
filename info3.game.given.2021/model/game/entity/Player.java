@@ -83,11 +83,30 @@ public class Player extends Entity {
 	@Override
 	public boolean do_get() {
 		System.out.print("is getting");
-		Item item = inventory[index];
-		Entity e=this.eval_closest(new Absolute_Orientation(Absolute_Orientation.NORTH), new Category(Category.PLAYER_IN_MY_TEAM),(float) model.get_width());
-//		if (bots.size() != 0) {
+		Item item = inventory[index%nb_item_inventory];
+		
+		Entity entity = null;
+		float min_dst = Float.MAX_VALUE;
+		for (Entity e : model.get_entities()) {
+			
+			if (!(e instanceof Bot)) {
+				continue;
+			}
+			
+			if (this.position.distance(e.position)< min_dst) {
+				min_dst = this.position.distance(e.position);
+				entity = e;
+			}
+		}
+		entity.aut = item.get_automate();
+		index =0;
+		nb_item_inventory--;
+	
+		//problem with moving every automaton in the inventory to first positions
+		return true;
+		
 //			Entity e = bots.get(index_bot);
-//			Item item = inventory[index_inventory];
+//			Item item = inventory[index];
 //			if (item != null) {
 //				// move element to the left
 //				for (int i = index_inventory; i < nb_item_inventory - 1; i++) {
@@ -96,14 +115,12 @@ public class Player extends Entity {
 //				inventory[nb_item_inventory - 1] = null; // last element is null
 //				nb_item_inventory--;
 //
-//				e.aut = item.get_automate();
 //				index_inventory = 0;
 //				index_bot = 0;
 //				return true;
 //			}
 //			return false;
 //		}
-		return false;
 	}
 
 	public void do_egg(int c) {
@@ -129,14 +146,10 @@ public class Player extends Entity {
 			index=0;
 			inventory[index].selected=true;
 		}
-		else if(index>=6) {
-			index=0;
-			inventory[index].selected=true;
-		}
 		else {
-			inventory[index].selected=false;
+			inventory[index%nb_item_inventory].selected=false;
 			index++;
-			inventory[index].selected=true;
+			inventory[index%nb_item_inventory].selected=true;
 		}
 		return true;
 	}

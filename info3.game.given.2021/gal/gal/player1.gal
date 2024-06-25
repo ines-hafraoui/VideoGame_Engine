@@ -23,8 +23,8 @@ Joueur_1(Beg){
  
  * (Select1):
  | !(Got(Power)) ? Explode :(Mort)
- | Key(a) ? :Wizz():(Select1)
- | Key(e) ? Get() :(Beg)
+ | Key(a) ? Wizz(1) :(Select1)
+ | Key(e) ? Get :(Beg)
  
  * (Select2):
  | !(Got(Power)) ? Explode :(Mort)

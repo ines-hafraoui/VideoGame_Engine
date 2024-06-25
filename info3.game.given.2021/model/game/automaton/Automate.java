@@ -64,14 +64,10 @@ public class Automate {
 
 	public void step(Entity e) {
 
-		System.out.println(TICK + " " + DELAY);
-		System.out.println(currentStateList.size());
 
 		if (TICK >= DELAY) {
 			blocked = false;
 		} else {
-			System.out.println("BLOCKED");
-			System.out.println(TICK);
 			TICK++;
 		}
 
