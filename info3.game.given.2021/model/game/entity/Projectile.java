@@ -23,11 +23,11 @@ public class Projectile extends Entity {
 		switch (s) {
 		case "Arrow":
 		case "A":
-			this.type = EntityType.ARROW;
+			this.type = EntityType.PROJECTILE;
 			break;
 		case "FireBall":
 		case "FB":
-			this.type = EntityType.FIREBALL;
+			this.type = EntityType.PROJECTILE;
 			break;
 		default:
 			System.out.print("mauvais type attribué au projectile");

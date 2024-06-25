@@ -117,17 +117,15 @@ public class Model {
 			boolean pickable = (Boolean) properties.get("pickable");
 			String behaviour = (String) properties.get("behaviour");
 			HitBox hb = (HitBox) properties.get("hitbox");
+			String type = (String) properties.get("type");
 
 			Entity entity;
-			switch (entityName) {
-			case "Player1":
-			case "Player2":
+			switch (type) {
+			case "P":
 				entity = new Player(this, pos, new Absolute_Orientation(direction), team, nb_bot_init, pickable, hb,
 						entityName);
 				break;
-			case "Bot1":
-			case "Bot2":
-			case "Parasite":
+			case "BO":
 				entity = new Bot(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
 				if (behaviour != null) {
 					Automate automate = TestMain.loadAutomata(new File("gal/gal/" + behaviour).getAbsolutePath());
@@ -145,14 +143,10 @@ public class Model {
 					}
 				}
 				break;
-			case "Base1":
-			case "Base2":
-			case "Base":
+			case "BA":
 				entity = new Base(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
 				break;
-			case "Power":
-			case "Capacity":
-			case "Plant":
+			case "I":
 				entity = new Item(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
 				if (behaviour != null) {
 					Automate automate = TestMain.loadAutomata(new File("gal/gal/" + behaviour).getAbsolutePath());
@@ -171,8 +165,7 @@ public class Model {
 					}
 				}
 				break;
-			case "Arrow":
-			case "FireBall":
+			case "PR":
 				entity = new Projectile(this, pos, new Absolute_Orientation(direction), entityName, team, 0, pickable,
 						hb, entityName);
 				break;

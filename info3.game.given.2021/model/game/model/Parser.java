@@ -117,9 +117,8 @@ public class Parser {
         case "Player2":
             return EntityType.PLAYER;
         case "Arrow": 
-        	return EntityType.ARROW;
         case "FireBall":
-        	return EntityType.FIREBALL;
+        	return EntityType.PROJECTILE;
         case "Bot1":
         case "Bot2":
         case "Parasite":
