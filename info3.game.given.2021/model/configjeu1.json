@@ -179,7 +179,7 @@
       "pickable" : true,
       "direction":"W",
       "position":[200,200],
-      "hitbox":[50,50],
+      "hitbox":[30,30],
       "team":0
     },
     "Base1":{ 

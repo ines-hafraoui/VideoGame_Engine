@@ -39,56 +39,34 @@ public class CanvasListener implements GameCanvasListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-//		System.out.println("Mouse clicked: (" + e.getX() + "," + e.getY() + ")");
-//		System.out.println("   modifiers=" + e.getModifiersEx());
-//		System.out.println("   buttons=" + e.getButton());
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-//		System.out.println("Mouse pressed: (" + e.getX() + "," + e.getY() + ")");
-//		System.out.println("   modifiers=" + e.getModifiersEx());
-//		System.out.println("   buttons=" + e.getButton());
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-//		System.out.println("Mouse released: (" + e.getX() + "," + e.getY() + ")");
-//		System.out.println("   modifiers=" + e.getModifiersEx());
-//		System.out.println("   buttons=" + e.getButton());
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-//		System.out.println("Mouse entered: (" + e.getX() + "," + e.getY() + ")");
-//		System.out.println("   modifiers=" + e.getModifiersEx());
-//		System.out.println("   buttons=" + e.getButton());
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-//		System.out.println("Mouse exited: (" + e.getX() + "," + e.getY() + ")");
-//		System.out.println("   modifiers=" + e.getModifiersEx());
-//		System.out.println("   buttons=" + e.getButton());
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-//		System.out.println("Mouse dragged: (" + e.getX() + "," + e.getY() + ")");
-//		System.out.println("   modifiers=" + e.getModifiersEx());
-//		System.out.println("   buttons=" + e.getButton());
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-//		System.out.println("Mouse moved: (" + e.getX() + "," + e.getY() + ")");
-//		System.out.println("   modifiers=" + e.getModifiersEx());
-//		System.out.println("   buttons=" + e.getButton());
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		//System.out.println("Key typed: " + e.getKeyChar() + " code=" + e.getKeyCode());
 	}
 
 	@Override
@@ -136,10 +114,10 @@ public class CanvasListener implements GameCanvasListener {
 			m_game.m_model.set_key("l");
 			break;
 		case 517 :// Hit joueur2 '!'
-			m_game.m_model.set_key("IM");
+			m_game.m_model.set_key("m");
 			break;
 		case 0 :// Select joueur2 'ù'
-			m_game.m_model.set_key("UA");
+			m_game.m_model.set_key("l");
 			break;
 		case 10 :// Accepter sélection joueur2 'Entrée'
 			m_game.m_model.set_key("ENTER");

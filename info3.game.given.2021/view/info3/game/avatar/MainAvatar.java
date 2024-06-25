@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -50,8 +52,6 @@ public class MainAvatar extends Avatar {
 	@Override
 	public void paint(Graphics g, int x, int y) {
 		BufferedImage img = m_images[m_imageIndex];
-//		int h = (int) m_entity.getHitBox().getHbHeight() * View.DISPLAYSCALE;
-//		int w = (int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE;
 		int h = img.getHeight() * View.DISPLAYSCALE;
 		int w = img.getWidth() * View.DISPLAYSCALE;
 		g.drawImage(img, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - w,
@@ -67,6 +67,11 @@ public class MainAvatar extends Avatar {
 			g.drawRect((x + (int) m_entity.get_x() * View.DISPLAYSCALE) - w,
 					(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - h, w, h);
 		}
+		g.setColor(Color.red);
+		g.drawRect((x + (int) m_entity.get_x() * View.DISPLAYSCALE) - w,
+				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - h,
+				(int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE,
+				(int) m_entity.getHitBox().getHbHeight() * View.DISPLAYSCALE);
 		if (m_animate) {
 			configureAnimation();
 		}
@@ -83,10 +88,9 @@ public class MainAvatar extends Avatar {
 		if (hp > 0) {
 			m_hb.drawHealthBar(g, x - w, y - h - 5 % img.getHeight(), w, 5 % img.getHeight(), hp);
 		}
-//		g.setColor(Color.red);
-//		g.drawRect(x - w/2 - 20, y - h, (int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE,
-//				(int) m_entity.getHitBox().getHbHeight() * View.DISPLAYSCALE);
-
+		g.setColor(Color.red);
+		g.drawRect(x - w/2 - 20, y - h, (int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE,
+				(int) m_entity.getHitBox().getHbHeight() * View.DISPLAYSCALE);
 		if (m_animate) {
 			configureAnimation();
 		}
@@ -99,7 +103,6 @@ public class MainAvatar extends Avatar {
 			a_state = m_entity.get_state_action();
 			switch (a_state) {
 			case ActionType.IDLE:
-//			case ActionType.REST:
 				JSONArray indexidle = (JSONArray) ((JSONObject) m_actions.get("idle")).get("index");
 				if (m_imageIndex < ((Number) indexidle.get(0)).intValue()) {
 					m_imageIndex = ((Number) indexidle.get(0)).intValue();

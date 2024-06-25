@@ -66,17 +66,20 @@ public class MapView {
 	public void paint(Graphics g, int x, int y) {
 //		g.translate(0, 0);
 		// printing all the basic tiles to be optimized
-		for (int i = 0; i < m_ncols; i++) {
-			for (int j = 0; j < m_nrows; j++) {
-				BufferedImage img = m_bgimages[m_groundsetup[i * j + j]];
-				int tilex = i * (m_bgimages[0].getWidth() * View.DISPLAYSCALE) + x;
-				int tiley = j * (m_bgimages[0].getHeight() * View.DISPLAYSCALE) + y;
-				if (m_parent.withinbounds(tilex, tiley)) {
-					g.drawImage(img, tilex, tiley, img.getWidth() * View.DISPLAYSCALE,
-							img.getHeight() * View.DISPLAYSCALE, null);
+		if(Game.configParse.bg_rand) {
+			for (int i = 0; i < m_ncols; i++) {
+				for (int j = 0; j < m_nrows; j++) {
+					BufferedImage img = m_bgimages[m_groundsetup[i * j + j]];
+					int tilex = i * (m_bgimages[0].getWidth() * View.DISPLAYSCALE) + x;
+					int tiley = j * (m_bgimages[0].getHeight() * View.DISPLAYSCALE) + y;
+					if (m_parent.withinbounds(tilex, tiley)) {
+						g.drawImage(img, tilex, tiley, img.getWidth() * View.DISPLAYSCALE,
+								img.getHeight() * View.DISPLAYSCALE, null);
+					}
 				}
 			}
 		}
+		
 
 		for (Squares square : squares) {
 			square.paint(g, x, y);

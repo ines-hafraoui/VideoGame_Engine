@@ -11,7 +11,7 @@ public abstract class AViewport extends Component {
 
 	protected Dimension m_d;
 	protected Rectangle m_inWorldBounds;
-	int m_x, m_y;
+	protected int m_x, m_y;
 	Model m_model;
 	View m_parent;
 	protected MapView m_map;
@@ -31,7 +31,6 @@ public abstract class AViewport extends Component {
 
 	public void setDimension(Dimension d) {
 		m_d = d;
-
 		// Scaling the bounds' leeway to the zoom given to the map
 		m_inWorldBounds = new Rectangle(-20 * View.DISPLAYSCALE, -20 * View.DISPLAYSCALE,
 				m_d.width + (20 * View.DISPLAYSCALE), m_d.height + (20 * View.DISPLAYSCALE));
