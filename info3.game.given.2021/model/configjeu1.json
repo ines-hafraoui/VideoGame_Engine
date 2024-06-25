@@ -87,8 +87,8 @@
       "team": 2,
       "type" : "P"
     },
-    "Bot1":
-    { "name" : "BOT1", 
+    "Bot1":{
+     "name" : "BOT1", 
       "behaviour" : "bot2.gal",
       "features" : "game.entity.Bot",
       "sprite" :  {
@@ -247,7 +247,7 @@
       "position":[0,0],
       "hitbox":[15,15],
       "team":0,
-      "type" : "A"
+      "type" : "PR"
     },
      "FireBall":{
       "name" : "FIREBALL", 
@@ -266,7 +266,7 @@
       "position":[0,0],
       "hitbox":[15,15],
       "team":0,
-      "type" : "FB"
+      "type" : "PR",
     },
     "automates" : ["Dasher.gal", "Archer.gal", "Dragon.gal"],
     "background" : ["resources/MiniWorldSprites/Ground/DeadGrass.png",2,3,true],

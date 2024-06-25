@@ -113,21 +113,19 @@ public class Model {
 			String behaviour = (String) properties.get("behaviour");
 			HitBox hb = (HitBox) properties.get("hitbox");
 			String type = (String) properties.get("type");
-			
 			Class<?> features = Class.forName((String) properties.get("features"));
 //			System.out.println(features);
-			Constructor<?> cons = features.getConstructor(Model.class, Position.class, Absolute_Orientation.class, String.class,
-					int.class, int.class, Boolean.class, HitBox.class, String.class);
-			Object object = cons.newInstance(this, pos, new Absolute_Orientation(direction),type, team, nb_bot_init,
+			Constructor<?> cons = features.getConstructor(Model.class, Position.class, Absolute_Orientation.class,
+					String.class, int.class, int.class, Boolean.class, HitBox.class, String.class);
+			Object object = cons.newInstance(this, pos, new Absolute_Orientation(direction), type, team, nb_bot_init,
 					pickable, hb, entityName);
 			System.out.println(entityName + "  " + object);
 
 			Entity entity = (Entity) object;
-			if(type.equals(EntityType.TEAMMATE) || type.equals(EntityType.PARASITE)) {
-				if(nb_bot_init <= 0) {
+			if (type.equals(EntityType.TEAMMATE) || type.equals(EntityType.PARASITE)) {
+				if (nb_bot_init <= 0) {
 					entity = null;
-				}
-				else if (behaviour != null) {
+				} else if (behaviour != null) {
 					Automate automate = TestMain.loadAutomata(new File("gal/gal/" + behaviour).getAbsolutePath());
 					if (automate != null) {
 						for (int j = 1; j < nb_bot_init; j++) {
@@ -137,18 +135,17 @@ public class Model {
 							float x = pos.getPositionX();
 							float y = pos.getPositionY();
 							pos = new Position(x + 2, y + 2);
-							entity = new Bot(this, pos, new Absolute_Orientation(direction), type, team, 0, pickable, hb,
-									entityName);
+							entity = (Entity) cons.newInstance(this, pos, new Absolute_Orientation(direction), type,
+									team, nb_bot_init, pickable, hb, entityName);
 						}
 					}
 				}
 			}
-			
-			if(type.equals(EntityType.ITEM)) {
-				if(nb_item <= 0) {
+
+			if (type.equals(EntityType.ITEM)) {
+				if (nb_item <= 0) {
 					entity = null;
-				}
-				else if (behaviour != null) {
+				} else if (behaviour != null) {
 					Automate automate = TestMain.loadAutomata(new File("gal/gal/" + behaviour).getAbsolutePath());
 					if (automate != null) {
 						for (int j = 1; j < nb_item; j++) {
@@ -159,8 +156,8 @@ public class Model {
 							float y = pos.getPositionY();
 							pos = new Position(x + 2, y + 2);
 							hb = new HitBox(50, 50);
-							entity = new Item(this, pos, new Absolute_Orientation(direction), type, team, 0, pickable, hb,
-									entityName);
+							entity = (Entity) cons.newInstance(this, pos, new Absolute_Orientation(direction), type,
+									team, nb_bot_init, pickable, hb, entityName);
 						}
 					}
 				}

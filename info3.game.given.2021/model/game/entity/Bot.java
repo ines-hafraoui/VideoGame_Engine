@@ -1,9 +1,6 @@
 package game.entity;
 
 import game.automaton.Automate;
-import game.entity.Absolute_Orientation;
-import game.automaton.Category;
-import game.automaton.Direction;
 import game.model.Model;
 
 public class Bot extends Entity {
@@ -29,8 +26,10 @@ public class Bot extends Entity {
 
 	public void set_player(Entity e) {
 		m_player = e;
-		this.offsetx = 10 * m_player.bots.size();
-		this.offsety = 2 * m_player.bots.size();
+		if(m_player.bots != null) {
+			this.offsetx = 10 * m_player.bots.size();
+			this.offsety = 2 * m_player.bots.size();
+		}
 		m_player.addbots(this);
 	}
 
@@ -43,19 +42,19 @@ public class Bot extends Entity {
 		switch (c) {
 		case FLECHE:
 			// Temporary just to test
-			e = model.newEntity(model, eggPos, eggOr, EntityType.ARROW, team, 0, 0, false, new HitBox(2, 2), "Arrow");
+			e = model.newEntity(model, eggPos, eggOr, EntityType.PROJECTILE, team, 0, 0, false, new HitBox(2, 2), "Arrow");
 			model.get_entities().add(e);
-			a = model.automates.get(EntityType.ARROW);
+			a = model.automates.get(EntityType.PROJECTILE);
 			e.set_player(this.m_player);
 			e.set_automate(a);
 			break;
 		case BOULE_FEU:
 			// Temporary just to test
-			e = model.newEntity(model, eggPos, eggOr, EntityType.FIREBALL, team, 0, 0, false, new HitBox(2, 2),
+			e = model.newEntity(model, eggPos, eggOr, EntityType.PROJECTILE, team, 0, 0, false, new HitBox(2, 2),
 					"Fireball");
 			model.get_entities().add(e);
 			e.set_player(this.m_player);
-			a = model.automates.get(EntityType.FIREBALL);
+			a = model.automates.get(EntityType.PROJECTILE);
 			e.set_automate(a);
 			break;
 		default:

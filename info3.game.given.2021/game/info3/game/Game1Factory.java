@@ -34,8 +34,7 @@ public class Game1Factory implements IFactory {
 			return new Bot(a, m, p, o, team, 0, name);
 		case EntityType.PLAYER:
 			return new Player(a, m, p, o, team, Model.nb_bot_init, name);
-		case EntityType.FIREBALL:
-		case EntityType.ARROW:
+		case EntityType.PROJECTILE:
 			return new Projectile(a, m, p, o, type, team, 0, name);
 		default:
 			return null;
@@ -54,8 +53,7 @@ public class Game1Factory implements IFactory {
 			return new Bot(m, p, o,type,  team, nb_bot, pickable, hb,name);
 		case EntityType.PLAYER:
 			return new Player(m, p, o,type, team, nb_bot, pickable, hb,name);
-		case EntityType.FIREBALL:
-		case EntityType.ARROW:
+		case EntityType.PROJECTILE:
 			return new Projectile(m, p, o, type, team, nb_bot, pickable, hb,name);
 		default:
 			return null;

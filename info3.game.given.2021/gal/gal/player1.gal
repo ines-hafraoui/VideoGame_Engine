@@ -26,13 +26,6 @@ Joueur_1(Beg){
  | Key(a) ? Wizz(1) :(Select1)
  | Key(e) ? Get :(Beg)
  
- * (Select2):
- | !(Got(Power)) ? Explode :(Mort)
- | Key(l) ? :(Beg)
- | Key(FR) ? Wait(1,2) :(Select2)
- | Key(FL) ? Wait(2,2) :(Select2)
- | Key(ENTER) ? Get :(Beg)
- | Key(p) ? Throw :(Beg)
   
  * (Mort):
  | True ? :(Mort)

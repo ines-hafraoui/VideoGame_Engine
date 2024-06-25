@@ -62,6 +62,7 @@ public class MainAvatar extends Avatar {
 					(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - h - 5 % img.getHeight(), w, 5 % img.getHeight(),
 					hp);
 		}
+
 		if (m_entity.get_selected()) {
 			g.setColor(Color.GREEN);
 			g.drawRect((x + (int) m_entity.get_x() * View.DISPLAYSCALE) - w,
