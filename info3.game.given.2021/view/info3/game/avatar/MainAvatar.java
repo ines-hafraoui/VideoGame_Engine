@@ -58,7 +58,7 @@ public class MainAvatar extends Avatar {
 		int h = img.getHeight() * View.DISPLAYSCALE;
 		int w = img.getWidth() * View.DISPLAYSCALE;
 		g.drawImage(img, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - w,
-				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - h, h, w, null);
+				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - h, w, h, null);
 		int hp = this.m_entity.get_HP();
 		if (hp > 0) {
 			m_hb.drawHealthBar(g, (x + (int) m_entity.get_x() * View.DISPLAYSCALE) - w,
@@ -70,7 +70,10 @@ public class MainAvatar extends Avatar {
 				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - h,
 				(int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE,
 				(int) m_entity.getHitBox().getHbHeight() * View.DISPLAYSCALE);
-
+		if(m_entity.get_selected()) {
+			g.setColor(Color.GREEN);
+			g.drawRect((x + (int) m_entity.get_x() * View.DISPLAYSCALE) - w, (y + (int) m_entity.get_y() * View.DISPLAYSCALE) - h, w, h);
+		}
 		if (m_animate) {
 			configureAnimation();
 		}

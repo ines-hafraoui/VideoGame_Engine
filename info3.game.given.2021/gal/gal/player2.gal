@@ -22,18 +22,9 @@ Joueur_2(Beg){
  
  * (Select1):
  | !(Got(Power)) ? Explode :(Mort)
- | Key(l) ? :(Beg)
- | Key(FR) ? Wait(1,1) :(Select1)
- | Key(FL) ? Wait(2,1) :(Select1)
- | Key(ENTER) ? Wait(0,1) :(Select2)
- 
- * (Select2):
- | !(Got(Power)) ? Explode :(Mort)
- | Key(l) ? :(Beg)
- | Key(FR) ? Wait(1,2) :(Select2)
- | Key(FL) ? Wait(2,2) :(Select2)
+ | Key(l) ? Wizz(1) :(Select1)
  | Key(ENTER) ? Get :(Beg)
- | Key(p) ? Throw :(Beg)
+ 
   
  * (Mort):
  | True ? :(Mort)

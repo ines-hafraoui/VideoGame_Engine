@@ -6,7 +6,7 @@
   "nb_player":2,
   "nb_item" : 20,
     "Player1":{
-      "name" : "PLAYER1", 
+      "name" : "PL<<<<<<< HEADAYER1", 
       "behaviour": "player2.gal",
       "features" : "Player.class",
       "sprite" :  {
@@ -97,6 +97,9 @@
       	"animation" : true,
       	"details" : {
       		"action": {
+      			"idle": {
+      				"index" : [6,7]
+      			},
       			"move": {
       				"orientation" : {
 			      		"north": [6,10],
@@ -133,6 +136,9 @@
       	"animation" : true,
       	"details" : {
       		"action": {
+      			"idle": {
+      				"index" : [6,7]
+      			},
       			"move": {
       				"orientation" : {
 			      		"north": [6,10],
@@ -257,4 +263,3 @@
     "background" : ["resources/MiniWorldSprites/Ground/DeadGrass.png",2,3,true],
     "zoom" : 3
 }
-

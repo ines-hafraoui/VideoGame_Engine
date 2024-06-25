@@ -1,5 +1,6 @@
 package info3.game.view;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -14,6 +15,7 @@ public class InventoryMenu {
 	static final int NBCASE = 6;
 
 	private BufferedImage m_image;
+	private BufferedImage m_image_select;
 	private int InventoryX;
 	private int InventoryY;
 	private AViewport m_viewport;
@@ -26,6 +28,10 @@ public class InventoryMenu {
 				5);
 		m_image = images[0];
 		m_inventory = inventory;
+		
+		BufferedImage[] images_select = View.loadSprite("resources/MiniWorldSprites/User_Interface/BoxSelector.png", 1,
+				2);
+		m_image_select=images_select[0];
 	}
 
 	public void paint(Graphics g, int x, int y) {
@@ -36,8 +42,12 @@ public class InventoryMenu {
 				if (m_inventory[i] != null) {
 					Entity item = m_inventory[i];
 					Avatar item_avatar = new ItemAvatar();
-					g.drawImage(item_avatar.get_images()[0], InventoryX + i * w, InventoryY, w,
+					g.drawImage(item_avatar.get_images()[0], x + i * w, y, w,
 							get_image().getHeight() * INVENTORYSIZE, null);
+					if(m_inventory[i].get_selected()) {
+						g.drawImage(m_image_select, x + i * w, y, w,
+								get_image().getHeight() * INVENTORYSIZE, null);
+					}
 				}
 			}
 

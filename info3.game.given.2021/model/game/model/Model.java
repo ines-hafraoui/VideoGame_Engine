@@ -164,6 +164,7 @@ public class Model {
 							float x = pos.getPositionX();
 							float y = pos.getPositionY();
 							pos = new Position(x + 2, y + 2);
+							hb = new HitBox(50,50);
 							entity = new Item(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb,
 									entityName);
 						}
@@ -420,7 +421,7 @@ public class Model {
 		return p1.distance(p2);
 	}
 
-	private Polygon create_polygon_direction(double p_x, double p_y, float portee, double angle1, double angle2) {
+	public Polygon create_polygon_direction(double p_x, double p_y, float portee, double angle1, double angle2) {
 		double pb_x = p_x + portee;
 		double pb_y = p_y;
 		double p1_x = (pb_x * Math.cos(angle1)) - (pb_y * Math.sin(angle1));
@@ -493,7 +494,6 @@ public class Model {
 	}
 
 	public boolean do_hit(Absolute_Orientation o, String type, int porte, Entity e) {
-		System.out.println("\nDo_Hit\n\n");
 		double p_x = e.get_x();
 		double p_y = e.get_y();
 		double angle1 = 0, angle2 = 0;
@@ -511,7 +511,7 @@ public class Model {
 		return true;
 	}
 
-	private void addToRemove(Entity entity) {
+	public void addToRemove(Entity entity) {
 		entityToRemove.add(entity);
 	}
 
@@ -591,8 +591,6 @@ public class Model {
 		Polygon polygon = create_polygon_direction(p_x, p_y, porte, angle1, angle2);
 		for (Entity entity : entities) {
 			if (entity.getHitBox().get_polygon().intersectsWith(polygon)) {
-				if (e instanceof Projectile)
-					System.out.print("projectile c'est good");
 				return true;
 			}
 		}
@@ -612,8 +610,16 @@ public class Model {
 			}
 		}
 
-		return newPosition.getPositionX() >= 0 && newPosition.getPositionX() <= m_map.getBorders().getMaxX()
-				&& newPosition.getPositionY() >= 0 && newPosition.getPositionY() <= m_map.getBorders().getMaxY();
+		return inBounds(newPosition.getPositionX(),newPosition.getPositionY(), entity); 
+	}
+
+	public boolean inBounds(float x, float y, Entity e) {
+		if (x >= 0 && x <= m_map.getBorders().getMaxX() && y >= 0 && y <= m_map.getBorders().getMaxY()) {
+			return true;
+		}else {
+			addToRemove(e);
+			return false;
+		}
 	}
 
 	public Entity get_entity_at(float checkX, float checkY) {

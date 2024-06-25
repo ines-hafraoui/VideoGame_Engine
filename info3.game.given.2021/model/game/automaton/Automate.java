@@ -18,6 +18,9 @@ public class Automate {
 
 	private List<Action> action_buffer = new ArrayList<Action>();
 
+	private int TICK = 0;
+	private int DELAY = -1;
+
 	public boolean blocked; // the entity will unblock the automaton once it's transition is over
 
 	public Automate(Entity entity) {
@@ -61,43 +64,64 @@ public class Automate {
 
 	public void step(Entity e) {
 
-		blocked = false;
-		Random r = new Random();
+		if (getTICK() >= getDELAY()) {
+			blocked = false;
+		} else {
+
+			setTICK(getTICK() + 1);
+		}
 
 		if (!blocked) {
 
-			List<State> todelete = new ArrayList<>();
-			List<State> toadd = new ArrayList<>();
+			if (!action_buffer.isEmpty()) {
+				blocked = true;
+				setTICK(0);
 
-			for (State state : currentStateList) {
-				for (Transition transition : state.get_transitionList()) {
+				Action a = action_buffer.get(0);
+				a.exec(e);
+				action_buffer.remove(0);
 
-					if (transition.c.percent != -1 && !(r.nextInt(Integer.MAX_VALUE) <= transition.c.percent))
-						continue;
+			} else {
+				Random r = new Random();
 
-					if (transition.c.eval(entity)) {
+				Set<State> toRemove = new HashSet<State>();
 
-						for (Action a : transition.actionList) {
+				for (State state : currentStateList) {
+					for (Transition transition : state.get_transitionList()) {
 
-							if (a.percent == -1 || r.nextInt(Integer.MAX_VALUE) <= a.percent) {
-								a.exec(e);
+						if (transition.c.percent != -1 && !(r.nextInt(Integer.MAX_VALUE) <= transition.c.percent))
+							continue;
+
+						if (transition.c.eval(entity)) {
+
+							for (Action a : transition.actionList) {
+								if (a.percent == -1 || r.nextInt(Integer.MAX_VALUE) <= a.percent) {
+									action_buffer.add(a);
+								}
 							}
 
-							action_buffer.add(a);
+							State s = this.getState(transition.cible);
+
+							if (!s.equals(state)) {
+								currentStateList.add(s);
+								toRemove.add(state);
+							}
+
+							break;
 						}
 
-						State s = this.getState(transition.cible);
-						toadd.add(s);
-						for (State st : toadd) {
-							currentStateList.add(st);
-
-						}
-
-						break;
 					}
 				}
+
+				for (State s : toRemove) {
+					currentStateList.remove(s);
+				}
+
+				System.out.println(currentStateList.size());
+
 			}
 		}
+
 	}
 
 	public State getState(String name) {
@@ -115,6 +139,22 @@ public class Automate {
 
 	public Entity get_entity() {
 		return this.entity;
+	}
+
+	public int getTICK() {
+		return TICK;
+	}
+
+	public void setTICK(int tICK) {
+		TICK = tICK;
+	}
+
+	public int getDELAY() {
+		return DELAY;
+	}
+
+	public void setDELAY(int dELAY) {
+		DELAY = dELAY;
 	}
 
 }
