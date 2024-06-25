@@ -202,7 +202,9 @@ public class Map {
 
 				p = new Position(x, y);
 				
-				String behaviour = m_model.aut_bot[m_model.aut_bot.length];
+				Random random2 = new Random(seed);
+				int index = random.nextInt(m_model.aut_bot.length);
+				String behaviour = m_model.aut_bot[index];
 				String galPath = new File("gal/gal/" + behaviour).getAbsolutePath();
 
 				Automate automate = TestMain.loadAutomata(galPath);
