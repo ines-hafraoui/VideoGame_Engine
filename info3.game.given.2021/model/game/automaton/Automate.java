@@ -117,7 +117,7 @@ public class Automate {
 					currentStateList.remove(s);
 				}
 
-				System.out.println(currentStateList.size());
+//				System.out.println(currentStateList.size());
 
 			}
 		}

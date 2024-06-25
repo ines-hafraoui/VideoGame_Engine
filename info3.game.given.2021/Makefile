@@ -25,6 +25,6 @@ clean:
 
 
 run: all
-	$(JAVA) -cp $(BIN_DIR):$(CLASSPATH) game/info3/game/Game
+	$(JAVA) -cp $(BIN_DIR):$(CLASSPATH) info3/game/Game
 
 .PHONY: all clean run
