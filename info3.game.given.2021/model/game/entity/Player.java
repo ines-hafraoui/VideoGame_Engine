@@ -133,6 +133,7 @@ public class Player extends Entity {
 	//select
 	public boolean do_wizz(int factor) {
 		
+		aut.setDELAY(100);
 		if (nb_item_inventory == 0) return false;
 		
 		state_action = ActionType.WIZZ;
