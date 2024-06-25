@@ -24,11 +24,11 @@ public class Player extends Entity {
 
 	}
 
-	public Player(Model m, Position pos, Absolute_Orientation o, int team, int nb_bot, Boolean pickable, HitBox hb,
-			String name) {
+	public Player(Model m, Position pos, Absolute_Orientation o, String type, int team, int nb_bot, Boolean pickable,
+			HitBox hb, String name) {
 		super(m, pos, o, team, nb_bot, pickable, hb, name);
 		inventory = new ArrayList<Item>();
-		type = EntityType.PLAYER;
+		this.type = type;
 		bots = new ArrayList<Entity>();
 	}
 

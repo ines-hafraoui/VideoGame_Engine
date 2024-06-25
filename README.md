@@ -14,10 +14,7 @@
 
 ### Lancement du Jeu
 
-- Commencer par compiler le fichier parser.jj pour parser les fichiers .gal. 
-Il se trouve dans gal/gal.parser. Sur eclipse un bouton de compilation vous est proposé. 
-
-- Pour lancer le jeu, il faut éxecuter la méthode main du fichier Game.java. Il se trouve dans game/info3.game. La choix du jeu se fait dans ce fichier dans la méthode main.
+Pour lancer le jeu, il faut éxecuter la méthode main du fichier Game.java. Il se trouve dans game/info3.game. Le choix du jeu se fait dans ce fichier dans la méthode main.
 
 ## 2.  Architecture du Projet de Jeu Java
 ### 2.1 Package Model (Chemin: game/model)
@@ -32,7 +29,7 @@ Les fichiers **configjeu1.json** et **configjeu2.json** sont placés directement
     - leur type, 
     - le comportement (le fichier gal) et la hitbox
     - le sprite
-        -  On y trouve un array **details** composé d'autre array. Ils indiquent pour chaque action où trouver les sprites dans la matrice généré avec le fichier .png. L'array details change en fonction de l'entité (exemple entre un joueur et une arrow)
+        -  On y trouve un objet **details** composé d'autre objets. Ils indiquent pour chaque action où trouver les sprites dans la matrice généré avec le fichier .png. L'array details change en fonction de l'entité (exemple entre un joueur et une arrow). Il faut délimiter les sprites par action et par orientation avec soit un entier pour chaque image à selectionner soit un array avec le début et la fin de l'animation.
     - la direction, position, team, et un boolean pickable
 - un tableau de fichier gal qui sont les comportements des bots qu'on peut leur attribuer
 - cooperative qui indique si les joueurs sont adversaire ou pas

@@ -6,10 +6,9 @@
   "nb_player":2,
   "nb_item" : 20,
     "Player1":{
-      "type" : "P",
-      "name" : "PLlAYER1", 
+      "name" : "PLAYER1", 
       "behaviour": "player2.gal",
-      "features" : "Player.class",
+      "features" : "game.entity.Player",
       "sprite" :  {
       	"filepath" :"resources/MiniWorldSprites/Characters/Soldiers/Mounted/RedKnight.png",
       	"nb_rows" : 12,
@@ -44,13 +43,13 @@
       "direction": "W",
       "position": [1600,890],
       "hitbox":[20,35],
-      "team":1
+      "team":1,
+      "type" : "P"
     },
     "Player2":{ 
-       "type" : "P",
       "name" : "PLAYER2", 
       "behaviour": "player1.gal",
-      "features" : "Player.class",
+      "features" : "game.entity.Player",
       "sprite" :  {
       	"filepath" :"resources/MiniWorldSprites/Characters/Soldiers/Mounted/CyanKnight.png",
       	"nb_rows" : 12,
@@ -85,13 +84,13 @@
       "direction": "W",
       "position":[110,150],
       "hitbox":[20,35],
-      "team": 2
+      "team": 2,
+      "type" : "P"
     },
     "Bot1":{
-    "type" : "BO",
      "name" : "BOT1", 
       "behaviour" : "bot2.gal",
-      "features" : "Bot.class",
+      "features" : "game.entity.Bot",
       "sprite" :  {
       	"filepath" : "resources/MiniWorldSprites/Characters/Monsters/Demons/RedDemon.png",
       	"nb_rows" : 8,
@@ -126,10 +125,10 @@
       "direction":"W",
       "position":[1600,920],
       "hitbox":[15,15],
-      "team":1
+      "team":1,
+      "type" : "BO"
     },
     "Bot2":{
-    "type" : "BO",
       "name" : "BOT2",  
       "behaviour" : "bot1.gal",
       "sprite" :  {
@@ -162,18 +161,18 @@
       		}
       	}
       },
-      "features" : "Bot.class",
+      "features" : "game.entity.Bot",
       "pickable" : true,
       "direction":"W",
       "position":[120,120],
       "hitbox":[15,15],
-      "team":2
+      "team":2,
+      "type" : "BO"
     },
     "Power":{
-    "type" : "I",
       "name" : "POWER",  
       "behaviour" : "item.gal",
-      "features" : "Power.class",
+      "features" : "game.entity.Item",
       "sprite" :  {
       	"filepath" : "resources/MiniWorldSprites/Miscellaneous/Chests.png",
       	"nb_rows" : 1,
@@ -185,13 +184,13 @@
       "direction":"W",
       "position":[200,200],
       "hitbox":[30,30],
-      "team":0
+      "team":0,
+      "type" : "I"
     },
     "Base1":{ 
-    "type" : "BA",
       "name" : "BASE1",  
       "behaviour" : "base1.gal",
-      "features" : "Base.class",
+      "features" : "game.entity.Base",
       "sprite" :  {
       	"filepath" : "resources/MiniWorldSprites/Buildings/Red/RedKeep.png",
       	"nb_rows" : 2,
@@ -203,13 +202,13 @@
       "direction":"W",
       "position":[1700,900],
       "hitbox":[40,40],
-      "team":1
+      "team":1,
+      "type" : "BA"
     },
     "Base2":{
-    "type" : "BA",
       "name" : "BASE2", 
       "behaviour" : "base1.gal",
-      "features" : "Base.class",
+      "features" : "game.entity.Base",
       "sprite" :  {
       	"filepath" : "resources/MiniWorldSprites/Buildings/Cyan/CyanKeep.png",
       	"nb_rows" : 2,
@@ -221,13 +220,13 @@
       "direction":"W",
       "position":[100,100],
       "hitbox":[40,40],
-      "team":2
+      "team":2,
+      "type" : "BA"
     },
      "Arrow":{
-     "type" : "PR",
       "name" : "ARROW",  
       "behaviour" : "Arrow.gal",
-      "features" : "Projectile.class",
+      "features" : "game.entity.Projectile",
       "sprite" :  {
       	"filepath" : "resources/MiniWorldSprites/Objects/ArrowLong.png",
       	"nb_rows" : 2,
@@ -236,10 +235,10 @@
       	"animation" : true,
       	"details" : {
       		"orientation" : {
-	      		"north": [1],
-	      		"south": [0],
-	      		"east" : [2],
-	      		"west" : [3]
+	      		"north": 1,
+	      		"south": 0,
+	      		"east" : 2,
+	      		"west" : 3
       		}
       	}
       },
@@ -247,13 +246,13 @@
       "direction":"W",
       "position":[0,0],
       "hitbox":[15,15],
-      "team":0
+      "team":0,
+      "type" : "PR"
     },
      "FireBall":{
-     "type" : "PR",
       "name" : "FIREBALL", 
       "behaviour" : "bdf.gal",
-      "features" : "Projectile.class",
+      "features" : "game.entity.Projectile",
        "sprite" :  {
       	"filepath" : "resources/MiniWorldSprites/Objects/ArrowLong.png",
       	"nb_rows" : 1,
@@ -266,7 +265,8 @@
       "direction":"W",
       "position":[0,0],
       "hitbox":[15,15],
-      "team":0
+      "team":0,
+      "type" : "PR",
     },
     "automates" : ["Dasher.gal", "Archer.gal", "Dragon.gal"],
     "background" : ["resources/MiniWorldSprites/Ground/DeadGrass.png",2,3,true],

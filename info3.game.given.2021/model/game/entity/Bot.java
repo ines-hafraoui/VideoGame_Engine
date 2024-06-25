@@ -1,9 +1,6 @@
 package game.entity;
 
 import game.automaton.Automate;
-import game.entity.Absolute_Orientation;
-import game.automaton.Category;
-import game.automaton.Direction;
 import game.model.Model;
 
 public class Bot extends Entity {
@@ -19,18 +16,20 @@ public class Bot extends Entity {
 		name = "BOT" + team;
 	}
 
-	public Bot(Model m, Position pos, Absolute_Orientation o, int team, int nb_bot, Boolean pickable, HitBox hb,
+	public Bot(Model m, Position pos, Absolute_Orientation o, String type, int team, int nb_bot, Boolean pickable, HitBox hb,
 			String name) {
 		super(m, pos, o, team, nb_bot, pickable, hb, name);
 		acc_factor = 3;
-		type = EntityType.TEAMMATE;
-		name = "BOT" + team;
+		this.type = type;
+		name = name;
 	}
 
 	public void set_player(Entity e) {
 		m_player = e;
-		this.offsetx = 10 * m_player.bots.size();
-		this.offsety = 2 * m_player.bots.size();
+		if(m_player.bots != null) {
+			this.offsetx = 10 * m_player.bots.size();
+			this.offsety = 2 * m_player.bots.size();
+		}
 		m_player.addbots(this);
 	}
 

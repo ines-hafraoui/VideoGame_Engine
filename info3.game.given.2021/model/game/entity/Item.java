@@ -13,9 +13,9 @@ public class Item extends Entity{
 		type = EntityType.ITEM;
 	}
 
-	public Item(Model m,Position pos, Absolute_Orientation o,int team, int nb_bot,Boolean pickable,HitBox hb, String name) {
+	public Item(Model m,Position pos, Absolute_Orientation o,String type, int team, int nb_bot,Boolean pickable,HitBox hb, String name) {
 		super(m,pos,o,team,nb_bot,pickable,hb,name);
-		type = EntityType.ITEM;
+		this.type = type;
 	}
 
 

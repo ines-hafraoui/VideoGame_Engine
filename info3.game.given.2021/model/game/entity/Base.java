@@ -17,11 +17,11 @@ public class Base extends Entity {
 		type = EntityType.BASE;
 	}
 
-	public Base(Model m, Position pos, Absolute_Orientation o, int team, int nb_bot, Boolean pickable, HitBox hb,
+	public Base(Model m, Position pos, Absolute_Orientation o, String type, int team, int nb_bot, Boolean pickable, HitBox hb,
 			String name) {
 		super(m, pos, o, team, nb_bot, pickable, hb, name);
 		picked = false;
-		type = EntityType.BASE;
+		this.type = type;
 	}
 	
 	public void set_player(Entity e) {
