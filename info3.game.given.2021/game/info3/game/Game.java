@@ -57,7 +57,7 @@ public class Game {
 		try {
 			System.out.println("Game starting...");
 			// Parse the config file
-			String parsePath = new File("model/configjeu2.json").getAbsolutePath();
+			String parsePath = new File("model/configjeu1.json").getAbsolutePath();
 			configParse = new Parser(parsePath);
 
 			game = new Game();

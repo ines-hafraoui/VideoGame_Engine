@@ -76,25 +76,23 @@ public class View extends Container {
 
 	public void paint(Graphics g) {
 		Graphics mg = g.create(m_x, m_y, m_d.width, m_d.height);
-		if (!m_dviewport.withinSameVP()) {
-//		if (false) {
-			switch (m_viewports.length) {
-			case 1:
-				m_viewports[0].paint(mg);
-				break;
-			case 2:
+		switch (m_viewports.length) {
+		case 1:
+			m_viewports[0].paint(mg);
+			break;
+		case 2:
+			if (!m_dviewport.withinSameVP()) {
 				m_viewports[0].paint(mg);
 				m_viewports[1].paint(mg);
 				mg.setColor(Color.black);
 				mg.drawLine(m_d.width / 2, m_y, m_d.width / 2, m_d.height);
-				break;
-			default:
-				throw new IllegalArgumentException("You have more than 2 players");
+			} else {
+				m_dviewport.paint(mg);
 			}
-		} else {
-			m_dviewport.paint(mg);
+			break;
+		default:
+			throw new IllegalArgumentException("You have more than 2 players");
 		}
-
 		// Asks the minimap to display itself within the overall view so that it is
 		// shared by both players
 		m_minimap.paint(mg);

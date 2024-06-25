@@ -22,37 +22,30 @@ package game.model;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import game.entity.Entity;
-import game.entity.EntityType;
-import game.automaton.Action;
+
+import gal.demo.test.TestMain;
 import game.automaton.Automate;
 import game.automaton.Category;
-import game.automaton.Cell;
-import game.automaton.Hit;
-import game.automaton.Key;
-import game.automaton.Move;
 import game.automaton.Relative_Orientation;
-import game.automaton.State;
-import game.automaton.Transition;
-import game.automaton.TrueFalse;
-import game.automaton.Turn;
 import game.entity.Absolute_Orientation;
 import game.entity.ActionType;
 import game.entity.Base;
 import game.entity.Bot;
+import game.entity.Entity;
+import game.entity.EntityType;
 import game.entity.HitBox;
 import game.entity.Item;
 import game.entity.Player;
-
 import game.entity.Position;
 import game.entity.Projectile;
 import game.map.Map;
 import game.map.Polygon;
 import info3.game.IFactory;
-import gal.demo.test.TestMain;
 
 /**
  * A simple class that holds the images of a sprite for an animated cowbow.
@@ -83,7 +76,9 @@ public class Model {
 	private static long TIMER = 0;
 	private boolean gameover = false;
 
-	public Model(int w, int h, Parser parse, IFactory f) throws IOException {
+	public Model(int w, int h, Parser parse, IFactory f)
+			throws IOException, InstantiationException, IllegalAccessException, IllegalArgumentException,
+			InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException {
 
 		m_width = w;
 		height = h;
@@ -117,19 +112,22 @@ public class Model {
 			boolean pickable = (Boolean) properties.get("pickable");
 			String behaviour = (String) properties.get("behaviour");
 			HitBox hb = (HitBox) properties.get("hitbox");
+			String type = (String) properties.get("type");
+			
+			Class<?> features = Class.forName((String) properties.get("features"));
+//			System.out.println(features);
+			Constructor<?> cons = features.getConstructor(Model.class, Position.class, Absolute_Orientation.class, String.class,
+					int.class, int.class, Boolean.class, HitBox.class, String.class);
+			Object object = cons.newInstance(this, pos, new Absolute_Orientation(direction),type, team, nb_bot_init,
+					pickable, hb, entityName);
+			System.out.println(entityName + "  " + object);
 
-			Entity entity;
-			switch (entityName) {
-			case "Player1":
-			case "Player2":
-				entity = new Player(this, pos, new Absolute_Orientation(direction), team, nb_bot_init, pickable, hb,
-						entityName);
-				break;
-			case "Bot1":
-			case "Bot2":
-			case "Parasite":
-				entity = new Bot(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
-				if (behaviour != null) {
+			Entity entity = (Entity) object;
+			if(type.equals(EntityType.TEAMMATE) || type.equals(EntityType.PARASITE)) {
+				if(nb_bot_init <= 0) {
+					entity = null;
+				}
+				else if (behaviour != null) {
 					Automate automate = TestMain.loadAutomata(new File("gal/gal/" + behaviour).getAbsolutePath());
 					if (automate != null) {
 						for (int j = 1; j < nb_bot_init; j++) {
@@ -139,22 +137,18 @@ public class Model {
 							float x = pos.getPositionX();
 							float y = pos.getPositionY();
 							pos = new Position(x + 2, y + 2);
-							entity = new Bot(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb,
+							entity = new Bot(this, pos, new Absolute_Orientation(direction), type, team, 0, pickable, hb,
 									entityName);
 						}
 					}
 				}
-				break;
-			case "Base1":
-			case "Base2":
-			case "Base":
-				entity = new Base(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
-				break;
-			case "Power":
-			case "Capacity":
-			case "Plant":
-				entity = new Item(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb, entityName);
-				if (behaviour != null) {
+			}
+			
+			if(type.equals(EntityType.ITEM)) {
+				if(nb_item <= 0) {
+					entity = null;
+				}
+				else if (behaviour != null) {
 					Automate automate = TestMain.loadAutomata(new File("gal/gal/" + behaviour).getAbsolutePath());
 					if (automate != null) {
 						for (int j = 1; j < nb_item; j++) {
@@ -164,21 +158,12 @@ public class Model {
 							float x = pos.getPositionX();
 							float y = pos.getPositionY();
 							pos = new Position(x + 2, y + 2);
-							hb = new HitBox(50,50);
-							entity = new Item(this, pos, new Absolute_Orientation(direction), team, 0, pickable, hb,
+							hb = new HitBox(50, 50);
+							entity = new Item(this, pos, new Absolute_Orientation(direction), type, team, 0, pickable, hb,
 									entityName);
 						}
 					}
 				}
-				break;
-			case "Arrow":
-			case "FireBall":
-				entity = new Projectile(this, pos, new Absolute_Orientation(direction), entityName, team, 0, pickable,
-						hb, entityName);
-				break;
-			default:
-				entity = null;
-				break;
 			}
 
 			if (entity != null) {
@@ -190,7 +175,7 @@ public class Model {
 
 					if (automate != null) {
 						entity.set_automate(automate);
-						if (entity instanceof Player) {
+						if (type.equals(EntityType.PLAYER)) {
 							players[i] = entity;
 							i++;
 						}
@@ -610,13 +595,13 @@ public class Model {
 			}
 		}
 
-		return inBounds(newPosition.getPositionX(),newPosition.getPositionY(), entity); 
+		return inBounds(newPosition.getPositionX(), newPosition.getPositionY(), entity);
 	}
 
 	public boolean inBounds(float x, float y, Entity e) {
 		if (x >= 0 && x <= m_map.getBorders().getMaxX() && y >= 0 && y <= m_map.getBorders().getMaxY()) {
 			return true;
-		}else {
+		} else {
 			addToRemove(e);
 			return false;
 		}

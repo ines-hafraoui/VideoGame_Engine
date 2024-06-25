@@ -47,13 +47,13 @@ public class Game1Factory implements IFactory {
 			Boolean pickable, HitBox hb, String name) {
 		switch (type) {
 		case EntityType.BASE:
-			return new Base(m, p, o, team, nb_bot, pickable, hb, name);
+			return new Base(m, p, o,type,  team, nb_bot, pickable, hb, name);
 		case EntityType.ITEM:
-			return new Item(m, p, o, team, nb_bot, pickable, hb,name);
+			return new Item(m, p, o,type,  team, nb_bot, pickable, hb,name);
 		case EntityType.TEAMMATE:
-			return new Bot(m, p, o, team, nb_bot, pickable, hb,name);
+			return new Bot(m, p, o,type,  team, nb_bot, pickable, hb,name);
 		case EntityType.PLAYER:
-			return new Player(m, p, o, team, nb_bot, pickable, hb,name);
+			return new Player(m, p, o,type, team, nb_bot, pickable, hb,name);
 		case EntityType.FIREBALL:
 		case EntityType.ARROW:
 			return new Projectile(m, p, o, type, team, nb_bot, pickable, hb,name);

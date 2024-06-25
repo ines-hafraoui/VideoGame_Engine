@@ -19,12 +19,12 @@ public class Bot extends Entity {
 		name = "BOT" + team;
 	}
 
-	public Bot(Model m, Position pos, Absolute_Orientation o, int team, int nb_bot, Boolean pickable, HitBox hb,
+	public Bot(Model m, Position pos, Absolute_Orientation o, String type, int team, int nb_bot, Boolean pickable, HitBox hb,
 			String name) {
 		super(m, pos, o, team, nb_bot, pickable, hb, name);
 		acc_factor = 3;
-		type = EntityType.TEAMMATE;
-		name = "BOT" + team;
+		this.type = type;
+		name = name;
 	}
 
 	public void set_player(Entity e) {

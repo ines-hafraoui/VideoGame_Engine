@@ -2,16 +2,16 @@
   "cooperative" : true,
   "timer" : 500000, 
   "viscosity" : 1,
-  "nb_bot_init":10,
+  "nb_bot_init":0,
   "nb_player": 2,
   "nb_item" : 30,
     "Player1":{
       "name" : "PLAYER1", 
       "behaviour": "player2.gal",
-      "features" : "Player.class",
+      "features" : "game.entity.Player",
       "sprite" :  {
-      	"filepath" :"resources/MiniWorldSprites/Characters/Monsters/Dragons/BlueDragon.png",
-      	"nb_rows" : 8,
+      	"filepath" :"resources/SproutLands/Characters/Basic Charakter Spritesheet.png",
+      	"nb_rows" : 4,
       	"nb_cols" : 4,
       	"index" : 0,
       	"animation" : true,
@@ -30,10 +30,10 @@
       			},
       			"hit": {
       				"orientation" : {
-			      		"north": [20,21],
-			      		"south": [16,17],
-			      		"east" : [28,29],
-			      		"west" : [24,25],
+			      		"north": [4,7],
+			      		"south": [0,3],
+			      		"east" : [12,15],
+			      		"west" : [8,11],
       				}
       			}
       		}
@@ -43,12 +43,13 @@
       "direction": "S",
       "position":[150,150],
       "hitbox":[20,35],
-      "team":1
+      "team":1,
+      "type" : "P"
     },
     "Player2":{ 
       "name" : "PLAYER2", 
       "behaviour": "player1.gal",
-      "features" : "Player.class",
+      "features" : "game.entity.Player",
       "sprite" :  {
       	"filepath" :"resources/MiniWorldSprites/Characters/Soldiers/Mounted/CyanKnight.png",
       	"nb_rows" : 12,
@@ -83,12 +84,13 @@
       "direction": "S",
       "position":[160,160],
       "hitbox":[20,35],
-      "team": 1
+      "team": 1,
+      "type" : "P"
     },
     "Dasher":{
       "name" : "DASHER", 
       "behaviour" : "dasher.gal",
-      "features" : "Bot.class",
+      "features" : "game.entity.Bot",
       "sprite" :  {
       	"filepath" : "resources/MiniWorldSprites/Characters/Monsters/Demons/RedDemon.png",
       	"nb_rows" : 8,
@@ -123,12 +125,13 @@
       "direction":"S",
       "position":[100,50],
       "hitbox":[15,15],
-      "team":1
+      "team":2,
+      "type" : "PA"
     },
    "Archer":{
       "name" : "ARCHER", 
       "behaviour" : "arsher.gal",
-      "features" : "Bot.class",
+      "features" : "game.entity.Bot",
       "sprite" :  {
       	"filepath" : "resources/MiniWorldSprites/Characters/Monsters/Demons/RedDemon.png",
       	"nb_rows" : 8,
@@ -163,45 +166,48 @@
       "direction":"S",
       "position":[100,50],
       "hitbox":[15,15],
-      "team":1
+      "team":2,
+      "type" : "PA"
     },
     "Capacity":{
       "name" : "CAPACITY", 
       "behaviour" : "item.gal",
-      "features" : "Capacity.class",
+      "features" : "game.entity.Item",
       "sprite" :  {
       	"filepath" : "resources/MiniWorldSprites/Miscellaneous/Chests.png",
       	"nb_rows" : 8,
       	"nb_cols" : 6,
-      	"index" : 0,
+      	"index" : 1,
       	"animation" : false
       },
       "pickable" : true,
       "direction":"W",
       "position":[1,1],
       "hitbox":[2,5],
-      "team":0
+      "team":0,
+      "type" : "I"
     },"Plant":{
       "name" : "PLANT", 
       "behaviour" : "item.gal",
-      "features" : "Plant.class",
+      "features" : "game.entity.Item",
       "sprite" :  {
       	"filepath" : "resources/MiniWorldSprites/Nature/Trees.png",
       	"nb_rows" : 1,
       	"nb_cols" : 4,
-      	"index" : 0,
+      	"index" : 2,
       	"animation" : false
       },
       "pickable" : true,
       "direction":"W",
       "position":[50,100],
       "hitbox":[2,5],
-      "team":0
+      "team":0,
+      "type" : "I"
     },
     "Base":{
       "name" : "BASE", 
       "behaviour" : "base2.gal",
-      "features" : "Base.class",
+      "features" : "game.entity.Base",
       "sprite" :  {
       	"filepath" : "resources/MiniWorldSprites/Buildings/Wood/Keep.png",
       	"nb_rows" : 2,
@@ -212,8 +218,9 @@
       "pickable" : false,
       "direction":"W",
       "position":[100,100],
-      "hitbox":[10,10],
-      "team":0
+      "hitbox":[50,50],
+      "team":0,
+      "type" : "I"
     },
     "automates" : ["Dasher.gal", "Archer.gal", "Dragon.gal"],
     "background" : ["resources/MiniWorldSprites/Ground/TexturedGrass.png",2,3,true],

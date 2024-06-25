@@ -189,9 +189,12 @@ public class MainAvatar extends Avatar {
 					m_imageIndex = 0;
 			}
 			long currentTime = System.currentTimeMillis();
-			if (currentTime - lastUpdateTime > ANIMATION_INTERVAL) {
+			if (currentTime - lastUpdateTime > ANIMATION_INTERVAL && m_imageIndex <= m_maxsprite) {
 				m_imageIndex++;
 				lastUpdateTime = currentTime; // Réinitialiser le dernier temps de mise à jour
+			} else if (currentTime - lastUpdateTime > ANIMATION_INTERVAL) {
+				m_imageIndex = 0;
+				lastUpdateTime = currentTime;
 			}
 		} else if (m_orientations != null) {
 			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
