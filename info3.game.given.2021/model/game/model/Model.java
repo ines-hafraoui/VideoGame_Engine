@@ -431,57 +431,6 @@ public class Model {
 		Polygon polygon = new Polygon(list_points);
 		return polygon;
 	}
-	
-	public double eval_angle_1(Absolute_Orientation d) {
-		switch (d.get_abs_Orientation()) {
-		case Absolute_Orientation.EAST:
-			return 337.5;
-		case Absolute_Orientation.SOUTH_E:
-			return 22.5;
-		case Absolute_Orientation.SOUTH:
-			return 67.5;
-		case Absolute_Orientation.SOUTH_W:
-			return 112.5;
-		case Absolute_Orientation.WEST:
-			return 157.5;
-		case Absolute_Orientation.NORTH_W:
-			return 202.5;
-		case Absolute_Orientation.NORTH:
-			return 247.5;
-		case Absolute_Orientation.NORTH_E:
-			return 292.5;
-		default:
-			System.out.print("Aucune Orientation !\n");
-			// throw new Exception();
-			return -1.0;
-		}
-	}
-	
-	public double eval_angle_2(Absolute_Orientation d) {
-		switch (d.get_abs_Orientation()) {
-		case Absolute_Orientation.EAST:
-			return 22.5;
-		case Absolute_Orientation.SOUTH_E:
-			return 67.5;
-		case Absolute_Orientation.SOUTH:
-			return 112.5;
-		case Absolute_Orientation.SOUTH_W:
-			return 157.5;
-		case Absolute_Orientation.WEST:
-			return 202.5;
-		case Absolute_Orientation.NORTH_W:
-			return 247.5;
-		case Absolute_Orientation.NORTH:
-			return 292.5;
-		case Absolute_Orientation.NORTH_E:
-			return 337.5;
-		default:
-			System.out.print("Aucune Orientation !\n");
-			return -1.0;
-			// throw new Exception();
-		}
-	}
-
 
 	public void eval_angle(Absolute_Orientation d, double angle1, double angle2) {
 		switch (d.get_abs_Orientation()) {
@@ -540,11 +489,11 @@ public class Model {
 	public boolean do_hit(Absolute_Orientation o, String type, int porte, Entity e) {
 		double p_x = e.get_x();
 		double p_y = e.get_y();
-		double angle1 = eval_angle_1(o);
-		double angle2 = eval_angle_2(o);
+		double angle1 = 0, angle2 = 0;
+		eval_angle(o, angle1, angle2);
 		Polygon polygon = create_polygon_direction(p_x, p_y, porte, angle1, angle2);
 		for (Entity entity : entities) {
-			if ( (entity.getHitBox().get_polygon().intersectsWith(polygon)) && (entity.get_team()!=e.get_team()) && (entity.get_team()!=0)) {
+			if (entity.getHitBox().get_polygon().intersectsWith(polygon)) {
 				entity.get_injured();
 				if (entity.get_state_action() == ActionType.EXPLODE) {
 					addToRemove(entity);
@@ -630,11 +579,11 @@ public class Model {
 
 		double p_x = e.get_x();
 		double p_y = e.get_y();
-		double angle1 = eval_angle_1(dir);
-		double angle2 = eval_angle_2(dir);
+		double angle1 = 0, angle2 = 0;
+		eval_angle(dir, angle1, angle2);
 		Polygon polygon = create_polygon_direction(p_x, p_y, porte, angle1, angle2);
 		for (Entity entity : entities) {
-			if ( (entity.getHitBox().get_polygon().intersectsWith(polygon)) && (entity.get_team()!=e.get_team()) && (entity.get_team()!=0) ) {
+			if (entity.getHitBox().get_polygon().intersectsWith(polygon)) {
 				return true;
 			}
 		}
