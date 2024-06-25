@@ -29,8 +29,8 @@ public class Bot extends Entity {
 
 	public void set_player(Entity e) {
 		m_player = e;
-		this.offsetx = 10*m_player.bots.size();
-		this.offsety = 2*m_player.bots.size();
+		this.offsetx = 10 * m_player.bots.size();
+		this.offsety = 2 * m_player.bots.size();
 		m_player.addbots(this);
 	}
 
@@ -74,8 +74,10 @@ public class Bot extends Entity {
 	}
 
 	public boolean do_move() {
+		do_turn(m_player.abs_or);
 		this.position.setPositionX(m_player.get_x() + 10 + offsetx);
 		this.position.setPositionY(m_player.get_y() + 10 + offsety);
+		set_state_action(ActionType.MOVE);
 		return true;
 	}
 

@@ -32,7 +32,6 @@ public class Viewport extends AViewport {
 		Entity[] inventory = player.m_entity.get_inventory();
 		if (inventory != null)
 			m_inventory = new InventoryMenu(this, inventory);
-
 		m_x = x;
 		m_y = y;
 		m_player = player;
@@ -45,14 +44,11 @@ public class Viewport extends AViewport {
 	public void paint(Graphics g) {
 		int x = (int) m_player.m_entity.get_x();
 		int y = (int) m_player.m_entity.get_y();
-
 		if ((x != m_oldpositionx || y != m_oldpositiony) || m_parent.Changed) {
 			Caculatetranslation(x, y);
 		}
-
 		Graphics mg = g.create(m_x, m_y, m_d.width, m_d.height);
 		m_map.paint(mg, -m_trx, -m_try);
-
 		Iterator<Avatar> iter = m_avatars.iterator();
 		while (iter.hasNext()) {
 			Avatar a = iter.next();
@@ -60,9 +56,11 @@ public class Viewport extends AViewport {
 				a.paint(mg, -m_trx, -m_try);
 			}
 		}
-
 		m_player.paintmainplayer(mg, m_d.width / 2, m_d.height / 2);
-		m_inventory.paint(mg,m_d.width / 2 - InventoryMenu.NBCASE / 2 * (m_inventory.get_image().getWidth() * InventoryMenu.INVENTORYSIZE), m_d.height - m_inventory.get_image().getHeight() - 100);
+		m_inventory.paint(mg,
+				m_d.width / 2
+						- InventoryMenu.NBCASE / 2 * (m_inventory.get_image().getWidth() * InventoryMenu.INVENTORYSIZE),
+				m_d.height - m_inventory.get_image().getHeight() - 100);
 	}
 
 	public void setX(int x) {

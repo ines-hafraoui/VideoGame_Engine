@@ -3,17 +3,15 @@ package info3.game.avatar;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Polygon;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import game.entity.Absolute_Orientation;
 import game.entity.ActionType;
 import game.entity.Entity;
-import game.entity.Position;
 import info3.game.view.View;
 
 public class MainAvatar extends Avatar {
@@ -21,6 +19,8 @@ public class MainAvatar extends Avatar {
 	private static final long ANIMATION_INTERVAL = 500; // 500 ms entre les mises à jour
 
 	boolean m_animate;
+	JSONObject m_actions, m_orientations;
+	int m_maxsprite;
 
 	public MainAvatar(Entity e, View v, JSONObject sprite_spec, boolean player) throws IOException {
 		super(e, v);
@@ -35,7 +35,13 @@ public class MainAvatar extends Avatar {
 			System.out.println("the file path : " + (String) sprite_spec.get("filepath"));
 			throw new IOException("Huuum sprite has not been loaded");
 		}
+		m_maxsprite = nr * nc - 1;
 		m_animate = (Boolean) sprite_spec.get("animation");
+		JSONObject details = (JSONObject) sprite_spec.get("details");
+		if (m_animate && details != null) {
+			m_actions = (JSONObject) details.get("action");
+			m_orientations = (JSONObject) details.get("orientation");
+		}
 		if (player) {
 			m_view.addPlayer(this);
 		}
@@ -43,9 +49,6 @@ public class MainAvatar extends Avatar {
 
 	@Override
 	public void paint(Graphics g, int x, int y) {
-		if (m_entity.get_state_action() != null) {
-			a_state = m_entity.get_state_action();
-		}
 		BufferedImage img = m_images[m_imageIndex];
 //		int h = (int) m_entity.getHitBox().getHbHeight() * View.DISPLAYSCALE;
 //		int w = (int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE;
@@ -59,9 +62,10 @@ public class MainAvatar extends Avatar {
 					(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - h - 5 % img.getHeight(), w, 5 % img.getHeight(),
 					hp);
 		}
-		if(m_entity.get_selected()) {
+		if (m_entity.get_selected()) {
 			g.setColor(Color.GREEN);
-			g.drawRect((x + (int) m_entity.get_x() * View.DISPLAYSCALE) - w, (y + (int) m_entity.get_y() * View.DISPLAYSCALE) - h, w, h);
+			g.drawRect((x + (int) m_entity.get_x() * View.DISPLAYSCALE) - w,
+					(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - h, w, h);
 		}
 		if (m_animate) {
 			configureAnimation();
@@ -71,9 +75,6 @@ public class MainAvatar extends Avatar {
 
 	@Override
 	public void paintmainplayer(Graphics g, int x, int y) {
-		if (m_entity.get_state_action() != null) {
-			a_state = m_entity.get_state_action();
-		}
 		BufferedImage img = m_images[m_imageIndex];
 		int h = img.getHeight() * View.DISPLAYSCALE;
 		int w = img.getWidth() * View.DISPLAYSCALE;
@@ -92,88 +93,115 @@ public class MainAvatar extends Avatar {
 
 	}
 
-	@Override
 	protected void configureAnimation() {
-		a_state = m_entity.get_state_action();
 		String abs_or = m_entity.get_abs_or().get_abs_Orientation();
-		switch (a_state) {
-		case ActionType.IDLE:
-			if (m_imageIndex < 4) {
-				m_imageIndex = 4;
-			}
-			if (m_imageIndex >= 5)
-				m_imageIndex = 4;
-			break;
-		case ActionType.MOVE:
-			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
-					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
-				if (m_imageIndex < 0) {
+		if (m_actions != null) {
+			a_state = m_entity.get_state_action();
+			switch (a_state) {
+			case ActionType.IDLE:
+//			case ActionType.REST:
+				JSONArray indexidle = (JSONArray) ((JSONObject) m_actions.get("idle")).get("index");
+				if (m_imageIndex < ((Number) indexidle.get(0)).intValue()) {
+					m_imageIndex = ((Number) indexidle.get(0)).intValue();
+				}
+				if (m_imageIndex >= ((Number) indexidle.get(1)).intValue())
+					m_imageIndex = ((Number) indexidle.get(0)).intValue();
+				break;
+			case ActionType.MOVE:
+				if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
+						|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
+					JSONArray index = (JSONArray) ((JSONObject) ((JSONObject) m_actions.get("move")).get("orientation"))
+							.get("south");
+					if (m_imageIndex < ((Number) index.get(0)).intValue()) {
+						m_imageIndex = ((Number) index.get(0)).intValue();
+					}
+					if (m_imageIndex >= ((Number) index.get(1)).intValue())
+						m_imageIndex = ((Number) index.get(0)).intValue();
+				} else if (abs_or.equals(Absolute_Orientation.NORTH) || abs_or.equals(Absolute_Orientation.NORTH_E)
+						|| abs_or.equals(Absolute_Orientation.NORTH_W)) {
+					JSONArray index = (JSONArray) ((JSONObject) ((JSONObject) m_actions.get("move")).get("orientation"))
+							.get("north");
+					if (m_imageIndex < ((Number) index.get(0)).intValue()) {
+						m_imageIndex = ((Number) index.get(0)).intValue();
+					}
+					if (m_imageIndex >= ((Number) index.get(1)).intValue())
+						m_imageIndex = ((Number) index.get(0)).intValue();
+				} else if (abs_or.equals(Absolute_Orientation.EAST)) {
+					JSONArray index = (JSONArray) ((JSONObject) ((JSONObject) m_actions.get("move")).get("orientation"))
+							.get("east");
+					if (m_imageIndex < ((Number) index.get(0)).intValue()) {
+						m_imageIndex = ((Number) index.get(0)).intValue();
+					}
+					if (m_imageIndex >= ((Number) index.get(1)).intValue())
+						m_imageIndex = ((Number) index.get(0)).intValue();
+				} else {// WEST
+					JSONArray index = (JSONArray) ((JSONObject) ((JSONObject) m_actions.get("move")).get("orientation"))
+							.get("west");
+					if (m_imageIndex < ((Number) index.get(0)).intValue()) {
+						m_imageIndex = ((Number) index.get(0)).intValue();
+					}
+					if (m_imageIndex >= ((Number) index.get(1)).intValue())
+						m_imageIndex = ((Number) index.get(0)).intValue();
+				}
+				break;
+			case ActionType.HIT:
+				if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
+						|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
+					JSONArray index = (JSONArray) ((JSONObject) ((JSONObject) m_actions.get("hit")).get("orientation"))
+							.get("south");
+					if (m_imageIndex < ((Number) index.get(0)).intValue()) {
+						m_imageIndex = ((Number) index.get(0)).intValue();
+					}
+					if (m_imageIndex >= ((Number) index.get(1)).intValue())
+						m_imageIndex = ((Number) index.get(0)).intValue();
+				} else if (abs_or.equals(Absolute_Orientation.NORTH) || abs_or.equals(Absolute_Orientation.NORTH_E)
+						|| abs_or.equals(Absolute_Orientation.NORTH_W)) {
+					JSONArray index = (JSONArray) ((JSONObject) ((JSONObject) m_actions.get("hit")).get("orientation"))
+							.get("north");
+					if (m_imageIndex < ((Number) index.get(0)).intValue()) {
+						m_imageIndex = ((Number) index.get(0)).intValue();
+					}
+					if (m_imageIndex >= ((Number) index.get(1)).intValue())
+						m_imageIndex = ((Number) index.get(0)).intValue();
+				} else if (abs_or.equals(Absolute_Orientation.EAST)) {
+					JSONArray index = (JSONArray) ((JSONObject) ((JSONObject) m_actions.get("move")).get("orientation"))
+							.get("east");
+					if (m_imageIndex < ((Number) index.get(0)).intValue()) {
+						m_imageIndex = ((Number) index.get(0)).intValue();
+					}
+					if (m_imageIndex >= ((Number) index.get(1)).intValue())
+						m_imageIndex = ((Number) index.get(0)).intValue();
+				} else {// WEST
+					JSONArray index = (JSONArray) ((JSONObject) ((JSONObject) m_actions.get("move")).get("orientation"))
+							.get("west");
+					if (m_imageIndex < ((Number) index.get(0)).intValue()) {
+						m_imageIndex = ((Number) index.get(0)).intValue();
+					}
+					if (m_imageIndex >= ((Number) index.get(1)).intValue())
+						m_imageIndex = ((Number) index.get(0)).intValue();
+				}
+				break;
+			default:
+				if (m_imageIndex >= m_maxsprite)
 					m_imageIndex = 0;
-				}
-				if (m_imageIndex >= 3)
-					m_imageIndex = 0;
-				else
-					m_imageIndex++;
-			} else if (abs_or.equals(Absolute_Orientation.NORTH) || abs_or.equals(Absolute_Orientation.NORTH_E)
-					|| abs_or.equals(Absolute_Orientation.NORTH_W)) {
-				if (m_imageIndex < 36) {
-					m_imageIndex = 36;
-				}
-				if (m_imageIndex >= 39)
-					m_imageIndex = 36;
-			} else if (abs_or.equals(Absolute_Orientation.EAST)) {
-				if (m_imageIndex < 12) {
-					m_imageIndex = 12;
-				}
-				if (m_imageIndex >= 15)
-					m_imageIndex = 12;
-			} else {// WEST
-				if (m_imageIndex < 24) {
-					m_imageIndex = 24;
-				}
-				if (m_imageIndex >= 25)
-					m_imageIndex = 24;
 			}
-			break;
-		case ActionType.HIT:
-			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
-					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
-				if (m_imageIndex < 8) {
-					m_imageIndex = 8;
-				}
-				if (m_imageIndex >= 11)
-					m_imageIndex = 8;
-			} else if (abs_or.equals(Absolute_Orientation.NORTH) || abs_or.equals(Absolute_Orientation.NORTH_E)
-					|| abs_or.equals(Absolute_Orientation.NORTH_W)) {
-				if (m_imageIndex < 20) {
-					m_imageIndex = 20;
-				}
-				if (m_imageIndex >= 35)
-					m_imageIndex = 30;
-			} else if (abs_or.equals(Absolute_Orientation.EAST)) {
-				if (m_imageIndex < 20) {
-					m_imageIndex = 20;
-				}
-				if (m_imageIndex >= 23)
-					m_imageIndex = 20;
-			} else {// WEST
-				if (m_imageIndex < 44) {
-					m_imageIndex = 44;
-				}
-				if (m_imageIndex >= 47)
-					m_imageIndex = 44;
+			long currentTime = System.currentTimeMillis();
+			if (currentTime - lastUpdateTime > ANIMATION_INTERVAL) {
+				m_imageIndex++;
+				lastUpdateTime = currentTime; // Réinitialiser le dernier temps de mise à jour
 			}
-			break;
-		default:
-			if (m_imageIndex >= 47)
-				m_imageIndex = 4;
-		}
-		long currentTime = System.currentTimeMillis();
-		if (currentTime - lastUpdateTime > ANIMATION_INTERVAL) {
-			m_imageIndex++;
-			lastUpdateTime = currentTime; // Réinitialiser le dernier temps de mise à jour
-		}
+		} else if (m_orientations != null) {
 
+		} else {
+			long currentTime = System.currentTimeMillis();
+			if (currentTime - lastUpdateTime > ANIMATION_INTERVAL && m_imageIndex <= m_maxsprite) {
+				m_imageIndex++;
+				lastUpdateTime = currentTime; // Réinitialiser le dernier temps de mise à jour
+			} else if (currentTime - lastUpdateTime > ANIMATION_INTERVAL) {
+				m_imageIndex = 0;
+				lastUpdateTime = currentTime;
+			}
+		}
 	}
 
 	@Override
