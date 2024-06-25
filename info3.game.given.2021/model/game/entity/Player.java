@@ -82,7 +82,9 @@ public class Player extends Entity {
 
 	@Override
 	public boolean do_get() {
-		System.out.print("is getting");
+		
+		if (nb_item_inventory == 0) return false;
+
 		Item item = inventory[index%nb_item_inventory];
 		
 		Entity entity = null;
@@ -104,23 +106,6 @@ public class Player extends Entity {
 	
 		//problem with moving every automaton in the inventory to first positions
 		return true;
-		
-//			Entity e = bots.get(index_bot);
-//			Item item = inventory[index];
-//			if (item != null) {
-//				// move element to the left
-//				for (int i = index_inventory; i < nb_item_inventory - 1; i++) {
-//					inventory[i] = inventory[i + 1];
-//				}
-//				inventory[nb_item_inventory - 1] = null; // last element is null
-//				nb_item_inventory--;
-//
-//				index_inventory = 0;
-//				index_bot = 0;
-//				return true;
-//			}
-//			return false;
-//		}
 	}
 
 	public void do_egg(int c) {
@@ -141,6 +126,9 @@ public class Player extends Entity {
 	@Override
 	//select
 	public boolean do_wizz(int factor) {
+		
+		if (nb_item_inventory == 0) return false;
+		
 		state_action = ActionType.WIZZ;
 		if(index==-1) {
 			index=0;
