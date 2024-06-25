@@ -38,6 +38,8 @@ public class MapView {
 
 		m_bgimages = Game.configParse.bg_sprite;
 		m_textureimages = View.loadSprite("resources/MiniWorldSprites/Ground/Grass.png", 1, 5);
+		m_nrows = (m_view.m_mheight / (m_bgimages[0].getHeight() * View.DISPLAYSCALE));
+		m_ncols = (m_view.m_mwidth / (m_bgimages[0].getWidth() * View.DISPLAYSCALE));
 		if(Game.configParse.bg_rand) {
 			/* Generates the default ground tiles */
 			genDefaultGround();
@@ -76,6 +78,24 @@ public class MapView {
 						g.drawImage(img, tilex, tiley, img.getWidth() * View.DISPLAYSCALE,
 								img.getHeight() * View.DISPLAYSCALE, null);
 					}
+				}
+			}
+		}
+		else {
+			int spritenb = 0;
+			for (int i = 0; i < m_ncols; i++) {
+				for (int j = 0; j < m_nrows; j++) {
+					if(spritenb > m_bgimages.length-1) {
+						spritenb = 0;
+					}
+					BufferedImage img = m_bgimages[spritenb];
+					int tilex = i * (m_bgimages[0].getWidth() * View.DISPLAYSCALE) + x;
+					int tiley = j * (m_bgimages[0].getHeight() * View.DISPLAYSCALE) + y;
+					if (m_parent.withinbounds(tilex, tiley)) {
+						g.drawImage(img, tilex, tiley, img.getWidth() * View.DISPLAYSCALE,
+								img.getHeight() * View.DISPLAYSCALE, null);
+					}
+					spritenb++;
 				}
 			}
 		}
@@ -124,8 +144,6 @@ public class MapView {
 	 */
 	public void genDefaultGround() {
 		BufferedImage ref = m_bgimages[0];
-		m_nrows = (m_view.m_mheight / (ref.getHeight() * View.DISPLAYSCALE));
-		m_ncols = (m_view.m_mwidth / (ref.getWidth() * View.DISPLAYSCALE));
 		m_groundsetup = new int[m_nrows * m_ncols];
 		for (int i = 0; i < m_ncols; i++) {
 			for (int j = 0; j < m_nrows; j++) {
