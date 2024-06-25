@@ -89,7 +89,7 @@ public class MainAvatar extends Avatar {
 			m_hb.drawHealthBar(g, x - w, y - h - 5 % img.getHeight(), w, 5 % img.getHeight(), hp);
 		}
 		g.setColor(Color.red);
-		g.drawRect(x - w/2 - 20, y - h, (int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE,
+		g.drawRect(x - w / 2 - 20, y - h, (int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE,
 				(int) m_entity.getHitBox().getHbHeight() * View.DISPLAYSCALE);
 		if (m_animate) {
 			configureAnimation();
@@ -194,7 +194,17 @@ public class MainAvatar extends Avatar {
 				lastUpdateTime = currentTime; // Réinitialiser le dernier temps de mise à jour
 			}
 		} else if (m_orientations != null) {
-
+			if (abs_or.equals(Absolute_Orientation.SOUTH) || abs_or.equals(Absolute_Orientation.SOUTH_E)
+					|| abs_or.equals(Absolute_Orientation.SOUTH_W)) {
+				m_imageIndex = ((Number) m_orientations.get("south")).intValue();		
+			} else if (abs_or.equals(Absolute_Orientation.NORTH) || abs_or.equals(Absolute_Orientation.NORTH_E)
+					|| abs_or.equals(Absolute_Orientation.NORTH_W)) {
+				m_imageIndex = ((Number) m_orientations.get("north")).intValue();	
+			} else if (abs_or.equals(Absolute_Orientation.EAST)) {
+				m_imageIndex = ((Number) m_orientations.get("east")).intValue();	
+			} else {// WEST
+				m_imageIndex = ((Number) m_orientations.get("west")).intValue();	
+			}
 		} else {
 			long currentTime = System.currentTimeMillis();
 			if (currentTime - lastUpdateTime > ANIMATION_INTERVAL && m_imageIndex <= m_maxsprite) {

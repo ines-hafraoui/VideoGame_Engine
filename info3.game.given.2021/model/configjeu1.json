@@ -228,10 +228,10 @@
       	"animation" : true,
       	"details" : {
       		"orientation" : {
-	      		"north": [1],
-	      		"south": [0],
-	      		"east" : [2],
-	      		"west" : [3]
+	      		"north": 1,
+	      		"south": 0,
+	      		"east" : 2,
+	      		"west" : 3
       		}
       	}
       },
