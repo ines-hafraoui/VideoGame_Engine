@@ -4,34 +4,34 @@ import game.automaton.Automate;
 import game.model.Model;
 
 public class Projectile extends Entity {
-	
 
-
-	public Projectile(Model m, Position p, Absolute_Orientation o,String type, int team, int nb_bot, Boolean pickable, HitBox hb, String name) {
-		super(m, p, o, team, nb_bot,pickable, hb,name);
+	public Projectile(Model m, Position p, Absolute_Orientation o, String type, int team, int nb_bot, Boolean pickable,
+			HitBox hb, String name) {
+		super(m, p, o, team, nb_bot, pickable, hb, name);
 		this.set_type(type);
 		this.HP = 10;
 	}
-	
-	public Projectile(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team, int i, String name) {
-		super(a,m, p, o, team, i,name);
+
+	public Projectile(Automate a, Model m, Position p, Absolute_Orientation o, String type, int team, int i,
+			String name) {
+		super(a, m, p, o, team, i, name);
 		this.HP = 10;
 		this.set_type(type);
 	}
 
-	public void set_type (String s) {
+	public void set_type(String s) {
 		switch (s) {
-		case "Arrow": 
-		case "A" :
+		case "Arrow":
+		case "A":
 			this.type = EntityType.ARROW;
 			break;
-		case "FireBall" :
+		case "FireBall":
 		case "FB":
 			this.type = EntityType.FIREBALL;
 			break;
-		default : 
+		default:
 			System.out.print("mauvais type attribué au projectile");
-			this.type = null; 
+			this.type = null;
 			break;
 		}
 	}
@@ -59,7 +59,7 @@ public class Projectile extends Entity {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
 	protected Position newPosition() {
 		Position newPosition = null;
 
@@ -76,21 +76,18 @@ public class Projectile extends Entity {
 		newPosition = new Position(newX, newY);
 		return newPosition;
 	}
-	
+
 	public boolean do_move() {
 		Position p = newPosition();
-		while(!model.isValidPosition(this, p)) {
-			p = newPosition();
-			System.out.print("mooving");
-			if (p== null) return false;
-			this.position = p; 
-		}
-		
+
+		if (p == null)
+			return false;
+		this.position = p;
+
 		return true;
-		
+
 	}
-	
-	
+
 	public boolean do_hit() {
 		return false;
 	}

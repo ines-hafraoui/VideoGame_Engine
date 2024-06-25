@@ -108,6 +108,7 @@ public class Player extends Entity {
 		Automate a;
 		Position eggPos = new Position(position.getPositionX(), position.getPositionY());
 		Absolute_Orientation eggOr = new Absolute_Orientation(abs_or.get_abs_Orientation());
+		
 		// Temporary just to test
 		e = model.newEntity(model, eggPos, eggOr, EntityType.ARROW, team, 0, 0, false, new HitBox(2, 2), "Arrow");
 		model.get_entities().add(e);
