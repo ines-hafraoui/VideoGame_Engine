@@ -1,35 +1,30 @@
 # Variables
-JFLAGS = -g
-JC = javac
-JVM = java
-MAINCLASS = info3.game.Game
-SRCDIR = .
-BINDIR = bin
+SRC_DIR := .
+BIN_DIR := bin
+LIBS := resources/json-20240303.jar:resources/json-simple-1.1.1.jar:parserGal.jar
+CLASSPATH := $(LIBS)
 
-# Recherche récursive de tous les fichiers .java
-SOURCES = $(shell find $(SRCDIR) -name '*.java')
+# Compilateur et options
+JAVAC := javac
+JAVA := java
+JAVAC_FLAGS := -d $(BIN_DIR) -classpath $(CLASSPATH) --release 11
 
-# Génération des fichiers .class à partir des fichiers .java
-CLASSES = $(SOURCES:$(SRCDIR)/%.java=$(BINDIR)/%.class)
+# Récupérer tous les fichiers source .java
+SRC_FILES := $(shell find $(SRC_DIR) -name '*.java')
 
-# Cible par défaut
-default: compile
+# Cibles
+all: $(BIN_DIR)/classes
 
-# Règle pour compiler tous les fichiers .java
-compile: $(CLASSES)
+# Règle pour compiler les fichiers .java en .class
+$(BIN_DIR)/classes: $(SRC_FILES)
+	@mkdir -p $(BIN_DIR)
+	$(JAVAC) $(JAVAC_FLAGS) $(SRC_FILES)
 
-# Règle générique pour compiler les fichiers .java
-$(BINDIR)/%.class: $(SRCDIR)/%.java
-	@mkdir -p $(dir $@)
-	$(JC) $(JFLAGS) -d $(BINDIR) $<
-
-# Règle pour exécuter le programme principal
-run: compile
-	$(JVM) -cp $(BINDIR) $(MAINCLASS)
-
-# Règle pour nettoyer les fichiers compilés
 clean:
-	$(RM) -r $(BINDIR)
+	rm -rf $(BIN_DIR)
 
-.PHONY: compile run clean
 
+run: all
+	$(JAVA) -cp $(BIN_DIR):$(CLASSPATH) game/info3/game/Game
+
+.PHONY: all clean run
