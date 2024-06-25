@@ -38,6 +38,7 @@ Les fichiers **configjeu1.json** et **configjeu2.json** sont placés directement
     - v > 0 , il est ralentis de v m/s 
     - v < 0 , il accelère de v m/s
 - le nombre de bot initiale pour chaque joueur, le nombre de player et le nombre d'item généré aléatoirement sur la map
+- le sprite du fond du terrain sous la forme d'un tableau avec son nombre de colonnes et de lignes ainsi que s'il doit être généré aléatoirement ou non
 
 ### 2.2 Package View (Chemin: game/view)
 Gère la représentation visuelle du jeu, mettant en œuvre l'affichage des éléments graphiques.
