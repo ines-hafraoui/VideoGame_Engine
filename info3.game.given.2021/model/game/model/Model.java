@@ -508,7 +508,7 @@ public class Model {
 		return true;
 	}
 
-	private void addToRemove(Entity entity) {
+	public void addToRemove(Entity entity) {
 		entityToRemove.add(entity);
 	}
 

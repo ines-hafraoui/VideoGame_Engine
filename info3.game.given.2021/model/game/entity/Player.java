@@ -31,7 +31,6 @@ public class Player extends Entity {
 
 	@Override
 	public boolean do_pick(int distance) {
-		System.out.println("PICKKKK");
 		if (nb_item_inventory < this.nb_bot_init) {
 			state_action = ActionType.PICK;
 			
@@ -41,14 +40,20 @@ public class Player extends Entity {
 			Polygon polygon = model.create_polygon_direction(position.getPositionX(), position.getPositionY(), distance,
 					angle1, angle2);
 			List<Entity> entities = model.get_entities();
+			List<Entity> toRemove = new ArrayList<Entity>();
 			for (Entity entity : entities) {
 				if (entity.getHitBox().get_polygon().intersectsWith(polygon)) {
 					if (entity.pickable) {
 						this.get_inventory()[nb_item_inventory] = (Item) entity;
-						model.entities.remove(entity);
+						model.addToRemove(entity) ;
 						nb_item_inventory++;
 					}
 				}
+			}
+			
+			
+			for (Entity e : toRemove) {
+				model.entities.remove(e);
 			}
 			return true;
 		}
