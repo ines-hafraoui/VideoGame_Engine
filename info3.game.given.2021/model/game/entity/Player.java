@@ -4,18 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import game.automaton.Automate;
+import game.automaton.Category;
 import game.map.Polygon;
 import game.model.Model;
 
 public class Player extends Entity {
-	protected Item inventory[];
+	protected List<Item> inventory;
+	protected Item[] inv = new Item[model.nb_bot_init];
 	protected int nb_item_inventory;
+	protected int index=-1;
 
 	// add current number of bot field
 
 	public Player(Automate a, Model m, Position p, Absolute_Orientation o, int team, int nb_bot, String name) {
 		super(a, m, p, o, team, nb_bot, name);
-		inventory = new Item[nb_bot];
+		inventory = new ArrayList<Item>();
 		bots = new ArrayList<Entity>();
 		type = EntityType.PLAYER;
 
@@ -24,7 +27,7 @@ public class Player extends Entity {
 	public Player(Model m, Position pos, Absolute_Orientation o, int team, int nb_bot, Boolean pickable, HitBox hb,
 			String name) {
 		super(m, pos, o, team, nb_bot, pickable, hb, name);
-		inventory = new Item[nb_bot];
+		inventory = new ArrayList<Item>();
 		type = EntityType.PLAYER;
 		bots = new ArrayList<Entity>();
 	}
@@ -40,11 +43,12 @@ public class Player extends Entity {
 			Polygon polygon = model.create_polygon_direction(position.getPositionX(), position.getPositionY(), distance,
 					angle1, angle2);
 			List<Entity> entities = model.get_entities();
-			List<Entity> toRemove = new ArrayList<Entity>();
 			for (Entity entity : entities) {
 				if (entity.getHitBox().get_polygon().intersectsWith(polygon)) {
 					if (entity.pickable) {
-						this.get_inventory()[nb_item_inventory] = (Item) entity;
+						this.inventory.add((Item)entity);
+						update_inv();
+						
 						model.addToRemove(entity) ;
 						nb_item_inventory++;
 					}
@@ -52,9 +56,7 @@ public class Player extends Entity {
 			}
 			
 			
-			for (Entity e : toRemove) {
-				model.entities.remove(e);
-			}
+
 			return true;
 		}
 		return false;
@@ -66,12 +68,10 @@ public class Player extends Entity {
 		if (nb_item_inventory != 0) {
 			state_action = ActionType.THROW;
 			int index = index_inventory % Model.nb_bot_init;
-			Item item = inventory[index];
-			// move element to the left
-			for (int i = index; i < nb_item_inventory - 1; i++) {
-				inventory[i] = inventory[i + 1];
-			}
-			inventory[nb_item_inventory - 1] = null; // last element is null
+			Item item = inventory.get(index);
+			inventory.remove(index);
+			update_inv();
+
 			nb_item_inventory--;
 			return item;
 		}
@@ -80,31 +80,40 @@ public class Player extends Entity {
 
 	@Override
 	public boolean do_get() {
-		System.out.print("is getting");
-		if (bots.size() != 0) {
-			Entity e = bots.get(index_bot);
-			Item item = inventory[index_inventory];
-			if (item != null) {
-				// move element to the left
-				for (int i = index_inventory; i < nb_item_inventory - 1; i++) {
-					inventory[i] = inventory[i + 1];
-				}
-				inventory[nb_item_inventory - 1] = null; // last element is null
-				nb_item_inventory--;
+		
+		if (nb_item_inventory == 0) return false;
 
-				e.aut = item.get_automate();
-				index_inventory = 0;
-				index_bot = 0;
-				return true;
+		Item item = inventory.get(index);
+		
+		Entity entity = null;
+		float min_dst = Float.MAX_VALUE;
+		for (Entity e : model.get_entities()) {
+			
+			if (!(e instanceof Bot)) {
+				continue;
 			}
-			return false;
+			
+			if (this.position.distance(e.position)< min_dst) {
+				min_dst = this.position.distance(e.position);
+				entity = e;
+			}
 		}
-		return false;
+		entity.aut = item.get_automate();
+		
+		inventory.remove(index);
+		update_inv();
+
+		nb_item_inventory--;
+		index =0;
+	
+		//problem with moving every automaton in the inventory to first positions
+		return true;
 	}
 
 	public void do_egg(int c) {
 		
-		aut.setDELAY(1000);
+
+		aut.setDELAY(5);
 		
 		set_state_action(ActionType.EGG);
 		Entity e;
@@ -121,15 +130,43 @@ public class Player extends Entity {
 	}
 
 	@Override
+	//select
 	public boolean do_wizz(int factor) {
+		
+		if (nb_item_inventory == 0) return false;
+		
 		state_action = ActionType.WIZZ;
-		newSpeed(factor);
+		if(index==-1) {
+			index=0;
+			inventory.get(index).selected=true;
+		}
+		else {
+			inventory.get(index).selected=false;
+			index = (1 + index)%nb_item_inventory ;
+			inventory.get(index).selected=true;
+		}
 		return true;
 	}
 
+	public void update_inv() {
+		get_inventory();
+	}
+	
 	@Override
 	public Item[] get_inventory() {
-		return inventory;
+		
+		for (int i = 0; i < model.nb_bot_init; i++) {
+			inv[i] = null;
+		}
+		
+		int r = 0;
+		for (Item i : inventory) {
+			inv[r] = i;
+			r++;
+		}
+		
+		
+		return inv;
 	}
 
 	public boolean do_hit(Absolute_Orientation o, String type, int porte) {

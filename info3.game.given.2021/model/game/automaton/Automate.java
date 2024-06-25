@@ -64,14 +64,10 @@ public class Automate {
 
 	public void step(Entity e) {
 
-		System.out.println(getTICK() + " " + getDELAY());
-		System.out.println(currentStateList.size());
-
 		if (getTICK() >= getDELAY()) {
 			blocked = false;
 		} else {
-			System.out.println("BLOCKED");
-			System.out.println(getTICK());
+
 			setTICK(getTICK() + 1);
 		}
 
@@ -81,7 +77,7 @@ public class Automate {
 				blocked = true;
 				setTICK(0);
 
-   				Action a = action_buffer.get(0);
+				Action a = action_buffer.get(0);
 				a.exec(e);
 				action_buffer.remove(0);
 
@@ -105,7 +101,7 @@ public class Automate {
 							}
 
 							State s = this.getState(transition.cible);
-							
+
 							if (!s.equals(state)) {
 								currentStateList.add(s);
 								toRemove.add(state);
@@ -120,7 +116,7 @@ public class Automate {
 				for (State s : toRemove) {
 					currentStateList.remove(s);
 				}
-				
+
 				System.out.println(currentStateList.size());
 
 			}

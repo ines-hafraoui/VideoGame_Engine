@@ -98,7 +98,6 @@ public class MainAvatar extends Avatar {
 		String abs_or = m_entity.get_abs_or().get_abs_Orientation();
 		switch (a_state) {
 		case ActionType.IDLE:
-			System.out.print("In IDLE\n");
 			if (m_imageIndex < 4) {
 				m_imageIndex = 4;
 			}
