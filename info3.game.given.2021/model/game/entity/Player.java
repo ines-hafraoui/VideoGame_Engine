@@ -113,7 +113,7 @@ public class Player extends Entity {
 	public void do_egg(int c) {
 		
 
-		aut.setDELAY(5);
+		aut.setDELAY(50);
 		
 		set_state_action(ActionType.EGG);
 		Entity e;
