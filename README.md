@@ -8,9 +8,6 @@
 - Créer un répertoire qui va devenir un répertoire git 
     - git init 
     - git clone *lien ssh*
-    - git add --all
-    - git commit -m "Initial commit"
-    - git push --all
 
 ### Lancement du Jeu
 
@@ -45,7 +42,8 @@ Les fichiers **configjeu1.json** et **configjeu2.json** sont placés directement
 ### 2.2 Package View (Chemin: game/view)
 Gère la représentation visuelle du jeu, mettant en œuvre l'affichage des éléments graphiques.
 
-- **game.avatar** : Contient les classes qui gèrent les avatars des entités dans le jeu, transformant les états des modèles en représentations visuelles que les joueurs peuvent voir et avec lesquelles ils peuvent interagir.
+- **info3.game.avatar** : Contient les classes qui gèrent les avatars des entités dans le jeu, transformant les états des modèles en représentations visuelles que les joueurs peuvent voir et avec lesquelles ils peuvent interagir.
+- **info3.game.view** : Contient les classes qui gèrent la vue du jeu dont une vue principale contenant des viewports et autres éléments de gameplay qui seront affiché sur la fenêtre.
 
 ### 2.3 Package Controller 
 - **CanvasListener** : Implémenté dans ce package, ce contrôleur écoute et répond aux interactions de l'utilisateur, comme les clics de souris ou les entrées clavier, en manipulant le modèle et la vue en conséquence.
