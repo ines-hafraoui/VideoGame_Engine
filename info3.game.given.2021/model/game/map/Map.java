@@ -1,11 +1,14 @@
 package game.map;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import gal.demo.test.TestMain;
+import game.automaton.Automate;
 import game.automaton.Relative_Orientation;
 import game.entity.Absolute_Orientation;
 import game.entity.Entity;
@@ -198,7 +201,13 @@ public class Map {
 				int y = random.nextInt((int) borders.getMaxY());
 
 				p = new Position(x, y);
-				i.setStock(m_model.automates.get(random.nextInt(m_model.automates.size())));
+				
+				String behaviour = m_model.aut_bot[m_model.aut_bot.length];
+				String galPath = new File("gal/gal/" + behaviour).getAbsolutePath();
+
+				Automate automate = TestMain.loadAutomata(galPath);
+				
+				i.setStock(automate);
 				seed++;
 				
 			} while (!borders.containsPosition(p));
