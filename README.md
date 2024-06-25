@@ -7,7 +7,7 @@
 
 - Créer un répertoire qui va devenir un répertoire git 
     - git init 
-    - git clone <lien ssh>
+    - git clone -*lien ssh*
     - git add --all
     - git commit -m "Initial commit"
     - git push --all
@@ -27,8 +27,22 @@ Il se trouve dans game/info3.game
 - **game.entity** : Contient les définitions des différentes entités du jeu (comme les joueurs, les ennemis, et les objets interactifs). Ces classes définissent les propriétés et les actions possibles pour chaque type d'entité.
 - **game.map** / **game.Biomes** : Implémente la génération des cartes et des biomes du jeu, utilisant divers algorithmes pour créer des environnements de jeu aléatoires et dynamiques.
 
-#### Fichier de Configuration 
-Les fichiers **.json** sont placés directement dans le package model, ces fichiers contiennent la configuration du jeu, y compris les paramètres des entités, les règles des automates, et les spécifications des cartes.
+#### 2.1.1 Fichier de Configuration 
+Les fichiers **configjeu1.json** et **configjeu2.json** sont placés directement dans le package model, ils contiennent des champs : 
+- les paramètres des entités
+    - leur type, 
+    - le comportement (le fichier gal) et la hitbox
+    - le sprite
+        -  On y trouve un array **details** composé d'autre array. Ils indiquent pour chaque action où trouver les sprites dans la matrice généré avec le fichier .png. L'array details change en fonction de l'entité (exemple entre un joueur et une arrow)
+    - la direction, position, team, et un boolean pickable
+- un tableau de fichier gal qui sont les comportements des bots qu'on peut leur attribuer
+- cooperative qui indique si les joueurs sont adversaire ou pas
+- timer : si il est à -1 la partie n'a pas de limite de temps 
+- viscosity : v 
+    - v = 0 alors le joueur n'est pas contraint dans son déplacement
+    - v > 0 , il est ralentis de v m/s 
+    - v < 0 , il accelère de v m/s
+- le nombre de bot initiale pour chaque joueur, le nombre de player et le nombre d'item généré aléatoirement sur la map
 
 ### 2.2 Package View (Chemin: game/view)
 Gère la représentation visuelle du jeu, mettant en œuvre l'affichage des éléments graphiques.
