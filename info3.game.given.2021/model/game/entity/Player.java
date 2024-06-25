@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import game.automaton.Automate;
+import game.automaton.Category;
 import game.map.Polygon;
 import game.model.Model;
 
 public class Player extends Entity {
 	protected Item inventory[];
 	protected int nb_item_inventory;
+	protected int index=-1;
 
 	// add current number of bot field
 
@@ -81,24 +83,26 @@ public class Player extends Entity {
 	@Override
 	public boolean do_get() {
 		System.out.print("is getting");
-		if (bots.size() != 0) {
-			Entity e = bots.get(index_bot);
-			Item item = inventory[index_inventory];
-			if (item != null) {
-				// move element to the left
-				for (int i = index_inventory; i < nb_item_inventory - 1; i++) {
-					inventory[i] = inventory[i + 1];
-				}
-				inventory[nb_item_inventory - 1] = null; // last element is null
-				nb_item_inventory--;
-
-				e.aut = item.get_automate();
-				index_inventory = 0;
-				index_bot = 0;
-				return true;
-			}
-			return false;
-		}
+		Item item = inventory[index];
+		Entity e=this.eval_closest(new Absolute_Orientation(Absolute_Orientation.NORTH), new Category(Category.PLAYER_IN_MY_TEAM),(float) model.get_width());
+//		if (bots.size() != 0) {
+//			Entity e = bots.get(index_bot);
+//			Item item = inventory[index_inventory];
+//			if (item != null) {
+//				// move element to the left
+//				for (int i = index_inventory; i < nb_item_inventory - 1; i++) {
+//					inventory[i] = inventory[i + 1];
+//				}
+//				inventory[nb_item_inventory - 1] = null; // last element is null
+//				nb_item_inventory--;
+//
+//				e.aut = item.get_automate();
+//				index_inventory = 0;
+//				index_bot = 0;
+//				return true;
+//			}
+//			return false;
+//		}
 		return false;
 	}
 
@@ -117,9 +121,22 @@ public class Player extends Entity {
 	}
 
 	@Override
+	//select
 	public boolean do_wizz(int factor) {
 		state_action = ActionType.WIZZ;
-		newSpeed(factor);
+		if(index==-1) {
+			index=0;
+			inventory[index].selected=true;
+		}
+		else if(index>=6) {
+			index=0;
+			inventory[index].selected=true;
+		}
+		else {
+			inventory[index].selected=false;
+			index++;
+			inventory[index].selected=true;
+		}
 		return true;
 	}
 
