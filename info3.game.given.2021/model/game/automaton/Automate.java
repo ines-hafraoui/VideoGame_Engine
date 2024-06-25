@@ -18,8 +18,8 @@ public class Automate {
 
 	private List<Action> action_buffer = new ArrayList<Action>();
 
-	int TICK = 0;
-	int DELAY = -1;
+	private int TICK = 0;
+	private int DELAY = -1;
 
 	public boolean blocked; // the entity will unblock the automaton once it's transition is over
 
@@ -65,22 +65,20 @@ public class Automate {
 	public void step(Entity e) {
 
 
-		if (TICK >= DELAY) {
+
+		if (getTICK() >= getDELAY()) {
 			blocked = false;
 		} else {
-			TICK++;
+			setTICK(getTICK() + 1);
 		}
 
 		if (!blocked) {
 
 			if (!action_buffer.isEmpty()) {
 				blocked = true;
-   				Action a = action_buffer.get(0);
-				if (a instanceof game.automaton.Egg) {
- 					TICK = 0;
-					DELAY = 500;
-				}
+				setTICK(0);
 
+   				Action a = action_buffer.get(0);
 				a.exec(e);
 				action_buffer.remove(0);
 
@@ -142,6 +140,22 @@ public class Automate {
 
 	public Entity get_entity() {
 		return this.entity;
+	}
+
+	public int getTICK() {
+		return TICK;
+	}
+
+	public void setTICK(int tICK) {
+		TICK = tICK;
+	}
+
+	public int getDELAY() {
+		return DELAY;
+	}
+
+	public void setDELAY(int dELAY) {
+		DELAY = dELAY;
 	}
 
 }
