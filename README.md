@@ -14,10 +14,7 @@
 
 ### Lancement du Jeu
 
-- Commencer par compiler le fichier parser.jj pour parser les fichiers .gal. 
-Il se trouve dans gal/gal.parser. Sur eclipse un bouton de compilation vous est proposé. 
-
-- Pour lancer le jeu, il faut éxecuter la méthode main du fichier Game.java. Il se trouve dans game/info3.game. La choix du jeu se fait dans ce fichier dans la méthode main.
+Pour lancer le jeu, il faut éxecuter la méthode main du fichier Game.java. Il se trouve dans game/info3.game. Le choix du jeu se fait dans ce fichier dans la méthode main.
 
 ## 2.  Architecture du Projet de Jeu Java
 ### 2.1 Package Model (Chemin: game/model)
