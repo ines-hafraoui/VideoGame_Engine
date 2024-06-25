@@ -14,7 +14,10 @@
 
 ### Lancement du Jeu
 
-Pour lancer le jeu, il faut éxecuter la méthode main du fichier Game.java. Il se trouve dans game/info3.game. Le choix du jeu se fait dans ce fichier dans la méthode main.
+Pour lancer le jeu, 2 manières sont possibles : 
+- Executer la méthode main du fichier Game.java dans eclipse. Il se trouve dans game/info3.game. Le choix du jeu se fait dans ce fichier dans la méthode main.
+- Se placer dans le répertoire au niveau du dossier info3.game.given.2021 et lancer la commande **make run**
+(nous avons un probleme car lors du run il ne trouve pas la classe Game.java) 
 
 ## 2.  Architecture du Projet de Jeu Java
 ### 2.1 Package Model (Chemin: game/model)
