@@ -103,6 +103,9 @@ public class Player extends Entity {
 	}
 
 	public void do_egg(int c) {
+		
+		aut.setDELAY(1000);
+		
 		set_state_action(ActionType.EGG);
 		Entity e;
 		Automate a;
