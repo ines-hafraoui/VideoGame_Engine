@@ -588,8 +588,6 @@ public class Model {
 		Polygon polygon = create_polygon_direction(p_x, p_y, porte, angle1, angle2);
 		for (Entity entity : entities) {
 			if (entity.getHitBox().get_polygon().intersectsWith(polygon)) {
-				if (e instanceof Projectile)
-					System.out.print("projectile c'est good");
 				return true;
 			}
 		}
@@ -608,8 +606,16 @@ public class Model {
 			}
 		}
 
-		return newPosition.getPositionX() >= 0 && newPosition.getPositionX() <= m_map.getBorders().getMaxX()
-				&& newPosition.getPositionY() >= 0 && newPosition.getPositionY() <= m_map.getBorders().getMaxY();
+		return inBounds(newPosition.getPositionX(),newPosition.getPositionY(), entity); 
+	}
+
+	public boolean inBounds(float x, float y, Entity e) {
+		if (x >= 0 && x <= m_map.getBorders().getMaxX() && y >= 0 && y <= m_map.getBorders().getMaxY()) {
+			return true;
+		}else {
+			addToRemove(e);
+			return false;
+		}
 	}
 
 	public Entity get_entity_at(float checkX, float checkY) {

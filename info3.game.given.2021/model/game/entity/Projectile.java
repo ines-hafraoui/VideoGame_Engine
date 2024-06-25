@@ -79,12 +79,11 @@ public class Projectile extends Entity {
 	
 	public boolean do_move() {
 		Position p = newPosition();
-		while(!model.isValidPosition(this, p)) {
-			p = newPosition();
-			System.out.print("mooving");
-			if (p== null) return false;
-			this.position = p; 
-		}
+		if (!model.inBounds(p.getPositionX(), p.getPositionY(), this))
+			this.do_explode();
+		System.out.print("mooving");
+		if (p== null) return false;
+		this.position = p; 
 		
 		return true;
 		
