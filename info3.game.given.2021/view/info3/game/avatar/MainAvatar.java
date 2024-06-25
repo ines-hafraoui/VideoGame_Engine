@@ -67,11 +67,11 @@ public class MainAvatar extends Avatar {
 			g.drawRect((x + (int) m_entity.get_x() * View.DISPLAYSCALE) - w,
 					(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - h, w, h);
 		}
-		g.setColor(Color.red);
-		g.drawRect((x + (int) m_entity.get_x() * View.DISPLAYSCALE) - w,
-				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - h,
-				(int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE,
-				(int) m_entity.getHitBox().getHbHeight() * View.DISPLAYSCALE);
+//		g.setColor(Color.red);
+//		g.drawRect((x + (int) m_entity.get_x() * View.DISPLAYSCALE) - w,
+//				(y + (int) m_entity.get_y() * View.DISPLAYSCALE) - h,
+//				(int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE,
+//				(int) m_entity.getHitBox().getHbHeight() * View.DISPLAYSCALE);
 		if (m_animate) {
 			configureAnimation();
 		}
@@ -88,9 +88,9 @@ public class MainAvatar extends Avatar {
 		if (hp > 0) {
 			m_hb.drawHealthBar(g, x - w, y - h - 5 % img.getHeight(), w, 5 % img.getHeight(), hp);
 		}
-		g.setColor(Color.red);
-		g.drawRect(x - w / 2 - 20, y - h, (int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE,
-				(int) m_entity.getHitBox().getHbHeight() * View.DISPLAYSCALE);
+//		g.setColor(Color.red);
+//		g.drawRect(x - w / 2 - 20, y - h, (int) m_entity.getHitBox().getHbWidth() * View.DISPLAYSCALE,
+//				(int) m_entity.getHitBox().getHbHeight() * View.DISPLAYSCALE);
 		if (m_animate) {
 			configureAnimation();
 		}

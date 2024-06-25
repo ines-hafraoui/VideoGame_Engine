@@ -1,28 +1,12 @@
 {
   "cooperative" : true,
-  "timer" : 120, 
-  "viscosity" : 0,
-  "nb_bot_init":5,
+  "timer" : 500000, 
+  "viscosity" : 1,
+  "nb_bot_init":10,
   "nb_player": 2,
-  "Player1":{ 
-      "name" : "PLAYER 1", 
-      "behaviour": "player1.gal",
-      "features" : "Player.class",
-      "sprite" :  {
-      	"filepath" :"resources/MiniWorldSprites/Characters/Monsters/Dragons/RedDragon.png",
-      	"nb_rows" : 8,
-      	"nb_cols" : 4,
-      	"index" : 0,
-      	"animation" : true
-      },
-      "pickable": false,
-      "direction":"W",
-      "position":[150,150],
-      "hitbox":[5,10],
-      "team":1
-    },
-    "Player2":{
-      "name" : "PLAYER 2",
+  "nb_item" : 30,
+    "Player1":{
+      "name" : "PLAYER1", 
       "behaviour": "player2.gal",
       "features" : "Player.class",
       "sprite" :  {
@@ -30,64 +14,156 @@
       	"nb_rows" : 8,
       	"nb_cols" : 4,
       	"index" : 0,
-      	"animation" : true
+      	"animation" : true,
+      	"details" : {
+      		"action": {
+      			"idle": {
+      				"index" : [0,1]
+      			},
+      			"move": {
+      				"orientation" : {
+			      		"north": [4,7],
+			      		"south": [0,3],
+			      		"east" : [12,15],
+			      		"west" : [8,11],
+      				}
+      			},
+      			"hit": {
+      				"orientation" : {
+			      		"north": [20,21],
+			      		"south": [16,17],
+			      		"east" : [28,29],
+			      		"west" : [24,25],
+      				}
+      			}
+      		}
+      	}
       },
-      "pickable": false ,
-      "direction":"W",
-      "position":[160,160],
-      "hitbox":[5,10],
+      "pickable": false, 
+      "direction": "S",
+      "position":[150,150],
+      "hitbox":[20,35],
       "team":1
     },
-    "Parasite":{
-      "name" : "PARASITE", 
-      "behaviour" : "bot2.gal",
-      "features" : "Bot.class",
+    "Player2":{ 
+      "name" : "PLAYER2", 
+      "behaviour": "player1.gal",
+      "features" : "Player.class",
       "sprite" :  {
-      	"filepath" :"resources/MiniWorldSprites/Characters/Monsters/Undead/Skeleton-Soldier.png",
-      	"nb_rows" : 5,
-      	"nb_cols" : 12,
+      	"filepath" :"resources/MiniWorldSprites/Characters/Soldiers/Mounted/CyanKnight.png",
+      	"nb_rows" : 12,
+      	"nb_cols" : 4,
       	"index" : 0,
-      	"animation" : true
+      	"animation" : true,
+      	"details" : {
+      		"action": {
+      			"idle": {
+      				"index" : [4,5]
+      			},
+      			"move": {
+      				"orientation" : {
+			      		"north": [36,39],
+			      		"south": [0,3],
+			      		"east" : [12,15],
+			      		"west" : [24,25],
+      				}
+      			},
+      			"hit": {
+      				"orientation" : {
+			      		"north": [8,11],
+			      		"south": [30,35],
+			      		"east" : [20,23],
+			      		"west" : [44,47],
+      				}
+      			}
+      		}
+      	}
       },
-      "pickable" : false,
-      "direction":"W",
-      "position":[100,50],
-      "hitbox":[2,5],
-      "team":0
+      "pickable": false ,
+      "direction": "S",
+      "position":[160,160],
+      "hitbox":[20,35],
+      "team": 1
     },
-     "Dasher":{
+    "Dasher":{
       "name" : "DASHER", 
       "behaviour" : "dasher.gal",
       "features" : "Bot.class",
       "sprite" :  {
-      	"filepath" :"resources/MiniWorldSprites/Characters/Champions/Grum.png",
-      	"nb_rows" : 5,
-      	"nb_cols" : 9,
+      	"filepath" : "resources/MiniWorldSprites/Characters/Monsters/Demons/RedDemon.png",
+      	"nb_rows" : 8,
+      	"nb_cols" : 6,
       	"index" : 0,
-      	"animation" : true
+      	"animation" : true,
+      	"details" : {
+      		"action": {
+      			"idle": {
+      				"index" : [6,7]
+      			},
+      			"move": {
+      				"orientation" : {
+			      		"north": [6,10],
+			      		"south": [0,4],
+			      		"east" : [12,16],
+			      		"west" : [18,22],
+      				}
+      			},
+      			"hit": {
+      				"orientation" : {
+			      		"north": [24,29],
+			      		"south": [30,35],
+			      		"east" : [36,41],
+			      		"west" : [42,47],
+      				}
+      			}
+      		}
+      	}
       },
-      "pickable" : false,
-      "direction":"W",
+      "pickable" : true,
+      "direction":"S",
       "position":[100,50],
-      "hitbox":[2,5],
-      "team":0
+      "hitbox":[15,15],
+      "team":1
     },
-     "Archer":{
+   "Archer":{
       "name" : "ARCHER", 
       "behaviour" : "arsher.gal",
       "features" : "Bot.class",
       "sprite" :  {
-      	"filepath" :"resources/MiniWorldSprites/Characters/Soldiers/Ranged/RedRanged/BowmanRed.png",
-      	"nb_rows" : 5,
-      	"nb_cols" : 8,
+      	"filepath" : "resources/MiniWorldSprites/Characters/Monsters/Demons/RedDemon.png",
+      	"nb_rows" : 8,
+      	"nb_cols" : 6,
       	"index" : 0,
-      	"animation" : true
+      	"animation" : true,
+      	"details" : {
+      		"action": {
+      			"idle": {
+      				"index" : [6,7]
+      			},
+      			"move": {
+      				"orientation" : {
+			      		"north": [6,10],
+			      		"south": [0,4],
+			      		"east" : [12,16],
+			      		"west" : [18,22],
+      				}
+      			},
+      			"hit": {
+      				"orientation" : {
+			      		"north": [24,29],
+			      		"south": [30,35],
+			      		"east" : [36,41],
+			      		"west" : [42,47],
+      				}
+      			}
+      		}
+      	}
       },
-      "pickable" : false,
-      "direction":"W",
+      "pickable" : true,
+      "direction":"S",
       "position":[100,50],
-      "hitbox":[2,5],
-      "team":0
+      "hitbox":[15,15],
+      "team":1
     },
     "Capacity":{
       "name" : "CAPACITY", 
@@ -105,8 +181,7 @@
       "position":[1,1],
       "hitbox":[2,5],
       "team":0
-    },
-    "Plant":{
+    },"Plant":{
       "name" : "PLANT", 
       "behaviour" : "item.gal",
       "features" : "Plant.class",
@@ -141,7 +216,6 @@
       "team":0
     },
     "automates" : ["Dasher.gal", "Archer.gal", "Dragon.gal"],
-    "background" : ["resources/SproutLands/Tilesets/Grass.png",2,3,false],
-    "zoom" : 1
+    "background" : ["resources/MiniWorldSprites/Ground/TexturedGrass.png",2,3,true],
+    "zoom" : 3
 }
-

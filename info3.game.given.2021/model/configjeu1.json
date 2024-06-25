@@ -6,7 +6,7 @@
   "nb_player":2,
   "nb_item" : 20,
     "Player1":{
-      "name" : "PL<<<<<<< HEADAYER1", 
+      "name" : "PLAYER1", 
       "behaviour": "player2.gal",
       "features" : "Player.class",
       "sprite" :  {
