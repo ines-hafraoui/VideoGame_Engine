@@ -53,7 +53,9 @@ Gère la représentation visuelle du jeu, mettant en œuvre l'affichage des él�
 ### 2.4 Package Game
 - **info3.game** : Contient le point d'entrée principal (main) du jeu, initialisant et lançant le moteur de jeu, en liant toutes les composantes du modèle, de la vue, et du contrôleur.
 
-## 3. Lien de la vidéo 
+## 3. Lien de la vidéo
+https://youtu.be/QWrw4YiCPCg
+
 ## 4. Pourcentage de participation
 - Nada YASSINE : 16,66%
 - Ines HAFRAOUI : 16,66%
